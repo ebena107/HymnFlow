@@ -3,14 +3,12 @@
 ## ⚡ 5-Minute Setup
 
 ### Prerequisites
-
 - OBS Studio v27 or higher
 - Web browser (Chrome, Edge, Firefox)
 
 ### Step 1: Locate Your HymnFlow Files
 
 Extract the downloaded release to a permanent location:
-
 ```
 C:\HymnFlow\              ← Recommended location
 ├── public/
@@ -49,7 +47,7 @@ The dock will appear in OBS (may take a moment to load).
    - ✅ **Refresh browser when scene becomes active**
 5. Click **OK**
 
-### Step 4: Test It
+### Step 4: Test It!
 
 1. Click a hymn in the dock
 2. You should see the preview update
@@ -130,25 +128,21 @@ Changes apply instantly to the overlay!
 ## ❓ Troubleshooting
 
 ### Dock doesn't appear
-
 - Check the URL uses forward slashes: `file:///C:/...` not `C:\`
 - Make sure file path is correct
 - Restart OBS
 
 ### Overlay doesn't show
-
 - Verify Browser Source URL is correct
 - Check browser source is in an active scene
 - Try refreshing the browser source (right-click → Refresh)
 
 ### Hymns won't import
-
 - Check file format (TXT or JSON only)
 - Ensure verses are separated by blank lines
 - Check for special characters in text
 
 ### Text won't display
-
 - Check font size isn't too small
 - Verify text color contrasts with background
 - Try changing to "Transparent" background
@@ -157,7 +151,7 @@ Changes apply instantly to the overlay!
 
 See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed solutions.
 
-Or visit: <https://github.com/yourusername/HymnFlow/issues>
+Or visit: https://github.com/yourusername/HymnFlow/issues
 
 ## 🚀 Next Steps
 

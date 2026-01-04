@@ -11,7 +11,7 @@
 2. In OBS, add Custom Dock: `file:///path/to/HymnFlow/public/obs-dock/index.html`
 3. Add Browser Source: `file:///path/to/HymnFlow/public/obs-overlay/index.html`
 
-See [SETUP.md](https://github.com/yourusername/HymnFlow/blob/main/SETUP.md) for detailed instructions.
+See [SETUP.md](https://github.com/yourusername/HymnFlow/blob/main/doc/SETUP.md) for detailed instructions.
 
 ### ✨ Features
 
@@ -30,9 +30,9 @@ See [SETUP.md](https://github.com/yourusername/HymnFlow/blob/main/SETUP.md) for 
 ### 📚 Documentation
 
 - [README](https://github.com/yourusername/HymnFlow) - Overview and features
-- [SETUP.md](https://github.com/yourusername/HymnFlow/blob/main/SETUP.md) - Quick start guide
-- [OBS_DOCK_README.md](https://github.com/yourusername/HymnFlow/blob/main/OBS_DOCK_README.md) - Detailed usage
-- [TROUBLESHOOTING.md](https://github.com/yourusername/HymnFlow/blob/main/TROUBLESHOOTING.md) - Common issues
+- [SETUP.md](https://github.com/yourusername/HymnFlow/blob/main/doc/SETUP.md) - Quick start guide
+- [OBS_DOCK_README.md](https://github.com/yourusername/HymnFlow/blob/main/doc/OBS_DOCK_README.md) - Detailed usage
+- [TROUBLESHOOTING.md](https://github.com/yourusername/HymnFlow/blob/main/doc/TROUBLESHOOTING.md) - Common issues
 
 ### 📄 License
 

@@ -32,9 +32,9 @@ xcopy public\obs-overlay "!RELEASE_DIR!\obs-overlay\" /E /Y > nul
 xcopy public\data "!RELEASE_DIR!\data\" /E /Y > nul
 xcopy public\parsers "!RELEASE_DIR!\parsers\" /E /Y > nul
 copy README.md "!RELEASE_DIR!\" > nul
-copy SETUP.md "!RELEASE_DIR!\" > nul
-copy TROUBLESHOOTING.md "!RELEASE_DIR!\" > nul
-copy SECURITY.md "!RELEASE_DIR!\" > nul
+copy doc\SETUP.md "!RELEASE_DIR!\" > nul
+copy doc\TROUBLESHOOTING.md "!RELEASE_DIR!\" > nul
+copy doc\SECURITY.md "!RELEASE_DIR!\" > nul
 
 REM Create ZIP (requires 7-Zip or built-in compression)
 set ZIP_FILE=hymnflow-v!VERSION!-plugin.zip

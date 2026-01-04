@@ -6,8 +6,9 @@ Use this checklist when preparing a new release.
 
 - [ ] Update version in `package.json`
 - [ ] Update `CHANGELOG.md` with new changes
-- [ ] Review all recent commits for breaking changes
-- [ ] Test in OBS with file:// URLs
+- [ ] Review [.github/release-checklist.md](release-checklist.md) for release process
+- [ ] Update [doc/CHANGELOG.md](../doc/CHANGELOG.md) with new changes
+- [ ] Check for breaking changes in [doc/RELEASE.md](../doc/RELEASE.md)
 - [ ] Test in OBS with http://localhost URLs
 - [ ] Test keyboard shortcuts (←, →, ↑, ↓, Space)
 - [ ] Test hymn import (TXT and JSON formats)
@@ -28,11 +29,11 @@ Use this checklist when preparing a new release.
 ## Documentation
 
 - [ ] Update `README.md` with new features (if any)
-- [ ] Update `OBS_DOCK_README.md` (if UI changed)
+- [ ] Update `doc/OBS_DOCK_README.md` (if UI changed)
 - [ ] Update `.github/copilot-instructions.md` (if architecture changed)
-- [ ] Add migration notes to `RELEASE.md` (if breaking change)
-- [ ] Review `SETUP.md` for accuracy
-- [ ] Review `TROUBLESHOOTING.md` for relevance
+- [ ] Add migration notes to `doc/RELEASE.md` (if breaking change)
+- [ ] Review `doc/SETUP.md` for accuracy
+- [ ] Review `doc/TROUBLESHOOTING.md` for relevance
 
 ## Release Artifacts
 
@@ -103,13 +104,13 @@ If critical issue discovered after release:
 
 ```
 package.json               ← version
-CHANGELOG.md              ← new section at top
+doc/CHANGELOG.md          ← new section at top
 .github/copilot-instructions.md  ← if architecture changed
 README.md                 ← if features changed
-OBS_DOCK_README.md       ← if UI changed
-RELEASE.md               ← if setup changed
-SETUP.md                 ← if setup changed
-TROUBLESHOOTING.md       ← if new issues found
+doc/OBS_DOCK_README.md   ← if UI changed
+doc/RELEASE.md           ← if setup changed
+doc/SETUP.md             ← if setup changed
+doc/TROUBLESHOOTING.md   ← if new issues found
 ```
 
 ## Security Checklist

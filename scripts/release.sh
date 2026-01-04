@@ -28,9 +28,9 @@ cp -r public/obs-overlay "$RELEASE_DIR/"
 cp -r public/data "$RELEASE_DIR/"
 cp -r public/parsers "$RELEASE_DIR/"
 cp README.md "$RELEASE_DIR/"
-cp SETUP.md "$RELEASE_DIR/"
-cp TROUBLESHOOTING.md "$RELEASE_DIR/"
-cp SECURITY.md "$RELEASE_DIR/"
+cp doc/SETUP.md "$RELEASE_DIR/"
+cp doc/TROUBLESHOOTING.md "$RELEASE_DIR/"
+cp doc/SECURITY.md "$RELEASE_DIR/"
 
 # Create ZIP
 ZIP_FILE="hymnflow-v$VERSION-plugin.zip"

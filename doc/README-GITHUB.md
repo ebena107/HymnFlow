@@ -108,7 +108,7 @@ Changes apply **instantly** to the overlay.
 - [**OBS_DOCK_README.md**](OBS_DOCK_README.md) - Detailed feature documentation
 - [**TROUBLESHOOTING.md**](TROUBLESHOOTING.md) - Common issues & solutions
 - [**RELEASE.md**](RELEASE.md) - Version info & migration guide
-- [**Contributing**](.github/CONTRIBUTING.md) - How to contribute
+- [Contributing](../.github/CONTRIBUTING.md) - How to contribute
 
 ## 🛠️ Development
 

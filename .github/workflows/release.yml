@@ -28,8 +28,9 @@ jobs:
           cp -r public/data hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp -r public/parsers hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp README.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp SETUP.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp TROUBLESHOOTING.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp doc/SETUP.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp doc/TROUBLESHOOTING.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp doc/SECURITY.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
 
       - name: Create ZIP archive
         run: |

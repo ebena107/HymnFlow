@@ -144,9 +144,9 @@ public/
 
 ## 📚 Documentation
 
-- **[OBS_DOCK_README.md](OBS_DOCK_README.md)** - Complete user guide with all features
-- **[OBS_IMPLEMENTATION.md](OBS_IMPLEMENTATION.md)** - Technical implementation details
-- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Common issues and solutions
+- **[doc/OBS_DOCK_README.md](doc/OBS_DOCK_README.md)** - Complete user guide with all features
+- **[doc/OBS_IMPLEMENTATION.md](doc/OBS_IMPLEMENTATION.md)** - Technical implementation details
+- **[doc/TROUBLESHOOTING.md](doc/TROUBLESHOOTING.md)** - Common issues and solutions
 - **[public/obs-setup.html](public/obs-setup.html)** - Interactive setup wizard
 
 ## 🔧 How It Works

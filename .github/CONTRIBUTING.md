@@ -144,9 +144,9 @@ When contributing code, also update:
 
 - `README.md` - If feature is user-facing
 - `.github/copilot-instructions.md` - If architecture changes
-- `TROUBLESHOOTING.md` - If users might encounter issues
+- `doc/TROUBLESHOOTING.md` - If users might encounter issues
 - Code comments - For complex logic
-- `CHANGELOG.md` - Keep top section for unreleased changes
+- `doc/CHANGELOG.md` - Keep top section for unreleased changes
 
 ## Testing Checklist
 
