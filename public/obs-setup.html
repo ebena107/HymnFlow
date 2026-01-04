@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HymnFlow OBS Dock - Setup Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 { margin-top: 0; font-size: 2.5em; text-align: center; }
+    h2 { border-bottom: 2px solid rgba(255,255,255,0.3); padding-bottom: 10px; margin-top: 40px; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+    .card {
+      background: rgba(255,255,255,0.15);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .card h3 { margin-top: 0; }
+    code {
+      background: rgba(0,0,0,0.3);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    pre {
+      background: rgba(0,0,0,0.4);
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+    .btn {
+      display: inline-block;
+      background: white;
+      color: #667eea;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin: 10px 10px 10px 0;
+      transition: transform 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .steps {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+    .steps li { margin: 15px 0; line-height: 1.6; }
+    .warning {
+      background: rgba(255, 193, 7, 0.2);
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .success {
+      background: rgba(76, 175, 80, 0.2);
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    th { background: rgba(0,0,0,0.2); font-weight: 600; }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎵 HymnFlow OBS Dock Plugin</h1>
+    <p style="text-align: center; font-size: 1.2em; opacity: 0.9;">
+      Complete Lower-Third Hymn Display System for OBS
+    </p>
+
+    <div class="success">
+      <strong>✅ Production Ready!</strong> This plugin is fully functional and tested. Follow the setup below to get started.
+    </div>
+
+    <h2>📦 Quick Setup (3 Steps)</h2>
+
+    <div class="steps">
+      <ol>
+        <li>
+          <strong>Add Custom Dock to OBS</strong>
+          <ul>
+            <li>Open OBS Studio</li>
+            <li>Go to <code>View → Docks → Custom Browser Docks</code></li>
+            <li>Dock Name: <code>HymnFlow Control</code></li>
+            <li>URL: <code id="dockUrl">file:///C:/HymnFlow/public/obs-dock/index.html</code></li>
+            <li>Click <strong>Apply</strong></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Add Browser Source for Overlay</strong>
+          <ul>
+            <li>In OBS, add a new <strong>Browser Source</strong></li>
+            <li>Name: <code>Hymn Lower-Third</code></li>
+            <li>URL: <code id="overlayUrl">file:///C:/HymnFlow/public/obs-overlay/index.html</code></li>
+            <li>Width: <code>1920</code>, Height: <code>1080</code></li>
+            <li>Check ✅ <strong>Shutdown source when not visible</strong></li>
+            <li>Click <strong>OK</strong></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Test It!</strong>
+          <ul>
+            <li>Click a hymn in the dock</li>
+            <li>Lower-third should appear automatically in OBS preview</li>
+            <li>Use arrow keys to navigate - overlay updates instantly</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <h2>🎮 Controls</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Keyboard Shortcuts</h3>
+        <table>
+          <tr><th>Key</th><th>Action</th></tr>
+          <tr><td><code>→</code></td><td>Next verse (auto-updates overlay)</td></tr>
+          <tr><td><code>←</code></td><td>Previous verse (auto-updates overlay)</td></tr>
+          <tr><td><code>↓</code></td><td>Next lines (auto-updates, advances verse at end)</td></tr>
+          <tr><td><code>↑</code></td><td>Previous lines (auto-updates, retreats verse at start)</td></tr>
+          <tr><td><code>Space</code></td><td>Toggle display (show/hide overlay)</td></tr>
+        </table>
+        <p><strong>Smart Navigation:</strong> Line navigation automatically continues to next/previous verse when reaching boundaries!</p>
+      </div>
+
+      <div class="card">
+        <h3>Button Controls</h3>
+        <table>
+          <tr><th>Button</th><th>Action</th></tr>
+          <tr><td><strong>👁️ Display / 🚫 Hide</strong></td><td>Toggle visibility with visual feedback (purple=hidden, red pulsing=visible)</td></tr>
+          <tr><td><strong>Reset</strong></td><td>Return to verse 1, line 1 (auto-updates)</td></tr>
+          <tr><td><strong>Import</strong></td><td>Load hymns from file</td></tr>
+          <tr><td><strong>Export</strong></td><td>Save hymns to JSON</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h2>✨ Features</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>📝 Hymn Management</h3>
+        <ul>
+          <li>Add, edit, delete hymns</li>
+          <li>Search by title or author</li>
+          <li>Import .txt or .json files</li>
+          <li>Export your library</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎨 Styling Options</h3>
+        <ul>
+          <li>5+ font families</li>
+          <li>Font size: 24-96px</li>
+          <li>Bold, italic, shadow, glow</li>
+          <li>Color picker for text</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🖼️ Background Options</h3>
+        <ul>
+          <li>Transparent (recommended)</li>
+          <li>Solid color</li>
+          <li>Gradient (2 colors)</li>
+          <li>Customizable opacity</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎬 Animations</h3>
+        <ul>
+          <li>Fade in/out</li>
+          <li>Slide in/out</li>
+          <li>Instant (no animation)</li>
+          <li>Smooth transitions</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>📖 Usage Example</h2>
+
+    <div class="steps">
+      <h3>Live Streaming Workflow:</h3>
+      <ol>
+        <li><strong>Before Stream:</strong> Import your hymn library</li>
+        <li><strong>During Service:</strong> Keep dock open in OBS</li>
+        <li><strong>When Hymn Starts:</strong> Click hymn from list</li>
+        <li><strong>Show First Verse:</strong> Press <code>Show</code> or <code>Space</code></li>
+        <li><strong>Navigate:</strong> Use arrow keys to move through verses/lines</li>
+        <li><strong>When Done:</strong> Press <code>Hide</code></li>
+      </ol>
+    </div>
+
+    <h2>📁 Import Formats</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h3>TXT Format</h3>
+        <pre>Title: Amazing Grace
+Author: John Newton
+
+Verse 1 text here
+Multiple lines allowed
+
+Verse 2 text here</pre>
+      </div>
+
+      <div class="card">
+        <h3>JSON Format</h3>
+        <pre>[
+  {
+    "title": "Amazing Grace",
+    "author": "John Newton",
+    "verses": [
+      "Verse 1 text",
+      "Verse 2 text"
+    ]
+  }
+]</pre>
+      </div>
+    </div>
+
+    <div class="warning">
+      <strong>⚠️ Important:</strong> Both dock and overlay must be from the same origin (same file:// directory or same http:// server) for localStorage communication to work.
+    </div>
+
+    <h2>🔗 Quick Links</h2>
+
+    <a href="obs-dock/index.html" class="btn" target="_blank">🎛️ Open Dock (Test)</a>
+    <a href="obs-overlay/index.html" class="btn" target="_blank">📺 Open Overlay (Test)</a>
+    <a href="../OBS_DOCK_README.md" class="btn" target="_blank">📚 Full Documentation</a>
+
+    <h2>💡 Tips</h2>
+
+    <div class="card">
+      <ul>
+        <li><strong>Lines per display:</strong> Adjust slider (1-6) to control how many lines show at once</li>
+        <li><strong>Preview:</strong> Watch the preview box to see what will display before clicking Show</li>
+        <li><strong>Position:</strong> Choose bottom-third (default), middle, or top placement</li>
+        <li><strong>Backup:</strong> Export your hymns regularly to avoid data loss</li>
+        <li><strong>Performance:</strong> Use transparent background for best overlay quality</li>
+      </ul>
+    </div>
+
+    <div class="success">
+      <strong>🎉 You're all set!</strong> Start by clicking "Open Dock (Test)" above to try the interface.
+    </div>
+  </div>
+
+  <script>
+    // Update URLs based on current location
+    const baseUrl = window.location.href.replace('obs-setup.html', '');
+    const protocol = window.location.protocol;
+    
+    if (protocol === 'file:') {
+      const dir = window.location.pathname.split('/').slice(0, -1).join('/');
+      document.getElementById('dockUrl').textContent = 'file://' + dir + '/obs-dock/index.html';
+      document.getElementById('overlayUrl').textContent = 'file://' + dir + '/obs-overlay/index.html';
+    } else {
+      document.getElementById('dockUrl').textContent = baseUrl + 'obs-dock/';
+      document.getElementById('overlayUrl').textContent = baseUrl + 'obs-overlay/';
+    }
+  </script>
+</body>
+</html>
+

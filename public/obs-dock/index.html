@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HymnFlow OBS Dock</title>
+  <link rel="stylesheet" href="obs-dock.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="title-block">
+        <div class="title">HymnFlow Dock</div>
+        <div class="subtitle">Lower-third controller for OBS</div>
+      </div>
+      <div class="status" id="status">Ready (localStorage)</div>
+    </header>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Hymns</div>
+          <div class="actions">
+            <button id="btnImport" class="btn">Import</button>
+            <button id="btnExport" class="btn">Export</button>
+            <input type="file" id="fileInput" accept=".txt,.json" hidden>
+          </div>
+        </div>
+        <div class="search">
+          <input id="search" type="text" placeholder="Search hymns...">
+          <button id="btnAdd" class="btn primary">+ Add Hymn</button>
+        </div>
+        <div id="hymnList" class="list"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title" id="currentTitle">No hymn selected</div>
+          <div class="pill" id="verseInfo">-</div>
+        </div>
+
+        <div class="controls">
+          <div class="row">
+            <button id="btnPrevVerse" class="btn">⟵ Prev Verse</button>
+            <button id="btnNextVerse" class="btn">Next Verse ⟶</button>
+          </div>
+          <div class="row">
+            <button id="btnPrevLine" class="btn">⬆ Prev Lines</button>
+            <button id="btnNextLine" class="btn">⬇ Next Lines</button>
+          </div>
+          <div class="row">
+            <button id="btnDisplay" class="btn primary">
+              <span class="btn-icon">👁️</span>
+              <span class="btn-text">Display</span>
+            </button>
+            <button id="btnReset" class="btn">Reset</button>
+          </div>
+        </div>
+
+        <div class="setting">
+          <label>Lines per display <span id="linesValue">2</span></label>
+          <input type="range" id="linesPerPage" min="1" max="6" value="2">
+        </div>
+
+        <div class="preview" id="preview"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Styles</div>
+        </div>
+        <div class="form">
+          <label>Font family
+            <select id="fontFamily">
+              <option value="Inter, sans-serif">Inter</option>
+              <option value="'Segoe UI', sans-serif">Segoe UI</option>
+              <option value="'Roboto', sans-serif">Roboto</option>
+              <option value="'Georgia', serif">Georgia</option>
+              <option value="'Montserrat', sans-serif">Montserrat</option>
+            </select>
+          </label>
+          <label>Font size <span id="fontSizeValue">48px</span>
+            <input type="range" id="fontSize" min="24" max="96" value="48">
+          </label>
+          <div class="row toggles">
+            <label><input type="checkbox" id="bold"> Bold</label>
+            <label><input type="checkbox" id="italic"> Italic</label>
+            <label><input type="checkbox" id="shadow"> Shadow</label>
+            <label><input type="checkbox" id="glow"> Glow</label>
+          </div>
+          <label>Text color
+            <input type="color" id="textColor" value="#ffffff">
+          </label>
+          <label>Background type
+            <select id="bgType">
+              <option value="transparent">Transparent</option>
+              <option value="solid">Solid</option>
+              <option value="gradient">Gradient</option>
+            </select>
+          </label>
+          <label>Background color A
+            <input type="color" id="bgColorA" value="#000000">
+          </label>
+          <label class="bg-gradient">Background color B (for gradient)
+            <input type="color" id="bgColorB" value="#2b2b2b">
+          </label>
+          <label>Animation
+            <select id="animation">
+              <option value="fade">Fade</option>
+              <option value="slide">Slide</option>
+              <option value="none">None</option>
+            </select>
+          </label>
+          <label>Position
+            <select id="position">
+              <option value="bottom">Bottom Third</option>
+              <option value="middle">Middle</option>
+              <option value="top">Top</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../data/hymns-data.js"></script>
+  <script src="../parsers/txtParser.js"></script>
+  <script src="../parsers/jsonParser.js"></script>
+  <script src="obs-dock.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: tag_name
+        run: |
+          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Create plugin package
+        run: |
+          mkdir -p hymnflow-${{ steps.tag_name.outputs.VERSION }}
+          cp -r public/obs-dock hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp -r public/obs-overlay hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp -r public/data hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp -r public/parsers hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp README.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp SETUP.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp TROUBLESHOOTING.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+
+      - name: Create ZIP archive
+        run: |
+          zip -r hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip hymnflow-${{ steps.tag_name.outputs.VERSION }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip
+          body_path: .github/release-template.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: hymnflow-plugin
+          path: hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip

@@ -1,0 +1,9 @@
+{
+  "default": true,
+  "MD013": false,
+  "MD033": false,
+  "MD036": false,
+  "MD040": {
+    "allowed_languages": ["text", "bash", "json", "javascript", "css", "html"]
+  }
+}
