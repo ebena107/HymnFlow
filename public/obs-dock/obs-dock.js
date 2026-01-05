@@ -4,7 +4,6 @@
   const searchEl = document.getElementById('search');
   const statusEl = document.getElementById('status');
   const previewEl = document.getElementById('preview');
-  const linesValueEl = document.getElementById('linesValue');
   const fontSizeValueEl = document.getElementById('fontSizeValue');
   const verseInfoEl = document.getElementById('verseInfo');
   const currentTitleEl = document.getElementById('currentTitle');
@@ -68,11 +67,14 @@
       listEl.innerHTML = '<div class="list-item">No hymns found</div>';
       return;
     }
-    listEl.innerHTML = filtered.map(h => `
+    listEl.innerHTML = filtered.map(h => {
+      const hymnNumber = h.metadata?.number ? `${h.metadata.number} - ` : '';
+      return `
       <div class="list-item${currentHymn && currentHymn.id === h.id ? ' active' : ''}" data-id="${h.id}">
-        <div class="title">${h.title}</div>
+        <div class="title">${hymnNumber}${h.title}</div>
         <div class="meta">${h.author || 'Unknown'} • ${h.verses.length} verse(s)</div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 
   function selectHymn(id) {
@@ -124,6 +126,7 @@
       hymnId: currentHymn.id,
       title: currentHymn.title,
       author: currentHymn.author,
+      metadata: currentHymn.metadata || {},
       verseNumber: currentVerse + 1,
       totalVerses: currentHymn.verses.length,
       lines: windowed,
@@ -144,21 +147,16 @@
   }
 
   function updateDisplayButton() {
-    const btn = document.getElementById('btnDisplay');
-    if (btn) {
-      const iconSpan = btn.querySelector('.btn-icon');
-      const textSpan = btn.querySelector('.btn-text');
-      
+    const toggle = document.getElementById('displayToggle');
+    const liveIndicator = document.getElementById('liveIndicator');
+    if (toggle) {
+      toggle.checked = isDisplaying;
+    }
+    if (liveIndicator) {
       if (isDisplaying) {
-        if (iconSpan) iconSpan.textContent = '🚫';
-        if (textSpan) textSpan.textContent = 'Hide';
-        btn.classList.add('active');
-        btn.classList.remove('primary');
+        liveIndicator.classList.add('active');
       } else {
-        if (iconSpan) iconSpan.textContent = '👁️';
-        if (textSpan) textSpan.textContent = 'Display';
-        btn.classList.remove('active');
-        btn.classList.add('primary');
+        liveIndicator.classList.remove('active');
       }
     }
   }
@@ -226,6 +224,34 @@
     updatePreview();
   }
 
+  function jumpToChorus() {
+    if (!currentHymn || !currentHymn.chorus) {
+      alert('No chorus available for this hymn');
+      return;
+    }
+    // In the future, we can implement chorus display
+    alert('Chorus: ' + currentHymn.chorus);
+  }
+
+  function emergencyClear() {
+    sendCommand('hide');
+    currentHymn = null;
+    currentVerse = 0;
+    currentLineOffset = 0;
+    updatePreview();
+    renderList();
+  }
+
+  function removeSelectedHymn() {
+    if (!currentHymn) {
+      alert('No hymn selected');
+      return;
+    }
+    if (confirm('Delete "' + currentHymn.title + '"?')) {
+      deleteHymn(currentHymn.id);
+    }
+  }
+
   function addHymnDialog(existing) {
     const title = prompt('Title', existing ? existing.title : '');
     if (!title) return;
@@ -281,16 +307,20 @@
     });
 
     document.getElementById('btnAdd').onclick = () => addHymnDialog();
+    document.getElementById('btnRemove').onclick = removeSelectedHymn;
     document.getElementById('btnPrevVerse').onclick = prevVerse;
     document.getElementById('btnNextVerse').onclick = nextVerse;
     document.getElementById('btnPrevLine').onclick = prevLineWindow;
     document.getElementById('btnNextLine').onclick = nextLineWindow;
+    document.getElementById('btnJumpChorus').onclick = jumpToChorus;
+    document.getElementById('btnClear').onclick = emergencyClear;
     document.getElementById('btnReset').onclick = resetPosition;
-    document.getElementById('btnDisplay').onclick = toggleDisplay;
+    document.getElementById('displayToggle').onchange = toggleDisplay;
 
     document.getElementById('linesPerPage').oninput = (e) => {
       settings.linesPerPage = parseInt(e.target.value, 10);
-      linesValueEl.textContent = settings.linesPerPage;
+      const sliderValue = e.target.parentElement.querySelector('.slider-value');
+      if (sliderValue) sliderValue.textContent = settings.linesPerPage;
       saveSettings();
       updatePreview();
     };
@@ -359,8 +389,10 @@
   }
 
   function applySettingsUI() {
-    document.getElementById('linesPerPage').value = settings.linesPerPage;
-    linesValueEl.textContent = settings.linesPerPage;
+    const linesPerPageSlider = document.getElementById('linesPerPage');
+    linesPerPageSlider.value = settings.linesPerPage;
+    const sliderValue = linesPerPageSlider.parentElement.querySelector('.slider-value');
+    if (sliderValue) sliderValue.textContent = settings.linesPerPage;
     document.getElementById('fontFamily').value = settings.fontFamily;
     document.getElementById('fontSize').value = settings.fontSize;
     fontSizeValueEl.textContent = settings.fontSize + 'px';

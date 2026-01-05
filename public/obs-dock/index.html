@@ -8,70 +8,99 @@
 </head>
 <body>
   <div class="app">
+    <!-- Header with Status Indicator -->
     <header class="header">
       <div class="title-block">
         <div class="title">HymnFlow Dock</div>
-        <div class="subtitle">Lower-third controller for OBS</div>
+        <div class="subtitle">Lower-third controller for OBS HYMN</div>
       </div>
-      <div class="status" id="status">Ready (localStorage)</div>
+      <div class="status-indicator">
+        <div class="status-badge">localStorage</div>
+        <div class="status-live" id="status">LIVE</div>
+      </div>
     </header>
 
-    <section class="grid">
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title">Hymns</div>
-          <div class="actions">
-            <button id="btnImport" class="btn">Import</button>
-            <button id="btnExport" class="btn">Export</button>
-            <input type="file" id="fileInput" accept=".txt,.json" hidden>
+    <!-- Main Vertical Container -->
+    <div class="vertical-container">
+      
+      <!-- Hymns Section -->
+      <section class="section">
+        <div class="section-header">
+          <h3>Hymns</h3>
+          <div class="action-group">
+            <button id="btnAdd" class="btn btn-add">+ Add</button>
+            <button id="btnRemove" class="btn btn-remove">- Remove</button>
           </div>
         </div>
-        <div class="search">
-          <input id="search" type="text" placeholder="Search hymns...">
-          <button id="btnAdd" class="btn primary">+ Add Hymn</button>
+        <input id="search" type="text" class="search-input" placeholder="Search hymns">
+        <div id="hymnList" class="hymn-list"></div>
+        <div class="import-export-actions">
+          <button id="btnImport" class="btn btn-secondary">Import</button>
+          <button id="btnExport" class="btn btn-secondary">Export</button>
+          <input type="file" id="fileInput" accept=".txt,.json" hidden>
         </div>
-        <div id="hymnList" class="list"></div>
-      </div>
+      </section>
 
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title" id="currentTitle">No hymn selected</div>
-          <div class="pill" id="verseInfo">-</div>
+      <!-- Selected Hymn Controls -->
+      <section class="section">
+        <div class="section-header-single">
+          <h3 id="currentTitle">Selected Hymn Title</h3>
+          <div class="verse-info" id="verseInfo">Verse 1/4 · Lines 1-2 of 4</div>
         </div>
+        
+        <div class="navigation-controls">
+          <button id="btnPrevVerse" class="btn btn-nav">⟵ Previous</button>
+          <button id="btnNextVerse" class="btn btn-nav">Next ⟶</button>
+          <button id="btnPrevLine" class="btn btn-nav">⬆ Previous Line</button>
+          <button id="btnNextLine" class="btn btn-nav">⬇ Next Line</button>
+          <button id="btnJumpChorus" class="btn btn-nav btn-chorus">Jump to Chorus</button>
+          <button id="btnClear" class="btn btn-emergency">Emergency Clear</button>
+        </div>
+      </section>
 
-        <div class="controls">
-          <div class="row">
-            <button id="btnPrevVerse" class="btn">⟵ Prev Verse</button>
-            <button id="btnNextVerse" class="btn">Next Verse ⟶</button>
+      <!-- Display Controls -->
+      <section class="section">
+        <div class="display-controls">
+          <div class="display-toggle">
+            <label class="toggle-switch">
+              <input type="checkbox" id="displayToggle">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="toggle-label">Display</span>
+            <span class="live-indicator" id="liveIndicator">LIVE</span>
           </div>
-          <div class="row">
-            <button id="btnPrevLine" class="btn">⬆ Prev Lines</button>
-            <button id="btnNextLine" class="btn">⬇ Next Lines</button>
+          <button id="btnReset" class="btn btn-secondary">Reset</button>
+        </div>
+        
+        <div class="lines-control">
+          <label class="control-label">Lines per display</label>
+          <div class="slider-container">
+            <span class="slider-value">2</span>
+            <input type="range" id="linesPerPage" min="2" max="6" value="2" class="slider">
+            <div class="slider-marks">
+              <span>2</span>
+              <span>3</span>
+              <span>4</span>
+              <span>5</span>
+              <span>6</span>
+            </div>
           </div>
-          <div class="row">
-            <button id="btnDisplay" class="btn primary">
-              <span class="btn-icon">👁️</span>
-              <span class="btn-text">Display</span>
-            </button>
-            <button id="btnReset" class="btn">Reset</button>
-          </div>
         </div>
+      </section>
 
-        <div class="setting">
-          <label>Lines per display <span id="linesValue">2</span></label>
-          <input type="range" id="linesPerPage" min="1" max="6" value="2">
-        </div>
+      <!-- Hymn Preview -->
+      <section class="section">
+        <h4 class="preview-title">Hymn Previews</h4>
+        <div id="preview" class="preview"></div>
+      </section>
 
-        <div class="preview" id="preview"></div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <div class="panel-title">Styles</div>
-        </div>
-        <div class="form">
-          <label>Font family
-            <select id="fontFamily">
+      <!-- Styles Section -->
+      <section class="section">
+        <h3>Styles</h3>
+        <div class="styles-form">
+          <label class="form-label">
+            Font Family
+            <select id="fontFamily" class="form-select">
               <option value="Inter, sans-serif">Inter</option>
               <option value="'Segoe UI', sans-serif">Segoe UI</option>
               <option value="'Roboto', sans-serif">Roboto</option>
@@ -79,48 +108,64 @@
               <option value="'Montserrat', sans-serif">Montserrat</option>
             </select>
           </label>
-          <label>Font size <span id="fontSizeValue">48px</span>
-            <input type="range" id="fontSize" min="24" max="96" value="48">
+          
+          <label class="form-label">
+            Font size <span id="fontSizeValue">48px</span>
+            <input type="range" id="fontSize" min="24" max="96" value="48" class="form-slider">
           </label>
-          <div class="row toggles">
-            <label><input type="checkbox" id="bold"> Bold</label>
-            <label><input type="checkbox" id="italic"> Italic</label>
-            <label><input type="checkbox" id="shadow"> Shadow</label>
-            <label><input type="checkbox" id="glow"> Glow</label>
+          
+          <div class="style-options">
+            <label class="checkbox-label"><input type="checkbox" id="bold"> Bold</label>
+            <label class="checkbox-label"><input type="checkbox" id="italic"> Italic</label>
+            <label class="checkbox-label"><input type="checkbox" id="shadow"> Shadow</label>
+            <label class="checkbox-label"><input type="checkbox" id="glow"> Glow</label>
           </div>
-          <label>Text color
-            <input type="color" id="textColor" value="#ffffff">
+          
+          <label class="form-label">
+            Text Color
+            <input type="color" id="textColor" value="#ffffff" class="form-color">
           </label>
-          <label>Background type
-            <select id="bgType">
+          
+          <label class="form-label">
+            Background type
+            <select id="bgType" class="form-select">
               <option value="transparent">Transparent</option>
               <option value="solid">Solid</option>
               <option value="gradient">Gradient</option>
             </select>
           </label>
-          <label>Background color A
-            <input type="color" id="bgColorA" value="#000000">
+          
+          <label class="form-label">
+            Background color A
+            <input type="color" id="bgColorA" value="#000000" class="form-color">
           </label>
-          <label class="bg-gradient">Background color B (for gradient)
-            <input type="color" id="bgColorB" value="#2b2b2b">
+          
+          <label class="form-label bg-gradient">
+            Background color B (for gradient)
+            <input type="color" id="bgColorB" value="#2b2b2b" class="form-color">
           </label>
-          <label>Animation
-            <select id="animation">
+          
+          <label class="form-label">
+            Animation
+            <select id="animation" class="form-select">
               <option value="fade">Fade</option>
               <option value="slide">Slide</option>
               <option value="none">None</option>
             </select>
           </label>
-          <label>Position
-            <select id="position">
+          
+          <label class="form-label">
+            Position
+            <select id="position" class="form-select">
               <option value="bottom">Bottom Third</option>
               <option value="middle">Middle</option>
               <option value="top">Top</option>
             </select>
           </label>
         </div>
-      </div>
-    </section>
+      </section>
+
+    </div>
   </div>
 
   <script src="../data/hymns-data.js"></script>

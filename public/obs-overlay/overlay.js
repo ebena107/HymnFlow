@@ -35,13 +35,14 @@
   }
 
   function show(data) {
-    const { id, title, verseNumber, totalVerses, lines, settings } = data;
+    const { title, verseNumber, totalVerses, lines, settings } = data;
+    const hymnNumber = data.metadata?.number ? `${data.metadata.number} • ` : '';
     
     console.log('[Overlay] Show command received:', { title, verseNumber, lines });
     
     applyStyles(settings);
 
-    titleBarEl.textContent = `${id} • ${title} • Verse ${verseNumber}/${totalVerses}`;
+    titleBarEl.textContent = `${hymnNumber}${title} • Verse ${verseNumber}/${totalVerses}`;
     
     // Ensure lines is an array and join properly
     const displayText = Array.isArray(lines) ? lines.join('\n') : String(lines);
