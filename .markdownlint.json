@@ -1,9 +1,15 @@
 {
   "default": true,
   "MD013": false,
+  "MD022": false,
+  "MD026": false,
+  "MD031": false,
+  "MD032": false,
   "MD033": false,
+  "MD034": false,
   "MD036": false,
   "MD040": {
-    "allowed_languages": ["text", "bash", "json", "javascript", "css", "html"]
-  }
+    "allowed_languages": ["text", "bash", "json", "javascript", "css", "html", ""]
+  },
+  "MD060": false
 }
