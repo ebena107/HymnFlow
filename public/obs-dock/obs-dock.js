@@ -67,6 +67,9 @@
 
   function saveSettings() {
     localStorage.setItem(storageKeys.prefs, JSON.stringify(settings));
+    if (isDisplaying && currentHymn) {
+      sendCommand('show'); // Update overlay with new settings
+    }
   }
 
   function renderList() {

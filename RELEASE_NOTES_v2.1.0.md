@@ -134,10 +134,11 @@ Pre-organize hymns for services, programs, and events. Perfect for:
 - Improved Styles section layout
 - Better form validation
 - Enhanced modal UI for editing
+- Slim single-line color indicators in style controls (more compact UI)
 
 ### Fixed
 
-- None reported
+- Style setting changes (including outline color/width) now update the live overlay instantly when a hymn is displayed
 
 ---
 
