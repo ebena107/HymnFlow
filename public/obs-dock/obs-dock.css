@@ -723,6 +723,12 @@ body {
 
 .service-item-info {
   flex: 1;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.service-item-info:hover {
+  opacity: 0.8;
 }
 
 .service-item-name {

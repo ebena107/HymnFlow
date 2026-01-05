@@ -400,15 +400,15 @@
       return;
     }
     listEl.innerHTML = services.map(service => `
-      <div class="service-item${currentService && currentService.id === service.id ? ' active' : ''}">
-        <div class="service-item-info">
+      <div class="service-item${currentService && currentService.id === service.id ? ' active' : ''}" data-service-id="${service.id}">
+        <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
           <div class="service-item-name">${service.name}</div>
           <div class="service-item-count">${service.hymns.length} hymn(s)</div>
         </div>
         <div class="service-item-actions">
-          <button class="btn btn-secondary" onclick="window.hymnflowSelectService('${service.id}')">Load</button>
-          <button class="btn btn-secondary" onclick="window.hymnflowEditService('${service.id}')">Edit</button>
-          <button class="btn btn-remove" onclick="window.hymnflowDeleteService('${service.id}')">Del</button>
+          <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">Load</button>
+          <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">Edit</button>
+          <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">Del</button>
         </div>
       </div>
     `).join('');
@@ -635,6 +635,11 @@
 
     // Keyboard shortcuts
     window.addEventListener('keydown', (e) => {
+      // Don't intercept keys when typing in input/textarea
+      const target = e.target;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        return;
+      }
       if (e.key === 'ArrowRight') { e.preventDefault(); nextVerse(); }
       if (e.key === 'ArrowLeft') { e.preventDefault(); prevVerse(); }
       if (e.key === 'ArrowUp') { e.preventDefault(); prevLineWindow(); }
