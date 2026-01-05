@@ -399,19 +399,36 @@
       listEl.innerHTML = '<div class="service-item" style="justify-content: center; color: var(--text-muted);">No services created</div>';
       return;
     }
-    listEl.innerHTML = services.map(service => `
-      <div class="service-item${currentService && currentService.id === service.id ? ' active' : ''}" data-service-id="${service.id}">
-        <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
-          <div class="service-item-name">${service.name}</div>
-          <div class="service-item-count">${service.hymns.length} hymn(s)</div>
+    listEl.innerHTML = services.map(service => {
+      const isActive = currentService && currentService.id === service.id;
+      const hymnsHtml = isActive ? service.hymns.map((hymnId, index) => {
+        const hymn = hymns.find(h => h.id === hymnId);
+        if (!hymn) return '';
+        const number = hymn.metadata?.number ? `${hymn.metadata.number} - ` : '';
+        const isCurrentHymn = currentHymn && currentHymn.id === hymnId;
+        return `
+          <div class="service-hymn-list-item${isCurrentHymn ? ' active' : ''}" onclick="window.hymnflowSelectHymnFromService('${hymnId}')">
+            <span class="service-hymn-order">${index + 1}.</span>
+            <span class="service-hymn-title">${number}${hymn.title}</span>
+          </div>
+        `;
+      }).join('') : '';
+      
+      return `
+        <div class="service-item${isActive ? ' active' : ''}" data-service-id="${service.id}">
+          <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
+            <div class="service-item-name">${service.name}</div>
+            <div class="service-item-count">${service.hymns.length} hymn(s)</div>
+          </div>
+          <div class="service-item-actions">
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">Load</button>
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">Edit</button>
+            <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">Del</button>
+          </div>
+          ${isActive ? `<div class="service-hymns-list">${hymnsHtml}</div>` : ''}
         </div>
-        <div class="service-item-actions">
-          <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">Load</button>
-          <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">Edit</button>
-          <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">Del</button>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function openServiceEditor(serviceId = null) {
@@ -494,15 +511,17 @@
   function selectService(serviceId) {
     currentService = services.find(s => s.id === serviceId);
     if (currentService) {
-      // Load first hymn from service
-      const hymnId = currentService.hymns[0];
-      const hymn = hymns.find(h => h.id === hymnId);
-      if (hymn) {
-        selectHymn(hymn.id);
-        statusEl.textContent = `Loaded service: ${currentService.name}`;
-      }
+      statusEl.textContent = `Loaded service: ${currentService.name} (${currentService.hymns.length} hymns)`;
     }
     renderServicesList();
+  }
+
+  function selectHymnFromService(hymnId) {
+    const hymn = hymns.find(h => h.id === hymnId);
+    if (hymn) {
+      selectHymn(hymn.id);
+      renderServicesList(); // Re-render to show active hymn
+    }
   }
 
   function deleteService(serviceId) {
@@ -519,6 +538,7 @@
 
   // Global functions for onclick handlers
   window.hymnflowSelectService = selectService;
+  window.hymnflowSelectHymnFromService = selectHymnFromService;
   window.hymnflowEditService = openServiceEditor;
   window.hymnflowDeleteService = deleteService;
   window.hymnflowMoveServiceHymn = (index, direction) => {
