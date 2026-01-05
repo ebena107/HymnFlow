@@ -29,6 +29,7 @@
           <h3>Hymns</h3>
           <div class="action-group">
             <button id="btnAdd" class="btn btn-add">+ Add</button>
+            <button id="btnEdit" class="btn btn-secondary">✏️ Edit</button>
             <button id="btnRemove" class="btn btn-remove">- Remove</button>
           </div>
         </div>
@@ -38,6 +39,24 @@
           <button id="btnImport" class="btn btn-secondary">Import</button>
           <button id="btnExport" class="btn btn-secondary">Export</button>
           <input type="file" id="fileInput" accept=".txt,.json" hidden>
+        </div>
+      </section>
+
+      <!-- Services/Scheduling Section -->
+      <section class="section">
+        <div class="section-header">
+          <h3>Services</h3>
+          <button id="btnNewService" class="btn btn-add" style="margin: 0;">+ New</button>
+        </div>
+        <div id="servicesList" class="services-list"></div>
+        <div id="serviceEditor" class="service-editor" style="display: none;">
+          <input id="serviceName" type="text" class="search-input" placeholder="Service name (e.g., Sunday Morning)">
+          <div id="serviceHymns" class="service-hymns"></div>
+          <div style="display: flex; gap: 8px; margin-top: 10px;">
+            <button id="btnAddToService" class="btn btn-secondary">+ Add Hymn</button>
+            <button id="btnSaveService" class="btn btn-add">Save Service</button>
+            <button id="btnCancelService" class="btn btn-secondary">Cancel</button>
+          </div>
         </div>
       </section>
 
@@ -119,6 +138,19 @@
             <label class="checkbox-label"><input type="checkbox" id="italic"> Italic</label>
             <label class="checkbox-label"><input type="checkbox" id="shadow"> Shadow</label>
             <label class="checkbox-label"><input type="checkbox" id="glow"> Glow</label>
+            <label class="checkbox-label"><input type="checkbox" id="outline"> Outline</label>
+          </div>
+          
+          <div id="outlineControls" class="outline-controls" style="display: none;">
+            <label class="form-label">
+              Outline Color
+              <input type="color" id="outlineColor" value="#000000" class="form-color">
+            </label>
+            
+            <label class="form-label">
+              Outline Width <span id="outlineWidthValue">2px</span>
+              <input type="range" id="outlineWidth" min="1" max="5" value="2" class="form-slider">
+            </label>
           </div>
           
           <label class="form-label">
@@ -165,6 +197,42 @@
         </div>
       </section>
 
+    </div>
+  </div>
+
+  <!-- Edit Hymn Modal -->
+  <div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Edit Hymn</h3>
+        <button id="btnCloseModal" class="btn-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">
+          Hymn Number
+          <input type="number" id="editNumber" class="form-input" placeholder="e.g., 23">
+        </label>
+        <label class="form-label">
+          Title *
+          <input type="text" id="editTitle" class="form-input" placeholder="Hymn title" required>
+        </label>
+        <label class="form-label">
+          Author
+          <input type="text" id="editAuthor" class="form-input" placeholder="Author name">
+        </label>
+        <label class="form-label">
+          Verses * (separate verses with blank line)
+          <textarea id="editVerses" class="form-textarea" rows="10" placeholder="Verse 1 text&#10;&#10;Verse 2 text&#10;&#10;Verse 3 text" required></textarea>
+        </label>
+        <label class="form-label">
+          Chorus (optional)
+          <textarea id="editChorus" class="form-textarea" rows="3" placeholder="Chorus text"></textarea>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button id="btnCancelEdit" class="btn btn-secondary">Cancel</button>
+        <button id="btnSaveEdit" class="btn btn-add">Save Changes</button>
+      </div>
     </div>
   </div>
 

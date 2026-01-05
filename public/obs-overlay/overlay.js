@@ -19,6 +19,17 @@
     contentEl.style.textShadow = shadow;
     titleBarEl.style.textShadow = shadow;
 
+    // Apply text outline (stroke)
+    if (s.outline) {
+      contentEl.style.webkitTextStrokeWidth = s.outlineWidth + 'px';
+      contentEl.style.webkitTextStrokeColor = s.outlineColor;
+      titleBarEl.style.webkitTextStrokeWidth = s.outlineWidth + 'px';
+      titleBarEl.style.webkitTextStrokeColor = s.outlineColor;
+    } else {
+      contentEl.style.webkitTextStrokeWidth = '0';
+      titleBarEl.style.webkitTextStrokeWidth = '0';
+    }
+
     if (s.bgType === 'transparent') {
       titleBarEl.style.background = 'transparent';
       contentEl.style.background = 'transparent';
