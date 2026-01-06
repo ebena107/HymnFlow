@@ -44,6 +44,105 @@
     services: 'hymnflow-services'
   };
 
+  // ========================================
+  // ID Generation (collision-free)
+  // ========================================
+  let lastHymnTimestamp = 0;
+  let sameTimeHymnCounter = 0;
+  let lastServiceTimestamp = 0;
+  let sameTimeServiceCounter = 0;
+
+  function generateUniqueHymnId() {
+    const now = Date.now();
+    if (now === lastHymnTimestamp) {
+      sameTimeHymnCounter++;
+    } else {
+      lastHymnTimestamp = now;
+      sameTimeHymnCounter = 0;
+    }
+    const randomPart = Math.random().toString(36).substring(2, 10);
+    return `hymn_${now}_${sameTimeHymnCounter}_${randomPart}`;
+  }
+
+  function generateUniqueServiceId() {
+    const now = Date.now();
+    if (now === lastServiceTimestamp) {
+      sameTimeServiceCounter++;
+    } else {
+      lastServiceTimestamp = now;
+      sameTimeServiceCounter = 0;
+    }
+    const randomPart = Math.random().toString(36).substring(2, 10);
+    return `service_${now}_${sameTimeServiceCounter}_${randomPart}`;
+  }
+
+  // ========================================
+  // XSS Prevention - HTML Escaping
+  // ========================================
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return (text || '').replace(/[&<>"']/g, (char) => map[char]);
+  }
+
+  // ========================================
+  // Search Optimization with Debouncing
+  // ========================================
+  let searchIndex = [];
+  let searchTimeout = null;
+
+  function buildSearchIndex() {
+    searchIndex = hymns.map(h => ({
+      titleLower: h.title.toLowerCase(),
+      authorLower: (h.author || '').toLowerCase(),
+      number: h.metadata?.number || 0,
+      sourceAbbrLower: (h.metadata?.sourceAbbr || '').toLowerCase(),
+      sourceLower: (h.metadata?.source || '').toLowerCase()
+    }));
+  }
+
+  function performSearch(query, debounceMs = 150) {
+    return new Promise((resolve) => {
+      clearTimeout(searchTimeout);
+
+      searchTimeout = setTimeout(() => {
+        if (!query.trim()) {
+          resolve(hymns); // No filter
+          return;
+        }
+
+        const q = query.toLowerCase();
+        const results = hymns.filter((h, idx) => {
+          if (idx >= searchIndex.length) return false;
+
+          const idxEntry = searchIndex[idx];
+          
+          // Build combined reference for search (e.g., "ch 123")
+          const combinedRef = idxEntry.sourceAbbrLower && idxEntry.number 
+            ? `${idxEntry.sourceAbbrLower} ${idxEntry.number}` 
+            : '';
+
+          // Search in pre-computed lowercase fields
+          return (
+            idxEntry.titleLower.includes(q) ||
+            idxEntry.authorLower.includes(q) ||
+            (q.length > 1 && idxEntry.number.toString().includes(q)) ||
+            idxEntry.sourceAbbrLower.includes(q) ||
+            idxEntry.sourceLower.includes(q) ||
+            combinedRef.includes(q)
+          );
+        });
+
+        resolve(results);
+      }, debounceMs);
+    });
+  }
+
   function loadHymns() {
     const stored = localStorage.getItem(storageKeys.hymns);
     if (stored) {
@@ -57,6 +156,7 @@
 
   function saveHymns() {
     localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
+    buildSearchIndex(); // Rebuild index when hymns change
   }
 
   function loadSettings() {
@@ -78,11 +178,22 @@
       return;
     }
     listEl.innerHTML = filtered.map(h => {
-      const hymnNumber = h.metadata?.number ? `${h.metadata.number} - ` : '';
+      // Build hymn reference (sourceAbbr + number, or just number)
+      const sourceAbbr = h.metadata?.sourceAbbr || '';
+      const number = h.metadata?.number || '';
+      let hymnRef = '';
+      if (sourceAbbr && number) {
+        hymnRef = `${sourceAbbr} ${number} - `;
+      } else if (number) {
+        hymnRef = `${number} - `;
+      }
+      const safeTitle = escapeHtml(hymnRef + h.title);
+      const safeAuthor = escapeHtml(h.author || 'Unknown');
+      const isActive = currentHymn && currentHymn.id === h.id ? ' active' : '';
       return `
-      <div class="list-item${currentHymn && currentHymn.id === h.id ? ' active' : ''}" data-id="${h.id}">
-        <div class="title">${hymnNumber}${h.title}</div>
-        <div class="meta">${h.author || 'Unknown'} • ${h.verses.length} verse(s)</div>
+      <div class="list-item${isActive}" data-id="${h.id}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
+        <div class="title">${safeTitle}</div>
+        <div class="meta">${safeAuthor} • ${h.verses.length} verse(s)</div>
       </div>`;
     }).join('');
   }
@@ -270,6 +381,8 @@
       // Edit existing hymn
       modalTitle.textContent = 'Edit Hymn';
       document.getElementById('editNumber').value = hymn.metadata?.number || '';
+      document.getElementById('editSourceAbbr').value = hymn.metadata?.sourceAbbr || '';
+      document.getElementById('editSource').value = hymn.metadata?.source || '';
       document.getElementById('editTitle').value = hymn.title;
       document.getElementById('editAuthor').value = hymn.author || '';
       document.getElementById('editVerses').value = hymn.verses.join('\n\n');
@@ -279,6 +392,8 @@
       // Add new hymn
       modalTitle.textContent = 'Add New Hymn';
       document.getElementById('editNumber').value = '';
+      document.getElementById('editSourceAbbr').value = '';
+      document.getElementById('editSource').value = '';
       document.getElementById('editTitle').value = '';
       document.getElementById('editAuthor').value = '';
       document.getElementById('editVerses').value = '';
@@ -297,6 +412,8 @@
     const modal = document.getElementById('editModal');
     const hymnId = modal.dataset.hymnId;
     const number = document.getElementById('editNumber').value.trim();
+    const sourceAbbr = document.getElementById('editSourceAbbr').value.trim().toUpperCase();
+    const source = document.getElementById('editSource').value.trim();
     const title = document.getElementById('editTitle').value.trim();
     const author = document.getElementById('editAuthor').value.trim();
     const versesText = document.getElementById('editVerses').value.trim();
@@ -322,24 +439,59 @@
         hymn.author = author;
         hymn.verses = verses;
         hymn.chorus = chorus;
+        
+        // Update metadata
+        hymn.metadata = hymn.metadata || {};
+        
         if (number) {
-          hymn.metadata = hymn.metadata || {};
           hymn.metadata.number = parseInt(number, 10);
-        } else if (hymn.metadata) {
+        } else {
           delete hymn.metadata.number;
+        }
+        
+        if (sourceAbbr) {
+          hymn.metadata.sourceAbbr = sourceAbbr;
+        } else {
+          delete hymn.metadata.sourceAbbr;
+        }
+        
+        if (source) {
+          hymn.metadata.source = source;
+        } else {
+          delete hymn.metadata.source;
+        }
+
+        // Validate before saving
+        const { valid, errors } = HymnValidator.validateHymn(hymn);
+        if (!valid) {
+          alert('Hymn validation failed:\n' + errors.join('\n'));
+          return;
         }
       }
     } else {
       // Add new hymn
+      const metadata = {};
+      if (number) metadata.number = parseInt(number, 10);
+      if (sourceAbbr) metadata.sourceAbbr = sourceAbbr;
+      if (source) metadata.source = source;
+      
       const newHymn = {
-        id: `hymn_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+        id: generateUniqueHymnId(),
         title,
         author,
         verses,
         chorus,
-        metadata: number ? { number: parseInt(number, 10) } : {},
+        metadata,
         createdAt: new Date().toISOString()
       };
+
+      // Validate before saving
+      const { valid, errors } = HymnValidator.validateHymn(newHymn);
+      if (!valid) {
+        alert('Hymn validation failed:\n' + errors.join('\n'));
+        return;
+      }
+
       hymns.push(newHymn);
     }
 
@@ -408,19 +560,21 @@
         const hymn = hymns.find(h => h.id === hymnId);
         if (!hymn) return '';
         const number = hymn.metadata?.number ? `${hymn.metadata.number} - ` : '';
+        const safeTitle = escapeHtml(number + hymn.title);
         const isCurrentHymn = currentHymn && currentHymn.id === hymnId;
         return `
           <div class="service-hymn-list-item${isCurrentHymn ? ' active' : ''}" onclick="window.hymnflowSelectHymnFromService('${hymnId}')">
             <span class="service-hymn-order">${index + 1}.</span>
-            <span class="service-hymn-title">${number}${hymn.title}</span>
+            <span class="service-hymn-title">${safeTitle}</span>
           </div>
         `;
       }).join('') : '';
       
+      const safeServiceName = escapeHtml(service.name);
       return `
         <div class="service-item${isActive ? ' active' : ''}" data-service-id="${service.id}">
           <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
-            <div class="service-item-name">${service.name}</div>
+            <div class="service-item-name">${safeServiceName}</div>
             <div class="service-item-count">${service.hymns.length} hymn(s)</div>
           </div>
           <div class="service-item-actions">
@@ -443,7 +597,7 @@
       editingService = services.find(s => s.id === serviceId);
       nameInput.value = editingService.name;
     } else {
-      editingService = { id: `srv_${Date.now()}`, name: '', hymns: [] };
+      editingService = { id: generateUniqueServiceId(), name: '', hymns: [] };
       nameInput.value = '';
     }
     
@@ -466,11 +620,12 @@
       const hymn = hymns.find(h => h.id === hymnId);
       if (!hymn) return '';
       const number = hymn.metadata?.number ? `${hymn.metadata.number} - ` : '';
+      const safeTitle = escapeHtml(number + hymn.title);
       return `
         <div class="service-hymn-item">
           <div class="service-hymn-item-info">
             <div class="service-hymn-number">#${index + 1}</div>
-            <div class="service-hymn-title">${number}${hymn.title}</div>
+            <div class="service-hymn-title">${safeTitle}</div>
           </div>
           <div class="service-hymn-controls">
             <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceHymn(${index}, -1)">↑</button>
@@ -560,14 +715,9 @@
 
 
   function attachEvents() {
-    searchEl.addEventListener('input', () => {
-      const q = searchEl.value.toLowerCase();
-      filtered = hymns.filter(h => 
-        h.title.toLowerCase().includes(q) || 
-        (h.author || '').toLowerCase().includes(q) ||
-        (h.id || '').toLowerCase().includes(q) ||
-        (h.metadata?.number?.toString() || '').includes(q)
-      );
+    searchEl.addEventListener('input', async (e) => {
+      const results = await performSearch(e.target.value);
+      filtered = results;
       renderList();
     });
 
@@ -601,31 +751,88 @@
       if (sliderValue) sliderValue.textContent = settings.linesPerPage;
       saveSettings();
       updatePreview();
+      // Auto-update overlay if displaying
+      if (isDisplaying && currentHymn) sendCommand('show');
     };
 
-    document.getElementById('fontFamily').onchange = (e) => { settings.fontFamily = e.target.value; saveSettings(); };
-    document.getElementById('fontSize').oninput = (e) => { settings.fontSize = parseInt(e.target.value,10); fontSizeValueEl.textContent = settings.fontSize + 'px'; saveSettings(); };
-    document.getElementById('bold').onchange = (e) => { settings.bold = e.target.checked; saveSettings(); };
-    document.getElementById('italic').onchange = (e) => { settings.italic = e.target.checked; saveSettings(); };
-    document.getElementById('shadow').onchange = (e) => { settings.shadow = e.target.checked; saveSettings(); };
-    document.getElementById('glow').onchange = (e) => { settings.glow = e.target.checked; saveSettings(); };
-    document.getElementById('outline').onchange = (e) => { 
-      settings.outline = e.target.checked; 
+    document.getElementById('fontFamily').onchange = (e) => {
+      settings.fontFamily = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('fontSize').oninput = (e) => {
+      settings.fontSize = parseInt(e.target.value, 10);
+      fontSizeValueEl.textContent = settings.fontSize + 'px';
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('bold').onchange = (e) => {
+      settings.bold = e.target.checked;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('italic').onchange = (e) => {
+      settings.italic = e.target.checked;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('shadow').onchange = (e) => {
+      settings.shadow = e.target.checked;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('glow').onchange = (e) => {
+      settings.glow = e.target.checked;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('outline').onchange = (e) => {
+      settings.outline = e.target.checked;
       document.getElementById('outlineControls').style.display = e.target.checked ? 'block' : 'none';
-      saveSettings(); 
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
     };
-    document.getElementById('outlineColor').oninput = (e) => { settings.outlineColor = e.target.value; saveSettings(); };
-    document.getElementById('outlineWidth').oninput = (e) => { 
-      settings.outlineWidth = parseInt(e.target.value, 10); 
+    document.getElementById('outlineColor').oninput = (e) => {
+      settings.outlineColor = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('outlineWidth').oninput = (e) => {
+      settings.outlineWidth = parseInt(e.target.value, 10);
       document.getElementById('outlineWidthValue').textContent = settings.outlineWidth + 'px';
-      saveSettings(); 
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
     };
-    document.getElementById('textColor').oninput = (e) => { settings.textColor = e.target.value; saveSettings(); };
-    document.getElementById('bgType').onchange = (e) => { settings.bgType = e.target.value; saveSettings(); };
-    document.getElementById('bgColorA').oninput = (e) => { settings.bgColorA = e.target.value; saveSettings(); };
-    document.getElementById('bgColorB').oninput = (e) => { settings.bgColorB = e.target.value; saveSettings(); };
-    document.getElementById('animation').onchange = (e) => { settings.animation = e.target.value; saveSettings(); };
-    document.getElementById('position').onchange = (e) => { settings.position = e.target.value; saveSettings(); };
+    document.getElementById('textColor').oninput = (e) => {
+      settings.textColor = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('bgType').onchange = (e) => {
+      settings.bgType = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('bgColorA').oninput = (e) => {
+      settings.bgColorA = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('bgColorB').oninput = (e) => {
+      settings.bgColorB = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('animation').onchange = (e) => {
+      settings.animation = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
+    document.getElementById('position').onchange = (e) => {
+      settings.position = e.target.value;
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
 
     document.getElementById('btnImport').onclick = () => document.getElementById('fileInput').click();
     document.getElementById('fileInput').onchange = handleImport;
@@ -680,17 +887,38 @@
       if (ext === 'txt') parsed = await parseTxt(file);
       else if (ext === 'json') parsed = await parseJson(file);
       else throw new Error('Use .txt or .json');
-      parsed.forEach(h => {
-        h.id = `hymn_${Date.now()}_${Math.random().toString(36).slice(2,8)}`;
-        h.createdAt = new Date().toISOString();
+
+      // Validate all imported hymns
+      const { valid, invalid } = HymnValidator.batchValidate(parsed);
+
+      if (invalid.length > 0) {
+        const errorSummary = invalid.map(i => `Row ${i.index + 1}: ${i.errors[0]}`).join('; ');
+        console.warn('Import validation issues:', errorSummary);
+      }
+
+      if (valid.length === 0) {
+        throw new Error(`No valid hymns found. ${invalid.length} entries had errors: ${invalid[0]?.errors[0] || 'Unknown error'}`);
+      }
+
+      // Generate unique IDs for validated hymns
+      valid.forEach((h, idx) => {
+        h.id = generateUniqueHymnId();
+        if (!h.createdAt) {
+          h.createdAt = new Date().toISOString();
+        }
       });
-      hymns = [...hymns, ...parsed];
+
+      hymns = [...hymns, ...valid];
       saveHymns();
       filtered = hymns;
       renderList();
-      statusEl.textContent = `Imported ${parsed.length} hymns`;
+      
+      const message = `Imported ${valid.length} hymn${valid.length !== 1 ? 's' : ''}${invalid.length > 0 ? ` (${invalid.length} skipped due to errors)` : ''}`;
+      statusEl.textContent = message;
+      console.log('[Import]', message);
     } catch (err) {
       statusEl.textContent = 'Import failed: ' + err.message;
+      console.error('[Import Error]', err);
     } finally {
       e.target.value = '';
     }
@@ -736,6 +964,7 @@
   loadHymns();
   loadSettings();
   loadServices();
+  buildSearchIndex();
   renderList();
   renderServicesList();
   attachEvents();

@@ -4,6 +4,9 @@
  * Expected format:
  * Title: [Hymn Title]
  * Author: [Author Name] (optional)
+ * Number: [Hymn Number] (optional)
+ * Source Abbr: [Source Abbreviation] (optional, e.g., CH, PD)
+ * Source: [Source Name] (optional, e.g., Church Hymnal)
  * 
  * Verse 1 text here
  * Can be multiple lines
@@ -46,6 +49,30 @@ async function parseTxt(file) {
     else if (line.startsWith('Author:')) {
       if (currentHymn) {
         currentHymn.author = line.substring(7).trim();
+      }
+    }
+    // Hymn Number
+    else if (line.startsWith('Number:')) {
+      if (currentHymn) {
+        const num = parseInt(line.substring(7).trim(), 10);
+        if (!isNaN(num)) {
+          currentHymn.metadata.number = num;
+        }
+      }
+    }
+    // Source Abbreviation
+    else if (line.startsWith('Source Abbr:') || line.startsWith('SourceAbbr:')) {
+      if (currentHymn) {
+        const abbr = line.substring(line.indexOf(':') + 1).trim().toUpperCase();
+        if (abbr) {
+          currentHymn.metadata.sourceAbbr = abbr;
+        }
+      }
+    }
+    // Source Name
+    else if (line.startsWith('Source:')) {
+      if (currentHymn) {
+        currentHymn.metadata.source = line.substring(7).trim();
       }
     }
     // Chorus
