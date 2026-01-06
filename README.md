@@ -173,11 +173,11 @@ Issues and pull requests welcome! This is a simple, vanilla JavaScript project w
 
 ## 📄 License
 
-MIT License - feel free to use and modify for your worship services!
+GPL-2.0 License - Same as OBS Studio. Free to use and modify for your worship services!
 
 ## 🙏 Acknowledgments
 
-Built with love for worship teams everywhere. May your services be blessed! ✨
+Built with love for worship teams everywhere. By the **Gloryland Baptist Church, Owode-Ede ```@gbcowode```, Media Team**. May your services be blessed! ✨
 
 ---
 

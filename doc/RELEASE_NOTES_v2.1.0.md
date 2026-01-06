@@ -283,7 +283,7 @@ Pre-organize hymns for services, programs, and events. Perfect for:
 
 ## 📄 License
 
-HymnFlow v2.1.0 is released under the [MIT License](LICENSE).  
+HymnFlow v2.1.0 is released under the [GPL-2.0 License](LICENSE) - Same as OBS Studio.  
 Free to use in churches, ministries, and commercial settings.
 
 ---
