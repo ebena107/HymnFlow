@@ -15,8 +15,8 @@
         <div class="subtitle">Lower-third controller for OBS HYMN</div>
       </div>
       <div class="status-indicator">
-        <div class="status-badge">localStorage</div>
-        <div class="status-live" id="status">LIVE</div>
+        <div class="status-badge" aria-label="Storage type">localStorage</div>
+        <div role="status" aria-live="polite" aria-atomic="true" id="status" class="status-live">LIVE</div>
       </div>
     </header>
 
@@ -28,17 +28,18 @@
         <div class="section-header">
           <h3>Hymns</h3>
           <div class="action-group">
-            <button id="btnAdd" class="btn btn-add">+ Add</button>
-            <button id="btnEdit" class="btn btn-secondary">✏️ Edit</button>
-            <button id="btnRemove" class="btn btn-remove">- Remove</button>
+            <button id="btnAdd" class="btn btn-add" aria-label="Add new hymn" title="Add new hymn">+ Add</button>
+            <button id="btnEdit" class="btn btn-secondary" aria-label="Edit selected hymn" title="Edit selected hymn">✏️ Edit</button>
+            <button id="btnRemove" class="btn btn-remove" aria-label="Remove selected hymn" title="Remove selected hymn">- Remove</button>
           </div>
         </div>
-        <input id="search" type="text" class="search-input" placeholder="Search hymns">
-        <div id="hymnList" class="hymn-list"></div>
+        <label for="search" class="sr-only">Search hymns by title, author, or number</label>
+        <input id="search" type="text" class="search-input" placeholder="Search hymns" aria-label="Search hymns by title, author, or number">
+        <div id="hymnList" class="hymn-list" role="listbox" aria-label="Hymns library"></div>
         <div class="import-export-actions">
-          <button id="btnImport" class="btn btn-secondary">Import</button>
-          <button id="btnExport" class="btn btn-secondary">Export</button>
-          <input type="file" id="fileInput" accept=".txt,.json" hidden>
+          <button id="btnImport" class="btn btn-secondary" aria-label="Import hymns from file" title="Import hymns from TXT or JSON file">Import</button>
+          <button id="btnExport" class="btn btn-secondary" aria-label="Export hymns to JSON file" title="Export all hymns to JSON file">Export</button>
+          <input type="file" id="fileInput" accept=".txt,.json" hidden aria-label="Select hymn file to import">
         </div>
       </section>
 
@@ -46,9 +47,9 @@
       <section class="section">
         <div class="section-header">
           <h3>Services</h3>
-          <button id="btnNewService" class="btn btn-add" style="margin: 0;">+ New</button>
+          <button id="btnNewService" class="btn btn-add" style="margin: 0;" aria-label="Create new service" title="Create new service">+ New</button>
         </div>
-        <div id="servicesList" class="services-list"></div>
+        <div id="servicesList" class="services-list" role="list" aria-label="Saved services"></div>
         <div id="serviceEditor" class="service-editor" style="display: none;">
           <input id="serviceName" type="text" class="search-input" placeholder="Service name (e.g., Sunday Morning)">
           <div id="serviceHymns" class="service-hymns"></div>
@@ -68,12 +69,12 @@
         </div>
         
         <div class="navigation-controls">
-          <button id="btnPrevVerse" class="btn btn-nav">⟵ Previous</button>
-          <button id="btnNextVerse" class="btn btn-nav">Next ⟶</button>
-          <button id="btnPrevLine" class="btn btn-nav">⬆ Previous Line</button>
-          <button id="btnNextLine" class="btn btn-nav">⬇ Next Line</button>
-          <button id="btnJumpChorus" class="btn btn-nav btn-chorus">Jump to Chorus</button>
-          <button id="btnClear" class="btn btn-emergency">Emergency Clear</button>
+          <button id="btnPrevVerse" class="btn btn-nav" aria-label="Go to previous verse" title="Previous verse (Left arrow)">⟵ Previous</button>
+          <button id="btnNextVerse" class="btn btn-nav" aria-label="Go to next verse" title="Next verse (Right arrow)">Next ⟶</button>
+          <button id="btnPrevLine" class="btn btn-nav" aria-label="Show previous lines" title="Previous line window (Up arrow)">⬆ Previous Line</button>
+          <button id="btnNextLine" class="btn btn-nav" aria-label="Show next lines" title="Next line window (Down arrow)">⬇ Next Line</button>
+          <button id="btnJumpChorus" class="btn btn-nav btn-chorus" aria-label="Jump to chorus" title="Display chorus if available">Jump to Chorus</button>
+          <button id="btnClear" class="btn btn-emergency" aria-label="Emergency clear overlay" title="Immediately hide overlay from stream">Emergency Clear</button>
         </div>
       </section>
 
@@ -81,21 +82,21 @@
       <section class="section">
         <div class="display-controls">
           <div class="display-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="displayToggle">
+            <label class="toggle-switch" for="displayToggle">
+              <input type="checkbox" id="displayToggle" aria-label="Toggle overlay display">
               <span class="toggle-slider"></span>
             </label>
             <span class="toggle-label">Display</span>
-            <span class="live-indicator" id="liveIndicator">LIVE</span>
+            <span class="live-indicator" id="liveIndicator" role="status" aria-live="polite">LIVE</span>
           </div>
-          <button id="btnReset" class="btn btn-secondary">Reset</button>
+          <button id="btnReset" class="btn btn-secondary" aria-label="Reset to verse 1" title="Reset to first verse, first line">Reset</button>
         </div>
         
         <div class="lines-control">
-          <label class="control-label">Lines per display</label>
+          <label class="control-label" for="linesPerPage">Lines per display</label>
           <div class="slider-container">
-            <span class="slider-value">2</span>
-            <input type="range" id="linesPerPage" min="2" max="6" value="2" class="slider">
+            <span class="slider-value" aria-hidden="true">2</span>
+            <input type="range" id="linesPerPage" min="2" max="6" value="2" class="slider" aria-label="Lines per display" aria-valuemin="2" aria-valuemax="6" aria-valuenow="2">
             <div class="slider-marks">
               <span>2</span>
               <span>3</span>
@@ -210,7 +211,15 @@
       <div class="modal-body">
         <label class="form-label">
           Hymn Number
-          <input type="number" id="editNumber" class="form-input" placeholder="e.g., 23">
+          <input type="number" id="editNumber" class="form-input" placeholder="e.g., 123">
+        </label>
+        <label class="form-label">
+          Source Abbreviation
+          <input type="text" id="editSourceAbbr" class="form-input" placeholder="e.g., CH, PD, HB" maxlength="5">
+        </label>
+        <label class="form-label">
+          Source Name
+          <input type="text" id="editSource" class="form-input" placeholder="e.g., Church Hymnal, Public Domain">
         </label>
         <label class="form-label">
           Title *
@@ -237,6 +246,7 @@
   </div>
 
   <script src="../data/hymns-data.js"></script>
+  <script src="../validation.js"></script>
   <script src="../parsers/txtParser.js"></script>
   <script src="../parsers/jsonParser.js"></script>
   <script src="obs-dock.js"></script>

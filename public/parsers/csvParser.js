@@ -1,11 +1,11 @@
 /**
  * Client-side CSV parser
  * Parse CSV file format from File object
- * Expected columns: Title, Author, Verse Number, Verse Text, Chorus
+ * Expected columns: Title, Author, Verse Number, Verse Text, Chorus, Source Abbr, Source, Hymn Number
  * Example:
- * Title,Author,Verse Number,Verse Text,Chorus
- * "Amazing Grace","John Newton",1,"Amazing grace! How sweet the sound...","Optional chorus"
- * "Amazing Grace","John Newton",2,"'Twas grace that taught my heart to fear...",""
+ * Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
+ * "Amazing Grace","John Newton",1,"Amazing grace! How sweet the sound...","Optional chorus","CH","Church Hymnal",123
+ * "Amazing Grace","John Newton",2,"'Twas grace that taught my heart to fear...","","CH","Church Hymnal",123
  */
 async function parseCsv(file) {
   const content = await file.text();
@@ -58,7 +58,11 @@ async function parseCsv(file) {
         author: row.author || '',
         verses: [],
         chorus: row.chorus || '',
-        metadata: {}
+        metadata: {
+          number: row['hymn number'] || row.number ? parseInt(row['hymn number'] || row.number, 10) : undefined,
+          sourceAbbr: (row['source abbr'] || row['source abbreviation'] || '').toUpperCase() || undefined,
+          source: row.source || undefined
+        }
       });
     }
     
@@ -68,6 +72,17 @@ async function parseCsv(file) {
     }
     if (row.chorus && !hymn.chorus) {
       hymn.chorus = row.chorus;
+    }
+    
+    // Update metadata if values found in later rows
+    if (row['hymn number'] || row.number) {
+      hymn.metadata.number = parseInt(row['hymn number'] || row.number, 10);
+    }
+    if (row['source abbr'] || row['source abbreviation']) {
+      hymn.metadata.sourceAbbr = (row['source abbr'] || row['source abbreviation']).toUpperCase();
+    }
+    if (row.source) {
+      hymn.metadata.source = row.source;
     }
   }
   
