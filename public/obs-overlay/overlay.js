@@ -19,12 +19,32 @@
     contentEl.style.textShadow = shadow;
     titleBarEl.style.textShadow = shadow;
 
-    // Apply text outline (stroke)
-    if (s.outline) {
-      contentEl.style.webkitTextStrokeWidth = s.outlineWidth + 'px';
+    // Apply text outline (stroke) with fallback
+    if (s.outline && s.outlineWidth > 0) {
+      const strokeWidth = Math.max(1, Math.min(s.outlineWidth, 15)); // Clamp between 1-15px
+      contentEl.style.webkitTextStrokeWidth = strokeWidth + 'px';
       contentEl.style.webkitTextStrokeColor = s.outlineColor;
-      titleBarEl.style.webkitTextStrokeWidth = s.outlineWidth + 'px';
+      titleBarEl.style.webkitTextStrokeWidth = strokeWidth + 'px';
       titleBarEl.style.webkitTextStrokeColor = s.outlineColor;
+      
+      // Fallback: CSS text-shadow outline for browsers without webkit support
+      const offsetPx = strokeWidth;
+      const shadowArray = [
+        `-${offsetPx}px -${offsetPx}px 0 ${s.outlineColor}`,
+        `${offsetPx}px -${offsetPx}px 0 ${s.outlineColor}`,
+        `-${offsetPx}px ${offsetPx}px 0 ${s.outlineColor}`,
+        `${offsetPx}px ${offsetPx}px 0 ${s.outlineColor}`,
+        `0px -${offsetPx}px 0 ${s.outlineColor}`,
+        `0px ${offsetPx}px 0 ${s.outlineColor}`,
+        `-${offsetPx}px 0px 0 ${s.outlineColor}`,
+        `${offsetPx}px 0px 0 ${s.outlineColor}`
+      ];
+      const fallbackShadow = shadowArray.join(', ');
+      
+      // Preserve existing text shadow if any
+      const existingShadow = contentEl.style.textShadow;
+      contentEl.style.textShadow = fallbackShadow + (existingShadow ? ', ' + existingShadow : '');
+      titleBarEl.style.textShadow = fallbackShadow + (titleBarEl.style.textShadow ? ', ' + titleBarEl.style.textShadow : '');
     } else {
       contentEl.style.webkitTextStrokeWidth = '0';
       titleBarEl.style.webkitTextStrokeWidth = '0';
@@ -49,17 +69,17 @@
     const { title, verseNumber, totalVerses, lines, settings } = data;
     const hymnNumber = data.metadata?.number ? `${data.metadata.number} • ` : '';
     
-    console.log('[Overlay] Show command received:', { title, verseNumber, lines });
-    
     applyStyles(settings);
 
-    titleBarEl.textContent = `${hymnNumber}${title} • Verse ${verseNumber}/${totalVerses}`;
+    if (data.isChorus) {
+      titleBarEl.textContent = `${hymnNumber}${title} • Chorus`;
+    } else {
+      titleBarEl.textContent = `${hymnNumber}${title} • Verse ${verseNumber}/${totalVerses}`;
+    }
     
     // Ensure lines is an array and join properly
     const displayText = Array.isArray(lines) ? lines.join('\n') : String(lines);
     contentEl.textContent = displayText;
-    
-    console.log('[Overlay] Content set to:', contentEl.textContent);
 
     overlayEl.classList.remove('hidden', 'fade-out', 'slide-out');
     overlayEl.classList.add('visible');
@@ -91,14 +111,13 @@
     if (e.key !== STORAGE_KEY || !e.newValue) return;
     try {
       const cmd = JSON.parse(e.newValue);
-      console.log('[Overlay] Storage event received:', cmd.type, cmd);
       if (cmd.type === 'show') {
         show(cmd);
       } else if (cmd.type === 'hide') {
         hide(cmd.settings);
       }
     } catch (err) {
-      console.error('Overlay error:', err);
+      console.error('[Overlay Storage Error]', err);
     }
   });
 
