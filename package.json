@@ -1,12 +1,20 @@
 {
   "name": "hymnflow",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "HymnFlow - OBS Studio plugin for displaying hymns - browser-based dock and overlay",
   "scripts": {
     "serve": "python -m http.server 8000 --directory public",
     "setup": "start public/obs-setup.html"
   },
-  "keywords": ["obs", "hymn", "worship", "display", "plugin", "obs-dock", "browser-source"],
+  "keywords": [
+    "obs",
+    "hymn",
+    "worship",
+    "display",
+    "plugin",
+    "obs-dock",
+    "browser-source"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {},
