@@ -14,6 +14,7 @@
   let currentVerse = 0;
   let currentLineOffset = 0;
   let isDisplaying = false;
+  let isShowingChorus = false;
   let services = [];
   let currentService = null;
   let editingService = null;
@@ -121,10 +122,10 @@
           if (idx >= searchIndex.length) return false;
 
           const idxEntry = searchIndex[idx];
-          
+
           // Build combined reference for search (e.g., "ch 123")
-          const combinedRef = idxEntry.sourceAbbrLower && idxEntry.number 
-            ? `${idxEntry.sourceAbbrLower} ${idxEntry.number}` 
+          const combinedRef = idxEntry.sourceAbbrLower && idxEntry.number
+            ? `${idxEntry.sourceAbbrLower} ${idxEntry.number}`
             : '';
 
           // Search in pre-computed lowercase fields
@@ -146,7 +147,13 @@
   function loadHymns() {
     const stored = localStorage.getItem(storageKeys.hymns);
     if (stored) {
-      hymns = JSON.parse(stored);
+      try {
+        hymns = JSON.parse(stored);
+      } catch (err) {
+        console.error('[Hymns Load Error] Corrupted data, reverting to defaults:', err);
+        hymns = DEFAULT_HYMNS || [];
+        localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
+      }
     } else {
       hymns = DEFAULT_HYMNS || [];
       localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
@@ -155,21 +162,43 @@
   }
 
   function saveHymns() {
-    localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
-    buildSearchIndex(); // Rebuild index when hymns change
+    try {
+      localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
+      buildSearchIndex(); // Rebuild index when hymns change
+    } catch (err) {
+      console.error('[Hymns Save Error]', err);
+      statusEl.textContent = 'Error saving hymns: ' + err.message;
+    }
   }
 
   function loadSettings() {
     const stored = localStorage.getItem(storageKeys.prefs);
-    if (stored) Object.assign(settings, JSON.parse(stored));
+    if (stored) {
+      try {
+        Object.assign(settings, JSON.parse(stored));
+      } catch (err) {
+        console.error('[Settings Load Error] Corrupted settings, using defaults:', err);
+        // Settings object keeps defaults, no action needed
+      }
+    }
     applySettingsUI();
   }
 
+  // Debounced settings save - prevents thrashing localStorage
+  let settingsSaveTimeout = null;
   function saveSettings() {
-    localStorage.setItem(storageKeys.prefs, JSON.stringify(settings));
-    if (isDisplaying && currentHymn) {
-      sendCommand('show'); // Update overlay with new settings
-    }
+    clearTimeout(settingsSaveTimeout);
+    settingsSaveTimeout = setTimeout(() => {
+      try {
+        localStorage.setItem(storageKeys.prefs, JSON.stringify(settings));
+        if (isDisplaying && currentHymn) {
+          sendCommand('show'); // Update overlay with new settings
+        }
+      } catch (err) {
+        console.error('[Settings Save Error]', err);
+        statusEl.textContent = 'Error saving settings: ' + err.message;
+      }
+    }, 300); // Debounce: wait 300ms after last change before saving
   }
 
   function renderList() {
@@ -202,6 +231,7 @@
     currentHymn = hymns.find(h => h.id === id);
     currentVerse = 0;
     currentLineOffset = 0;
+    isShowingChorus = false;
     updatePreview();
     renderList();
     sendCommand('show'); // Auto-display when hymn is selected
@@ -215,48 +245,65 @@
       return;
     }
     currentTitleEl.textContent = currentHymn.title;
-    const verseText = currentHymn.verses[currentVerse] || '';
-    const lines = verseText.split('\n');
+    currentTitleEl.textContent = currentHymn.title;
+
+    let lines = [];
+    let label = '';
+
+    if (isShowingChorus && currentHymn.chorus) {
+      lines = currentHymn.chorus.split('\n');
+      label = `Chorus · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
+    } else {
+      const verseText = currentHymn.verses[currentVerse] || '';
+      lines = verseText.split('\n');
+      label = `Verse ${currentVerse + 1}/${currentHymn.verses.length} · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
+    }
+
     const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
     previewEl.textContent = windowed.join('\n');
-    verseInfoEl.textContent = `Verse ${currentVerse + 1}/${currentHymn.verses.length} · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
+    verseInfoEl.textContent = label;
   }
 
   function sendCommand(type) {
-    if (type === 'hide') {
-      localStorage.setItem(storageKeys.cmd, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
-      isDisplaying = false;
+    try {
+      if (type === 'hide') {
+        localStorage.setItem(storageKeys.cmd, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
+        isDisplaying = false;
+        updateDisplayButton();
+        return;
+      }
+      if (!currentHymn) return;
+
+      let lines = [];
+      if (isShowingChorus && currentHymn.chorus) {
+        lines = currentHymn.chorus.split('\n');
+      } else {
+        const verseText = currentHymn.verses[currentVerse] || '';
+        lines = verseText.split('\n');
+      }
+
+      const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
+
+      const payload = {
+        type: 'show',
+        hymnId: currentHymn.id,
+        title: currentHymn.title,
+        author: currentHymn.author,
+        metadata: currentHymn.metadata || {},
+        verseNumber: currentVerse + 1,
+        totalVerses: currentHymn.verses.length,
+        isChorus: isShowingChorus,
+        lines: windowed,
+        settings: { ...settings },
+        timestamp: Date.now()
+      };
+      localStorage.setItem(storageKeys.cmd, JSON.stringify(payload));
+      isDisplaying = true;
       updateDisplayButton();
-      return;
+    } catch (err) {
+      console.error('[Send Command Error]', err);
+      statusEl.textContent = 'Error sending to overlay: ' + err.message;
     }
-    if (!currentHymn) return;
-    const verseText = currentHymn.verses[currentVerse] || '';
-    const lines = verseText.split('\n');
-    const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
-    
-    console.log('[Dock] Sending command:', { 
-      title: currentHymn.title, 
-      verseNumber: currentVerse + 1,
-      lines: windowed,
-      linesPerPage: settings.linesPerPage,
-      currentLineOffset
-    });
-    
-    const payload = {
-      type: 'show',
-      hymnId: currentHymn.id,
-      title: currentHymn.title,
-      author: currentHymn.author,
-      metadata: currentHymn.metadata || {},
-      verseNumber: currentVerse + 1,
-      totalVerses: currentHymn.verses.length,
-      lines: windowed,
-      settings: { ...settings },
-      timestamp: Date.now()
-    };
-    localStorage.setItem(storageKeys.cmd, JSON.stringify(payload));
-    isDisplaying = true;
-    updateDisplayButton();
   }
 
   function toggleDisplay() {
@@ -284,8 +331,19 @@
 
   function nextVerse() {
     if (!currentHymn) return;
+
+    // Logic: Verse -> Chorus -> Next Verse
+    if (currentHymn.chorus && !isShowingChorus) {
+      isShowingChorus = true;
+      currentLineOffset = 0;
+      updatePreview();
+      sendCommand('show');
+      return;
+    }
+
     if (currentVerse < currentHymn.verses.length - 1) {
       currentVerse++;
+      isShowingChorus = false;
       currentLineOffset = 0;
       updatePreview();
       sendCommand('show'); // Auto-update overlay
@@ -294,27 +352,53 @@
 
   function prevVerse() {
     if (!currentHymn) return;
-    if (currentVerse > 0) {
-      currentVerse--;
-      currentLineOffset = 0;
-      updatePreview();
-      sendCommand('show'); // Auto-update overlay
+
+    if (currentHymn.chorus) {
+      // If showing chorus, go back to its verse
+      if (isShowingChorus) {
+        isShowingChorus = false;
+        currentLineOffset = 0;
+        updatePreview();
+        sendCommand('show');
+        return;
+      }
+      // If showing verse (and not verse 1), go back to previous chorus
+      if (currentVerse > 0) {
+        currentVerse--;
+        isShowingChorus = true;
+        currentLineOffset = 0;
+        updatePreview();
+        sendCommand('show');
+        return;
+      }
+    } else {
+      // Standard logic without chorus
+      if (currentVerse > 0) {
+        currentVerse--;
+        currentLineOffset = 0;
+        updatePreview();
+        sendCommand('show'); // Auto-update overlay
+      }
     }
   }
 
   function nextLineWindow() {
     if (!currentHymn) return;
-    const lines = currentHymn.verses[currentVerse].split('\n');
+
+    let lines = [];
+    if (isShowingChorus && currentHymn.chorus) {
+      lines = currentHymn.chorus.split('\n');
+    } else {
+      lines = currentHymn.verses[currentVerse].split('\n');
+    }
+
     if (currentLineOffset + settings.linesPerPage < lines.length) {
       currentLineOffset += settings.linesPerPage;
       updatePreview();
-      sendCommand('show'); // Auto-update overlay
-    } else if (currentVerse < currentHymn.verses.length - 1) {
-      // At end of verse, advance to next verse
-      currentVerse++;
-      currentLineOffset = 0;
-      updatePreview();
-      sendCommand('show'); // Auto-update overlay
+      sendCommand('show');
+    } else {
+      // Try to go to next verse/chorus
+      nextVerse();
     }
   }
 
@@ -323,25 +407,55 @@
     if (currentLineOffset - settings.linesPerPage >= 0) {
       currentLineOffset -= settings.linesPerPage;
       updatePreview();
-      sendCommand('show'); // Auto-update overlay
-    } else if (currentLineOffset === 0 && currentVerse > 0) {
-      // At beginning of verse, go to previous verse (last line window)
-      currentVerse--;
-      const prevLines = currentHymn.verses[currentVerse].split('\n');
-      // Position at last complete window of previous verse
-      currentLineOffset = Math.max(0, prevLines.length - settings.linesPerPage);
-      updatePreview();
-      sendCommand('show'); // Auto-update overlay
+      sendCommand('show');
     } else {
-      currentLineOffset = 0;
-      updatePreview();
-      sendCommand('show'); // Auto-update overlay
+      // At top of current block, try to go to previous block
+      // But we need to land on the last page of the previous block
+
+      // Save current state to revert if we can't move back
+      const oldVerse = currentVerse;
+      const oldChorus = isShowingChorus;
+
+      prevVerse();
+
+      // If state changed, calculate new offset
+      if (currentVerse !== oldVerse || isShowingChorus !== oldChorus) {
+        let prevLines = [];
+        if (isShowingChorus && currentHymn.chorus) {
+          prevLines = currentHymn.chorus.split('\n');
+        } else {
+          prevLines = currentHymn.verses[currentVerse].split('\n');
+        }
+
+        // Calculate last page offset
+        if (prevLines.length > 0) {
+          const remainder = prevLines.length % settings.linesPerPage;
+          if (remainder === 0) {
+            currentLineOffset = Math.max(0, prevLines.length - settings.linesPerPage);
+          } else {
+            currentLineOffset = Math.floor(prevLines.length / settings.linesPerPage) * settings.linesPerPage;
+            // Wait, if 5 lines, 2 per page: 0-1, 2-3, 4. 
+            // Length 5. Floor(5/2)*2 = 4. Correct.
+            // If 4 lines, 2 per page: 0-1, 2-3.
+            // Length 4. Floor(4/2)*2 = 4. Incorrect. Should be 2.
+            // If exact multiple, logic should be length - perPage.
+          }
+
+          // Simplified logic that covers both:
+          currentLineOffset = Math.floor((prevLines.length - 1) / settings.linesPerPage) * settings.linesPerPage;
+          if (currentLineOffset < 0) currentLineOffset = 0;
+        }
+
+        updatePreview();
+        sendCommand('show');
+      }
     }
   }
 
   function resetPosition() {
     currentLineOffset = 0;
     currentVerse = 0;
+    isShowingChorus = false;
     updatePreview();
   }
 
@@ -350,8 +464,10 @@
       alert('No chorus available for this hymn');
       return;
     }
-    // In the future, we can implement chorus display
-    alert('Chorus: ' + currentHymn.chorus);
+    isShowingChorus = true;
+    currentLineOffset = 0;
+    updatePreview();
+    sendCommand('show');
   }
 
   function emergencyClear() {
@@ -359,6 +475,7 @@
     currentHymn = null;
     currentVerse = 0;
     currentLineOffset = 0;
+    isShowingChorus = false;
     updatePreview();
     renderList();
   }
@@ -376,7 +493,7 @@
   function openEditModal(hymn) {
     const modal = document.getElementById('editModal');
     const modalTitle = document.getElementById('modalTitle');
-    
+
     if (hymn) {
       // Edit existing hymn
       modalTitle.textContent = 'Edit Hymn';
@@ -400,7 +517,7 @@
       document.getElementById('editChorus').value = '';
       modal.dataset.hymnId = '';
     }
-    
+
     modal.style.display = 'flex';
   }
 
@@ -439,22 +556,22 @@
         hymn.author = author;
         hymn.verses = verses;
         hymn.chorus = chorus;
-        
+
         // Update metadata
         hymn.metadata = hymn.metadata || {};
-        
+
         if (number) {
           hymn.metadata.number = parseInt(number, 10);
         } else {
           delete hymn.metadata.number;
         }
-        
+
         if (sourceAbbr) {
           hymn.metadata.sourceAbbr = sourceAbbr;
         } else {
           delete hymn.metadata.sourceAbbr;
         }
-        
+
         if (source) {
           hymn.metadata.source = source;
         } else {
@@ -462,7 +579,7 @@
         }
 
         // Validate before saving
-        const { valid, errors } = HymnValidator.validateHymn(hymn);
+        const { valid, errors } = window.HymnValidator.validateHymn(hymn);
         if (!valid) {
           alert('Hymn validation failed:\n' + errors.join('\n'));
           return;
@@ -474,7 +591,7 @@
       if (number) metadata.number = parseInt(number, 10);
       if (sourceAbbr) metadata.sourceAbbr = sourceAbbr;
       if (source) metadata.source = source;
-      
+
       const newHymn = {
         id: generateUniqueHymnId(),
         title,
@@ -486,7 +603,7 @@
       };
 
       // Validate before saving
-      const { valid, errors } = HymnValidator.validateHymn(newHymn);
+      const { valid, errors } = window.HymnValidator.validateHymn(newHymn);
       if (!valid) {
         alert('Hymn validation failed:\n' + errors.join('\n'));
         return;
@@ -516,7 +633,7 @@
       existing.verses = verses;
     } else {
       hymns.push({
-        id: `hymn_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
+        id: `hymn_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
         title,
         author,
         verses,
@@ -541,11 +658,21 @@
 
   function loadServices() {
     const stored = localStorage.getItem(storageKeys.services);
-    services = stored ? JSON.parse(stored) : [];
+    try {
+      services = stored ? JSON.parse(stored) : [];
+    } catch (err) {
+      console.error('[Services Load Error] Corrupted data:', err);
+      services = [];
+    }
   }
 
   function saveServices() {
-    localStorage.setItem(storageKeys.services, JSON.stringify(services));
+    try {
+      localStorage.setItem(storageKeys.services, JSON.stringify(services));
+    } catch (err) {
+      console.error('[Services Save Error]', err);
+      statusEl.textContent = 'Error saving services: ' + err.message;
+    }
   }
 
   function renderServicesList() {
@@ -569,7 +696,7 @@
           </div>
         `;
       }).join('') : '';
-      
+
       const safeServiceName = escapeHtml(service.name);
       return `
         <div class="service-item${isActive ? ' active' : ''}" data-service-id="${service.id}">
@@ -592,7 +719,7 @@
     const editor = document.getElementById('serviceEditor');
     const nameInput = document.getElementById('serviceName');
     const hymnsContainer = document.getElementById('serviceHymns');
-    
+
     if (serviceId) {
       editingService = services.find(s => s.id === serviceId);
       nameInput.value = editingService.name;
@@ -600,7 +727,7 @@
       editingService = { id: generateUniqueServiceId(), name: '', hymns: [] };
       nameInput.value = '';
     }
-    
+
     renderServiceHymns();
     editor.style.display = 'block';
   }
@@ -640,26 +767,33 @@
   function saveService() {
     const nameInput = document.getElementById('serviceName');
     const name = nameInput.value.trim();
-    
+
     if (!name) {
       alert('Service name is required');
       return;
     }
-    
+
     if (editingService.hymns.length === 0) {
       alert('Add at least one hymn to the service');
       return;
     }
-    
+
     editingService.name = name;
-    
+
+    // Validate service structure before saving
+    const { valid, errors } = window.HymnValidator.validateService(editingService, hymns);
+    if (!valid) {
+      alert('Service validation failed:\n' + errors.join('\n'));
+      return;
+    }
+
     const existingIndex = services.findIndex(s => s.id === editingService.id);
     if (existingIndex >= 0) {
       services[existingIndex] = editingService;
     } else {
       services.push(editingService);
     }
-    
+
     saveServices();
     renderServicesList();
     closeServiceEditor();
@@ -667,8 +801,15 @@
   }
 
   function selectService(serviceId) {
-    currentService = services.find(s => s.id === serviceId);
-    if (currentService) {
+    const service = services.find(s => s.id === serviceId);
+    if (service) {
+      // Validate service before loading
+      const { valid, errors } = window.HymnValidator.validateService(service, hymns);
+      if (!valid) {
+        console.warn('[Service Validation] Issues loading service:', errors);
+        statusEl.textContent = 'Warning: Service has validation issues';
+      }
+      currentService = service;
       statusEl.textContent = `Loaded service: ${currentService.name} (${currentService.hymns.length} hymns)`;
     }
     renderServicesList();
@@ -684,13 +825,16 @@
 
   function deleteService(serviceId) {
     if (confirm('Delete this service?')) {
-      services = services.filter(s => s.id !== serviceId);
-      if (currentService && currentService.id === serviceId) {
-        currentService = null;
+      const serviceToDelete = services.find(s => s.id === serviceId);
+      if (serviceToDelete) {
+        services = services.filter(s => s.id !== serviceId);
+        if (currentService && currentService.id === serviceId) {
+          currentService = null;
+        }
+        saveServices();
+        renderServicesList();
+        statusEl.textContent = 'Service deleted';
       }
-      saveServices();
-      renderServicesList();
-      statusEl.textContent = 'Service deleted';
     }
   }
 
@@ -789,6 +933,9 @@
     document.getElementById('outline').onchange = (e) => {
       settings.outline = e.target.checked;
       document.getElementById('outlineControls').style.display = e.target.checked ? 'block' : 'none';
+      // Validate outline width is in valid range
+      if (settings.outlineWidth < 1) settings.outlineWidth = 1;
+      if (settings.outlineWidth > 15) settings.outlineWidth = 15;
       saveSettings();
       if (isDisplaying && currentHymn) sendCommand('show');
     };
@@ -798,7 +945,8 @@
       if (isDisplaying && currentHymn) sendCommand('show');
     };
     document.getElementById('outlineWidth').oninput = (e) => {
-      settings.outlineWidth = parseInt(e.target.value, 10);
+      const width = parseInt(e.target.value, 10);
+      settings.outlineWidth = Math.max(1, Math.min(width, 15)); // Clamp to 1-15
       document.getElementById('outlineWidthValue').textContent = settings.outlineWidth + 'px';
       saveSettings();
       if (isDisplaying && currentHymn) sendCommand('show');
@@ -842,7 +990,7 @@
     document.getElementById('btnCloseModal').onclick = closeEditModal;
     document.getElementById('btnCancelEdit').onclick = closeEditModal;
     document.getElementById('btnSaveEdit').onclick = saveHymnEdit;
-    
+
     // Close modal on outside click
     document.getElementById('editModal').onclick = (e) => {
       if (e.target.id === 'editModal') closeEditModal();
@@ -885,37 +1033,35 @@
       const ext = file.name.split('.').pop().toLowerCase();
       let parsed = [];
       if (ext === 'txt') parsed = await parseTxt(file);
+      else if (ext === 'csv') parsed = await parseCsv(file);
       else if (ext === 'json') parsed = await parseJson(file);
-      else throw new Error('Use .txt or .json');
+      else throw new Error('Use .txt, .csv, or .json');
+
+      // Generate unique IDs BEFORE validation (validators expect id field)
+      parsed.forEach((h) => {
+        if (!h.id) h.id = generateUniqueHymnId();
+        if (!h.createdAt) h.createdAt = new Date().toISOString();
+      });
 
       // Validate all imported hymns
-      const { valid, invalid } = HymnValidator.batchValidate(parsed);
+      const { valid, invalid } = window.HymnValidator.batchValidate(parsed);
 
       if (invalid.length > 0) {
         const errorSummary = invalid.map(i => `Row ${i.index + 1}: ${i.errors[0]}`).join('; ');
-        console.warn('Import validation issues:', errorSummary);
+        console.warn('[Import Warnings]', invalid.length, 'row(s) skipped:', errorSummary);
       }
 
       if (valid.length === 0) {
         throw new Error(`No valid hymns found. ${invalid.length} entries had errors: ${invalid[0]?.errors[0] || 'Unknown error'}`);
       }
 
-      // Generate unique IDs for validated hymns
-      valid.forEach((h, idx) => {
-        h.id = generateUniqueHymnId();
-        if (!h.createdAt) {
-          h.createdAt = new Date().toISOString();
-        }
-      });
-
       hymns = [...hymns, ...valid];
       saveHymns();
       filtered = hymns;
       renderList();
-      
+
       const message = `Imported ${valid.length} hymn${valid.length !== 1 ? 's' : ''}${invalid.length > 0 ? ` (${invalid.length} skipped due to errors)` : ''}`;
       statusEl.textContent = message;
-      console.log('[Import]', message);
     } catch (err) {
       statusEl.textContent = 'Import failed: ' + err.message;
       console.error('[Import Error]', err);
@@ -929,7 +1075,7 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'hymnview-export.json';
+    a.download = 'hymnflow-export.json';
     a.click();
     URL.revokeObjectURL(url);
     statusEl.textContent = 'Exported hymns.json';
@@ -948,7 +1094,16 @@
     document.getElementById('shadow').checked = settings.shadow;
     document.getElementById('glow').checked = settings.glow;
     document.getElementById('outline').checked = settings.outline;
-    document.getElementById('outlineColor').value = settings.outlineColor;
+
+    // Validate and clamp outline properties
+    if (typeof settings.outlineWidth !== 'number' || settings.outlineWidth < 1) {
+      settings.outlineWidth = 2;
+    }
+    if (settings.outlineWidth > 15) {
+      settings.outlineWidth = 15;
+    }
+
+    document.getElementById('outlineColor').value = settings.outlineColor || '#000000';
     document.getElementById('outlineWidth').value = settings.outlineWidth;
     document.getElementById('outlineWidthValue').textContent = settings.outlineWidth + 'px';
     document.getElementById('outlineControls').style.display = settings.outline ? 'block' : 'none';

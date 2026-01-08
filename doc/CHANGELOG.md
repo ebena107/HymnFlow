@@ -1,6 +1,36 @@
 # Changelog
 
-## [2.0.0] - 2026-01-04
+## [2.2.0] - 2026-01-08
+
+### 🔄 Automatic Chorus Logic
+
+**Major Feature**: Hymns with choruses now follow a smart navigation sequence (Verse -> Chorus -> Next Verse).
+
+### Added
+
+- 🔄 Smart navigation sequence: automatically inserts chorus after every verse.
+- 🏷️ Dynamic "Chorus" label in OBS Overlay title bar.
+- ⏭️ Automatic line-boundary transitions between verses and choruses.
+- ⚡ Fully functional "Jump to Chorus" navigation in dock.
+
+---
+
+## [2.1.0] - 2026-01-05
+
+### ✨ Interface & Styling Enhancements
+
+### Added
+
+- 🎨 Text outline (stroke) styling with customizable color and width.
+- ✏️ Built-in hymn editor modal for quick corrections.
+- 🎯 Service/Program scheduling system to pre-organize hymn orders.
+
+### Changed
+
+- Compact UI for style controls with single-line color indicators.
+- Improved form validation for hymn editing and adding.
+
+---
 
 ### 🎯 Major Streamlining Release
 
