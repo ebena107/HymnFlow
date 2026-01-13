@@ -197,7 +197,10 @@ public/
 │   ├── fr.json         # French translations
 │   ├── pt.json         # Portuguese translations
 │   ├── sw.json         # Swahili translations
-│   └── tl.json         # Tagalog translations
+│   ├── tl.json         # Tagalog translations
+│   ├── yo.json         # Yoruba translations
+│   ├── zh.json         # Mandarin Chinese translations
+│   └── ko.json         # Korean translations
 ├── parsers/            # Client-side file parsers
 │   ├── txtParser.js
 │   ├── csvParser.js
@@ -233,6 +236,31 @@ No server, no WebSocket, just pure browser APIs! Perfect for portable deployment
 ## 🤝 Contributing
 
 Issues and pull requests welcome! This is a simple, vanilla JavaScript project with no build step.
+
+### Ways to Contribute
+
+1. **Report Issues**: Found a bug? [Open an issue](https://github.com/ebena107/HymnFlow/issues)
+2. **Suggest Features**: Have an idea? Share it in [Discussions](https://github.com/ebena107/HymnFlow/discussions)
+3. **Submit Pull Requests**: Code improvements welcome!
+4. **Share on OBS Forums**: Help others discover HymnFlow on the [OBS Project Forums](https://obsproject.com/forum/)
+
+### Sharing on OBS Forums
+
+If you find HymnFlow useful, consider sharing it on the OBS community:
+
+- **OBS Forums**: [https://obsproject.com/forum/](https://obsproject.com/forum/)
+- **Relevant Sections**:
+  - [Resources & Plugins](https://obsproject.com/forum/resources/) - Share as a resource
+  - [General Discussion](https://obsproject.com/forum/list/general-discussion.4/) - Discuss use cases
+  - [Live Streaming/Recording](https://obsproject.com/forum/list/live-streaming-recording.6/) - Share streaming tips
+
+When sharing, mention:
+- Browser-based plugin (no installation required)
+- Works with OBS Custom Docks and Browser Sources
+- Supports 9 languages
+- Perfect for worship services and live streaming
+
+Your feedback and contributions help improve HymnFlow for worship teams worldwide!
 
 ## 📄 License
 
