@@ -987,8 +987,12 @@
     // Listen for language changes from other sources
     window.addEventListener('languageChanged', () => {
       languageSelect.value = window.HymnFlowI18n.getCurrentLanguage();
-      // Update dropdown options if they have translations
-      window.HymnFlowI18n.applyTranslations();
+      // Re-render lists to update dynamic content
+      renderList();
+      renderServicesList();
+      if (currentHymn) {
+        updatePreview();
+      }
     });
   }
 
