@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "OBS 赞美诗下三分之一控制器",
+    "status": {
+      "live": "直播",
+      "storage": "本地存储"
+    }
+  },
+  "hymns": {
+    "title": "赞美诗",
+    "searchPlaceholder": "搜索赞美诗",
+    "searchLabel": "按标题、作者或编号搜索赞美诗",
+    "noHymnsFound": "未找到赞美诗",
+    "selectedTitle": "已选赞美诗标题",
+    "buttons": {
+      "add": "+ 添加",
+      "edit": "✏️ 编辑",
+      "remove": "- 删除",
+      "import": "导入",
+      "export": "导出"
+    },
+    "labels": {
+      "hymnNumber": "赞美诗编号",
+      "sourceAbbr": "来源缩写",
+      "sourceName": "来源名称",
+      "title": "标题",
+      "author": "作者",
+      "verses": "诗节",
+      "chorus": "副歌",
+      "versesSeparator": "（用空行分隔诗节）",
+      "chorusOptional": "（可选）",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "例如：123",
+      "sourceAbbr": "例如：CH, PD, HB",
+      "sourceName": "例如：教会赞美诗集, 公有领域",
+      "title": "赞美诗标题",
+      "author": "作者姓名",
+      "verses": "第1节诗文\n\n第2节诗文\n\n第3节诗文",
+      "chorus": "副歌诗文"
+    }
+  },
+  "services": {
+    "title": "礼拜",
+    "newButton": "+ 新建",
+    "namePlaceholder": "礼拜名称（例如：主日晨礼拜）",
+    "buttons": {
+      "addHymn": "+ 添加赞美诗",
+      "save": "保存礼拜",
+      "cancel": "取消"
+    }
+  },
+  "navigation": {
+    "verseInfo": "第 {current}/{total} 节 · 第 {startLine}-{endLine} 行，共 {totalLines} 行",
+    "buttons": {
+      "prevVerse": "⟵ 上一节",
+      "nextVerse": "下一节 ⟶",
+      "prevLine": "⬆ 上一行",
+      "nextLine": "⬇ 下一行",
+      "jumpChorus": "跳转到副歌",
+      "emergencyClear": "紧急清除"
+    },
+    "tooltips": {
+      "prevVerse": "上一节（左箭头）",
+      "nextVerse": "下一节（右箭头）",
+      "prevLine": "上一行窗口（上箭头）",
+      "nextLine": "下一行窗口（下箭头）",
+      "jumpChorus": "显示副歌（如果有）",
+      "emergencyClear": "立即从直播中隐藏叠加层"
+    }
+  },
+  "display": {
+    "title": "显示控制",
+    "displayLabel": "显示",
+    "liveIndicator": "直播",
+    "resetButton": "重置",
+    "resetTooltip": "重置到第一节，第一行",
+    "linesPerDisplay": "每次显示的行数"
+  },
+  "preview": {
+    "title": "赞美诗预览"
+  },
+  "styles": {
+    "title": "样式",
+    "fontFamily": "字体系列",
+    "fontSize": "字体大小",
+    "bold": "粗体",
+    "italic": "斜体",
+    "shadow": "阴影",
+    "glow": "发光",
+    "outline": "轮廓",
+    "outlineColor": "轮廓颜色",
+    "outlineWidth": "轮廓宽度",
+    "textColor": "文字颜色",
+    "bgType": "背景类型",
+    "bgColorA": "背景颜色 A",
+    "bgColorB": "背景颜色 B（用于渐变）",
+    "animation": "动画",
+    "position": "位置",
+    "bgTypes": {
+      "transparent": "透明",
+      "solid": "实心",
+      "gradient": "渐变"
+    },
+    "animations": {
+      "fade": "淡入淡出",
+      "slide": "滑动",
+      "none": "无"
+    },
+    "positions": {
+      "bottom": "下三分之一",
+      "middle": "中间",
+      "top": "顶部"
+    }
+  },
+  "modal": {
+    "editHymn": "编辑赞美诗",
+    "addHymn": "添加赞美诗",
+    "buttons": {
+      "cancel": "取消",
+      "save": "保存更改"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "languageLabel": "界面语言"
+  }
+}

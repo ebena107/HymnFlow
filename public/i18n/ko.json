@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "OBS 찬송가 하단 3분의 1 컨트롤러",
+    "status": {
+      "live": "라이브",
+      "storage": "로컬스토리지"
+    }
+  },
+  "hymns": {
+    "title": "찬송가",
+    "searchPlaceholder": "찬송가 검색",
+    "searchLabel": "제목, 작가 또는 번호로 찬송가 검색",
+    "noHymnsFound": "찬송가를 찾을 수 없습니다",
+    "selectedTitle": "선택된 찬송가 제목",
+    "buttons": {
+      "add": "+ 추가",
+      "edit": "✏️ 편집",
+      "remove": "- 삭제",
+      "import": "가져오기",
+      "export": "내보내기"
+    },
+    "labels": {
+      "hymnNumber": "찬송가 번호",
+      "sourceAbbr": "출처 약어",
+      "sourceName": "출처 이름",
+      "title": "제목",
+      "author": "작가",
+      "verses": "절",
+      "chorus": "후렴",
+      "versesSeparator": "（빈 줄로 절 구분）",
+      "chorusOptional": "（선택 사항）",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "예: 123",
+      "sourceAbbr": "예: CH, PD, HB",
+      "sourceName": "예: 교회 찬송가, 퍼블릭 도메인",
+      "title": "찬송가 제목",
+      "author": "작가 이름",
+      "verses": "1절 가사\n\n2절 가사\n\n3절 가사",
+      "chorus": "후렴 가사"
+    }
+  },
+  "services": {
+    "title": "예배",
+    "newButton": "+ 새로 만들기",
+    "namePlaceholder": "예배 이름 (예: 주일 오전 예배)",
+    "buttons": {
+      "addHymn": "+ 찬송가 추가",
+      "save": "예배 저장",
+      "cancel": "취소"
+    }
+  },
+  "navigation": {
+    "verseInfo": "절 {current}/{total} · {totalLines}줄 중 {startLine}-{endLine}줄",
+    "buttons": {
+      "prevVerse": "⟵ 이전",
+      "nextVerse": "다음 ⟶",
+      "prevLine": "⬆ 이전 줄",
+      "nextLine": "⬇ 다음 줄",
+      "jumpChorus": "후렴으로 이동",
+      "emergencyClear": "긴급 지우기"
+    },
+    "tooltips": {
+      "prevVerse": "이전 절 (왼쪽 화살표)",
+      "nextVerse": "다음 절 (오른쪽 화살표)",
+      "prevLine": "이전 줄 창 (위쪽 화살표)",
+      "nextLine": "다음 줄 창 (아래쪽 화살표)",
+      "jumpChorus": "후렴이 있으면 표시",
+      "emergencyClear": "스트림에서 오버레이 즉시 숨기기"
+    }
+  },
+  "display": {
+    "title": "디스플레이 컨트롤",
+    "displayLabel": "디스플레이",
+    "liveIndicator": "라이브",
+    "resetButton": "재설정",
+    "resetTooltip": "첫 번째 절, 첫 번째 줄로 재설정",
+    "linesPerDisplay": "디스플레이당 줄 수"
+  },
+  "preview": {
+    "title": "찬송가 미리보기"
+  },
+  "styles": {
+    "title": "스타일",
+    "fontFamily": "글꼴 종류",
+    "fontSize": "글꼴 크기",
+    "bold": "굵게",
+    "italic": "기울임",
+    "shadow": "그림자",
+    "glow": "빛",
+    "outline": "윤곽선",
+    "outlineColor": "윤곽선 색상",
+    "outlineWidth": "윤곽선 두께",
+    "textColor": "텍스트 색상",
+    "bgType": "배경 유형",
+    "bgColorA": "배경 색상 A",
+    "bgColorB": "배경 색상 B (그라데이션용)",
+    "animation": "애니메이션",
+    "position": "위치",
+    "bgTypes": {
+      "transparent": "투명",
+      "solid": "단색",
+      "gradient": "그라데이션"
+    },
+    "animations": {
+      "fade": "페이드",
+      "slide": "슬라이드",
+      "none": "없음"
+    },
+    "positions": {
+      "bottom": "하단 3분의 1",
+      "middle": "중간",
+      "top": "상단"
+    }
+  },
+  "modal": {
+    "editHymn": "찬송가 편집",
+    "addHymn": "찬송가 추가",
+    "buttons": {
+      "cancel": "취소",
+      "save": "변경사항 저장"
+    }
+  },
+  "settings": {
+    "title": "설정",
+    "language": "언어",
+    "languageLabel": "인터페이스 언어"
+  }
+}

@@ -9,7 +9,10 @@
     'fr': 'Français',
     'pt': 'Português',
     'sw': 'Kiswahili',
-    'tl': 'Tagalog'
+    'tl': 'Tagalog',
+    'yo': 'Yorùbá',
+    'zh': '中文',
+    'ko': '한국어'
   };
 
   const DEFAULT_LANGUAGE = 'en';
