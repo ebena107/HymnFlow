@@ -54,7 +54,7 @@ const HymnValidator = {
           hasValidVerse = true;
         }
       });
-      
+
       if (!hasValidVerse && hymn.verses.length > 0) {
         errors.push('At least one verse must contain non-whitespace text');
       }
@@ -221,4 +221,7 @@ const HymnValidator = {
 // Export for global use
 if (typeof window !== 'undefined') {
   window.HymnValidator = HymnValidator;
+}
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = HymnValidator;
 }

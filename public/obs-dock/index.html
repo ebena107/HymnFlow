@@ -37,9 +37,9 @@
         <input id="search" type="text" class="search-input" placeholder="Search hymns" aria-label="Search hymns by title, author, or number">
         <div id="hymnList" class="hymn-list" role="listbox" aria-label="Hymns library"></div>
         <div class="import-export-actions">
-          <button id="btnImport" class="btn btn-secondary" aria-label="Import hymns from file" title="Import hymns from TXT or JSON file">Import</button>
+          <button id="btnImport" class="btn btn-secondary" aria-label="Import hymns from file" title="Import hymns from TXT, CSV, or JSON file">Import</button>
           <button id="btnExport" class="btn btn-secondary" aria-label="Export hymns to JSON file" title="Export all hymns to JSON file">Export</button>
-          <input type="file" id="fileInput" accept=".txt,.json" hidden aria-label="Select hymn file to import">
+          <input type="file" id="fileInput" accept=".txt,.csv,.json" hidden aria-label="Select hymn file to import">
         </div>
       </section>
 
@@ -145,12 +145,12 @@
           <div id="outlineControls" class="outline-controls" style="display: none;">
             <label class="form-label">
               Outline Color
-              <input type="color" id="outlineColor" value="#000000" class="form-color">
+              <input type="color" id="outlineColor" value="#000000" class="form-color" aria-label="Outline color">
             </label>
             
             <label class="form-label">
               Outline Width <span id="outlineWidthValue">2px</span>
-              <input type="range" id="outlineWidth" min="1" max="5" value="2" class="form-slider">
+              <input type="range" id="outlineWidth" min="1" max="15" value="2" class="form-slider" aria-label="Outline width in pixels">
             </label>
           </div>
           
@@ -246,8 +246,9 @@
   </div>
 
   <script src="../data/hymns-data.js"></script>
-  <script src="../validation.js"></script>
+  <script src="validation.js"></script>
   <script src="../parsers/txtParser.js"></script>
+  <script src="../parsers/csvParser.js"></script>
   <script src="../parsers/jsonParser.js"></script>
   <script src="obs-dock.js"></script>
 </body>

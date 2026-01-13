@@ -70,8 +70,7 @@ Two independent browser windows communicate via localStorage storage events:
 {
   id: "service_${Date.now()}_${random}",
   name: string,                  // Service name (e.g., "Sunday Morning")
-  date: ISO8601 timestamp,       // Service date
-  hymnIds: string[],             // Ordered array of hymn IDs
+  hymns: string[],               // Ordered array of hymn IDs
   createdAt: ISO8601 timestamp
 }
 ```
@@ -109,28 +108,49 @@ Commands written to `hymnflow-lowerthird-command`:
 
 ### File Parsers (Client-Side)
 
-Three parsers in `public/parsers/`: `txtParser.js`, `csvParser.js`, `jsonParser.js`. Each exports async function accepting a File object and returning an array of hymn objects.
+Three parsers in `public/parsers/`: `txtParser.js`, `csvParser.js`, `jsonParser.js`. Each exports async function accepting a File object and returning an array of hymn objects. All parsed hymns go through `HymnValidator.validateHymn()` before import.
 
 **TXT format**:
 - `Title:` starts a new hymn
 - `Author:` is optional
 - Empty lines separate verses
 - `Chorus:` marks optional chorus text
-- Example: See [public/parsers/txtParser.js](public/parsers/txtParser.js) for full implementation
+- Example: See [../public/parsers/txtParser.js](../public/parsers/txtParser.js) for full implementation
 
 **CSV format**:
-- Expected columns: `Title`, `Author`, `Verse Number`, `Verse Text`, `Chorus`
-- Multiple rows with same title/author are combined into one hymn with multiple verses
+- Expected columns: `Title`, `Author`, `Verse Number`, `Verse Text`, `Chorus`, `Hymn Number`, `Source Abbr`, `Source`
+- Multiple rows with same title are combined into one hymn with multiple verses
 - Quote fields containing commas: `"Title","Author",1,"Verse\nwith\nlines",""`
-- See [public/parsers/csvParser.js](public/parsers/csvParser.js) for implementation
+- Validates Title/Name column exists; skips malformed rows with warnings
+- See [../public/parsers/csvParser.js](../public/parsers/csvParser.js) for implementation
 
-**JSON format**: Array of hymn objects matching the hymn schema (see [public/data/hymns-data.js](public/data/hymns-data.js) and [public/data/hymns.json](public/data/hymns.json) for examples)
+**JSON format**: Array of hymn objects matching the hymn schema (see [../public/data/hymns-data.js](../public/data/hymns-data.js) and [../public/data/hymns.json](../public/data/hymns.json) for examples)
 
 **Adding a new parser**: 
 1. Create file in `public/parsers/` (e.g., `xmlParser.js`)
 2. Export async `parseXml(file)` function that returns array of hymn objects
-3. Add handler to `handleImport()` switch statement in [public/obs-dock/obs-dock.js](public/obs-dock/obs-dock.js#L703-L715)
-4. Update file input accept attribute in [public/obs-dock/index.html](public/obs-dock/index.html#L40) if needed
+3. Add handler to `handleImport()` switch statement in [../public/obs-dock/obs-dock.js](../public/obs-dock/obs-dock.js)
+4. Update file input accept attribute in [../public/obs-dock/index.html](../public/obs-dock/index.html) if needed
+
+### Data Validation
+
+All hymn imports, edits, and service operations validate against schema using `HymnValidator` module in [../public/validation.js](../public/validation.js):
+
+**Core validators:**
+- `validateHymn(hymn)` - Returns `{valid, errors[]}`, checks: id format, required title, verses (non-empty), optional metadata
+- `validateService(service, allHymns)` - Validates service/setlist structure and hymn references
+- `sanitizeHymn(hymn)` - Removes invalid fields, cleans whitespace, ensures schema compliance
+
+**Usage in dock:**
+```javascript
+const { valid, errors } = HymnValidator.validateHymn(hymnObject);
+if (!valid) {
+  alert('Hymn validation failed:\n' + errors.join('\n'));
+  return;
+}
+```
+
+**Critical:** Validators prevent corrupted data from entering localStorage. Always call before `saveHymns()` or `saveServices()`.
 
 ### Client-Side Data Operations
 All data operations use localStorage - no backend server needed:
@@ -197,6 +217,35 @@ npm run serve
 ```
 
 **Note:** file:// protocol works for both OBS Custom Dock and Browser Source. No web server required for basic functionality, but http:// may provide better debugging tools.
+
+**Import/Export Formats:**
+- Import from: `.txt`, `.csv`, or `.json` files
+- Export to: `.json` format (filename: `hymnflow-export.json`)
+- CSV parser auto-combines rows by title into multi-verse hymns
+- Import validates all data and shows summary of accepted/rejected entries
+
+### Bulk Hymnal Processing
+
+Three hymnal collections included: NNBH (Baptist), UMH (Methodist), FWS (Faith We Sing):
+- Hymn text files in `hymn texts/` directory (organized by collection)
+- Transformed JSON data in `public/data/`: `nnbh.json`, `umh.json`, `fws.json`, `ybh.json`
+
+**Scripts in `scripts/`:**
+- `transform-all-hymnals.js` - Converts all hymnal text files to HymnFlow JSON format (requires Node.js)
+- `validate-hymnals.js` - Validates transformed data integrity
+- `transform-ybh.js` - Specialized processor for Yoruba Hymn Book
+
+**Processing workflow:**
+```bash
+# Install Node.js if needed, then:
+node scripts/transform-all-hymnals.js
+# Outputs: public/data/{nnbh,umh,fws}.json
+
+# Validate results:
+node scripts/validate-hymnals.js
+```
+
+**Output files:** Each transformed hymnal is a JSON array of hymn objects with metadata (number, category, key, tempo).
 
 ### Testing in OBS
 
@@ -279,8 +328,7 @@ Services allow users to create ordered playlists of hymns for a worship service.
 {
   id: "service_${Date.now()}_${random}",
   name: string,                  // e.g., "Sunday Morning Service"
-  date: ISO8601 timestamp,       // Service date (optional in current implementation)
-  hymnIds: string[]             // Array of hymn IDs in order
+  hymns: string[]               // Array of hymn IDs in order
 }
 
 // Key functions in obs-dock.js
@@ -303,11 +351,12 @@ moveServiceHymn(idx, dir) // Reorder hymns within service (up/down)
 6. Click hymn in service → `selectHymnFromService()` → Hymn displays, service remains context
 
 **Critical Implementation Details:**
-- Services reference hymns BY ID only - if a hymn is deleted, it's silently skipped when loading service
-- IDs are immutable: never change a hymn's ID or all service references break
-- Service hymns use simpler structure (just IDs) vs full hymn objects to reduce localStorage size
+- Services store hymn references: lookup by ID from main hymns array when rendering
+- If a hymn is deleted, it's silently skipped when loading service (orphaned reference)
+- IDs are immutable: changing a hymn's ID breaks all service references
+- Service structure is minimal (just IDs + metadata) to conserve localStorage space
 - Services are independent from current hymn selection - can switch between normal and service contexts
-- Current implementation stores hymn IDs in `hymnIds` array (data structure shows this, code may use `hymns`)
+- When rendering service hymns, fetch full hymn object by ID from the main hymns array
 
 ### Styling
 
@@ -332,9 +381,12 @@ moveServiceHymn(idx, dir) // Reorder hymns within service (up/down)
 
 | File | Purpose | Key Functions |
 |------|---------|---------------|
-| [public/obs-dock/obs-dock.js](public/obs-dock/obs-dock.js) | Control panel logic | `sendCommand()`, `selectHymn()`, `nextVerse()`, `nextLineWindow()`, `loadServices()` |
-| [public/obs-overlay/overlay.js](public/obs-overlay/overlay.js) | Display overlay logic | `show()`, `hide()`, `applyStyles()`, storage event listener |
-| [public/parsers/*.js](public/parsers/) | File format parsers | `parseTxt()`, `parseCsv()`, `parseJson()` - all async, accept File object |
-| [public/data/hymns-data.js](public/data/hymns-data.js) | Default hymn library | `DEFAULT_HYMNS` array (embedded in HTML via script tag) |
-| [scripts/release.bat](scripts/release.bat) | Windows release script | Packages plugin for distribution |
-| [scripts/release.sh](scripts/release.sh) | Unix/Mac release script | Packages plugin for distribution |
+| [../public/obs-dock/obs-dock.js](../public/obs-dock/obs-dock.js) | Control panel logic | `sendCommand()`, `selectHymn()`, `nextVerse()`, `nextLineWindow()`, `loadServices()` |
+| [../public/obs-overlay/overlay.js](../public/obs-overlay/overlay.js) | Display overlay logic | `show()`, `hide()`, `applyStyles()`, storage event listener |
+| [../public/validation.js](../public/validation.js) | Data validation module | `HymnValidator.validateHymn()`, `validateService()`, `sanitizeHymn()` |
+| [../public/parsers](../public/parsers) | File format parsers | `parseTxt()`, `parseCsv()`, `parseJson()` - all async, accept File object |
+| [../public/data/hymns-data.js](../public/data/hymns-data.js) | Default hymn library | `DEFAULT_HYMNS` array (embedded in HTML via script tag) |
+| [../public/obs-setup.html](../public/obs-setup.html) | Interactive setup guide | Step-by-step OBS configuration instructions |
+| [../scripts/release.bat](../scripts/release.bat) | Windows release script | Packages plugin for distribution |
+| [../scripts/release.sh](../scripts/release.sh) | Unix/Mac release script | Packages plugin for distribution |
+| [../scripts/transform-all-hymnals.js](../scripts/transform-all-hymnals.js) | Hymnal bulk processor | Converts text hymnal files to HymnFlow JSON format |

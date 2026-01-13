@@ -12,7 +12,7 @@ async function parseCsv(file) {
   const lines = content.split('\n').map(line => line.trim()).filter(line => line);
   
   if (lines.length < 2) {
-    throw new Error('CSV file must have header and at least one row');
+    throw new Error('CSV file must have header and at least one data row');
   }
   
   // Parse CSV (simple parser - handles quoted fields)
@@ -38,53 +38,85 @@ async function parseCsv(file) {
   }
   
   const headers = parseCsvLine(lines[0]).map(h => h.toLowerCase());
+  
+  // Validate required columns exist
+  if (!headers.includes('title') && !headers.includes('name')) {
+    throw new Error('CSV must have Title or Name column');
+  }
+  
   const hymnsMap = new Map();
+  const errors = [];
   
   for (let i = 1; i < lines.length; i++) {
-    const values = parseCsvLine(lines[i]);
-    
-    if (values.length < headers.length) continue;
-    
-    const row = {};
-    headers.forEach((header, index) => {
-      row[header] = values[index] || '';
-    });
-    
-    const title = row.title || `Hymn ${i}`;
-    
-    if (!hymnsMap.has(title)) {
-      hymnsMap.set(title, {
-        title: title,
-        author: row.author || '',
-        verses: [],
-        chorus: row.chorus || '',
-        metadata: {
-          number: row['hymn number'] || row.number ? parseInt(row['hymn number'] || row.number, 10) : undefined,
-          sourceAbbr: (row['source abbr'] || row['source abbreviation'] || '').toUpperCase() || undefined,
-          source: row.source || undefined
-        }
+    try {
+      const values = parseCsvLine(lines[i]);
+      
+      if (values.length < 1 || (values.length === 1 && !values[0])) continue;
+      
+      const row = {};
+      headers.forEach((header, index) => {
+        row[header] = values[index] || '';
       });
-    }
-    
-    const hymn = hymnsMap.get(title);
-    if (row['verse text'] || row.text || row.verse) {
-      hymn.verses.push(row['verse text'] || row.text || row.verse);
-    }
-    if (row.chorus && !hymn.chorus) {
-      hymn.chorus = row.chorus;
-    }
-    
-    // Update metadata if values found in later rows
-    if (row['hymn number'] || row.number) {
-      hymn.metadata.number = parseInt(row['hymn number'] || row.number, 10);
-    }
-    if (row['source abbr'] || row['source abbreviation']) {
-      hymn.metadata.sourceAbbr = (row['source abbr'] || row['source abbreviation']).toUpperCase();
-    }
-    if (row.source) {
-      hymn.metadata.source = row.source;
+      
+      const title = (row.title || row.name || `Hymn ${i}`).trim();
+      
+      if (!title) {
+        errors.push(`Row ${i + 1}: Missing title/name`);
+        continue;
+      }
+      
+      if (!hymnsMap.has(title)) {
+        hymnsMap.set(title, {
+          title: title,
+          author: (row.author || '').trim(),
+          verses: [],
+          chorus: (row.chorus || '').trim(),
+          metadata: {}
+        });
+      }
+      
+      const hymn = hymnsMap.get(title);
+      
+      // Add verse text
+      const verseText = (row['verse text'] || row.text || row.verse || '').trim();
+      if (verseText) {
+        hymn.verses.push(verseText);
+      }
+      
+      // Update chorus if found
+      if (row.chorus && !hymn.chorus) {
+        hymn.chorus = row.chorus.trim();
+      }
+      
+      // Extract metadata
+      const hymnNumber = parseInt(row['hymn number'] || row.number, 10);
+      if (!isNaN(hymnNumber) && hymnNumber > 0) {
+        hymn.metadata.number = hymnNumber;
+      }
+      
+      const sourceAbbr = (row['source abbr'] || row['source abbreviation'] || '').trim().toUpperCase();
+      if (sourceAbbr) {
+        hymn.metadata.sourceAbbr = sourceAbbr;
+      }
+      
+      const source = (row.source || '').trim();
+      if (source) {
+        hymn.metadata.source = source;
+      }
+    } catch (err) {
+      errors.push(`Row ${i + 1}: ${err.message}`);
     }
   }
   
-  return Array.from(hymnsMap.values());
+  if (errors.length > 0) {
+    console.warn('CSV parsing warnings:', errors.join('; '));
+  }
+  
+  const result = Array.from(hymnsMap.values());
+  
+  if (result.length === 0) {
+    throw new Error('No valid hymns extracted from CSV');
+  }
+  
+  return result;
 }
