@@ -11,10 +11,13 @@
 Extract the downloaded release to a permanent location:
 ```
 C:\HymnFlow\              ← Recommended location
-├── public/
+├── public/                ← Core application files
 │   ├── obs-dock/
 │   └── obs-overlay/
-└── [other files]
+└── hymn-bundle/          ← Separate download for hymns (Large files)
+    ├── cac_ghb.json
+    ├── cac_yhb.json
+    └── [other hymns]
 ```
 
 **Note your full path** - you'll need it below.
@@ -106,10 +109,15 @@ And grace my fears relieved;
 
 ### Import Process
 
-1. Click **Import** in the dock
-2. Select your `.txt` or `.json` file
-3. Hymns are added to your library
-4. ✅ Done! Click any hymn to display it
+> [!IMPORTANT]
+> To reduce the initial download size, official hymn collections (CAC English/Yoruba, etc.) are now provided as a separate **Hymn Bundle**.
+
+1. Download the latest **Hymn Bundle** from our release page.
+2. Extract the `.json` files to your `hymn-bundle/` folder.
+3. Click **Import** in the OBS dock.
+4. Select your preferred `.json` file from the `hymn-bundle/` directory.
+5. Hymns are added to your library instantly.
+6. ✅ Done! Click any hymn to display it.
 
 ## 🎨 Customize the Display
 
@@ -156,5 +164,5 @@ Or visit: https://github.com/yourusername/HymnFlow/issues
 ## 🚀 Next Steps
 
 - [Customize colors and fonts](OBS_DOCK_README.md#customization)
-- [Import sample hymn files](public/data/)
+- [Import official hymn bundle](hymn-bundle/)
 - [Learn all keyboard shortcuts](README.md#keyboard-shortcuts)

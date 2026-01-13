@@ -13,7 +13,8 @@
 - 📱 **Responsive Design** - Works on any screen size including vertical displays
 - 🔄 **Real-Time Updates** - Overlay updates automatically as you navigate
 - 💾 **Persistent Storage** - Hymns saved in browser localStorage
-- 🌍 **Multi-Language Support** - Interface available in 9 languages (English, Spanish, French, Portuguese, Swahili, Tagalog, Yoruba, Mandarin Chinese, Korean)
+- 🌍 **Multi-Language Support** - Interface in 9 languages (EN, ES, FR, PT, SW, TL, YO, ZH, KO)
+- 📦 **Hymn Bundle** - Optional high-quality collections (including CAC GHB/YHB) separated for small base size
 
 ## 🚀 Quick Start
 
@@ -47,7 +48,7 @@ Height: 1080
 #### Step 3: Import Your Hymns
 
 - Click **Import** button in the dock
-- Select your .txt or .json hymn file
+- Select your `.txt` or `.json` hymn file from the **Hymn Bundle**
 - Start displaying hymns!
 
 ### Alternative: Python HTTP Server
@@ -138,6 +139,13 @@ HymnFlow supports multiple languages for the user interface:
 - 🇨🇳 **Mandarin Chinese** (zh - 中文)
 - 🇰🇷 **Korean** (ko - 한국어)
 
+### Official Hymn Collections
+
+The v2.3.0 release introduces the **Hymn Bundle**, featuring:
+- **CAC GHB**: Christ Apostolic Church Gospel Hymn Book (English) - 1000 hymns
+- **CAC YHB**: Iwe Orin CAC (Yoruba) - 997 hymns
+- **Standard Library**: FWS, NNBH, UMH, YBH collections
+
 ### Changing Language
 
 1. Open the **OBS Dock** control panel
@@ -205,6 +213,10 @@ public/
 │   ├── txtParser.js
 │   ├── csvParser.js
 │   └── jsonParser.js
+├── hymn-bundle/        # External hymn data (Separate download)
+│   ├── cac_ghb.json
+│   ├── cac_yhb.json
+│   └── ...
 └── obs-setup.html      # Interactive setup wizard
 ```
 

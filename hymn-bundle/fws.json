@@ -1,0 +1,889 @@
+{
+  "source": "The Faith We Sing",
+  "sourceAbbreviation": "FWS",
+  "publisher": "Abingdon Press",
+  "year": 2000,
+  "count": 46,
+  "generatedAt": "2026-01-07T08:01:11.373Z",
+  "hymns": [
+    {
+      "id": "fws_2078",
+      "title": "Alleluia",
+      "author": "Unknown",
+      "verses": [
+        "Praise! Praise God in the temple,\nin the highest heavens!\nPraise! Praise God's mighty deeds\nand nobel majesty!",
+        "Praise! Praise God with trumpet blasts,\nwith lute and harp.\nPraise! Praise God with timbrels and dance,\nwith strings and pipes.",
+        "Praise! Praise God with crashing cymbals,\nwith ringing cybals.\nAll that is alive,\npraise, praise the Lord."
+      ],
+      "chorus": "Alleluia. Alleluia. Alleluia.\nAlleluia. Alleluia. Alleluia.\nNow the Lord is ris'n indeed.",
+      "metadata": {
+        "number": 2078,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.363Z"
+    },
+    {
+      "id": "fws_2072",
+      "title": "Amen, Amen",
+      "author": "Unknown",
+      "verses": [
+        "Amen, amen,\namen, amen, amen.",
+        "O see the little baby\nlying in a manger\non Christmas morning.",
+        "See Jesus in the temple\ntalking to the elders\nhow they all marveled!",
+        "See Jesus at the sea shore\npreaching to the people,\nhealing all the sick ones!",
+        "See Jesus on the cross\nbearing all my sins\nin bitter agony!",
+        "Yes, Jesus died to save us,\nrose on Easter morning,\nand lives forever!",
+        "We're singing Alleluia!\nJesus is my Savior,\nwho lives forever!"
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2072,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.363Z"
+    },
+    {
+      "id": "fws_2166",
+      "title": "Christ Beside Me",
+      "author": "Unknown",
+      "verses": [
+        "Christ beside me, Christ before me,\nChrist behind me King of my heart;\nChrist within me, Christ below me,\nChrist above me never to part.",
+        "Christ on my right hand, Christ on my left hand,\nChrist all around me shield in strife;\nChrist in my sleeping, Christ in my sitting,\nChrist in my rising light of my life.",
+        "Christ beside me, Christ before me,\nChrist behind me King of my heart;\nChrist within me, Christ below me,\nChrist above me never to part."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2166,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.363Z"
+    },
+    {
+      "id": "fws_2084",
+      "title": "Come, Let Us with Our Lord Arise",
+      "author": "Unknown",
+      "verses": [
+        "Come, let us with our Lord arise,\nour Lord, who made both earth and skies:\nwho died to save the world he made,\nand rose triumphant from the dead;\nhe rose, the Prince of life and peace,\nand stamped the day forever his.",
+        "This is the day the Lord has made,\nthat all may see his love displayed,\nmay feel his resurrection's power,\nand rise again, to fall no more,\nin perfect righteousness renewed,\nand filled with all the life of God.",
+        "Then let us render him his own,\nwith solemn prayer approach his throne,\nwith meekness hear the gospel word,\nwith thanks his dying love record,\nour joyful hearts and voices raise,\nand fill his courts with songs of praise."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2084,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.363Z"
+    },
+    {
+      "id": "fws_2124",
+      "title": "Come, O Holy Spirit, Come (Wa Wa Wa Emimimo)",
+      "author": "Unknown",
+      "verses": [
+        "Wa wa wa Emimimo,\nWa wa wa Alagbara,\nWao wao wao."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2124,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.363Z"
+    },
+    {
+      "id": "fws_2191",
+      "title": "Eternal Father, Strong to Save",
+      "author": "Unknown",
+      "verses": [
+        "Eternal Father, strong to save,\nWhose arm has bound the restless wave,\nWho bid the mighty ocean deep\nIts own appointed limits keep:\nO hear us when we cry to thee\nFor those in peril on the sea.",
+        "O Savior, whose almighty word\nThe wind and waves submissive heard,\nWho walked upon the foaming deep,\nAnd calm amid its rage did sleep:\nO hear us when we cry to thee\nFor those in peril on the sea.",
+        "O Holy Spirit, who did brood\nUpon the chaos wild and rude,\nand bid its angry tumult cease,\nand gave, for fierce confusion, peace:\nO hear us when we cry to thee\nFor those in peril on the sea.",
+        "O Trinity of love and power,\nAll travelers guard in danger's hour;\nFrom rock and tempest, fire and foe,\nProtect them wheresoe'er they go:\nThus evermore shall rise to thee\nGlad praise from air and land and sea.\n(As in #538 of The Methodist Hymnal):",
+        "Eternal Father, strong to save,\nWhose arm hath bound the restless wave,\nWho bidst the mighty ocean deep\nIts own appointed limits keep:\nO hear us when we cry to thee\nFor those in peril on the sea.",
+        "O Christ, whose voice the waters heard,\nAnd hushed their raging at thy word,\nWho walkedst on the foaming deep,\nAnd calm amid the storm didst sleep:\nO hear us when we cry to thee\nFor those in peril on the sea.",
+        "O Holy Spirit, who didst brood\nUpon the waters dark and rude,\nand bid their angry tumult cease,\nand give, for wild confusion, peace:\nO hear us when we cry to thee\nFor those in peril on the sea.",
+        "O Trinity of love and power,\nAll travelers guard in danger's hour;\nFrom rock and tempest, fire and foe,\nProtect them wheresoe'er they go:\nThus evermore shall rise to thee\nGlad hymns of praise from land and sea."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2191,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.364Z"
+    },
+    {
+      "id": "fws_2024",
+      "title": "From the Rising of the Sun",
+      "author": "Unknown",
+      "verses": [
+        "From the rising of the sun\nto the going down of the same,\nthe name of the Lord shall be praised.\nFrom the rising of the sun\nto the going down of the same,\nthe name of the Lord shall be praised.\nSo praise ye the Lord.\nPraise ye the Lord.\nFrom the rising of the sun\nto the going down of the same,\nthe name of the Lord shall be praised."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2024,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.364Z"
+    },
+    {
+      "id": "fws_2156",
+      "title": "Give Peace (Da Pacem Cordium)",
+      "author": "Unknown",
+      "verses": [
+        "Give peace to every heart.\nGive peace to every heart.\nGive peace, Lord.\nGive peace, Lord.\n(Latin)\nDa pacem cordium.\nDa pacem cordium.\nDa pacem.\nDa pacem."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2156,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.364Z"
+    },
+    {
+      "id": "fws_2033",
+      "title": "Glory to God",
+      "author": "Unknown",
+      "verses": [
+        "Glory to God, glory to God,\nglory in the highest!\nGlory to God, glory to God,\nglory in the highest!\nTo God be glory forever!\nTo God be glory forever!",
+        "Glory to God, glory to God,\nglory to Christ Jesus!\nGlory to God, glory to God,\nglory to Christ Jesus!\nTo God be glory forever!\nTo God be glory forever!",
+        "Glory to God, glory to God,\nglory to the Spirit!\nGlory to God, glory to God,\nglory to the Spirit!\nTo God be glory forever!\nTo God be glory forever!",
+        "Gloria a Dios, gloria a Dios,\ngloria en los cielos!\nGloria a Dios, gloria a Dios,\ngloria en los cielos!\nA Dios la gloria siempre!\nA Dios la gloria siempre!",
+        "Gloria a Dios, gloria a Dios,\ngloria a Jesucristo!\nGloria a Dios, gloria a Dios,\ngloria a Jesucristo!\nA Dios la gloria siempre!\nA Dios la gloria siempre!",
+        "Gloria a Dios, gloria a Dios,\ngloria al Espiritu!\nGloria a Dios, gloria a Dios,\ngloria al Espiritu!\nA Dios la gloria siempre!\nA Dios la gloria siempre!"
+      ],
+      "chorus": "Alleluia, Amen! Alleluia, Amen!\nAlleluia, Amen! Alleluia, Amen!\nAlleluia, Amen! Alleluia, Amen!",
+      "metadata": {
+        "number": 2033,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.364Z"
+    },
+    {
+      "id": "fws_2049",
+      "title": "God Is Here Today (Dios Esta Aqui)",
+      "author": "Unknown",
+      "verses": [
+        "Dios est aqu,\ntan cierto como el aire que respiro,\ntan cierto como la maana se levanta,\ntan cierto como que le canto y me puede or."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2049,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.365Z"
+    },
+    {
+      "id": "fws_2056",
+      "title": "God Is So Good",
+      "author": "Unknown",
+      "verses": [
+        "God is so good, God is so good,\nGod is so good, God's so good to me.",
+        "God cares for me, God cares for me,\nGod cares for me, God's so good to me.",
+        "God loves me so, God loves me so,\nGod loves me so, God's so good to me.",
+        "God is so good, God is so good,\nGod is so good, God's so good to me."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2056,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.365Z"
+    },
+    {
+      "id": "fws_2208",
+      "title": "Guide My Feet",
+      "author": "Unknown",
+      "verses": [
+        "Guide my feet while I run this race.\nGuide my feet while I run this race.\nGuide my feet while I run this race,\nfor I don't want to run this race in vain!",
+        "Hold my hand while I run this race.\nHold my hand while I run this race.\nHold my hand while I run this race,\nfor I don't want to run this race in vain!",
+        "Stand by me while I run this race.\nStand by me while I run this race.\nStand by me while I run this race,\nfor I don't want to run this race in vain!",
+        "I'm your child while I run this race.\nI'm your child while I run this race.\nI'm your child while I run this race,\nfor I don't want to run this race in vain!",
+        "Search my heart while I run this race.\nSearch my heart while I run this race.\nSearch my heart while I run this race,\nfor I don't want to run this race in vain!",
+        "Guide my feet while I run this race.\nGuide my feet while I run this race.\nGuide my feet while I run this race,\nfor I don't want to run this race in vain!"
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2208,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.365Z"
+    },
+    {
+      "id": "fws_2026",
+      "title": "Halle, Halle, Halleluja",
+      "author": "Unknown",
+      "verses": [
+        "Halle, Halle, Halle-lu-ja!\nHalle, Halle, Halle-lu-ja!\nHalle, Halle, Halle-lu-ja!\nHalleluja! Halle-lu-ja!"
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2026,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.365Z"
+    },
+    {
+      "id": "fws_2146",
+      "title": "His Eye Is On The Sparrow",
+      "author": "Unknown",
+      "verses": [
+        "Why should I feel discouraged?\nWhy should the shadows come?\nWhy should my heart be lonely\nand long for heaven and home,\nWhen Jesus is my portion?\nMy constant friend is he:\nHis eye is on the sparrow,\nand I know he watches me.",
+        "\"Let not your heart be troubled,\"\nhis tender word I hear,\nand resting on his goodness,\nI lose my doubts and fears;\nthough by the path he leadeth\nbut one step I may see:\nHis eye is on the sparrow,\nand I know he watches me.",
+        "Whenever I am tempted,\nwhenever clouds arise,\nwhen song gives place to sighing,\nwhen hope within me dies;\nI draw the closer to him,\nfrom care he sets me free:\nHis eye is on the sparrow,\nand I know he watches me."
+      ],
+      "chorus": "I sing because I'm happy,\nI sing because I'm free,\nfor his eye is on the sparrow,\nand I know he watches me.",
+      "metadata": {
+        "number": 2146,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.365Z"
+    },
+    {
+      "id": "fws_2007",
+      "title": "Holy, Holy, Holy (Santo, Santo, Santo)",
+      "author": "Unknown",
+      "verses": [
+        "Holy, holy, holy.\nMy heart, my heart adores you!\nMy heart knows how to say to you:\nYou are holy, Lord!\nSanto, santo, santo.\nMi corazon te adora!\nMi corazon te sabe decir:\nSanto eres, Dios!"
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2007,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.366Z"
+    },
+    {
+      "id": "fws_2153",
+      "title": "I'm Gonna Live So God Can Use Me",
+      "author": "Unknown",
+      "verses": [
+        "I'm gonna live so God can use me\nanywhere, Lord, anytime!\nI'm gonna live so God can use me\nanywhere, Lord, anytime!",
+        "I'm gonna work so God can use me\nanywhere, Lord, anytime!\nI'm gonna work so God can use me\nanywhere, Lord, anytime!",
+        "I'm gonna pray so God can use me\nanywhere, Lord, anytime!\nI'm gonna pray so God can use me\nanywhere, Lord, anytime!",
+        "I'm gonna sing so God can use me\nanywhere, Lord, anytime!\nI'm gonna sing so God can use me\nanywhere, Lord, anytime!"
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2153,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.366Z"
+    },
+    {
+      "id": "fws_2151",
+      "title": "I'm So Glad Jesus Lifted Me",
+      "author": "Unknown",
+      "verses": [
+        "I'm so glad, Jesus lifted me,\nI'm so glad, Jesus lifted me,\nI'm so glad, Jesus lifted me,\nsinging glory, hallelujah,\nJesus lifted me.",
+        "Satan had me bound, Jesus lifted me,\nSatan had me bound, Jesus lifted me,\nSatan had me bound, Jesus lifted me,\nsinging glory, hallelujah,\nJesus lifted me.",
+        "When I was in trouble, Jesus lifted me,\nwhen I was in trouble, Jesus lifted me,\nwhen I was in trouble, Jesus lifted me,\nsinging glory, hallelujah,\nJesus lifted me.\n(Optional extended ending)\nJesus lifted me."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2151,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.366Z"
+    },
+    {
+      "id": "fws_2145",
+      "title": "I've Got Peace Like a River",
+      "author": "Unknown",
+      "verses": [
+        "I've got peace like a river,\nI've got peace like a river,\nI've got peace like a river in my soul.\nI've got peace like a river,\nI've got peace like a river,\nI've got peace like a river in my soul.",
+        "I've got joy like a fountain,\nI've got joy like a fountain,\nI've got joy like a fountain in my soul.\nI've got joy like a fountain,\nI've got joy like a fountain,\nI've got joy like a fountain in my soul.",
+        "I've got love like an ocean,\nI've got love like an ocean,\nI've got love like an ocean in my soul.\nI've got love like an ocean,\nI've got love like an ocean,\nI've got love like an ocean in my soul."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2145,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.367Z"
+    },
+    {
+      "id": "fws_2250",
+      "title": "I've Just Come from the Fountain",
+      "author": "Unknown",
+      "verses": [
+        "O brother, do you love Jesus?\nYes, yes, I do love my Jesus.\nBrother, do you love Jesus?\nHis name's so sweet. O Lord ...",
+        "O sister, do you love Jesus?\nYes, yes, I do love my Jesus.\nSister, do you love Jesus?\nHis name's so sweet. O Lord ...",
+        "O sinner, do you love Jesus?\nYes, yes, I do love my Jesus.\nSinner do you love Jesus?\nHis name's so sweet. O Lord ..."
+      ],
+      "chorus": "I've just come from the fountain,\nI've just come from the fountain, Lord,\nI've just come from the fountain,\nhis name's so sweet. O Lord,\nI've just come from the fountain,\nI've just come from the fountain, Lord,\nI've just come from the fountain,\nhis name's so sweet.",
+      "metadata": {
+        "number": 2250,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.367Z"
+    },
+    {
+      "id": "fws_2112",
+      "title": "Jesus Walked This Lonesome Valley",
+      "author": "Unknown",
+      "verses": [
+        "Jesus walked this lonesome valley;\nhe had to walk it by himself.\nOh, nobody else could walk it for him;\nhe had to walk it by himself.",
+        "We must walk this lonesome valley;\nwe have to walk it by ourselves.\nOh, nobody else can walk it for us;\nwe have to walk it by ourselves.",
+        "You must go and stand your trial;\nyou have to stand it by yourself.\nOh, nobody else can stand it for you;\nyou have to stand it by yourself."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2112,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.367Z"
+    },
+    {
+      "id": "fws_2099",
+      "title": "Joseph Dearest, Joseph Mine",
+      "author": "Unknown",
+      "verses": [
+        "Joseph dearest, Joseph mine,\nhelp me cradle the child divine;\nGod reward thee and all that's thine\nin paradise, so prays the mother Mary.",
+        "Gladly, dear one, lady mine,\nhelp I cradle this child of thine;\nGod's own light on us both shall shine\nin paradise, as prays the mother Mary.",
+        "All shall come and bow the knee;\nwise and happy their souls shall be,\nloving such a divinity,\nas all may see in Jesus, Son of Mary."
+      ],
+      "chorus": "He came among us at Christmastime,\nat Christmastime, in Bethlehem;\nlet us bring him from far and wide Love's diadem:\nJesus, Jesus,\nlo, he comes, and loves, and saves, and frees us!",
+      "metadata": {
+        "number": 2099,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.367Z"
+    },
+    {
+      "id": "fws_2158",
+      "title": "Just a Closer Walk With Thee",
+      "author": "Unknown",
+      "verses": [
+        "I am weak, but thou art strong;\nJesus, keep me from all wrong;\nI'll be satisfied as long\nas I walk, let me walk close to thee.",
+        "Through this world of toil and snares,\nif I falter, Lord, who cares?\nWho with me my burden shares?\nNone but thee, dear Lord, none but thee.",
+        "When my feeble life is o'er,\ntime for me will be no more;\nguide me gently, safely o'er\nto thy shore, dear Lord, to thy shore."
+      ],
+      "chorus": "Just a closer walk with thee,\ngrant it, Jesus, is my plea,\ndaily walking close to thee:\nLet it be, dear Lord, let it be.",
+      "metadata": {
+        "number": 2158,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.367Z"
+    },
+    {
+      "id": "fws_2179",
+      "title": "Live in Charity (Ubi Caritas)",
+      "author": "Unknown",
+      "verses": [
+        "Live in charity and steadfast love,\nlive in charity; God will dwell with you.\n(Latin)\nUbi caritas et amor,\nubi caritas Deus ibi est."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2179,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.368Z"
+    },
+    {
+      "id": "fws_2149",
+      "title": "Living for Jesus",
+      "author": "Unknown",
+      "verses": [
+        "Living for Jesus a life that is true;\nstriving to please him in all that I do,\nyielding allegiance, gladhearted and free,\nthis is the pathway of blessing for me.",
+        "Living for Jesus who died in my place,\nbearing on Calvary my sin and disgrace,\nsuch love constrains me to answer his call,\nfollow his leading and give him my all.",
+        "Living for Jesus wherever I am,\ndoing each duty in his holy hame,\nwilling to suffer affliction or loss,\ndeeming each trial a part of my cross.",
+        "Living for Jesus through earth's little while,\nmy dearest treasure, the light of his smile,\nseeking the lost ones he died to redeem,\nbringing the weary to find rest in him."
+      ],
+      "chorus": "O Jesus, Lord and Savior,\nI give myself to thee;\nfor thou, in thy atonement,\ndidst give thyself for me;\nI own no other master,\nmy heart shall be thy throne,\nMy life I give, henceforth to live,\nO Christ for thee alone.",
+      "metadata": {
+        "number": 2149,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.368Z"
+    },
+    {
+      "id": "fws_2212",
+      "title": "My Life Flows On (How Can I Keep from Singing)",
+      "author": "Unknown",
+      "verses": [
+        "My life flows on in endless song,\nabove earth's lamentation.\nI hear the clear, though faroff hymn\nthat hails a new creation.",
+        "Through all the tumult and the strife,\nI hear that music ringing.\nIt finds an echo in my soul.\nHow can I keep from singing?",
+        "What though my joys and comforts die?\nI know my Savior liveth.\nWhat though the darkness gather round?\nSongs in the night he giveth.",
+        "The peace of Christ makes fresh my heart,\na fountain ever springing!\nAll things are mine since I am his!\nHow can I keep from singing?"
+      ],
+      "chorus": "No storm can shake my inmost calm\nwhile to that Rock I'm clinging.\nSince love is Lord of heaven and earth,\nhow can I keep from singing?",
+      "metadata": {
+        "number": 2212,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.368Z"
+    },
+    {
+      "id": "fws_2083",
+      "title": "My Song Is Love Unknown",
+      "author": "Unknown",
+      "verses": [
+        "My song is love unknown,\nmy Savior's love to me,\nlove to the loveless shown,\nthat they might lovely be.\nO who am I, that for my sake\nmy God should take frail flesh and die?\nMy God should take frail flesh and die?",
+        "God left the richest throne\nsalvation to bestow;\nbut Christ as flesh and bone\nthe world refused to know.\nBut, O my Friend, my Friend indeed,\nwho at my need did life expend;\nwho at my need did life expend.",
+        "Sometimes they threw down palms\nand sweetest praises sang.\nHosannas and glad psalms\nthrough streets and markets rang.\nThen \"Crucify!\" is all their breath,\nfor blood and death they thirst and cry;\nfor blood and death they thirst and cry.",
+        "What has my Sovereign done?\nWhat makes this rage and spite?\nChrist gave new strength to run,\nrestored the gift of sight.\nSweet injuries! Yet they at these\nthemselves displease, and 'gainst Christ rise;\nthemselves displease, and 'gainst Christ rise.",
+        "I sing my plain belief,\none song my heart outpours:\nnever was pain nor grief,\nnever was love like yours.\nThis is my Friend, in whose sweet praise\nI all my days could gladly spend;\nI all my days could gladly spend."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2083,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.368Z"
+    },
+    {
+      "id": "fws_2139",
+      "title": "Oh, I Know the Lord's Laid His Hands on Me",
+      "author": "Unknown",
+      "verses": [
+        "Did ever you see the like before?\nI know the Lord's laid his hands on me;\nKing Jesus preaching to the poor!\nI know the Lord's laid his hands on me.",
+        "Oh, wasn't that a happy day\nI know the Lord's laid his hands on me;\nwhen Jesus washed my sins away!\nI know the Lord's laid his hands on me.",
+        "__ Some seek the Lord and don't seek him right;\nI know the Lord's laid his hands on me;\nthey fool all day and pray at night,\nI know the Lord's laid his hands on me.",
+        "__ My Lord's done just what he said;\nI know the Lord's laid his hands on me;\nhe's healed the sick and raised the dead;\nI know the Lord's laid his hands on me."
+      ],
+      "chorus": "Oh, I know the Lord, I know the Lord,\nI know the Lord's laid his hands on me.\nOh, I know the Lord, I know the Lord,\nI know the Lord's laid his hands on me.",
+      "metadata": {
+        "number": 2139,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.368Z"
+    },
+    {
+      "id": "fws_2148",
+      "title": "Over My Head",
+      "author": "Unknown",
+      "verses": [
+        "Leader: Oh, when the world is silent,\nPeople: Hmm, I hear music in the air;\nLeader: oh, when the world is silent,\nPeople: hmm, I hear music in the air;\nLeader: Oh, when the world is silent,\nPeople: hmm, I hear music in the air;\nAll: there must be a God somewhere.",
+        "Leader: And when I'm feeling lonely,\nPeople: Hmm, I hear music in the air;\nLeader: and when I'm feeling lonely,\nPeople: hmm, I hear music in the air;\nLeader: and when I'm feeling lonely,\nPeople: hmm, I hear music in the air;\nAll: there must be a God somewhere.",
+        "Leader: Now when I think on Jesus,\nPeople: Hmm, I hear music in the air;\nLeader: now when I think on Jesus,\nPeople: hmm, I hear music in the air;\nLeader: now when I think on Jesus,\nPeople: hmm, I hear music in the air;\nAll: there must be a God somewhere."
+      ],
+      "chorus": "Over my head, I hear music in the air;\nover my head, I hear music in the air;\nover my head, I hear music in the air;\nthere must be a God somewhere.",
+      "metadata": {
+        "number": 2148,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.369Z"
+    },
+    {
+      "id": "fws_2061",
+      "title": "Praise Our God Above (Harvest Song)",
+      "author": "Unknown",
+      "verses": [
+        "Praise our God above, source of boundless love:\nSpring wind, summer rain, then the harvest grain;\npearly rice and corn, fragrant autumn morn.\nThough our work is hard, God gives us reward.",
+        "God's care like a cloak wraps us humble folk,\nmakes all green things grow, ripens what we sow.\nThrough God we are strong; sing our harvest song.\nSing praise, field and flower, praise God's mighty power."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2061,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.369Z"
+    },
+    {
+      "id": "fws_2096",
+      "title": "Rise Up, Shepherd, and Follow (There's a Star in the East)",
+      "author": "Unknown",
+      "verses": [
+        "There's a star in the East\non Christmas morn,\nrise up, shepherd, and follow;\nit will lead to the place\nwhere Christ was born;\nrise up, shepherd, and follow.",
+        "If you take good heed\nto the angel's words;\nrise up, shepherd, and follow;\nyou'll forget your flocks,\nyou'll forget your herds;\nrise up shepherd, and follow."
+      ],
+      "chorus": "Follow, follow,\nrise up, shepherd, and follow,\nfollow the star of Bethlehem.\nRise up, shepherd, and follow.",
+      "metadata": {
+        "number": 2096,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.369Z"
+    },
+    {
+      "id": "fws_2184",
+      "title": "Sent Out in Jesus' Name (Enviado Soy de Dios)",
+      "author": "Unknown",
+      "verses": [
+        "Enviado soy de Dios,\nmi mano lista est\npara construir con El\nun mundo fraternal.\nEnviado soy de Dios,\nmi mano lista est\npara construir con El\nun mundo fraternal.\nLos ngeles no son\nenviados a cambiar\nun mundo de dolor\npor un mundo de paz.\nMe ha tocado a m\nhacerlo realidad;\naydame, Seor,\na hacer tu voluntad."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2184,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.369Z"
+    },
+    {
+      "id": "fws_2140",
+      "title": "Since Jesus Came Into My Heart",
+      "author": "Unknown",
+      "verses": [
+        "What a wonderful change\nin my life has been wrought\nsince Jesus came into my heart!\nI have light in my soul\nfor which long I had sought,\nsince Jesus came into my heart!",
+        "I have ceased from my wan-\nd'ring and going astray,\nsince Jesus came into my heart!\nAnd my sins, which were many,\nare all washed away,\nsince Jesus came into my heart!",
+        "I'm possessed of a hope\nthat is steadfast and sure,\nsince Jesus came into my heart!\nAnd no dark clouds of doubt\nnow my pathway obscure,\nsince Jesus came into my heart!",
+        "There's a light in the valley\nof death now for me,\nsince Jesus came into my heart!\nAnd the gates of the City\nbeyond I can see,\nsince Jesus came into my heart!",
+        "I shall go there to dwell\nin that City, I know,\nsince Jesus came into my heart!\nAnd I'm happy, so happy,\nas onward I go,\nsince Jesus came into my heart!"
+      ],
+      "chorus": "Since Jesus came into my heart,\nsince Jesus came into my heart,\nfloods of joy o'er my soul\nlike the sea billows roll,\nsince Jesus came into my heart.",
+      "metadata": {
+        "number": 2140,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.369Z"
+    },
+    {
+      "id": "fws_2186",
+      "title": "Song of Hope (Canto de Esperanza)",
+      "author": "Unknown",
+      "verses": [
+        "May the God of hope go with us every day,\nfilling all our lives with love and joy and peace.\nMay the God of justice speed us on our way,\nbringing light and hope to every land and race.\n(Spanish)\nDios de la esperanza, danos gozo y paz.\nAl mundo en crisis, habla tu verdad.\nDios de la justicia, mndanos to luz,\nluz y esperanza en la oscuridad."
+      ],
+      "chorus": "Oremos por la paz,\ncantemos de tu amor.\nLuchemos por la paz,\nfieles a ti, Seor.",
+      "metadata": {
+        "number": 2186,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.370Z"
+    },
+    {
+      "id": "fws_2062",
+      "title": "The Lily of the Valley",
+      "author": "Unknown",
+      "verses": [
+        "I have found a friend in Jesus,\nhe's everything to me,\nhe's the fairest of ten thousand to my soul;\nthe Lily of the Valley, in him alone I see\nall I need to cleanse and make me fully whole.\nIn sorrow he's my comfort, in trougle he's my stay,\nhe tells me every care on him to roll.",
+        "He all my grief has taken, and all my sorrows borne;\nin temptation he's my strong and mighty tower;\nI have all for him forsaken, and all my idols torn\nfrom my heart, and now he keeps me by his power.\nThough all the world forsake me, and Satan tempts me sore,\nthrough Jesus I shall safely reach the goal.",
+        "He will never, never leave me, nor yet forsake me here,\nwhile I live by faith and do his blessed will;\na wall of fire about me, I've nothing now to fear,\nwith his manna he my hungry soul shall fill.\nThen sweeping up to glory, to see his blessed face,\nwhere rivers of delight shall ever roll."
+      ],
+      "chorus": "He's the Lily of the Valley,\nthe bright and Morning Star,\nhe's the fairest of ten thousand to my soul.",
+      "metadata": {
+        "number": 2062,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.370Z"
+    },
+    {
+      "id": "fws_2052",
+      "title": "The Lone, Wild Bird",
+      "author": "Unknown",
+      "verses": [
+        "The lone, wild bird in lofty flight\nis still with you, nor leaves your sight.\nAnd I am yours! I rest in you,\nGreat Spirit, come, rest in me, too.",
+        "The ends of earth are in your hand,\nthe sea's dark deep and far off land.\nAnd I am yours! I rest in you,\nGreat Spirit, come, rest in me, too.",
+        "Each secret thought is known to you,\nthe path I walk my whole life through;\nmy days, my deeds, my hopes, my fears,\nmy deepest joys, my silent tears."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2052,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.370Z"
+    },
+    {
+      "id": "fws_2093",
+      "title": "The Snow Lay on the Ground",
+      "author": "Unknown",
+      "verses": [
+        "The snow lay on the ground,\nthe stars shone bright,\nwhen Christ our Lord was born\non Christmas night.\nVenite adoremus Dominum.\nVenite adoremus Dominum.",
+        "'Twas Mary, daughter pure\nof holy Anne,\nthat brought into this world\nthe God made man,\nShe laid him in a stall\nat Bethlehem;\nthe ass and oxen shared\nthe roof with them.",
+        "And thus that manger poor\nbecame a throne,\nfor he whom Mary bore\nwas God the Son.\nO come, then, let us join\nthe heavenly host;\nto praise the Father, Son,\nand Holy Ghost."
+      ],
+      "chorus": "Venite adoremus Dominum.\nVenite adoremus Dominum.",
+      "metadata": {
+        "number": 2093,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.370Z"
+    },
+    {
+      "id": "fws_2098",
+      "title": "The Virgin Mary Had a Baby Boy",
+      "author": "Unknown",
+      "verses": [
+        "The virgin Mary had a baby boy,\nthe virgin Mary had a baby boy,\nthe virgin Mary had a baby boy,\nand they say that his name is Jesus.",
+        "The angels sang with the baby was born,\nthe angels sang with the baby was born,\nthe angels sang with the baby was born,\nand they say that his name is Jesus.",
+        "The shepherds came where the baby was born,\nthe shepherds came where the baby was born,\nthe shepherds came where the baby was born,\nand they say that his name is Jesus.",
+        "The Wise Men came where the baby was born,\nthe Wise Men came where the baby was born,\nthe Wise Men came where the baby was born,\nand they say that his name is Jesus."
+      ],
+      "chorus": "He come from the glory,\nhe come from the glorious kingdom.\nHe come from the glory,\nhe come from the glorious kingdom.\nOh, yes! believer! Oh, yes! believer!\nHe come from the glory,\nhe come from the glorious kingdom.",
+      "metadata": {
+        "number": 2098,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.371Z"
+    },
+    {
+      "id": "fws_2100",
+      "title": "Thou Didst Leave Thy Throne",
+      "author": "Unknown",
+      "verses": [
+        "Thou didst leave thy throne and thy kingly crown,\nwhen thou camest to earth for me;\nbut in Bethlehem's home there was found no room\nfor thy holy nativity.\nO come to my heart, Lord Jesus,\nthere is room in my heart for thee.",
+        "Heaven's arches rang when the angels sang,\nproclaiming thy royal degree;\nbut in lowly birth didst thou come to earth,\nand in greatest humility.\nO come to my heart, Lord Jesus,\nthere is room in my heart for thee.",
+        "The foxes found rest, and the birds their nest\nin the shade of the forest tree;\nbut thy couch was the sod, O thou Son of God,\nin the deserts of Galilee.\nO come to my heart, Lord Jesus,\nthere is room in my heart for thee.",
+        "Thou camest, O Lord, with the living Word\nthat should set thy people free;\nbut with mocking scorn, and with crown of thorn,\nthey bore thee to Calvary.\nO come to my heart, Lord Jesus,\nthere is room in my heart for thee.",
+        "When heav'ns arches shall ring and its choir shall sing\nat thy coming to victory,\nlet thy voice call me home, saying \"Yet there is room,\nthere is room at my side for thee!\"\nAnd my heart shall rejoice, Lord Jesus,\nwhen thou comest and callest for me."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2100,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.371Z"
+    },
+    {
+      "id": "fws_2259",
+      "title": "Victim Divine",
+      "author": "Unknown",
+      "verses": [
+        "Victim Divine, thy grace we claim,\nwhile thus thy precious death we show;\nonce offered up, a spotless Lamb,\nin thy great temple here below,\nthou didst for all our kind atone,\nand standest now before the throne.",
+        "Thou standest in the holiest place,\nas now for guilty sinners slain;\nthy blood of sprinkling speaks, and prays,\nall prevalent for helpless ones;\nthy blood is still our ransom found,\nand spreads salvation all around.",
+        "The smoke of thy atonement here\ndarkened the sun and rent the veil,\nmade the new way to heaven appear,\nand showed the great Invisible;\nwell pleased in thee our God looked down,\nand called his rebels to a crown.",
+        "He still respects thy sacrifice,\nits savor sweet doth always please;\nthe offering smokes through earth and skies,\ndiffusing life, and joy, and peace;\nto these thy lower courts it comes,\nand fills them with divine perfumes.",
+        "We need not go up to heaven,\nto bring the long sought Savior down;\nthou art to all already given,\nthou dost e'en now thy banquet crown;\nTo every faithful soul appear,\nand show thy real presence here!"
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2259,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.371Z"
+    },
+    {
+      "id": "fws_2107",
+      "title": "Wade in the Water",
+      "author": "Unknown",
+      "verses": [
+        "See that host all dressed in white,\nGod's a-gonna trouble the water.\nThe leader looks like the Israelite,\nGod's a-gonna trouble the water.",
+        "See that band all dressed in red,\nGod's a-gonna trouble the water.\nLooks like the band that Moses led,\nGod's a-gonna trouble the water.",
+        "Look over younder, what do I see?\nGod's a-gonna trouble the water.\nThe Holy Ghost a-coming on me,\nGod's a-gonna trouble the water.",
+        "If you don't believe I've been redeemed,\nGod's a-gonna trouble the water.\nJust follow me down to Jordan's stream,\nGod's a-gonna trouble the water."
+      ],
+      "chorus": "Wade inteh water,\nwade in the water, children,\nwade in the water,\nGod's a-gonna trouble the water.",
+      "metadata": {
+        "number": 2107,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.372Z"
+    },
+    {
+      "id": "fws_2229",
+      "title": "We Are One in Christ Jesus (Somos Uno en Christo)",
+      "author": "Unknown",
+      "verses": [
+        "Somos uno en Christo, somos uno,\nSomos uno, uno slo.\nSomos uno en Christo, somos uno,\nSomos uno, uno slo.\nUn solo Dios, un solo Seor,\nuna sola fe, un sola amor,\nun solo bautsmo, uno solo Espritu\ny ese es el Consolador."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2229,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.372Z"
+    },
+    {
+      "id": "fws_2011",
+      "title": "We Sing of Your Glory (Tuya Es la Gloria)",
+      "author": "Unknown",
+      "verses": [
+        "Tuya es la gloria la honra tambien;\ntuya para siempre. Amen. Amen.",
+        "Tuyos los dominios, los tronos tambien;\ntuyos para siempre. Amen. Amen.",
+        "A ti yo me rindo, te adoro tambien;\namor absoluto. Amen. Amen.",
+        "Gloria en las alturas y en la tierra tambien;\ngloria, aleluya. Amen. Amen."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2011,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.372Z"
+    },
+    {
+      "id": "fws_2196",
+      "title": "We Walk by Faith",
+      "author": "Unknown",
+      "verses": [
+        "We walk by faith, an not by sight:\nNo gracious words we hear\nof him who spoke as none e'er spoke,\nbut we believe him near.",
+        "We may not touch his hands and side,\nnor follow where he trod;\nyet in his promise we rejoice,\nand cry, \"My Lord and God!\"",
+        "Help then, O Lord, our unbelief,\nand may our faith abound;\nto call on you when you are near.\nand seek where you are found:",
+        "That when our life of faith is done\nin realms of clearer light\nWe may behold you as you are\nin full and endless sight.",
+        "We walk by faith, an not by sight:\nNo gracious words we hear\nof him who spoke as none e'er spoke,\nbut we believe him near."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2196,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.373Z"
+    },
+    {
+      "id": "fws_2106",
+      "title": "When Jesus Wept",
+      "author": "Unknown",
+      "verses": [
+        "When Jesus wept, the falling tear\nin mercy flowed beyond all bound;\nwhen Jesus groaned, a trembling fear\nseized all the guilty world around."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2106,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.373Z"
+    },
+    {
+      "id": "fws_2077",
+      "title": "You Alone Are Holy (Solo Tu Eres Santo)",
+      "author": "Unknown",
+      "verses": [
+        "Solo tu eres santo, solo tu eres digno,\ntu eres hermoso y maravilloso.\nEn la cruz moriste y resucitaste;\ntu me diste vida y muy pronto volveras."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2077,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.373Z"
+    },
+    {
+      "id": "fws_2063",
+      "title": "You Are Worthy (Eres Digno)",
+      "author": "Unknown",
+      "verses": [
+        "Eres digno, eres digno,\neres digno de adoracin.\nEres digno, eres digno,\neres digno de adoracin.\nRey glorioso, majestuosos,\neres digno de adoracin.\nRey glorioso, majestuosos,\neres digno de adoracin."
+      ],
+      "chorus": "",
+      "metadata": {
+        "number": 2063,
+        "sourceAbbr": "FWS",
+        "source": "The Faith We Sing",
+        "publisher": "Abingdon Press",
+        "year": 2000
+      },
+      "createdAt": "2026-01-07T08:01:11.373Z"
+    }
+  ]
+}

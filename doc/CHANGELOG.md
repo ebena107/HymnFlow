@@ -1,4 +1,26 @@
-# Changelog
+## [2.3.0] - 2026-01-14
+
+### 🌍 Internationalization (i18n) & Optimized Data
+
+**Major Features**: HymnFlow now supports 9 languages for the user interface and features an optimized "Hymn Bundle" architecture.
+
+### Added
+
+- 🌍 Multi-language support for 9 languages: English, Spanish, French, Portuguese, Swahili, Tagalog, Yoruba, Mandarin Chinese, and Korean.
+- ⚙️ Interface Language selector in Settings.
+- 💾 Persistent language preference (saved in localStorage).
+- 🧩 New i18n module for dynamic label switching without page reloads.
+- 📚 **CAC Hymn Collections**: Complete conversion of Christ Apostolic Church (CAC) hymns:
+  - Gospel Hymn Book (English): 1000 hymns.
+  - Iwe Orin CAC (Yoruba): 997 hymns.
+- 📦 **Hymn Bundle**: Moved large JSON collections out of the core plugin to reduce download size (from ~3MB to ~150KB).
+
+### Changed
+
+- Updated `SETUP.md` and `obs-setup.html` with external data import instructions.
+- Optimized `parse_cac_hymns.py` with robust preamble/verse disambiguation for high-quality titles.
+
+---
 
 ## [2.2.0] - 2026-01-08
 

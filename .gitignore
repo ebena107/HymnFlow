@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+raw-hymn-file/
 package-lock.json
 yarn.lock
 

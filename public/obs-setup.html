@@ -112,7 +112,7 @@
     <div class="steps">
       <ol>
         <li>
-          <strong>Add Custom Dock to OBS</strong>
+          <strong>1. Add Custom Dock to OBS</strong>
           <ul>
             <li>Open OBS Studio</li>
             <li>Go to <code>View → Docks → Custom Browser Docks</code></li>
@@ -122,7 +122,20 @@
           </ul>
         </li>
         <li>
-          <strong>Add Browser Source for Overlay</strong>
+          <strong>2. Import Your Hymn Data</strong>
+          <div class="card" style="margin-top: 10px; background: rgba(0,0,0,0.2);">
+             <h4>📥 Get Official Hymns</h4>
+             <p>To keep the initial download small, official hymn books are provided in a separate bundle.</p>
+             <a href="https://github.com/yourusername/HymnFlow/releases" class="btn" style="padding: 10px 20px; font-size: 0.9em;">Download Hymn Bundle (.zip)</a>
+          </div>
+          <ul>
+            <li>Extract the <code>hymn-bundle.zip</code> to your <code>hymn-bundle/</code> folder.</li>
+            <li>In the OBS Dock, click the <strong>Import</strong> button.</li>
+            <li>Select a <code>.json</code> file (e.g., <code>cac_ghb.json</code>).</li>
+          </ul>
+        </li>
+        <li>
+          <strong>3. Add Browser Source for Overlay</strong>
           <ul>
             <li>In OBS, add a new <strong>Browser Source</strong></li>
             <li>Name: <code>Hymn Lower-Third</code></li>
@@ -130,14 +143,6 @@
             <li>Width: <code>1920</code>, Height: <code>1080</code></li>
             <li>Check ✅ <strong>Shutdown source when not visible</strong></li>
             <li>Click <strong>OK</strong></li>
-          </ul>
-        </li>
-        <li>
-          <strong>Test It!</strong>
-          <ul>
-            <li>Click a hymn in the dock</li>
-            <li>Lower-third should appear automatically in OBS preview</li>
-            <li>Use arrow keys to navigate - overlay updates instantly</li>
           </ul>
         </li>
       </ol>
