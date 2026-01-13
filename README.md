@@ -13,7 +13,7 @@
 - 📱 **Responsive Design** - Works on any screen size including vertical displays
 - 🔄 **Real-Time Updates** - Overlay updates automatically as you navigate
 - 💾 **Persistent Storage** - Hymns saved in browser localStorage
-- 🌍 **Multi-Language Support** - Interface available in 6 languages (English, Spanish, French, Portuguese, Swahili, Tagalog)
+- 🌍 **Multi-Language Support** - Interface available in 9 languages (English, Spanish, French, Portuguese, Swahili, Tagalog, Yoruba, Mandarin Chinese, Korean)
 
 ## 🚀 Quick Start
 
@@ -134,6 +134,9 @@ HymnFlow supports multiple languages for the user interface:
 - 🇵🇹 **Portuguese** (pt - Português)
 - 🇹🇿 **Swahili** (sw - Kiswahili)
 - 🇵🇭 **Tagalog** (tl)
+- 🇳🇬 **Yoruba** (yo - Yorùbá)
+- 🇨🇳 **Mandarin Chinese** (zh - 中文)
+- 🇰🇷 **Korean** (ko - 한국어)
 
 ### Changing Language
 
