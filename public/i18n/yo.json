@@ -1,0 +1,162 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Olùdarí ìsàlẹ̀ mẹ́ta fún OBS ORIN"
+  },
+  "storage": {
+    "type": "localStorage",
+    "ready": "Ṣetán (localStorage)"
+  },
+  "hymns": {
+    "title": "Àwọn Orin-Ìyìn",
+    "add": "+ Fi Kún",
+    "edit": "✏️ Ṣàtúnṣe",
+    "remove": "- Yọ Kúrò",
+    "search": "Wá àwọn orin",
+    "noHymnsFound": "Kò sí orin kan tí a rí",
+    "verses": "ẹsẹ orin",
+    "unknown": "Àìmọ̀"
+  },
+  "services": {
+    "title": "Àwọn Ìsìn",
+    "new": "+ Tuntun",
+    "noServices": "Kò sí ìsìn tí a dá",
+    "load": "Gbé Wọlé",
+    "edit": "Ṣàtúnṣe",
+    "delete": "Pa Rẹ́",
+    "name": "Orúkọ ìsìn (bí àpẹẹrẹ, Òwúrọ̀ Ọjọ́ Ìsìmí)",
+    "addHymn": "+ Fi Orin Kún",
+    "save": "Fi Ìsìn Pamọ́",
+    "cancel": "Fagilé",
+    "noHymnsAdded": "Kò sí orin tí a fi kún",
+    "loaded": "Ìsìn tí a gbé wọlé",
+    "deleted": "Ìsìn tí a pa rẹ́",
+    "saved": "Ìsìn tí a fi pamọ́"
+  },
+  "navigation": {
+    "previous": "⟵ Ìṣáájú",
+    "next": "Tẹ̀lé ⟶",
+    "previousLine": "⬆ Ìlà Ìṣáájú",
+    "nextLine": "⬇ Ìlà Tẹ̀lé",
+    "jumpChorus": "Fò Lọ sí Egbè Orin",
+    "emergencyClear": "Pa Kúrò Lẹ́sẹ̀kẹsẹ̀",
+    "reset": "Àtúnbẹ̀rẹ̀",
+    "verse": "Ẹsẹ",
+    "lines": "Àwọn Ìlà",
+    "of": "nínú",
+    "chorus": "Egbè Orin"
+  },
+  "display": {
+    "toggle": "Ṣàfihàn",
+    "toggleTooltip": "Yí ìfihàn padà (Space)",
+    "live": "LÁÌFỌ́WỌ́YÌ",
+    "linesPerDisplay": "Àwọn ìlà fún ìfihàn"
+  },
+  "preview": {
+    "title": "Àkọ́kọ́ Wò Orin",
+    "noHymn": "Kò sí orin tí a yàn"
+  },
+  "styles": {
+    "title": "Àwọn Ìrísí",
+    "fontFamily": "Ìdílé Ọ̀nà-kíkọ",
+    "fontSize": "Ìwọ̀n Ọ̀nà-kíkọ",
+    "bold": "Nípọn",
+    "italic": "Títẹ̀",
+    "shadow": "Òjijì",
+    "glow": "Ìmọ́lẹ̀",
+    "outline": "Ààlà",
+    "outlineColor": "Àwọ̀ Ààlà",
+    "outlineWidth": "Ìfẹ̀ Ààlà",
+    "textColor": "Àwọ̀ Ọ̀rọ̀",
+    "bgType": "Irú Ẹ̀yìn",
+    "bgColorA": "Àwọ̀ Ẹ̀yìn A",
+    "bgColorB": "Àwọ̀ Ẹ̀yìn B (fún gradient)",
+    "animation": "Ìṣípayá",
+    "position": "Ipò"
+  },
+  "bgTypes": {
+    "transparent": "Tó ní Ìmọ́lẹ̀ kọjá",
+    "solid": "Líle",
+    "gradient": "Ìdàpọ̀ Àwọ̀"
+  },
+  "animations": {
+    "fade": "Ìdípọ̀",
+    "slide": "Ìyípadà",
+    "none": "Kò sí"
+  },
+  "positions": {
+    "bottom": "Ìsàlẹ̀ Mẹ́ta",
+    "middle": "Àárín",
+    "top": "Òkè"
+  },
+  "import": {
+    "button": "Gbé Wọlé",
+    "title": "Gbé àwọn orin wọlé láti fáìlì",
+    "tooltip": "Gbé àwọn orin wọlé láti TXT, CSV, tàbí JSON"
+  },
+  "export": {
+    "button": "Gbé Jáde",
+    "title": "Gbé àwọn orin jáde sí JSON",
+    "exported": "Àwọn orin tí a gbé jáde hymns.json"
+  },
+  "modal": {
+    "editHymn": "Ṣàtúnṣe Orin",
+    "addHymn": "Fi Orin Tuntun Kún",
+    "hymnNumber": "Nọ́mbà Orin",
+    "sourceAbbr": "Àkọ́lé Orísun",
+    "sourceName": "Orúkọ Orísun",
+    "title": "Àkọlé",
+    "author": "Olùkọ̀wé",
+    "verses": "Àwọn Ẹsẹ",
+    "versesPlaceholder": "fi ààyè kòfò ya àwọn ẹsẹ",
+    "chorus": "Egbè Orin (kò dandan)",
+    "cancel": "Fagilé",
+    "save": "Fi Àyípadà Pamọ́",
+    "required": "*"
+  },
+  "messages": {
+    "noHymnSelected": "Kò sí orin tí a yàn",
+    "noHymnToEdit": "Kò sí orin tí a yàn láti ṣàtúnṣe",
+    "deleteConfirm": "Pa \"{title}\" rẹ́?",
+    "deleteService": "Pa ìsìn yìí rẹ́?",
+    "titleRequired": "Àkọlé ṣe pàtàkì",
+    "verseRequired": "Ó kéré tán ẹsẹ kan ṣe pàtàkì",
+    "serviceNameRequired": "Orúkọ ìsìn ṣe pàtàkì",
+    "addHymnToService": "Fi ó kéré tán orin kan kún ìsìn náà",
+    "selectHymnFirst": "Yan orin kan ní àkọ́kọ́",
+    "noChorusAvailable": "Kò sí egbè orin fún orin yìí",
+    "importFailed": "Ìgbéwọlé kò ṣàṣeyọrí",
+    "hymnAdded": "Orin tí a fi kún",
+    "hymnUpdated": "Orin tí a ṣàtúnṣe",
+    "validationFailed": "Ìfọwọ́sí orin kò ṣàṣeyọrí",
+    "serviceValidationFailed": "Ìfọwọ́sí ìsìn kò ṣàṣeyọrí"
+  },
+  "tooltips": {
+    "previousVerse": "Ẹsẹ ìṣáájú (Ọ̀pá òsì)",
+    "nextVerse": "Ẹsẹ tẹ̀lé (Ọ̀pá ọ̀tún)",
+    "previousLine": "Ìlà ìṣáájú (Ọ̀pá òkè)",
+    "nextLine": "Ìlà tẹ̀lé (Ọ̀pá ìsàlẹ̀)",
+    "jumpChorus": "Ṣàfihàn egbè orin tí ó bá wà",
+    "emergencyClear": "Fi ìfihàn pamọ́ lẹ́sẹ̀kẹsẹ̀",
+    "reset": "Tún bẹ̀rẹ̀ sí ẹsẹ àkọ́kọ́, ìlà àkọ́kọ́",
+    "addHymn": "Fi orin tuntun kún",
+    "editHymn": "Ṣàtúnṣe orin tí a yàn",
+    "removeHymn": "Yọ orin tí a yàn kúrò",
+    "createService": "Dá ìsìn tuntun"
+  },
+  "aria": {
+    "search": "Wá orin nípa àkọlé, olùkọ̀wé, tàbí nọ́mbà",
+    "hymnsList": "Ilé-ìkàwé orin",
+    "servicesList": "Àwọn ìsìn tí a fi pamọ́",
+    "storageType": "Irú ìfipamọ́",
+    "toggleDisplay": "Yí ìfihàn padà",
+    "linesPerDisplay": "Àwọn ìlà fún ìfihàn",
+    "outlineColor": "Àwọ̀ ààlà",
+    "outlineWidth": "Ìfẹ̀ ààlà ní àwọn píkísẹ̀lì"
+  },
+  "language": {
+    "label": "Èdè",
+    "english": "English",
+    "yoruba": "Yorùbá"
+  }
+}

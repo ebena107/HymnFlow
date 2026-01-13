@@ -203,9 +203,12 @@
 
   function renderList() {
     if (!filtered.length) {
-      listEl.innerHTML = '<div class="list-item">No hymns found</div>';
+      const noHymnsText = window.i18n ? window.i18n.t('hymns.noHymnsFound') : 'No hymns found';
+      listEl.innerHTML = `<div class="list-item">${noHymnsText}</div>`;
       return;
     }
+    const unknownText = window.i18n ? window.i18n.t('hymns.unknown') : 'Unknown';
+    const versesText = window.i18n ? window.i18n.t('hymns.verses') : 'verse(s)';
     listEl.innerHTML = filtered.map(h => {
       // Build hymn reference (sourceAbbr + number, or just number)
       const sourceAbbr = h.metadata?.sourceAbbr || '';
@@ -217,12 +220,12 @@
         hymnRef = `${number} - `;
       }
       const safeTitle = escapeHtml(hymnRef + h.title);
-      const safeAuthor = escapeHtml(h.author || 'Unknown');
+      const safeAuthor = escapeHtml(h.author || unknownText);
       const isActive = currentHymn && currentHymn.id === h.id ? ' active' : '';
       return `
       <div class="list-item${isActive}" data-id="${h.id}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
         <div class="title">${safeTitle}</div>
-        <div class="meta">${safeAuthor} • ${h.verses.length} verse(s)</div>
+        <div class="meta">${safeAuthor} • ${h.verses.length} ${versesText}</div>
       </div>`;
     }).join('');
   }
@@ -239,24 +242,27 @@
 
   function updatePreview() {
     if (!currentHymn) {
-      currentTitleEl.textContent = 'No hymn selected';
+      currentTitleEl.textContent = window.i18n ? window.i18n.t('preview.noHymn') : 'No hymn selected';
       verseInfoEl.textContent = '-';
       previewEl.textContent = '';
       return;
     }
     currentTitleEl.textContent = currentHymn.title;
-    currentTitleEl.textContent = currentHymn.title;
 
     let lines = [];
     let label = '';
+    const verseText = window.i18n ? window.i18n.t('navigation.verse') : 'Verse';
+    const linesText = window.i18n ? window.i18n.t('navigation.lines') : 'Lines';
+    const ofText = window.i18n ? window.i18n.t('navigation.of') : 'of';
+    const chorusText = window.i18n ? window.i18n.t('navigation.chorus') : 'Chorus';
 
     if (isShowingChorus && currentHymn.chorus) {
       lines = currentHymn.chorus.split('\n');
-      label = `Chorus · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
+      label = `${chorusText} · ${linesText} ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} ${ofText} ${lines.length}`;
     } else {
-      const verseText = currentHymn.verses[currentVerse] || '';
-      lines = verseText.split('\n');
-      label = `Verse ${currentVerse + 1}/${currentHymn.verses.length} · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
+      const verseText_ = currentHymn.verses[currentVerse] || '';
+      lines = verseText_.split('\n');
+      label = `${verseText} ${currentVerse + 1}/${currentHymn.verses.length} · ${linesText} ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} ${ofText} ${lines.length}`;
     }
 
     const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
@@ -678,9 +684,15 @@
   function renderServicesList() {
     const listEl = document.getElementById('servicesList');
     if (services.length === 0) {
-      listEl.innerHTML = '<div class="service-item" style="justify-content: center; color: var(--text-muted);">No services created</div>';
+      const noServicesText = window.i18n ? window.i18n.t('services.noServices') : 'No services created';
+      listEl.innerHTML = `<div class="service-item" style="justify-content: center; color: var(--text-muted);">${noServicesText}</div>`;
       return;
     }
+    const loadText = window.i18n ? window.i18n.t('services.load') : 'Load';
+    const editText = window.i18n ? window.i18n.t('services.edit') : 'Edit';
+    const deleteText = window.i18n ? window.i18n.t('services.delete') : 'Del';
+    const hymnsText = window.i18n ? window.i18n.t('hymns.verses') : 'hymn(s)';
+    
     listEl.innerHTML = services.map(service => {
       const isActive = currentService && currentService.id === service.id;
       const hymnsHtml = isActive ? service.hymns.map((hymnId, index) => {
@@ -702,12 +714,12 @@
         <div class="service-item${isActive ? ' active' : ''}" data-service-id="${service.id}">
           <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
             <div class="service-item-name">${safeServiceName}</div>
-            <div class="service-item-count">${service.hymns.length} hymn(s)</div>
+            <div class="service-item-count">${service.hymns.length} ${hymnsText}</div>
           </div>
           <div class="service-item-actions">
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">Load</button>
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">Edit</button>
-            <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">Del</button>
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">${loadText}</button>
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">${editText}</button>
+            <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">${deleteText}</button>
           </div>
           ${isActive ? `<div class="service-hymns-list">${hymnsHtml}</div>` : ''}
         </div>
@@ -1116,12 +1128,42 @@
   }
 
   // Initialize
-  loadHymns();
-  loadSettings();
-  loadServices();
-  buildSearchIndex();
-  renderList();
-  renderServicesList();
-  attachEvents();
-  statusEl.textContent = 'Ready (localStorage)';
+  async function initializeApp() {
+    // Initialize i18n first
+    if (window.i18n) {
+      const currentLang = await window.i18n.init();
+      const langSelector = document.getElementById('languageSelector');
+      if (langSelector) {
+        langSelector.value = currentLang;
+        langSelector.addEventListener('change', async (e) => {
+          await window.i18n.setLanguage(e.target.value);
+          // Re-render dynamic content with new translations
+          renderList();
+          renderServicesList();
+          updatePreview();
+          statusEl.textContent = window.i18n.t('storage.ready');
+        });
+      }
+
+      // Listen for language changes from other sources
+      window.addEventListener('languageChanged', () => {
+        renderList();
+        renderServicesList();
+        updatePreview();
+        statusEl.textContent = window.i18n.t('storage.ready');
+      });
+    }
+
+    loadHymns();
+    loadSettings();
+    loadServices();
+    buildSearchIndex();
+    renderList();
+    renderServicesList();
+    attachEvents();
+    statusEl.textContent = window.i18n ? window.i18n.t('storage.ready') : 'Ready (localStorage)';
+  }
+
+  // Start the app
+  initializeApp();
 })();

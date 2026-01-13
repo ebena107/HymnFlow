@@ -85,6 +85,27 @@ body {
   gap: 8px;
 }
 
+.language-selector {
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.language-selector:hover {
+  background: var(--card);
+  border-color: var(--primary);
+}
+
+.language-selector:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
 .status-badge {
   background: var(--card-hover);
   padding: 4px 10px;

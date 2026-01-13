@@ -1,0 +1,162 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Lower-third controller for OBS HYMN"
+  },
+  "storage": {
+    "type": "localStorage",
+    "ready": "Ready (localStorage)"
+  },
+  "hymns": {
+    "title": "Hymns",
+    "add": "+ Add",
+    "edit": "✏️ Edit",
+    "remove": "- Remove",
+    "search": "Search hymns",
+    "noHymnsFound": "No hymns found",
+    "verses": "verse(s)",
+    "unknown": "Unknown"
+  },
+  "services": {
+    "title": "Services",
+    "new": "+ New",
+    "noServices": "No services created",
+    "load": "Load",
+    "edit": "Edit",
+    "delete": "Del",
+    "name": "Service name (e.g., Sunday Morning)",
+    "addHymn": "+ Add Hymn",
+    "save": "Save Service",
+    "cancel": "Cancel",
+    "noHymnsAdded": "No hymns added yet",
+    "loaded": "Loaded service",
+    "deleted": "Service deleted",
+    "saved": "Service saved"
+  },
+  "navigation": {
+    "previous": "⟵ Previous",
+    "next": "Next ⟶",
+    "previousLine": "⬆ Previous Line",
+    "nextLine": "⬇ Next Line",
+    "jumpChorus": "Jump to Chorus",
+    "emergencyClear": "Emergency Clear",
+    "reset": "Reset",
+    "verse": "Verse",
+    "lines": "Lines",
+    "of": "of",
+    "chorus": "Chorus"
+  },
+  "display": {
+    "toggle": "Display",
+    "toggleTooltip": "Toggle overlay display (Space)",
+    "live": "LIVE",
+    "linesPerDisplay": "Lines per display"
+  },
+  "preview": {
+    "title": "Hymn Previews",
+    "noHymn": "No hymn selected"
+  },
+  "styles": {
+    "title": "Styles",
+    "fontFamily": "Font Family",
+    "fontSize": "Font size",
+    "bold": "Bold",
+    "italic": "Italic",
+    "shadow": "Shadow",
+    "glow": "Glow",
+    "outline": "Outline",
+    "outlineColor": "Outline Color",
+    "outlineWidth": "Outline Width",
+    "textColor": "Text Color",
+    "bgType": "Background type",
+    "bgColorA": "Background color A",
+    "bgColorB": "Background color B (for gradient)",
+    "animation": "Animation",
+    "position": "Position"
+  },
+  "bgTypes": {
+    "transparent": "Transparent",
+    "solid": "Solid",
+    "gradient": "Gradient"
+  },
+  "animations": {
+    "fade": "Fade",
+    "slide": "Slide",
+    "none": "None"
+  },
+  "positions": {
+    "bottom": "Bottom Third",
+    "middle": "Middle",
+    "top": "Top"
+  },
+  "import": {
+    "button": "Import",
+    "title": "Import hymns from file",
+    "tooltip": "Import hymns from TXT, CSV, or JSON file"
+  },
+  "export": {
+    "button": "Export",
+    "title": "Export hymns to JSON file",
+    "exported": "Exported hymns.json"
+  },
+  "modal": {
+    "editHymn": "Edit Hymn",
+    "addHymn": "Add New Hymn",
+    "hymnNumber": "Hymn Number",
+    "sourceAbbr": "Source Abbreviation",
+    "sourceName": "Source Name",
+    "title": "Title",
+    "author": "Author",
+    "verses": "Verses",
+    "versesPlaceholder": "separate verses with blank line",
+    "chorus": "Chorus (optional)",
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "required": "*"
+  },
+  "messages": {
+    "noHymnSelected": "No hymn selected",
+    "noHymnToEdit": "No hymn selected to edit",
+    "deleteConfirm": "Delete \"{title}\"?",
+    "deleteService": "Delete this service?",
+    "titleRequired": "Title is required",
+    "verseRequired": "At least one verse is required",
+    "serviceNameRequired": "Service name is required",
+    "addHymnToService": "Add at least one hymn to the service",
+    "selectHymnFirst": "Select a hymn first",
+    "noChorusAvailable": "No chorus available for this hymn",
+    "importFailed": "Import failed",
+    "hymnAdded": "Hymn added",
+    "hymnUpdated": "Hymn updated",
+    "validationFailed": "Hymn validation failed",
+    "serviceValidationFailed": "Service validation failed"
+  },
+  "tooltips": {
+    "previousVerse": "Previous verse (Left arrow)",
+    "nextVerse": "Next verse (Right arrow)",
+    "previousLine": "Previous line window (Up arrow)",
+    "nextLine": "Next line window (Down arrow)",
+    "jumpChorus": "Display chorus if available",
+    "emergencyClear": "Immediately hide overlay from stream",
+    "reset": "Reset to first verse, first line",
+    "addHymn": "Add new hymn",
+    "editHymn": "Edit selected hymn",
+    "removeHymn": "Remove selected hymn",
+    "createService": "Create new service"
+  },
+  "aria": {
+    "search": "Search hymns by title, author, or number",
+    "hymnsList": "Hymns library",
+    "servicesList": "Saved services",
+    "storageType": "Storage type",
+    "toggleDisplay": "Toggle overlay display",
+    "linesPerDisplay": "Lines per display",
+    "outlineColor": "Outline color",
+    "outlineWidth": "Outline width in pixels"
+  },
+  "language": {
+    "label": "Language",
+    "english": "English",
+    "yoruba": "Yoruba"
+  }
+}
