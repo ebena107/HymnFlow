@@ -960,6 +960,42 @@
     document.getElementById('position').value = settings.position;
   }
 
+  // ========================================
+  // Language Selector Handler
+  // ========================================
+  function setupLanguageSelector() {
+    const languageSelect = document.getElementById('languageSelect');
+    if (!languageSelect || !window.HymnFlowI18n) return;
+
+    // Set current language in selector
+    languageSelect.value = window.HymnFlowI18n.getCurrentLanguage();
+
+    // Handle language change
+    languageSelect.addEventListener('change', async (e) => {
+      const newLang = e.target.value;
+      const success = await window.HymnFlowI18n.changeLanguage(newLang);
+      if (success) {
+        // Re-render lists to update any dynamic content
+        renderList();
+        renderServicesList();
+        if (currentHymn) {
+          updatePreview();
+        }
+      }
+    });
+
+    // Listen for language changes from other sources
+    window.addEventListener('languageChanged', () => {
+      languageSelect.value = window.HymnFlowI18n.getCurrentLanguage();
+      // Re-render lists to update dynamic content
+      renderList();
+      renderServicesList();
+      if (currentHymn) {
+        updatePreview();
+      }
+    });
+  }
+
   // Initialize
   loadHymns();
   loadSettings();
@@ -968,5 +1004,6 @@
   renderList();
   renderServicesList();
   attachEvents();
+  setupLanguageSelector();
   statusEl.textContent = 'Ready (localStorage)';
 })();

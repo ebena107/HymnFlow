@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN",
+    "status": {
+      "live": "MOJA KWA MOJA",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Nyimbo",
+    "searchPlaceholder": "Tafuta nyimbo",
+    "searchLabel": "Tafuta nyimbo kwa jina, mwandishi, au nambari",
+    "noHymnsFound": "Hakuna nyimbo zilizopatikana",
+    "selectedTitle": "Jina la wimbo uliochaguliwa",
+    "buttons": {
+      "add": "+ Ongeza",
+      "edit": "✏️ Hariri",
+      "remove": "- Ondoa",
+      "import": "Ingiza",
+      "export": "Toa"
+    },
+    "labels": {
+      "hymnNumber": "Nambari ya wimbo",
+      "sourceAbbr": "Kifupisho cha chanzo",
+      "sourceName": "Jina la chanzo",
+      "title": "Jina",
+      "author": "Mwandishi",
+      "verses": "Beti",
+      "chorus": "Kiitikio",
+      "versesSeparator": "(tenganisha beti kwa mstari tupu)",
+      "chorusOptional": "(si lazima)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "mfano, 123",
+      "sourceAbbr": "mfano, CH, PD, HB",
+      "sourceName": "mfano, Kitabu cha Nyimbo za Kanisa, Eneo la Umma",
+      "title": "Jina la wimbo",
+      "author": "Jina la mwandishi",
+      "verses": "Maandishi ya beti ya 1\n\nMaandishi ya beti ya 2\n\nMaandishi ya beti ya 3",
+      "chorus": "Maandishi ya kiitikio"
+    }
+  },
+  "services": {
+    "title": "Huduma",
+    "newButton": "+ Mpya",
+    "namePlaceholder": "Jina la huduma (mfano, Jumapili asubuhi)",
+    "buttons": {
+      "addHymn": "+ Ongeza wimbo",
+      "save": "Hifadhi huduma",
+      "cancel": "Ghairi"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Beti {current}/{total} · Mistari {startLine}-{endLine} ya {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Iliyotangulia",
+      "nextVerse": "Ifuatayo ⟶",
+      "prevLine": "⬆ Mstari uliotangulia",
+      "nextLine": "⬇ Mstari ufuatao",
+      "jumpChorus": "Nenda kwa kiitikio",
+      "emergencyClear": "Futa dharura"
+    },
+    "tooltips": {
+      "prevVerse": "Beti iliyotangulia (Mshale wa kushoto)",
+      "nextVerse": "Beti ifuatayo (Mshale wa kulia)",
+      "prevLine": "Dirisha la mstari uliotangulia (Mshale wa juu)",
+      "nextLine": "Dirisha la mstari ufuatao (Mshale wa chini)",
+      "jumpChorus": "Onyesha kiitikio ikiwa inapatikana",
+      "emergencyClear": "Ficha mara moja daraja kutoka kwa mtiririko"
+    }
+  },
+  "display": {
+    "title": "Vidhibiti vya kuonyesha",
+    "displayLabel": "Onyesha",
+    "liveIndicator": "MOJA KWA MOJA",
+    "resetButton": "Weka upya",
+    "resetTooltip": "Weka upya kwa beti ya kwanza, mstari wa kwanza",
+    "linesPerDisplay": "Mistari kwa onyesho"
+  },
+  "preview": {
+    "title": "Maonyesho ya nyimbo"
+  },
+  "styles": {
+    "title": "Mitindo",
+    "fontFamily": "Familia ya fonti",
+    "fontSize": "Ukubwa wa fonti",
+    "bold": "Nzito",
+    "italic": "Italiki",
+    "shadow": "Kivuli",
+    "glow": "Mwangaza",
+    "outline": "Mpaka",
+    "outlineColor": "Rangi ya mpaka",
+    "outlineWidth": "Upana wa mpaka",
+    "textColor": "Rangi ya maandishi",
+    "bgType": "Aina ya mandharinyuma",
+    "bgColorA": "Rangi ya mandharinyuma A",
+    "bgColorB": "Rangi ya mandharinyuma B (kwa mwingiliano)",
+    "animation": "Uhuishaji",
+    "position": "Nafasi",
+    "bgTypes": {
+      "transparent": "Uwazi",
+      "solid": "Imara",
+      "gradient": "Mwingiliano"
+    },
+    "animations": {
+      "fade": "Fifia",
+      "slide": "Teleza",
+      "none": "Hakuna"
+    },
+    "positions": {
+      "bottom": "Sehemu ya chini",
+      "middle": "Katikati",
+      "top": "Juu"
+    }
+  },
+  "modal": {
+    "editHymn": "Hariri wimbo",
+    "addHymn": "Ongeza wimbo",
+    "buttons": {
+      "cancel": "Ghairi",
+      "save": "Hifadhi mabadiliko"
+    }
+  },
+  "settings": {
+    "title": "Mipangilio",
+    "language": "Lugha",
+    "languageLabel": "Lugha ya kiolesura"
+  }
+}

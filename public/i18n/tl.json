@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Tagapangasiwa ng lower-third para sa OBS HYMN",
+    "status": {
+      "live": "LIVE",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Mga Himno",
+    "searchPlaceholder": "Maghanap ng mga himno",
+    "searchLabel": "Maghanap ng mga himno sa pamamagitan ng pamagat, may-akda, o numero",
+    "noHymnsFound": "Walang nahanap na himno",
+    "selectedTitle": "Pamagat ng napiling himno",
+    "buttons": {
+      "add": "+ Magdagdag",
+      "edit": "✏️ I-edit",
+      "remove": "- Alisin",
+      "import": "Mag-import",
+      "export": "Mag-export"
+    },
+    "labels": {
+      "hymnNumber": "Numero ng himno",
+      "sourceAbbr": "Pagdadaglat ng pinagmulan",
+      "sourceName": "Pangalan ng pinagmulan",
+      "title": "Pamagat",
+      "author": "May-akda",
+      "verses": "Mga Taludtod",
+      "chorus": "Koro",
+      "versesSeparator": "(paghiwalayin ang mga taludtod gamit ang blangkong linya)",
+      "chorusOptional": "(opsyonal)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "hal., 123",
+      "sourceAbbr": "hal., CH, PD, HB",
+      "sourceName": "hal., Church Hymnal, Public Domain",
+      "title": "Pamagat ng himno",
+      "author": "Pangalan ng may-akda",
+      "verses": "Teksto ng taludtod 1\n\nTeksto ng taludtod 2\n\nTeksto ng taludtod 3",
+      "chorus": "Teksto ng koro"
+    }
+  },
+  "services": {
+    "title": "Mga Serbisyo",
+    "newButton": "+ Bago",
+    "namePlaceholder": "Pangalan ng serbisyo (hal., Linggo ng umaga)",
+    "buttons": {
+      "addHymn": "+ Magdagdag ng himno",
+      "save": "I-save ang serbisyo",
+      "cancel": "Kanselahin"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Taludtod {current}/{total} · Mga linya {startLine}-{endLine} ng {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Nakaraan",
+      "nextVerse": "Susunod ⟶",
+      "prevLine": "⬆ Nakaraang linya",
+      "nextLine": "⬇ Susunod na linya",
+      "jumpChorus": "Pumunta sa koro",
+      "emergencyClear": "Emergency na pag-clear"
+    },
+    "tooltips": {
+      "prevVerse": "Nakaraang taludtod (Kaliwang arrow)",
+      "nextVerse": "Susunod na taludtod (Kanang arrow)",
+      "prevLine": "Nakaraang window ng linya (Pataas na arrow)",
+      "nextLine": "Susunod na window ng linya (Pababa na arrow)",
+      "jumpChorus": "Ipakita ang koro kung available",
+      "emergencyClear": "Itago kaagad ang overlay mula sa stream"
+    }
+  },
+  "display": {
+    "title": "Mga kontrol sa pagpapakita",
+    "displayLabel": "Ipakita",
+    "liveIndicator": "LIVE",
+    "resetButton": "I-reset",
+    "resetTooltip": "I-reset sa unang taludtod, unang linya",
+    "linesPerDisplay": "Mga linya bawat pagpapakita"
+  },
+  "preview": {
+    "title": "Mga preview ng himno"
+  },
+  "styles": {
+    "title": "Mga Estilo",
+    "fontFamily": "Pamilya ng font",
+    "fontSize": "Laki ng font",
+    "bold": "Bold",
+    "italic": "Italic",
+    "shadow": "Anino",
+    "glow": "Ningning",
+    "outline": "Balangkas",
+    "outlineColor": "Kulay ng balangkas",
+    "outlineWidth": "Lapad ng balangkas",
+    "textColor": "Kulay ng teksto",
+    "bgType": "Uri ng background",
+    "bgColorA": "Kulay ng background A",
+    "bgColorB": "Kulay ng background B (para sa gradient)",
+    "animation": "Animation",
+    "position": "Posisyon",
+    "bgTypes": {
+      "transparent": "Transparent",
+      "solid": "Solid",
+      "gradient": "Gradient"
+    },
+    "animations": {
+      "fade": "Fade",
+      "slide": "Slide",
+      "none": "Wala"
+    },
+    "positions": {
+      "bottom": "Ibabang bahagi",
+      "middle": "Gitna",
+      "top": "Itaas"
+    }
+  },
+  "modal": {
+    "editHymn": "I-edit ang himno",
+    "addHymn": "Magdagdag ng himno",
+    "buttons": {
+      "cancel": "Kanselahin",
+      "save": "I-save ang mga pagbabago"
+    }
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "language": "Wika",
+    "languageLabel": "Wika ng interface"
+  }
+}

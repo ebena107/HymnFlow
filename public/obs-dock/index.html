@@ -5,18 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HymnFlow OBS Dock</title>
   <link rel="stylesheet" href="obs-dock.css">
+  <script src="../i18n/i18n.js"></script>
 </head>
 <body>
   <div class="app">
     <!-- Header with Status Indicator -->
     <header class="header">
       <div class="title-block">
-        <div class="title">HymnFlow Dock</div>
-        <div class="subtitle">Lower-third controller for OBS HYMN</div>
+        <div class="title" data-i18n="app.title">HymnFlow Dock</div>
+        <div class="subtitle" data-i18n="app.subtitle">Lower-third controller for OBS HYMN</div>
       </div>
       <div class="status-indicator">
-        <div class="status-badge" aria-label="Storage type">localStorage</div>
-        <div role="status" aria-live="polite" aria-atomic="true" id="status" class="status-live">LIVE</div>
+        <div class="status-badge" data-i18n="app.status.storage" aria-label="Storage type">localStorage</div>
+        <div role="status" aria-live="polite" aria-atomic="true" id="status" class="status-live" data-i18n="app.status.live">LIVE</div>
       </div>
     </header>
 
@@ -26,19 +27,19 @@
       <!-- Hymns Section -->
       <section class="section">
         <div class="section-header">
-          <h3>Hymns</h3>
+          <h3 data-i18n="hymns.title">Hymns</h3>
           <div class="action-group">
-            <button id="btnAdd" class="btn btn-add" aria-label="Add new hymn" title="Add new hymn">+ Add</button>
-            <button id="btnEdit" class="btn btn-secondary" aria-label="Edit selected hymn" title="Edit selected hymn">✏️ Edit</button>
-            <button id="btnRemove" class="btn btn-remove" aria-label="Remove selected hymn" title="Remove selected hymn">- Remove</button>
+            <button id="btnAdd" class="btn btn-add" data-i18n="hymns.buttons.add" data-i18n-aria="hymns.buttons.add" data-i18n-title="hymns.buttons.add">+ Add</button>
+            <button id="btnEdit" class="btn btn-secondary" data-i18n="hymns.buttons.edit" data-i18n-aria="hymns.buttons.edit" data-i18n-title="hymns.buttons.edit">✏️ Edit</button>
+            <button id="btnRemove" class="btn btn-remove" data-i18n="hymns.buttons.remove" data-i18n-aria="hymns.buttons.remove" data-i18n-title="hymns.buttons.remove">- Remove</button>
           </div>
         </div>
-        <label for="search" class="sr-only">Search hymns by title, author, or number</label>
-        <input id="search" type="text" class="search-input" placeholder="Search hymns" aria-label="Search hymns by title, author, or number">
+        <label for="search" class="sr-only" data-i18n="hymns.searchLabel">Search hymns by title, author, or number</label>
+        <input id="search" type="text" class="search-input" data-i18n-placeholder="hymns.searchPlaceholder" placeholder="Search hymns" data-i18n-aria="hymns.searchLabel" aria-label="Search hymns by title, author, or number">
         <div id="hymnList" class="hymn-list" role="listbox" aria-label="Hymns library"></div>
         <div class="import-export-actions">
-          <button id="btnImport" class="btn btn-secondary" aria-label="Import hymns from file" title="Import hymns from TXT or JSON file">Import</button>
-          <button id="btnExport" class="btn btn-secondary" aria-label="Export hymns to JSON file" title="Export all hymns to JSON file">Export</button>
+          <button id="btnImport" class="btn btn-secondary" data-i18n="hymns.buttons.import" data-i18n-aria="hymns.buttons.import" data-i18n-title="hymns.buttons.import">Import</button>
+          <button id="btnExport" class="btn btn-secondary" data-i18n="hymns.buttons.export" data-i18n-aria="hymns.buttons.export" data-i18n-title="hymns.buttons.export">Export</button>
           <input type="file" id="fileInput" accept=".txt,.json" hidden aria-label="Select hymn file to import">
         </div>
       </section>
@@ -46,17 +47,17 @@
       <!-- Services/Scheduling Section -->
       <section class="section">
         <div class="section-header">
-          <h3>Services</h3>
-          <button id="btnNewService" class="btn btn-add" style="margin: 0;" aria-label="Create new service" title="Create new service">+ New</button>
+          <h3 data-i18n="services.title">Services</h3>
+          <button id="btnNewService" class="btn btn-add" style="margin: 0;" data-i18n="services.newButton" data-i18n-aria="services.newButton" data-i18n-title="services.newButton">+ New</button>
         </div>
         <div id="servicesList" class="services-list" role="list" aria-label="Saved services"></div>
         <div id="serviceEditor" class="service-editor" style="display: none;">
-          <input id="serviceName" type="text" class="search-input" placeholder="Service name (e.g., Sunday Morning)">
+          <input id="serviceName" type="text" class="search-input" data-i18n-placeholder="services.namePlaceholder" placeholder="Service name (e.g., Sunday Morning)">
           <div id="serviceHymns" class="service-hymns"></div>
           <div style="display: flex; gap: 8px; margin-top: 10px;">
-            <button id="btnAddToService" class="btn btn-secondary">+ Add Hymn</button>
-            <button id="btnSaveService" class="btn btn-add">Save Service</button>
-            <button id="btnCancelService" class="btn btn-secondary">Cancel</button>
+            <button id="btnAddToService" class="btn btn-secondary" data-i18n="services.buttons.addHymn">+ Add Hymn</button>
+            <button id="btnSaveService" class="btn btn-add" data-i18n="services.buttons.save">Save Service</button>
+            <button id="btnCancelService" class="btn btn-secondary" data-i18n="services.buttons.cancel">Cancel</button>
           </div>
         </div>
       </section>
@@ -64,17 +65,17 @@
       <!-- Selected Hymn Controls -->
       <section class="section">
         <div class="section-header-single">
-          <h3 id="currentTitle">Selected Hymn Title</h3>
+          <h3 id="currentTitle" data-i18n="hymns.selectedTitle">Selected Hymn Title</h3>
           <div class="verse-info" id="verseInfo">Verse 1/4 · Lines 1-2 of 4</div>
         </div>
         
         <div class="navigation-controls">
-          <button id="btnPrevVerse" class="btn btn-nav" aria-label="Go to previous verse" title="Previous verse (Left arrow)">⟵ Previous</button>
-          <button id="btnNextVerse" class="btn btn-nav" aria-label="Go to next verse" title="Next verse (Right arrow)">Next ⟶</button>
-          <button id="btnPrevLine" class="btn btn-nav" aria-label="Show previous lines" title="Previous line window (Up arrow)">⬆ Previous Line</button>
-          <button id="btnNextLine" class="btn btn-nav" aria-label="Show next lines" title="Next line window (Down arrow)">⬇ Next Line</button>
-          <button id="btnJumpChorus" class="btn btn-nav btn-chorus" aria-label="Jump to chorus" title="Display chorus if available">Jump to Chorus</button>
-          <button id="btnClear" class="btn btn-emergency" aria-label="Emergency clear overlay" title="Immediately hide overlay from stream">Emergency Clear</button>
+          <button id="btnPrevVerse" class="btn btn-nav" data-i18n="navigation.buttons.prevVerse" data-i18n-aria="navigation.buttons.prevVerse" data-i18n-title="navigation.tooltips.prevVerse">⟵ Previous</button>
+          <button id="btnNextVerse" class="btn btn-nav" data-i18n="navigation.buttons.nextVerse" data-i18n-aria="navigation.buttons.nextVerse" data-i18n-title="navigation.tooltips.nextVerse">Next ⟶</button>
+          <button id="btnPrevLine" class="btn btn-nav" data-i18n="navigation.buttons.prevLine" data-i18n-aria="navigation.buttons.prevLine" data-i18n-title="navigation.tooltips.prevLine">⬆ Previous Line</button>
+          <button id="btnNextLine" class="btn btn-nav" data-i18n="navigation.buttons.nextLine" data-i18n-aria="navigation.buttons.nextLine" data-i18n-title="navigation.tooltips.nextLine">⬇ Next Line</button>
+          <button id="btnJumpChorus" class="btn btn-nav btn-chorus" data-i18n="navigation.buttons.jumpChorus" data-i18n-aria="navigation.buttons.jumpChorus" data-i18n-title="navigation.tooltips.jumpChorus">Jump to Chorus</button>
+          <button id="btnClear" class="btn btn-emergency" data-i18n="navigation.buttons.emergencyClear" data-i18n-aria="navigation.buttons.emergencyClear" data-i18n-title="navigation.tooltips.emergencyClear">Emergency Clear</button>
         </div>
       </section>
 
@@ -83,20 +84,20 @@
         <div class="display-controls">
           <div class="display-toggle">
             <label class="toggle-switch" for="displayToggle">
-              <input type="checkbox" id="displayToggle" aria-label="Toggle overlay display">
+              <input type="checkbox" id="displayToggle" data-i18n-aria="display.displayLabel" aria-label="Toggle overlay display">
               <span class="toggle-slider"></span>
             </label>
-            <span class="toggle-label">Display</span>
-            <span class="live-indicator" id="liveIndicator" role="status" aria-live="polite">LIVE</span>
+            <span class="toggle-label" data-i18n="display.displayLabel">Display</span>
+            <span class="live-indicator" id="liveIndicator" role="status" aria-live="polite" data-i18n="display.liveIndicator">LIVE</span>
           </div>
-          <button id="btnReset" class="btn btn-secondary" aria-label="Reset to verse 1" title="Reset to first verse, first line">Reset</button>
+          <button id="btnReset" class="btn btn-secondary" data-i18n="display.resetButton" data-i18n-aria="display.resetButton" data-i18n-title="display.resetTooltip">Reset</button>
         </div>
         
         <div class="lines-control">
-          <label class="control-label" for="linesPerPage">Lines per display</label>
+          <label class="control-label" for="linesPerPage" data-i18n="display.linesPerDisplay">Lines per display</label>
           <div class="slider-container">
             <span class="slider-value" aria-hidden="true">2</span>
-            <input type="range" id="linesPerPage" min="2" max="6" value="2" class="slider" aria-label="Lines per display" aria-valuemin="2" aria-valuemax="6" aria-valuenow="2">
+            <input type="range" id="linesPerPage" min="2" max="6" value="2" class="slider" data-i18n-aria="display.linesPerDisplay" aria-label="Lines per display" aria-valuemin="2" aria-valuemax="6" aria-valuenow="2">
             <div class="slider-marks">
               <span>2</span>
               <span>3</span>
@@ -110,16 +111,34 @@
 
       <!-- Hymn Preview -->
       <section class="section">
-        <h4 class="preview-title">Hymn Previews</h4>
+        <h4 class="preview-title" data-i18n="preview.title">Hymn Previews</h4>
         <div id="preview" class="preview"></div>
+      </section>
+
+      <!-- Language Settings -->
+      <section class="section">
+        <h3 data-i18n="settings.title">Settings</h3>
+        <div class="styles-form">
+          <label class="form-label">
+            <span data-i18n="settings.languageLabel">Interface Language</span>
+            <select id="languageSelect" class="form-select">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="pt">Português</option>
+              <option value="sw">Kiswahili</option>
+              <option value="tl">Tagalog</option>
+            </select>
+          </label>
+        </div>
       </section>
 
       <!-- Styles Section -->
       <section class="section">
-        <h3>Styles</h3>
+        <h3 data-i18n="styles.title">Styles</h3>
         <div class="styles-form">
           <label class="form-label">
-            Font Family
+            <span data-i18n="styles.fontFamily">Font Family</span>
             <select id="fontFamily" class="form-select">
               <option value="Inter, sans-serif">Inter</option>
               <option value="'Segoe UI', sans-serif">Segoe UI</option>
@@ -130,69 +149,69 @@
           </label>
           
           <label class="form-label">
-            Font size <span id="fontSizeValue">48px</span>
+            <span data-i18n="styles.fontSize">Font size</span> <span id="fontSizeValue">48px</span>
             <input type="range" id="fontSize" min="24" max="96" value="48" class="form-slider">
           </label>
           
           <div class="style-options">
-            <label class="checkbox-label"><input type="checkbox" id="bold"> Bold</label>
-            <label class="checkbox-label"><input type="checkbox" id="italic"> Italic</label>
-            <label class="checkbox-label"><input type="checkbox" id="shadow"> Shadow</label>
-            <label class="checkbox-label"><input type="checkbox" id="glow"> Glow</label>
-            <label class="checkbox-label"><input type="checkbox" id="outline"> Outline</label>
+            <label class="checkbox-label"><input type="checkbox" id="bold"> <span data-i18n="styles.bold">Bold</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="italic"> <span data-i18n="styles.italic">Italic</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="shadow"> <span data-i18n="styles.shadow">Shadow</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="glow"> <span data-i18n="styles.glow">Glow</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="outline"> <span data-i18n="styles.outline">Outline</span></label>
           </div>
           
           <div id="outlineControls" class="outline-controls" style="display: none;">
             <label class="form-label">
-              Outline Color
+              <span data-i18n="styles.outlineColor">Outline Color</span>
               <input type="color" id="outlineColor" value="#000000" class="form-color">
             </label>
             
             <label class="form-label">
-              Outline Width <span id="outlineWidthValue">2px</span>
+              <span data-i18n="styles.outlineWidth">Outline Width</span> <span id="outlineWidthValue">2px</span>
               <input type="range" id="outlineWidth" min="1" max="5" value="2" class="form-slider">
             </label>
           </div>
           
           <label class="form-label">
-            Text Color
+            <span data-i18n="styles.textColor">Text Color</span>
             <input type="color" id="textColor" value="#ffffff" class="form-color">
           </label>
           
           <label class="form-label">
-            Background type
+            <span data-i18n="styles.bgType">Background type</span>
             <select id="bgType" class="form-select">
-              <option value="transparent">Transparent</option>
-              <option value="solid">Solid</option>
-              <option value="gradient">Gradient</option>
+              <option value="transparent" data-i18n="styles.bgTypes.transparent">Transparent</option>
+              <option value="solid" data-i18n="styles.bgTypes.solid">Solid</option>
+              <option value="gradient" data-i18n="styles.bgTypes.gradient">Gradient</option>
             </select>
           </label>
           
           <label class="form-label">
-            Background color A
+            <span data-i18n="styles.bgColorA">Background color A</span>
             <input type="color" id="bgColorA" value="#000000" class="form-color">
           </label>
           
           <label class="form-label bg-gradient">
-            Background color B (for gradient)
+            <span data-i18n="styles.bgColorB">Background color B (for gradient)</span>
             <input type="color" id="bgColorB" value="#2b2b2b" class="form-color">
           </label>
           
           <label class="form-label">
-            Animation
+            <span data-i18n="styles.animation">Animation</span>
             <select id="animation" class="form-select">
-              <option value="fade">Fade</option>
-              <option value="slide">Slide</option>
-              <option value="none">None</option>
+              <option value="fade" data-i18n="styles.animations.fade">Fade</option>
+              <option value="slide" data-i18n="styles.animations.slide">Slide</option>
+              <option value="none" data-i18n="styles.animations.none">None</option>
             </select>
           </label>
           
           <label class="form-label">
-            Position
+            <span data-i18n="styles.position">Position</span>
             <select id="position" class="form-select">
-              <option value="bottom">Bottom Third</option>
-              <option value="middle">Middle</option>
-              <option value="top">Top</option>
+              <option value="bottom" data-i18n="styles.positions.bottom">Bottom Third</option>
+              <option value="middle" data-i18n="styles.positions.middle">Middle</option>
+              <option value="top" data-i18n="styles.positions.top">Top</option>
             </select>
           </label>
         </div>
@@ -205,42 +224,42 @@
   <div id="editModal" class="modal" style="display: none;">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 id="modalTitle">Edit Hymn</h3>
+        <h3 id="modalTitle" data-i18n="modal.editHymn">Edit Hymn</h3>
         <button id="btnCloseModal" class="btn-close">&times;</button>
       </div>
       <div class="modal-body">
         <label class="form-label">
-          Hymn Number
-          <input type="number" id="editNumber" class="form-input" placeholder="e.g., 123">
+          <span data-i18n="hymns.labels.hymnNumber">Hymn Number</span>
+          <input type="number" id="editNumber" class="form-input" data-i18n-placeholder="hymns.placeholders.number" placeholder="e.g., 123">
         </label>
         <label class="form-label">
-          Source Abbreviation
-          <input type="text" id="editSourceAbbr" class="form-input" placeholder="e.g., CH, PD, HB" maxlength="5">
+          <span data-i18n="hymns.labels.sourceAbbr">Source Abbreviation</span>
+          <input type="text" id="editSourceAbbr" class="form-input" data-i18n-placeholder="hymns.placeholders.sourceAbbr" placeholder="e.g., CH, PD, HB" maxlength="5">
         </label>
         <label class="form-label">
-          Source Name
-          <input type="text" id="editSource" class="form-input" placeholder="e.g., Church Hymnal, Public Domain">
+          <span data-i18n="hymns.labels.sourceName">Source Name</span>
+          <input type="text" id="editSource" class="form-input" data-i18n-placeholder="hymns.placeholders.sourceName" placeholder="e.g., Church Hymnal, Public Domain">
         </label>
         <label class="form-label">
-          Title *
-          <input type="text" id="editTitle" class="form-input" placeholder="Hymn title" required>
+          <span data-i18n="hymns.labels.title">Title</span> <span data-i18n="hymns.labels.required">*</span>
+          <input type="text" id="editTitle" class="form-input" data-i18n-placeholder="hymns.placeholders.title" placeholder="Hymn title" required>
         </label>
         <label class="form-label">
-          Author
-          <input type="text" id="editAuthor" class="form-input" placeholder="Author name">
+          <span data-i18n="hymns.labels.author">Author</span>
+          <input type="text" id="editAuthor" class="form-input" data-i18n-placeholder="hymns.placeholders.author" placeholder="Author name">
         </label>
         <label class="form-label">
-          Verses * (separate verses with blank line)
-          <textarea id="editVerses" class="form-textarea" rows="10" placeholder="Verse 1 text&#10;&#10;Verse 2 text&#10;&#10;Verse 3 text" required></textarea>
+          <span data-i18n="hymns.labels.verses">Verses</span> <span data-i18n="hymns.labels.required">*</span> <span data-i18n="hymns.labels.versesSeparator">(separate verses with blank line)</span>
+          <textarea id="editVerses" class="form-textarea" rows="10" data-i18n-placeholder="hymns.placeholders.verses" placeholder="Verse 1 text&#10;&#10;Verse 2 text&#10;&#10;Verse 3 text" required></textarea>
         </label>
         <label class="form-label">
-          Chorus (optional)
-          <textarea id="editChorus" class="form-textarea" rows="3" placeholder="Chorus text"></textarea>
+          <span data-i18n="hymns.labels.chorus">Chorus</span> <span data-i18n="hymns.labels.chorusOptional">(optional)</span>
+          <textarea id="editChorus" class="form-textarea" rows="3" data-i18n-placeholder="hymns.placeholders.chorus" placeholder="Chorus text"></textarea>
         </label>
       </div>
       <div class="modal-footer">
-        <button id="btnCancelEdit" class="btn btn-secondary">Cancel</button>
-        <button id="btnSaveEdit" class="btn btn-add">Save Changes</button>
+        <button id="btnCancelEdit" class="btn btn-secondary" data-i18n="modal.buttons.cancel">Cancel</button>
+        <button id="btnSaveEdit" class="btn btn-add" data-i18n="modal.buttons.save">Save Changes</button>
       </div>
     </div>
   </div>

@@ -13,6 +13,7 @@
 - 📱 **Responsive Design** - Works on any screen size including vertical displays
 - 🔄 **Real-Time Updates** - Overlay updates automatically as you navigate
 - 💾 **Persistent Storage** - Hymns saved in browser localStorage
+- 🌍 **Multi-Language Support** - Interface available in 6 languages (English, Spanish, French, Portuguese, Swahili, Tagalog)
 
 ## 🚀 Quick Start
 
@@ -121,6 +122,57 @@ All styling options available in the dock:
 - **Animations**: Fade, slide, or none
 - **Position**: Bottom-third, middle, or top
 
+## 🌍 Internationalization (i18n)
+
+HymnFlow supports multiple languages for the user interface:
+
+### Supported Languages
+
+- 🇬🇧 **English** (en) - Default
+- 🇪🇸 **Spanish** (es - Español)
+- 🇫🇷 **French** (fr - Français)
+- 🇵🇹 **Portuguese** (pt - Português)
+- 🇹🇿 **Swahili** (sw - Kiswahili)
+- 🇵🇭 **Tagalog** (tl)
+
+### Changing Language
+
+1. Open the **OBS Dock** control panel
+2. Scroll to the **Settings** section
+3. Select your preferred language from the **Interface Language** dropdown
+4. The UI will update immediately with all labels, buttons, and tooltips in your selected language
+
+### Language Persistence
+
+Your language preference is automatically saved in browser `localStorage` and will be remembered across sessions.
+
+### Adding New Languages
+
+To add a new language:
+
+1. Create a new translation file in `public/i18n/` (e.g., `de.json` for German)
+2. Copy the structure from `public/i18n/en.json` and translate all strings
+3. Add the language code and name to `AVAILABLE_LANGUAGES` in `public/i18n/i18n.js`
+4. Add a new `<option>` in the language selector in `public/obs-dock/index.html`
+
+Translation files follow a nested JSON structure:
+
+```json
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Controller description"
+  },
+  "hymns": {
+    "title": "Hymns",
+    "buttons": {
+      "add": "+ Add",
+      "edit": "✏️ Edit"
+    }
+  }
+}
+```
+
 ## 📁 Project Structure
 
 ```text
@@ -135,6 +187,14 @@ public/
 │   └── overlay.js
 ├── data/
 │   └── hymns-data.js   # Default hymns library
+├── i18n/               # Internationalization files
+│   ├── i18n.js         # i18n module
+│   ├── en.json         # English translations
+│   ├── es.json         # Spanish translations
+│   ├── fr.json         # French translations
+│   ├── pt.json         # Portuguese translations
+│   ├── sw.json         # Swahili translations
+│   └── tl.json         # Tagalog translations
 ├── parsers/            # Client-side file parsers
 │   ├── txtParser.js
 │   ├── csvParser.js
