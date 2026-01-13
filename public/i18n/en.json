@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Lower-third controller for OBS HYMN",
+    "status": {
+      "live": "LIVE",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Hymns",
+    "searchPlaceholder": "Search hymns",
+    "searchLabel": "Search hymns by title, author, or number",
+    "noHymnsFound": "No hymns found",
+    "selectedTitle": "Selected Hymn Title",
+    "buttons": {
+      "add": "+ Add",
+      "edit": "✏️ Edit",
+      "remove": "- Remove",
+      "import": "Import",
+      "export": "Export"
+    },
+    "labels": {
+      "hymnNumber": "Hymn Number",
+      "sourceAbbr": "Source Abbreviation",
+      "sourceName": "Source Name",
+      "title": "Title",
+      "author": "Author",
+      "verses": "Verses",
+      "chorus": "Chorus",
+      "versesSeparator": "(separate verses with blank line)",
+      "chorusOptional": "(optional)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "e.g., 123",
+      "sourceAbbr": "e.g., CH, PD, HB",
+      "sourceName": "e.g., Church Hymnal, Public Domain",
+      "title": "Hymn title",
+      "author": "Author name",
+      "verses": "Verse 1 text\n\nVerse 2 text\n\nVerse 3 text",
+      "chorus": "Chorus text"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "newButton": "+ New",
+    "namePlaceholder": "Service name (e.g., Sunday Morning)",
+    "buttons": {
+      "addHymn": "+ Add Hymn",
+      "save": "Save Service",
+      "cancel": "Cancel"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Previous",
+      "nextVerse": "Next ⟶",
+      "prevLine": "⬆ Previous Line",
+      "nextLine": "⬇ Next Line",
+      "jumpChorus": "Jump to Chorus",
+      "emergencyClear": "Emergency Clear"
+    },
+    "tooltips": {
+      "prevVerse": "Previous verse (Left arrow)",
+      "nextVerse": "Next verse (Right arrow)",
+      "prevLine": "Previous line window (Up arrow)",
+      "nextLine": "Next line window (Down arrow)",
+      "jumpChorus": "Display chorus if available",
+      "emergencyClear": "Immediately hide overlay from stream"
+    }
+  },
+  "display": {
+    "title": "Display Controls",
+    "displayLabel": "Display",
+    "liveIndicator": "LIVE",
+    "resetButton": "Reset",
+    "resetTooltip": "Reset to first verse, first line",
+    "linesPerDisplay": "Lines per display"
+  },
+  "preview": {
+    "title": "Hymn Previews"
+  },
+  "styles": {
+    "title": "Styles",
+    "fontFamily": "Font Family",
+    "fontSize": "Font size",
+    "bold": "Bold",
+    "italic": "Italic",
+    "shadow": "Shadow",
+    "glow": "Glow",
+    "outline": "Outline",
+    "outlineColor": "Outline Color",
+    "outlineWidth": "Outline Width",
+    "textColor": "Text Color",
+    "bgType": "Background type",
+    "bgColorA": "Background color A",
+    "bgColorB": "Background color B (for gradient)",
+    "animation": "Animation",
+    "position": "Position",
+    "bgTypes": {
+      "transparent": "Transparent",
+      "solid": "Solid",
+      "gradient": "Gradient"
+    },
+    "animations": {
+      "fade": "Fade",
+      "slide": "Slide",
+      "none": "None"
+    },
+    "positions": {
+      "bottom": "Bottom Third",
+      "middle": "Middle",
+      "top": "Top"
+    }
+  },
+  "modal": {
+    "editHymn": "Edit Hymn",
+    "addHymn": "Add Hymn",
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save Changes"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageLabel": "Interface Language"
+  }
+}

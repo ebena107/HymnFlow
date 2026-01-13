@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Controlador de terço inferior para OBS HYMN",
+    "status": {
+      "live": "AO VIVO",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Hinos",
+    "searchPlaceholder": "Pesquisar hinos",
+    "searchLabel": "Pesquisar hinos por título, autor ou número",
+    "noHymnsFound": "Nenhum hino encontrado",
+    "selectedTitle": "Título do hino selecionado",
+    "buttons": {
+      "add": "+ Adicionar",
+      "edit": "✏️ Editar",
+      "remove": "- Remover",
+      "import": "Importar",
+      "export": "Exportar"
+    },
+    "labels": {
+      "hymnNumber": "Número do hino",
+      "sourceAbbr": "Abreviação da fonte",
+      "sourceName": "Nome da fonte",
+      "title": "Título",
+      "author": "Autor",
+      "verses": "Versos",
+      "chorus": "Refrão",
+      "versesSeparator": "(separe os versos com linha em branco)",
+      "chorusOptional": "(opcional)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "ex., 123",
+      "sourceAbbr": "ex., HC, DP, HB",
+      "sourceName": "ex., Hinário Cristão, Domínio Público",
+      "title": "Título do hino",
+      "author": "Nome do autor",
+      "verses": "Texto do verso 1\n\nTexto do verso 2\n\nTexto do verso 3",
+      "chorus": "Texto do refrão"
+    }
+  },
+  "services": {
+    "title": "Serviços",
+    "newButton": "+ Novo",
+    "namePlaceholder": "Nome do serviço (ex., Domingo de manhã)",
+    "buttons": {
+      "addHymn": "+ Adicionar hino",
+      "save": "Salvar serviço",
+      "cancel": "Cancelar"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verso {current}/{total} · Linhas {startLine}-{endLine} de {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Anterior",
+      "nextVerse": "Próximo ⟶",
+      "prevLine": "⬆ Linha anterior",
+      "nextLine": "⬇ Próxima linha",
+      "jumpChorus": "Ir para o refrão",
+      "emergencyClear": "Limpeza de emergência"
+    },
+    "tooltips": {
+      "prevVerse": "Verso anterior (Seta esquerda)",
+      "nextVerse": "Próximo verso (Seta direita)",
+      "prevLine": "Janela de linha anterior (Seta para cima)",
+      "nextLine": "Janela de próxima linha (Seta para baixo)",
+      "jumpChorus": "Exibir refrão se disponível",
+      "emergencyClear": "Ocultar imediatamente a sobreposição da transmissão"
+    }
+  },
+  "display": {
+    "title": "Controles de exibição",
+    "displayLabel": "Exibição",
+    "liveIndicator": "AO VIVO",
+    "resetButton": "Redefinir",
+    "resetTooltip": "Redefinir para o primeiro verso, primeira linha",
+    "linesPerDisplay": "Linhas por exibição"
+  },
+  "preview": {
+    "title": "Visualização de hinos"
+  },
+  "styles": {
+    "title": "Estilos",
+    "fontFamily": "Família da fonte",
+    "fontSize": "Tamanho da fonte",
+    "bold": "Negrito",
+    "italic": "Itálico",
+    "shadow": "Sombra",
+    "glow": "Brilho",
+    "outline": "Contorno",
+    "outlineColor": "Cor do contorno",
+    "outlineWidth": "Largura do contorno",
+    "textColor": "Cor do texto",
+    "bgType": "Tipo de fundo",
+    "bgColorA": "Cor de fundo A",
+    "bgColorB": "Cor de fundo B (para gradiente)",
+    "animation": "Animação",
+    "position": "Posição",
+    "bgTypes": {
+      "transparent": "Transparente",
+      "solid": "Sólido",
+      "gradient": "Gradiente"
+    },
+    "animations": {
+      "fade": "Desvanecer",
+      "slide": "Deslizar",
+      "none": "Nenhum"
+    },
+    "positions": {
+      "bottom": "Terço inferior",
+      "middle": "Meio",
+      "top": "Topo"
+    }
+  },
+  "modal": {
+    "editHymn": "Editar hino",
+    "addHymn": "Adicionar hino",
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Salvar alterações"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "languageLabel": "Idioma da interface"
+  }
+}

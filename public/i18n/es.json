@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Controlador de tercio inferior para OBS HYMN",
+    "status": {
+      "live": "EN VIVO",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Himnos",
+    "searchPlaceholder": "Buscar himnos",
+    "searchLabel": "Buscar himnos por título, autor o número",
+    "noHymnsFound": "No se encontraron himnos",
+    "selectedTitle": "Título del himno seleccionado",
+    "buttons": {
+      "add": "+ Agregar",
+      "edit": "✏️ Editar",
+      "remove": "- Eliminar",
+      "import": "Importar",
+      "export": "Exportar"
+    },
+    "labels": {
+      "hymnNumber": "Número del himno",
+      "sourceAbbr": "Abreviatura de la fuente",
+      "sourceName": "Nombre de la fuente",
+      "title": "Título",
+      "author": "Autor",
+      "verses": "Versos",
+      "chorus": "Coro",
+      "versesSeparator": "(separar versos con línea en blanco)",
+      "chorusOptional": "(opcional)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "ej., 123",
+      "sourceAbbr": "ej., HC, DP, HB",
+      "sourceName": "ej., Himnario Cristiano, Dominio Público",
+      "title": "Título del himno",
+      "author": "Nombre del autor",
+      "verses": "Texto del verso 1\n\nTexto del verso 2\n\nTexto del verso 3",
+      "chorus": "Texto del coro"
+    }
+  },
+  "services": {
+    "title": "Servicios",
+    "newButton": "+ Nuevo",
+    "namePlaceholder": "Nombre del servicio (ej., Domingo por la mañana)",
+    "buttons": {
+      "addHymn": "+ Agregar himno",
+      "save": "Guardar servicio",
+      "cancel": "Cancelar"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verso {current}/{total} · Líneas {startLine}-{endLine} de {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Anterior",
+      "nextVerse": "Siguiente ⟶",
+      "prevLine": "⬆ Línea anterior",
+      "nextLine": "⬇ Siguiente línea",
+      "jumpChorus": "Ir al coro",
+      "emergencyClear": "Borrado de emergencia"
+    },
+    "tooltips": {
+      "prevVerse": "Verso anterior (Flecha izquierda)",
+      "nextVerse": "Siguiente verso (Flecha derecha)",
+      "prevLine": "Ventana de línea anterior (Flecha arriba)",
+      "nextLine": "Ventana de siguiente línea (Flecha abajo)",
+      "jumpChorus": "Mostrar coro si está disponible",
+      "emergencyClear": "Ocultar inmediatamente la superposición de la transmisión"
+    }
+  },
+  "display": {
+    "title": "Controles de visualización",
+    "displayLabel": "Visualización",
+    "liveIndicator": "EN VIVO",
+    "resetButton": "Restablecer",
+    "resetTooltip": "Restablecer al primer verso, primera línea",
+    "linesPerDisplay": "Líneas por visualización"
+  },
+  "preview": {
+    "title": "Vista previa de himnos"
+  },
+  "styles": {
+    "title": "Estilos",
+    "fontFamily": "Familia de fuente",
+    "fontSize": "Tamaño de fuente",
+    "bold": "Negrita",
+    "italic": "Cursiva",
+    "shadow": "Sombra",
+    "glow": "Resplandor",
+    "outline": "Contorno",
+    "outlineColor": "Color del contorno",
+    "outlineWidth": "Ancho del contorno",
+    "textColor": "Color del texto",
+    "bgType": "Tipo de fondo",
+    "bgColorA": "Color de fondo A",
+    "bgColorB": "Color de fondo B (para gradiente)",
+    "animation": "Animación",
+    "position": "Posición",
+    "bgTypes": {
+      "transparent": "Transparente",
+      "solid": "Sólido",
+      "gradient": "Gradiente"
+    },
+    "animations": {
+      "fade": "Desvanecer",
+      "slide": "Deslizar",
+      "none": "Ninguno"
+    },
+    "positions": {
+      "bottom": "Tercio inferior",
+      "middle": "Medio",
+      "top": "Superior"
+    }
+  },
+  "modal": {
+    "editHymn": "Editar himno",
+    "addHymn": "Agregar himno",
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Guardar cambios"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "languageLabel": "Idioma de la interfaz"
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN",
+    "status": {
+      "live": "EN DIRECT",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Cantiques",
+    "searchPlaceholder": "Rechercher des cantiques",
+    "searchLabel": "Rechercher des cantiques par titre, auteur ou numéro",
+    "noHymnsFound": "Aucun cantique trouvé",
+    "selectedTitle": "Titre du cantique sélectionné",
+    "buttons": {
+      "add": "+ Ajouter",
+      "edit": "✏️ Modifier",
+      "remove": "- Supprimer",
+      "import": "Importer",
+      "export": "Exporter"
+    },
+    "labels": {
+      "hymnNumber": "Numéro du cantique",
+      "sourceAbbr": "Abréviation de la source",
+      "sourceName": "Nom de la source",
+      "title": "Titre",
+      "author": "Auteur",
+      "verses": "Versets",
+      "chorus": "Refrain",
+      "versesSeparator": "(séparer les versets par une ligne vide)",
+      "chorusOptional": "(optionnel)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "ex., 123",
+      "sourceAbbr": "ex., CH, PD, HB",
+      "sourceName": "ex., Recueil d'hymnes, Domaine public",
+      "title": "Titre du cantique",
+      "author": "Nom de l'auteur",
+      "verses": "Texte du verset 1\n\nTexte du verset 2\n\nTexte du verset 3",
+      "chorus": "Texte du refrain"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "newButton": "+ Nouveau",
+    "namePlaceholder": "Nom du service (ex., Dimanche matin)",
+    "buttons": {
+      "addHymn": "+ Ajouter un cantique",
+      "save": "Enregistrer le service",
+      "cancel": "Annuler"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verset {current}/{total} · Lignes {startLine}-{endLine} sur {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Précédent",
+      "nextVerse": "Suivant ⟶",
+      "prevLine": "⬆ Ligne précédente",
+      "nextLine": "⬇ Ligne suivante",
+      "jumpChorus": "Aller au refrain",
+      "emergencyClear": "Effacement d'urgence"
+    },
+    "tooltips": {
+      "prevVerse": "Verset précédent (Flèche gauche)",
+      "nextVerse": "Verset suivant (Flèche droite)",
+      "prevLine": "Fenêtre de ligne précédente (Flèche haut)",
+      "nextLine": "Fenêtre de ligne suivante (Flèche bas)",
+      "jumpChorus": "Afficher le refrain si disponible",
+      "emergencyClear": "Masquer immédiatement la superposition du flux"
+    }
+  },
+  "display": {
+    "title": "Contrôles d'affichage",
+    "displayLabel": "Affichage",
+    "liveIndicator": "EN DIRECT",
+    "resetButton": "Réinitialiser",
+    "resetTooltip": "Réinitialiser au premier verset, première ligne",
+    "linesPerDisplay": "Lignes par affichage"
+  },
+  "preview": {
+    "title": "Aperçu des cantiques"
+  },
+  "styles": {
+    "title": "Styles",
+    "fontFamily": "Police de caractères",
+    "fontSize": "Taille de police",
+    "bold": "Gras",
+    "italic": "Italique",
+    "shadow": "Ombre",
+    "glow": "Lueur",
+    "outline": "Contour",
+    "outlineColor": "Couleur du contour",
+    "outlineWidth": "Largeur du contour",
+    "textColor": "Couleur du texte",
+    "bgType": "Type d'arrière-plan",
+    "bgColorA": "Couleur d'arrière-plan A",
+    "bgColorB": "Couleur d'arrière-plan B (pour dégradé)",
+    "animation": "Animation",
+    "position": "Position",
+    "bgTypes": {
+      "transparent": "Transparent",
+      "solid": "Solide",
+      "gradient": "Dégradé"
+    },
+    "animations": {
+      "fade": "Fondu",
+      "slide": "Glissement",
+      "none": "Aucun"
+    },
+    "positions": {
+      "bottom": "Tiers inférieur",
+      "middle": "Milieu",
+      "top": "Haut"
+    }
+  },
+  "modal": {
+    "editHymn": "Modifier le cantique",
+    "addHymn": "Ajouter un cantique",
+    "buttons": {
+      "cancel": "Annuler",
+      "save": "Enregistrer les modifications"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "languageLabel": "Langue de l'interface"
+  }
+}
