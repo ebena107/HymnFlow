@@ -45,12 +45,12 @@ Complete, verified hymn books from Christ Apostolic Church:
 - **CAC Yoruba Hymn Book (Iwe Orin CAC)**: 997 hymns - 969 KB
 
 Plus standard collections:
-- **Faith We Sing**: 7 hymns - 44 KB
-- **Nigerian Baptist Hymnal**: 7 hymns - 352 KB
-- **United Methodist Hymnal**: 7 hymns - 337 KB
-- **Yoruba Baptist Hymnal**: 6 hymns - 582 KB
+- **Faith We Sing**: 46 hymns - 44 KB
+- **Baptist Hymnal (2008)**: 325 hymns - 352 KB
+- **United Methodist Hymnal**: 296 hymns - 337 KB
+- **Yoruba Baptist Hymnal**: 650 hymns - 582 KB
 
-**Total: 2,025 hymns across 6 collections!**
+**Total: 2,315 hymns across 6 collections!**
 
 ---
 
@@ -150,12 +150,12 @@ All available as **separate downloads** from the [hymn-bundle folder](https://gi
 |------------|----------|-------|------|
 | **CAC Gospel Hymn Book** | English | 1,001 | 1.18 MB |
 | **CAC Yoruba Hymn Book** | Yoruba | 997 | 969 KB |
-| **Faith We Sing** | English | 7 | 44 KB |
-| **Nigerian Baptist Hymnal** | English | 7 | 352 KB |
-| **United Methodist Hymnal** | English | 7 | 337 KB |
-| **Yoruba Baptist Hymnal** | Yoruba | 6 | 582 KB |
+| **Faith We Sing** | English | 46 | 44 KB |
+| **Baptist Hymnal (2008)** | English | 325 | 352 KB |
+| **United Methodist Hymnal** | English | 296 | 337 KB |
+| **Yoruba Baptist Hymnal** | Yoruba | 650 | 582 KB |
 
-**Total: 2,025 hymns** available for download!
+**Total: 3,315 hymns** available for download!
 
 ---
 

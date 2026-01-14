@@ -30,10 +30,10 @@ hymn_books = [
     },
     {
         "filename": "nnbh.json",
-        "name": "Nigerian Baptist Hymnal",
-        "fullName": "Nigerian National Baptist Hymnal",
+        "name": "Baptist Hymnal",
+        "fullName": "The Baptist Hymnal (2008)",
         "abbr": "NNBH",
-        "description": "Traditional hymns from the Nigerian Baptist Convention"
+        "description": "Baptist hymnal published by LifeWay Christian Resources"
     },
     {
         "filename": "umh.json",
