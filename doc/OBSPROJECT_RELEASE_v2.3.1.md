@@ -43,7 +43,8 @@ HymnFlow now speaks your language! The entire user interface is available in:
 Complete, verified hymn books from Christ Apostolic Church:
 - **CAC Gospel Hymn Book** (English) - 1,001 hymns
 - **CAC Yoruba Hymn Book** (Iwe Orin CAC) - 997 hymns
-- Plus standard collections: FWS, NNBH, UMH, YBH
+- Plus standard collections: FWS (46), Baptist Hymnal (325), UMH (296), YBH (650)
+- **Total: 3,315 hymns across 6 collections**
 
 **Download separately from:** [GitHub Hymn Bundle](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle)
 
@@ -141,10 +142,10 @@ All available as separate downloads:
 |------------|-------|------|----------|
 | CAC Gospel Hymn Book | 1,001 | 1.18 MB | English |
 | CAC Yoruba Hymn Book | 997 | 969 KB | Yoruba |
-| Faith We Sing | 7 | 44 KB | English |
-| Nigerian Baptist Hymnal | 7 | 352 KB | English |
-| United Methodist Hymnal | 7 | 337 KB | English |
-| Yoruba Baptist Hymnal | 6 | 582 KB | Yoruba |
+| Faith We Sing | 46 | 44 KB | English |
+| Baptist Hymnal (2008) | 325 | 352 KB | English |
+| United Methodist Hymnal | 296 | 337 KB | English |
+| Yoruba Baptist Hymnal | 650 | 582 KB | Yoruba |
 
 **Download from:** https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle
 
