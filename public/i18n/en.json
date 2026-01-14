@@ -4,7 +4,13 @@
     "subtitle": "Lower-third controller for OBS HYMN",
     "status": {
       "live": "LIVE",
-      "storage": "localStorage"
+      "storage": "localStorage",
+      "ready": "Ready ({storage})",
+      "hymnUpdated": "Hymn updated",
+      "hymnAdded": "Hymn added"
+    },
+    "errors": {
+      "sendFailed": "Error sending to overlay: {error}"
     }
   },
   "hymns": {
@@ -12,6 +18,7 @@
     "searchPlaceholder": "Search hymns",
     "searchLabel": "Search hymns by title, author, or number",
     "noHymnsFound": "No hymns found",
+    "noHymnSelected": "No hymn selected",
     "selectedTitle": "Selected Hymn Title",
     "buttons": {
       "add": "+ Add",
@@ -30,7 +37,8 @@
       "chorus": "Chorus",
       "versesSeparator": "(separate verses with blank line)",
       "chorusOptional": "(optional)",
-      "required": "*"
+      "required": "*",
+      "versesCount": "{count} verse(s)"
     },
     "placeholders": {
       "number": "e.g., 123",
@@ -40,20 +48,60 @@
       "author": "Author name",
       "verses": "Verse 1 text\n\nVerse 2 text\n\nVerse 3 text",
       "chorus": "Chorus text"
+    },
+    "alerts": {
+      "noChorus": "No chorus available for this hymn",
+      "noHymnSelected": "No hymn selected",
+      "noHymnToEdit": "No hymn selected to edit",
+      "titleRequired": "Title is required",
+      "versesRequired": "At least one verse is required",
+      "validationFailed": "Hymn validation failed:\n{errors}",
+      "importFailed": "Import failed: {error}"
+    },
+    "confirmations": {
+      "delete": "Delete \"{title}\"?"
+    },
+    "status": {
+      "exported": "Exported {filename}",
+      "imported": "Imported {count} hymn(s){skipped}"
     }
   },
   "services": {
     "title": "Services",
     "newButton": "+ New",
     "namePlaceholder": "Service name (e.g., Sunday Morning)",
+    "noServicesFound": "No services created",
+    "noHymnsInService": "No hymns added yet",
+    "hymnsCount": "{count} hymn(s)",
     "buttons": {
       "addHymn": "+ Add Hymn",
       "save": "Save Service",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "load": "Load",
+      "edit": "Edit",
+      "delete": "Del"
+    },
+    "alerts": {
+      "nameRequired": "Service name is required",
+      "atLeastOneHymn": "Add at least one hymn to the service",
+      "validationFailed": "Service validation failed:\n{errors}"
+    },
+    "confirmations": {
+      "delete": "Delete this service?"
+    },
+    "status": {
+      "validationIssues": "Warning: Service has validation issues",
+      "loaded": "Loaded service: {name} ({count} hymns)",
+      "deleted": "Service deleted",
+      "saved": "Service saved"
+    },
+    "errors": {
+      "saveFailed": "Error saving services: {error}"
     }
   },
   "navigation": {
     "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
+    "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",
     "buttons": {
       "prevVerse": "⟵ Previous",
       "nextVerse": "Next ⟶",

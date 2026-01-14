@@ -4,7 +4,12 @@
     "subtitle": "Controlador de terço inferior para OBS HYMN",
     "status": {
       "live": "AO VIVO",
-      "storage": "localStorage"
+      "ready": "Pronto ({storage})",
+      "hymnUpdated": "Hino atualizado",
+      "hymnAdded": "Hino adicionado"
+    },
+    "errors": {
+      "sendFailed": "Erro ao enviar para a sobreposição: {error}"
     }
   },
   "hymns": {
@@ -12,6 +17,7 @@
     "searchPlaceholder": "Pesquisar hinos",
     "searchLabel": "Pesquisar hinos por título, autor ou número",
     "noHymnsFound": "Nenhum hino encontrado",
+    "noHymnSelected": "Nenhum hino selecionado",
     "selectedTitle": "Título do hino selecionado",
     "buttons": {
       "add": "+ Adicionar",
@@ -30,7 +36,8 @@
       "chorus": "Refrão",
       "versesSeparator": "(separe os versos com linha em branco)",
       "chorusOptional": "(opcional)",
-      "required": "*"
+      "required": "*",
+      "versesCount": "{count} verso(s)"
     },
     "placeholders": {
       "number": "ex., 123",
@@ -40,16 +47,55 @@
       "author": "Nome do autor",
       "verses": "Texto do verso 1\n\nTexto do verso 2\n\nTexto do verso 3",
       "chorus": "Texto do refrão"
+    },
+    "alerts": {
+      "noChorus": "Sem refrão disponível para este hino",
+      "noHymnSelected": "Nenhum hino selecionado",
+      "noHymnToEdit": "Nenhum hino selecionado para editar",
+      "titleRequired": "O título é obrigatório",
+      "versesRequired": "É necessário pelo menos um verso",
+      "validationFailed": "Falha na validação do hino:\n{errors}",
+      "importFailed": "Falha na importação: {error}"
+    },
+    "confirmations": {
+      "delete": "Excluir \"{title}\"?"
+    },
+    "status": {
+      "exported": "Hinos exportados para {filename}",
+      "imported": "Importado(s) {count} hino(s){skipped}"
     }
   },
   "services": {
     "title": "Serviços",
     "newButton": "+ Novo",
     "namePlaceholder": "Nome do serviço (ex., Domingo de manhã)",
+    "noServicesFound": "Nenhum serviço criado",
+    "noHymnsInService": "Nenhum hino adicionado ainda",
+    "hymnsCount": "{count} hino(s)",
     "buttons": {
       "addHymn": "+ Adicionar hino",
       "save": "Salvar serviço",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "load": "Carregar",
+      "edit": "Editar",
+      "delete": "Excluir"
+    },
+    "alerts": {
+      "nameRequired": "O nome do serviço é obrigatório",
+      "atLeastOneHymn": "Adicione pelo menos um hino ao serviço",
+      "validationFailed": "Falha na validação do serviço:\n{errors}"
+    },
+    "confirmations": {
+      "delete": "Excluir este serviço?"
+    },
+    "status": {
+      "validationIssues": "Aviso: O serviço tem problemas de validação",
+      "loaded": "Serviço carregado: {name} ({count} hinos)",
+      "deleted": "Serviço excluído",
+      "saved": "Serviço salvo"
+    },
+    "errors": {
+      "saveFailed": "Erro ao salvar os serviços: {error}"
     }
   },
   "navigation": {

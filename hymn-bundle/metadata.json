@@ -1,0 +1,68 @@
+[
+  {
+    "filename": "cac_ghb.json",
+    "name": "CAC Gospel Hymn Book",
+    "fullName": "Christ Apostolic Church Gospel Hymn Book",
+    "abbr": "CAC GHB",
+    "description": "Complete collection of hymns from the Christ Apostolic Church Gospel Hymn Book",
+    "size": "1.18 MB",
+    "sizeBytes": 1241813,
+    "hymnCount": 1001,
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_ghb.json"
+  },
+  {
+    "filename": "cac_yhb.json",
+    "name": "CAC Yoruba Hymn Book",
+    "fullName": "Christ Apostolic Church Yoruba Hymn Book (Iwe Orin CAC)",
+    "abbr": "CAC YHB",
+    "description": "Yoruba hymns from the Christ Apostolic Church (Iwe Orin CAC)",
+    "size": "969 KB",
+    "sizeBytes": 992482,
+    "hymnCount": 997,
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_yhb.json"
+  },
+  {
+    "filename": "fws.json",
+    "name": "Faith We Sing",
+    "fullName": "The Faith We Sing Hymnal",
+    "abbr": "FWS",
+    "description": "Contemporary worship supplement hymnal",
+    "size": "44 KB",
+    "sizeBytes": 45478,
+    "hymnCount": 7,
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/fws.json"
+  },
+  {
+    "filename": "nnbh.json",
+    "name": "Nigerian Baptist Hymnal",
+    "fullName": "Nigerian National Baptist Hymnal",
+    "abbr": "NNBH",
+    "description": "Traditional hymns from the Nigerian Baptist Convention",
+    "size": "352 KB",
+    "sizeBytes": 360534,
+    "hymnCount": 7,
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/nnbh.json"
+  },
+  {
+    "filename": "umh.json",
+    "name": "United Methodist Hymnal",
+    "fullName": "The United Methodist Hymnal",
+    "abbr": "UMH",
+    "description": "Official hymnal of the United Methodist Church",
+    "size": "337 KB",
+    "sizeBytes": 345521,
+    "hymnCount": 7,
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/umh.json"
+  },
+  {
+    "filename": "ybh.json",
+    "name": "Yoruba Baptist Hymnal",
+    "fullName": "Yoruba Baptist Hymnal",
+    "abbr": "YBH",
+    "description": "Baptist hymns in Yoruba language",
+    "size": "582 KB",
+    "sizeBytes": 596154,
+    "hymnCount": 6,
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/ybh.json"
+  }
+]

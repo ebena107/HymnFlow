@@ -21,12 +21,19 @@ if [ -d "$RELEASE_DIR" ]; then
 fi
 mkdir -p "$RELEASE_DIR"
 
+# Consolidate translations
+echo "🔄 Consolidating translations..."
+python3 scripts/combine_translations.py || python scripts/combine_translations.py
+
 # Copy essential files
 echo "📦 Packaging files..."
 cp -r public/obs-dock "$RELEASE_DIR/"
 cp -r public/obs-overlay "$RELEASE_DIR/"
 cp -r public/data "$RELEASE_DIR/"
 cp -r public/parsers "$RELEASE_DIR/"
+cp -r public/i18n "$RELEASE_DIR/"
+cp public/obs-setup.html "$RELEASE_DIR/"
+cp public/validation.js "$RELEASE_DIR/"
 cp README.md "$RELEASE_DIR/"
 cp doc/SETUP.md "$RELEASE_DIR/"
 cp doc/TROUBLESHOOTING.md "$RELEASE_DIR/"

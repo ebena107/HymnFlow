@@ -1,3 +1,25 @@
+## [2.3.1] - 2026-01-14
+
+### 📝 Documentation Clarification Release
+
+**Focus**: Improved documentation to clarify that hymn collections are a separate download.
+
+### Changed
+
+- 📖 Updated `README.md` with explicit hymn bundle download instructions
+- 📖 Updated `doc/SETUP.md` with detailed download options (GitHub folder or Releases)
+- 📖 Updated `public/obs-setup.html` with prominent notice that hymn files are separate downloads
+- 🔢 Bumped version to 2.3.1 in `package.json` and all HTML files
+- 📋 Created `RELEASE_NOTES_v2.3.1.md` documenting the changes
+
+### Notes
+
+- No functional changes to the application
+- Plugin download remains ~150KB (hymn files not included)
+- All hymn files available at: https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle
+
+---
+
 ## [2.3.0] - 2026-01-14
 
 ### 🌍 Internationalization (i18n) & Optimized Data

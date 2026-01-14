@@ -4,14 +4,21 @@
     "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN",
     "status": {
       "live": "MOJA KWA MOJA",
-      "storage": "localStorage"
+      "storage": "localStorage",
+      "ready": "Tayari ({storage})",
+      "hymnUpdated": "Wimbo umesasishwa",
+      "hymnAdded": "Wimbo umeongezwa"
+    },
+    "errors": {
+      "sendFailed": "Hitilafu wakati wa kutuma kwa mwangaliza: {error}"
     }
   },
   "hymns": {
     "title": "Nyimbo",
     "searchPlaceholder": "Tafuta nyimbo",
-    "searchLabel": "Tafuta nyimbo kwa jina, mwandishi, au nambari",
+    "searchLabel": "Tafuta nyimbo kwa nambari, jina, au mwandishi",
     "noHymnsFound": "Hakuna nyimbo zilizopatikana",
+    "noHymnSelected": "Hakuna wimbo uliochaguliwa",
     "selectedTitle": "Jina la wimbo uliochaguliwa",
     "buttons": {
       "add": "+ Ongeza",
@@ -30,26 +37,66 @@
       "chorus": "Kiitikio",
       "versesSeparator": "(tenganisha beti kwa mstari tupu)",
       "chorusOptional": "(si lazima)",
-      "required": "*"
+      "required": "*",
+      "versesCount": "Beti {count}"
     },
     "placeholders": {
       "number": "mfano, 123",
       "sourceAbbr": "mfano, CH, PD, HB",
       "sourceName": "mfano, Kitabu cha Nyimbo za Kanisa, Eneo la Umma",
       "title": "Jina la wimbo",
-      "author": "Jina la mwandishi",
+      "author": "Mwandishi",
       "verses": "Maandishi ya beti ya 1\n\nMaandishi ya beti ya 2\n\nMaandishi ya beti ya 3",
       "chorus": "Maandishi ya kiitikio"
+    },
+    "alerts": {
+      "noChorus": "Hakuna kiitikio kwa wimbo huu",
+      "noHymnSelected": "Hakuna wimbo uliochaguliwa",
+      "noHymnToEdit": "Hakuna wimbo uliochaguliwa kuhariri",
+      "titleRequired": "Jina la wimbo linahitajika",
+      "versesRequired": "Angalau beti moja inahitajika",
+      "validationFailed": "Uthibitishaji wa wimbo umeshindwa:\n{errors}",
+      "importFailed": "Uingizaji umeshindwa: {error}"
+    },
+    "confirmations": {
+      "delete": "Futa \"{title}\"?"
+    },
+    "status": {
+      "exported": "Imehamishwa {filename}",
+      "imported": "Imeingizwa beti {count}{skipped}"
     }
   },
   "services": {
     "title": "Huduma",
     "newButton": "+ Mpya",
     "namePlaceholder": "Jina la huduma (mfano, Jumapili asubuhi)",
+    "noServicesFound": "Hakuna huduma zilizoundwa",
+    "noHymnsInService": "Hakuna nyimbo zilizoongezwa bado",
+    "hymnsCount": "{count} wimbo/nyimbo",
     "buttons": {
       "addHymn": "+ Ongeza wimbo",
       "save": "Hifadhi huduma",
-      "cancel": "Ghairi"
+      "cancel": "Ghairi",
+      "load": "Pakia",
+      "edit": "Hariri",
+      "delete": "Futa"
+    },
+    "alerts": {
+      "nameRequired": "Jina la huduma linahitajika",
+      "atLeastOneHymn": "Ongeza angalau wimbo mmoja kwenye huduma",
+      "validationFailed": "Uthibitishaji wa huduma umeshindwa:\n{errors}"
+    },
+    "confirmations": {
+      "delete": "Futa huduma hii?"
+    },
+    "status": {
+      "validationIssues": "Onyo: Huduma ina masuala ya uthibitishaji",
+      "loaded": "Huduma iliyopakiwa: {name} ({count} nyimbo)",
+      "deleted": "Huduma imefutwa",
+      "saved": "Huduma imehifadhiwa"
+    },
+    "errors": {
+      "saveFailed": "Hitilafu wakati wa kuhifadhi huduma: {error}"
     }
   },
   "navigation": {

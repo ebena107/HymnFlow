@@ -11,14 +11,18 @@
 Extract the downloaded release to a permanent location:
 ```
 C:\HymnFlow\              ← Recommended location
-├── public/                ← Core application files
+├── public/                ← Core application files (from plugin download)
 │   ├── obs-dock/
 │   └── obs-overlay/
-└── hymn-bundle/          ← Separate download for hymns (Large files)
-    ├── cac_ghb.json
+└── hymn-bundle/          ← SEPARATE DOWNLOAD (not included in plugin)
+    ├── cac_ghb.json      ← Download these individually from GitHub
     ├── cac_yhb.json
     └── [other hymns]
 ```
+
+> [!IMPORTANT]
+> The `hymn-bundle/` files are **NOT included** in the main plugin download.
+> You must download hymn files separately from the [GitHub repository](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle).
 
 **Note your full path** - you'll need it below.
 
@@ -110,14 +114,30 @@ And grace my fears relieved;
 ### Import Process
 
 > [!IMPORTANT]
-> To reduce the initial download size, official hymn collections (CAC English/Yoruba, etc.) are now provided as a separate **Hymn Bundle**.
+> To reduce the initial download size, official hymn collections (CAC English/Yoruba, etc.) are provided as a **separate download** and are **NOT included** in the main plugin package.
 
-1. Download the latest **Hymn Bundle** from our release page.
-2. Extract the `.json` files to your `hymn-bundle/` folder.
-3. Click **Import** in the OBS dock.
-4. Select your preferred `.json` file from the `hymn-bundle/` directory.
-5. Hymns are added to your library instantly.
-6. ✅ Done! Click any hymn to display it.
+**Step 1: Download Hymn Files**
+
+Choose one of these options:
+
+**Option A: Download Individual Files from GitHub**
+1. Visit the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle) on GitHub
+2. Click on the hymn file you want (e.g., `cac_ghb.json`)
+3. Click the "Download raw file" button or right-click "Raw" and select "Save link as..."
+4. Save to your computer (e.g., `C:\HymnFlow\hymn-bundle\`)
+
+**Option B: Download from Releases**
+1. Visit the [Releases page](https://github.com/ebena107/HymnFlow/releases)
+2. Download the `hymn-bundle.zip` file (if available)
+3. Extract to your preferred location
+
+**Step 2: Import into HymnFlow**
+1. Open the HymnFlow Dock in OBS
+2. Click **Import** button in the Hymns section
+3. Navigate to where you saved the `.json` file
+4. Select the hymn file (e.g., `cac_ghb.json`)
+5. Hymns are added to your library instantly
+6. ✅ Done! Click any hymn to display it
 
 ## 🎨 Customize the Display
 

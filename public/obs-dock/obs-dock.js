@@ -203,7 +203,8 @@
 
   function renderList() {
     if (!filtered.length) {
-      listEl.innerHTML = '<div class="list-item">No hymns found</div>';
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.noHymnsFound') : 'No hymns found';
+      listEl.innerHTML = `<div class="list-item">${msg}</div>`;
       return;
     }
     listEl.innerHTML = filtered.map(h => {
@@ -219,10 +220,11 @@
       const safeTitle = escapeHtml(hymnRef + h.title);
       const safeAuthor = escapeHtml(h.author || 'Unknown');
       const isActive = currentHymn && currentHymn.id === h.id ? ' active' : '';
+      const versesLabel = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.labels.versesCount', { count: h.verses.length }) : `${h.verses.length} verse(s)`;
       return `
       <div class="list-item${isActive}" data-id="${h.id}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
         <div class="title">${safeTitle}</div>
-        <div class="meta">${safeAuthor} • ${h.verses.length} verse(s)</div>
+        <div class="meta">${safeAuthor} • ${versesLabel}</div>
       </div>`;
     }).join('');
   }
@@ -239,7 +241,11 @@
 
   function updatePreview() {
     if (!currentHymn) {
-      currentTitleEl.textContent = 'No hymn selected';
+      if (window.HymnFlowI18n) {
+        currentTitleEl.textContent = window.HymnFlowI18n.getTranslation('hymns.noHymnSelected');
+      } else {
+        currentTitleEl.textContent = 'No hymn selected';
+      }
       verseInfoEl.textContent = '-';
       previewEl.textContent = '';
       return;
@@ -252,16 +258,24 @@
 
     if (isShowingChorus && currentHymn.chorus) {
       lines = currentHymn.chorus.split('\n');
-      label = `Chorus · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
     } else {
       const verseText = currentHymn.verses[currentVerse] || '';
       lines = verseText.split('\n');
-      label = `Verse ${currentVerse + 1}/${currentHymn.verses.length} · Lines ${currentLineOffset + 1}-${Math.min(lines.length, currentLineOffset + settings.linesPerPage)} of ${lines.length}`;
     }
 
     const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
     previewEl.textContent = windowed.join('\n');
-    verseInfoEl.textContent = label;
+
+    if (window.HymnFlowI18n) {
+      const i18nKey = (isShowingChorus && currentHymn.chorus) ? 'navigation.chorusInfo' : 'navigation.verseInfo';
+      verseInfoEl.textContent = window.HymnFlowI18n.getTranslation(i18nKey, {
+        current: currentVerse + 1,
+        total: currentHymn.verses.length,
+        startLine: currentLineOffset + 1,
+        endLine: Math.min(lines.length, currentLineOffset + settings.linesPerPage),
+        totalLines: lines.length
+      });
+    }
   }
 
   function sendCommand(type) {
@@ -302,7 +316,11 @@
       updateDisplayButton();
     } catch (err) {
       console.error('[Send Command Error]', err);
-      statusEl.textContent = 'Error sending to overlay: ' + err.message;
+      if (window.HymnFlowI18n) {
+        statusEl.textContent = window.HymnFlowI18n.getTranslation('app.errors.sendFailed', { error: err.message });
+      } else {
+        statusEl.textContent = 'Error sending to overlay: ' + err.message;
+      }
     }
   }
 
@@ -461,7 +479,8 @@
 
   function jumpToChorus() {
     if (!currentHymn || !currentHymn.chorus) {
-      alert('No chorus available for this hymn');
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noChorus') : 'No chorus available for this hymn';
+      alert(msg);
       return;
     }
     isShowingChorus = true;
@@ -482,10 +501,12 @@
 
   function removeSelectedHymn() {
     if (!currentHymn) {
-      alert('No hymn selected');
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noHymnSelected') : 'No hymn selected';
+      alert(msg);
       return;
     }
-    if (confirm('Delete "' + currentHymn.title + '"?')) {
+    const confirmMsg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.confirmations.delete', { title: currentHymn.title }) : 'Delete "' + currentHymn.title + '"?';
+    if (confirm(confirmMsg)) {
       deleteHymn(currentHymn.id);
     }
   }
@@ -537,12 +558,14 @@
     const chorus = document.getElementById('editChorus').value.trim();
 
     if (!title) {
-      alert('Title is required');
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.titleRequired') : 'Title is required';
+      alert(msg);
       return;
     }
 
     if (!versesText) {
-      alert('At least one verse is required');
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.versesRequired') : 'At least one verse is required';
+      alert(msg);
       return;
     }
 
@@ -581,7 +604,8 @@
         // Validate before saving
         const { valid, errors } = window.HymnValidator.validateHymn(hymn);
         if (!valid) {
-          alert('Hymn validation failed:\n' + errors.join('\n'));
+          const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.validationFailed', { errors: errors.join('\n') }) : 'Hymn validation failed:\n' + errors.join('\n');
+          alert(msg);
           return;
         }
       }
@@ -605,7 +629,8 @@
       // Validate before saving
       const { valid, errors } = window.HymnValidator.validateHymn(newHymn);
       if (!valid) {
-        alert('Hymn validation failed:\n' + errors.join('\n'));
+        const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.validationFailed', { errors: errors.join('\n') }) : 'Hymn validation failed:\n' + errors.join('\n');
+        alert(msg);
         return;
       }
 
@@ -617,7 +642,11 @@
     renderList();
     updatePreview();
     closeEditModal();
-    statusEl.textContent = hymnId ? 'Hymn updated' : 'Hymn added';
+    if (window.HymnFlowI18n) {
+      statusEl.textContent = window.HymnFlowI18n.getTranslation(hymnId ? 'app.status.hymnUpdated' : 'app.status.hymnAdded');
+    } else {
+      statusEl.textContent = hymnId ? 'Hymn updated' : 'Hymn added';
+    }
   }
 
   function addHymnDialog(existing) {
@@ -671,14 +700,19 @@
       localStorage.setItem(storageKeys.services, JSON.stringify(services));
     } catch (err) {
       console.error('[Services Save Error]', err);
-      statusEl.textContent = 'Error saving services: ' + err.message;
+      if (window.HymnFlowI18n) {
+        statusEl.textContent = window.HymnFlowI18n.getTranslation('services.errors.saveFailed', { error: err.message });
+      } else {
+        statusEl.textContent = 'Error saving services: ' + err.message;
+      }
     }
   }
 
   function renderServicesList() {
     const listEl = document.getElementById('servicesList');
     if (services.length === 0) {
-      listEl.innerHTML = '<div class="service-item" style="justify-content: center; color: var(--text-muted);">No services created</div>';
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.noServicesFound') : 'No services created';
+      listEl.innerHTML = `<div class="service-item" style="justify-content: center; color: var(--text-muted);">${msg}</div>`;
       return;
     }
     listEl.innerHTML = services.map(service => {
@@ -702,12 +736,12 @@
         <div class="service-item${isActive ? ' active' : ''}" data-service-id="${service.id}">
           <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
             <div class="service-item-name">${safeServiceName}</div>
-            <div class="service-item-count">${service.hymns.length} hymn(s)</div>
+            <div class="service-item-count">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.hymnsCount', { count: service.hymns.length }) : service.hymns.length + ' hymn(s)'}</div>
           </div>
           <div class="service-item-actions">
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">Load</button>
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">Edit</button>
-            <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">Del</button>
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.load') : 'Load'}</button>
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.edit') : 'Edit'}</button>
+            <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.delete') : 'Del'}</button>
           </div>
           ${isActive ? `<div class="service-hymns-list">${hymnsHtml}</div>` : ''}
         </div>
@@ -740,7 +774,8 @@
   function renderServiceHymns() {
     const container = document.getElementById('serviceHymns');
     if (!editingService || editingService.hymns.length === 0) {
-      container.innerHTML = '<div style="padding: 12px; text-align: center; color: var(--text-muted); font-size: 12px;">No hymns added yet</div>';
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.noHymnsInService') : 'No hymns added yet';
+      container.innerHTML = `<div style="padding: 12px; text-align: center; color: var(--text-muted); font-size: 12px;">${msg}</div>`;
       return;
     }
     container.innerHTML = editingService.hymns.map((hymnId, index) => {
@@ -769,12 +804,14 @@
     const name = nameInput.value.trim();
 
     if (!name) {
-      alert('Service name is required');
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.nameRequired') : 'Service name is required';
+      alert(msg);
       return;
     }
 
     if (editingService.hymns.length === 0) {
-      alert('Add at least one hymn to the service');
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.atLeastOneHymn') : 'Add at least one hymn to the service';
+      alert(msg);
       return;
     }
 
@@ -783,7 +820,8 @@
     // Validate service structure before saving
     const { valid, errors } = window.HymnValidator.validateService(editingService, hymns);
     if (!valid) {
-      alert('Service validation failed:\n' + errors.join('\n'));
+      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.validationFailed', { errors: errors.join('\n') }) : 'Service validation failed:\n' + errors.join('\n');
+      alert(msg);
       return;
     }
 
@@ -797,7 +835,11 @@
     saveServices();
     renderServicesList();
     closeServiceEditor();
-    statusEl.textContent = 'Service saved';
+    if (window.HymnFlowI18n) {
+      statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.saved');
+    } else {
+      statusEl.textContent = 'Service saved';
+    }
   }
 
   function selectService(serviceId) {
@@ -807,10 +849,18 @@
       const { valid, errors } = window.HymnValidator.validateService(service, hymns);
       if (!valid) {
         console.warn('[Service Validation] Issues loading service:', errors);
-        statusEl.textContent = 'Warning: Service has validation issues';
+        if (window.HymnFlowI18n) {
+          statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.validationIssues');
+        } else {
+          statusEl.textContent = 'Warning: Service has validation issues';
+        }
       }
       currentService = service;
-      statusEl.textContent = `Loaded service: ${currentService.name} (${currentService.hymns.length} hymns)`;
+      if (window.HymnFlowI18n) {
+        statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.loaded', { name: currentService.name, count: currentService.hymns.length });
+      } else {
+        statusEl.textContent = `Loaded service: ${currentService.name} (${currentService.hymns.length} hymns)`;
+      }
     }
     renderServicesList();
   }
@@ -824,7 +874,8 @@
   }
 
   function deleteService(serviceId) {
-    if (confirm('Delete this service?')) {
+    const confirmMsg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.confirmations.delete') : 'Delete this service?';
+    if (confirm(confirmMsg)) {
       const serviceToDelete = services.find(s => s.id === serviceId);
       if (serviceToDelete) {
         services = services.filter(s => s.id !== serviceId);
@@ -833,7 +884,11 @@
         }
         saveServices();
         renderServicesList();
-        statusEl.textContent = 'Service deleted';
+        if (window.HymnFlowI18n) {
+          statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.deleted');
+        } else {
+          statusEl.textContent = 'Service deleted';
+        }
       }
     }
   }
@@ -874,7 +929,8 @@
     document.getElementById('btnAdd').onclick = () => openEditModal();
     document.getElementById('btnEdit').onclick = () => {
       if (!currentHymn) {
-        alert('No hymn selected to edit');
+        const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noHymnToEdit') : 'No hymn selected to edit';
+        alert(msg);
         return;
       }
       openEditModal(currentHymn);
@@ -1000,7 +1056,8 @@
     document.getElementById('btnNewService').onclick = () => openServiceEditor();
     document.getElementById('btnAddToService').onclick = () => {
       if (!currentHymn) {
-        alert('Select a hymn first');
+        const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noHymnSelected') : 'Select a hymn first';
+        alert(msg);
         return;
       }
       if (!editingService.hymns.includes(currentHymn.id)) {
@@ -1060,10 +1117,19 @@
       filtered = hymns;
       renderList();
 
-      const message = `Imported ${valid.length} hymn${valid.length !== 1 ? 's' : ''}${invalid.length > 0 ? ` (${invalid.length} skipped due to errors)` : ''}`;
-      statusEl.textContent = message;
+      if (window.HymnFlowI18n) {
+        const skipped = invalid.length > 0 ? ` (${invalid.length} skipped)` : '';
+        statusEl.textContent = window.HymnFlowI18n.getTranslation('hymns.status.imported', { count: valid.length, skipped: skipped });
+      } else {
+        const message = `Imported ${valid.length} hymn${valid.length !== 1 ? 's' : ''}${invalid.length > 0 ? ` (${invalid.length} skipped due to errors)` : ''}`;
+        statusEl.textContent = message;
+      }
     } catch (err) {
-      statusEl.textContent = 'Import failed: ' + err.message;
+      if (window.HymnFlowI18n) {
+        statusEl.textContent = window.HymnFlowI18n.getTranslation('hymns.alerts.importFailed', { error: err.message });
+      } else {
+        statusEl.textContent = 'Import failed: ' + err.message;
+      }
       console.error('[Import Error]', err);
     } finally {
       e.target.value = '';
@@ -1078,7 +1144,11 @@
     a.download = 'hymnflow-export.json';
     a.click();
     URL.revokeObjectURL(url);
-    statusEl.textContent = 'Exported hymns.json';
+    if (window.HymnFlowI18n) {
+      statusEl.textContent = window.HymnFlowI18n.getTranslation('hymns.status.exported', { filename: 'hymns.json' });
+    } else {
+      statusEl.textContent = 'Exported hymns.json';
+    }
   }
 
   function applySettingsUI() {
@@ -1148,6 +1218,10 @@
       if (currentHymn) {
         updatePreview();
       }
+      // Update status bar
+      if (statusEl) {
+        statusEl.textContent = window.HymnFlowI18n.getTranslation('app.status.ready', { storage: 'localStorage' });
+      }
     });
   }
 
@@ -1160,5 +1234,9 @@
   renderServicesList();
   attachEvents();
   setupLanguageSelector();
-  statusEl.textContent = 'Ready (localStorage)';
+  if (window.HymnFlowI18n) {
+    statusEl.textContent = window.HymnFlowI18n.getTranslation('app.status.ready', { storage: 'localStorage' });
+  } else {
+    statusEl.textContent = 'Ready (localStorage)';
+  }
 })();

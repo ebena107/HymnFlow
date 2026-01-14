@@ -4,7 +4,12 @@
     "subtitle": "Controlador de tercio inferior para OBS HYMN",
     "status": {
       "live": "EN VIVO",
-      "storage": "localStorage"
+      "ready": "Listo ({storage})",
+      "hymnUpdated": "Himno actualizado",
+      "hymnAdded": "Himno añadido"
+    },
+    "errors": {
+      "sendFailed": "Error al enviar a la superposición: {error}"
     }
   },
   "hymns": {
@@ -12,6 +17,7 @@
     "searchPlaceholder": "Buscar himnos",
     "searchLabel": "Buscar himnos por título, autor o número",
     "noHymnsFound": "No se encontraron himnos",
+    "noHymnSelected": "Ningún himno seleccionado",
     "selectedTitle": "Título del himno seleccionado",
     "buttons": {
       "add": "+ Agregar",
@@ -30,7 +36,8 @@
       "chorus": "Coro",
       "versesSeparator": "(separar versos con línea en blanco)",
       "chorusOptional": "(opcional)",
-      "required": "*"
+      "required": "*",
+      "versesCount": "{count} verso(s)"
     },
     "placeholders": {
       "number": "ej., 123",
@@ -40,16 +47,55 @@
       "author": "Nombre del autor",
       "verses": "Texto del verso 1\n\nTexto del verso 2\n\nTexto del verso 3",
       "chorus": "Texto del coro"
+    },
+    "alerts": {
+      "noChorus": "No hay coro disponible para este himno",
+      "noHymnSelected": "Ningún himno seleccionado",
+      "noHymnToEdit": "Ningún himno seleccionado para editar",
+      "titleRequired": "El título es obligatorio",
+      "versesRequired": "Se requiere al menos un verso",
+      "validationFailed": "Error de validación del himno:\n{errors}",
+      "importFailed": "Error al importar: {error}"
+    },
+    "confirmations": {
+      "delete": "¿Eliminar \"{title}\"?"
+    },
+    "status": {
+      "exported": "Exportado {filename}",
+      "imported": "Importado {count} himno(s){skipped}"
     }
   },
   "services": {
     "title": "Servicios",
     "newButton": "+ Nuevo",
     "namePlaceholder": "Nombre del servicio (ej., Domingo por la mañana)",
+    "noServicesFound": "No se crearon servicios",
+    "noHymnsInService": "Aún no se han añadido himnos",
+    "hymnsCount": "{count} himno(s)",
     "buttons": {
       "addHymn": "+ Agregar himno",
       "save": "Guardar servicio",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "load": "Cargar",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "alerts": {
+      "nameRequired": "El nombre del servicio es obligatorio",
+      "atLeastOneHymn": "Agregue al menos un himno al servicio",
+      "validationFailed": "Error de validación del servicio:\n{errors}"
+    },
+    "confirmations": {
+      "delete": "¿Eliminar este servicio?"
+    },
+    "status": {
+      "validationIssues": "Advertencia: El servicio tiene problemas de validación",
+      "loaded": "Servicio cargado: {name} ({count} himnos)",
+      "deleted": "Servicio eliminado",
+      "saved": "Servicio guardado"
+    },
+    "errors": {
+      "saveFailed": "Error al guardar los servicios: {error}"
     }
   },
   "navigation": {

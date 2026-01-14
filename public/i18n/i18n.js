@@ -17,29 +17,21 @@
 
   const DEFAULT_LANGUAGE = 'en';
   const STORAGE_KEY = 'hymnflow-language';
-  
+
   let currentLanguage = DEFAULT_LANGUAGE;
   let translations = {};
 
-  // ========================================
-  // Load translation file
-  // ========================================
-  async function loadTranslations(lang) {
-    try {
-      const response = await fetch(`../i18n/${lang}.json`);
-      if (!response.ok) {
-        throw new Error(`Failed to load ${lang} translations`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error(`Error loading translations for ${lang}:`, error);
-      // Fallback to English if the language file fails to load
-      if (lang !== DEFAULT_LANGUAGE) {
-        console.warn(`Falling back to ${DEFAULT_LANGUAGE}`);
-        return loadTranslations(DEFAULT_LANGUAGE);
-      }
-      return {};
+  function loadTranslations(lang) {
+    if (window.HymnFlowTranslations && window.HymnFlowTranslations[lang]) {
+      return window.HymnFlowTranslations[lang];
     }
+    console.warn(`Translations for ${lang} not found in window.HymnFlowTranslations`);
+    // Fallback to English if the language fails to load
+    if (lang !== DEFAULT_LANGUAGE && window.HymnFlowTranslations && window.HymnFlowTranslations[DEFAULT_LANGUAGE]) {
+      console.warn(`Falling back to ${DEFAULT_LANGUAGE}`);
+      return window.HymnFlowTranslations[DEFAULT_LANGUAGE];
+    }
+    return {};
   }
 
   // ========================================
@@ -47,24 +39,43 @@
   // ========================================
   function getTranslation(key, replacements = {}) {
     const keys = key.split('.');
-    let value = translations;
-    
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        console.warn(`Translation key not found: ${key}`);
-        return key; // Return the key itself if not found
+
+    // Helper to get value from a specific dictionary
+    const getValue = (dict) => {
+      let val = dict;
+      for (const k of keys) {
+        if (val && typeof val === 'object' && k in val) {
+          val = val[k];
+        } else {
+          return null;
+        }
+      }
+      return val;
+    };
+
+    // 1. Try current language
+    let value = getValue(translations);
+
+    // 2. Fallback to English if not found
+    if (value === null && currentLanguage !== DEFAULT_LANGUAGE) {
+      if (window.HymnFlowTranslations && window.HymnFlowTranslations[DEFAULT_LANGUAGE]) {
+        value = getValue(window.HymnFlowTranslations[DEFAULT_LANGUAGE]);
       }
     }
-    
+
+    // 3. Last resort: return the key itself
+    if (value === null) {
+      console.warn(`Translation key not found: ${key}`);
+      return key;
+    }
+
     // Replace placeholders like {current}, {total}, etc.
     if (typeof value === 'string') {
       return value.replace(/\{(\w+)\}/g, (match, placeholder) => {
         return replacements[placeholder] !== undefined ? replacements[placeholder] : match;
       });
     }
-    
+
     return value;
   }
 
@@ -76,7 +87,7 @@
     document.querySelectorAll('[data-i18n]').forEach(element => {
       const key = element.getAttribute('data-i18n');
       const translation = getTranslation(key);
-      
+
       // Check if we should update text content or specific attribute
       const attr = element.getAttribute('data-i18n-attr');
       if (attr) {
@@ -108,22 +119,22 @@
     document.documentElement.lang = currentLanguage;
 
     // Dispatch event for custom handling
-    window.dispatchEvent(new CustomEvent('languageChanged', { 
-      detail: { language: currentLanguage, translations } 
+    window.dispatchEvent(new CustomEvent('languageChanged', {
+      detail: { language: currentLanguage, translations }
     }));
   }
 
   // ========================================
   // Change language
   // ========================================
-  async function changeLanguage(lang) {
+  function changeLanguage(lang) {
     if (!AVAILABLE_LANGUAGES[lang]) {
       console.error(`Language ${lang} is not supported`);
       return false;
     }
 
     try {
-      translations = await loadTranslations(lang);
+      translations = loadTranslations(lang);
       currentLanguage = lang;
       localStorage.setItem(STORAGE_KEY, lang);
       applyTranslations();
@@ -137,10 +148,10 @@
   // ========================================
   // Initialize i18n
   // ========================================
-  async function init() {
+  function init() {
     // Load saved language preference or use default
     const savedLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANGUAGE;
-    await changeLanguage(savedLang);
+    changeLanguage(savedLang);
   }
 
   // ========================================

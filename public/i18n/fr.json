@@ -4,7 +4,12 @@
     "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN",
     "status": {
       "live": "EN DIRECT",
-      "storage": "localStorage"
+      "ready": "Prêt ({storage})",
+      "hymnUpdated": "Cantique mis à jour",
+      "hymnAdded": "Cantique ajouté"
+    },
+    "errors": {
+      "sendFailed": "Erreur d'envoi vers l'incrustation : {error}"
     }
   },
   "hymns": {
@@ -12,6 +17,7 @@
     "searchPlaceholder": "Rechercher des cantiques",
     "searchLabel": "Rechercher des cantiques par titre, auteur ou numéro",
     "noHymnsFound": "Aucun cantique trouvé",
+    "noHymnSelected": "Aucun cantique sélectionné",
     "selectedTitle": "Titre du cantique sélectionné",
     "buttons": {
       "add": "+ Ajouter",
@@ -30,7 +36,8 @@
       "chorus": "Refrain",
       "versesSeparator": "(séparer les versets par une ligne vide)",
       "chorusOptional": "(optionnel)",
-      "required": "*"
+      "required": "*",
+      "versesCount": "{count} verset(s)"
     },
     "placeholders": {
       "number": "ex., 123",
@@ -40,16 +47,55 @@
       "author": "Nom de l'auteur",
       "verses": "Texte du verset 1\n\nTexte du verset 2\n\nTexte du verset 3",
       "chorus": "Texte du refrain"
+    },
+    "alerts": {
+      "noChorus": "Aucun refrain disponible pour ce cantique",
+      "noHymnSelected": "Aucun cantique sélectionné",
+      "noHymnToEdit": "Aucun cantique sélectionné à modifier",
+      "titleRequired": "Le titre est obligatoire",
+      "versesRequired": "Au moins un verset est requis",
+      "validationFailed": "Échec de la validation du cantique :\n{errors}",
+      "importFailed": "Échec de l'importation : {error}"
+    },
+    "confirmations": {
+      "delete": "Supprimer \"{title}\" ?"
+    },
+    "status": {
+      "exported": "Exporté vers {filename}",
+      "imported": "Importé {count} cantique(s){skipped}"
     }
   },
   "services": {
     "title": "Services",
     "newButton": "+ Nouveau",
     "namePlaceholder": "Nom du service (ex., Dimanche matin)",
+    "noServicesFound": "Aucun service créé",
+    "noHymnsInService": "Aucun cantique ajouté pour l'instant",
+    "hymnsCount": "{count} cantique(s)",
     "buttons": {
       "addHymn": "+ Ajouter un cantique",
       "save": "Enregistrer le service",
-      "cancel": "Annuler"
+      "cancel": "Annuler",
+      "load": "Charger",
+      "edit": "Modifier",
+      "delete": "Suppr"
+    },
+    "alerts": {
+      "nameRequired": "Le nom du service est obligatoire",
+      "atLeastOneHymn": "Ajoutez au moins un cantique au service",
+      "validationFailed": "Échec de la validation du service :\n{errors}"
+    },
+    "confirmations": {
+      "delete": "Supprimer ce service ?"
+    },
+    "status": {
+      "validationIssues": "Attention : Le service présente des problèmes de validation",
+      "loaded": "Service chargé : {name} ({count} cantiques)",
+      "deleted": "Service supprimé",
+      "saved": "Service enregistré"
+    },
+    "errors": {
+      "saveFailed": "Erreur lors de l'enregistrement des services : {error}"
     }
   },
   "navigation": {

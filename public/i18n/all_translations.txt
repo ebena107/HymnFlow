@@ -1,0 +1,1189 @@
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Lower-third controller for OBS HYMN",
+    "status": {
+      "live": "LIVE",
+      "storage": "localStorage",
+      "ready": "Ready ({storage})"
+    }
+  },
+  "hymns": {
+    "title": "Hymns",
+    "searchPlaceholder": "Search hymns",
+    "searchLabel": "Search hymns by title, author, or number",
+    "noHymnsFound": "No hymns found",
+    "noHymnSelected": "No hymn selected",
+    "selectedTitle": "Selected Hymn Title",
+    "buttons": {
+      "add": "+ Add",
+      "edit": "✏️ Edit",
+      "remove": "- Remove",
+      "import": "Import",
+      "export": "Export"
+    },
+    "labels": {
+      "hymnNumber": "Hymn Number",
+      "sourceAbbr": "Source Abbreviation",
+      "sourceName": "Source Name",
+      "title": "Title",
+      "author": "Author",
+      "verses": "Verses",
+      "chorus": "Chorus",
+      "versesSeparator": "(separate verses with blank line)",
+      "chorusOptional": "(optional)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "e.g., 123",
+      "sourceAbbr": "e.g., CH, PD, HB",
+      "sourceName": "e.g., Church Hymnal, Public Domain",
+      "title": "Hymn title",
+      "author": "Author name",
+      "verses": "Verse 1 text\n\nVerse 2 text\n\nVerse 3 text",
+      "chorus": "Chorus text"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "newButton": "+ New",
+    "namePlaceholder": "Service name (e.g., Sunday Morning)",
+    "noServicesFound": "No services created",
+    "hymnsCount": "{count} hymn(s)",
+    "buttons": {
+      "addHymn": "+ Add Hymn",
+      "save": "Save Service",
+      "cancel": "Cancel"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
+    "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Previous",
+      "nextVerse": "Next ⟶",
+      "prevLine": "⬆ Previous Line",
+      "nextLine": "⬇ Next Line",
+      "jumpChorus": "Jump to Chorus",
+      "emergencyClear": "Emergency Clear"
+    },
+    "tooltips": {
+      "prevVerse": "Previous verse (Left arrow)",
+      "nextVerse": "Next verse (Right arrow)",
+      "prevLine": "Previous line window (Up arrow)",
+      "nextLine": "Next line window (Down arrow)",
+      "jumpChorus": "Display chorus if available",
+      "emergencyClear": "Immediately hide overlay from stream"
+    }
+  },
+  "display": {
+    "title": "Display Controls",
+    "displayLabel": "Display",
+    "liveIndicator": "LIVE",
+    "resetButton": "Reset",
+    "resetTooltip": "Reset to first verse, first line",
+    "linesPerDisplay": "Lines per display"
+  },
+  "preview": {
+    "title": "Hymn Previews"
+  },
+  "styles": {
+    "title": "Styles",
+    "fontFamily": "Font Family",
+    "fontSize": "Font size",
+    "bold": "Bold",
+    "italic": "Italic",
+    "shadow": "Shadow",
+    "glow": "Glow",
+    "outline": "Outline",
+    "outlineColor": "Outline Color",
+    "outlineWidth": "Outline Width",
+    "textColor": "Text Color",
+    "bgType": "Background type",
+    "bgColorA": "Background color A",
+    "bgColorB": "Background color B (for gradient)",
+    "animation": "Animation",
+    "position": "Position",
+    "bgTypes": {
+      "transparent": "Transparent",
+      "solid": "Solid",
+      "gradient": "Gradient"
+    },
+    "animations": {
+      "fade": "Fade",
+      "slide": "Slide",
+      "none": "None"
+    },
+    "positions": {
+      "bottom": "Bottom Third",
+      "middle": "Middle",
+      "top": "Top"
+    }
+  },
+  "modal": {
+    "editHymn": "Edit Hymn",
+    "addHymn": "Add Hymn",
+    "buttons": {
+      "cancel": "Cancel",
+      "save": "Save Changes"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageLabel": "Interface Language"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Controlador de tercio inferior para OBS HYMN",
+    "status": {
+      "live": "EN VIVO",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Himnos",
+    "searchPlaceholder": "Buscar himnos",
+    "searchLabel": "Buscar himnos por título, autor o número",
+    "noHymnsFound": "No se encontraron himnos",
+    "selectedTitle": "Título del himno seleccionado",
+    "buttons": {
+      "add": "+ Agregar",
+      "edit": "✏️ Editar",
+      "remove": "- Eliminar",
+      "import": "Importar",
+      "export": "Exportar"
+    },
+    "labels": {
+      "hymnNumber": "Número del himno",
+      "sourceAbbr": "Abreviatura de la fuente",
+      "sourceName": "Nombre de la fuente",
+      "title": "Título",
+      "author": "Autor",
+      "verses": "Versos",
+      "chorus": "Coro",
+      "versesSeparator": "(separar versos con línea en blanco)",
+      "chorusOptional": "(opcional)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "ej., 123",
+      "sourceAbbr": "ej., HC, DP, HB",
+      "sourceName": "ej., Himnario Cristiano, Dominio Público",
+      "title": "Título del himno",
+      "author": "Nombre del autor",
+      "verses": "Texto del verso 1\n\nTexto del verso 2\n\nTexto del verso 3",
+      "chorus": "Texto del coro"
+    }
+  },
+  "services": {
+    "title": "Servicios",
+    "newButton": "+ Nuevo",
+    "namePlaceholder": "Nombre del servicio (ej., Domingo por la mañana)",
+    "buttons": {
+      "addHymn": "+ Agregar himno",
+      "save": "Guardar servicio",
+      "cancel": "Cancelar"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verso {current}/{total} · Líneas {startLine}-{endLine} de {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Anterior",
+      "nextVerse": "Siguiente ⟶",
+      "prevLine": "⬆ Línea anterior",
+      "nextLine": "⬇ Siguiente línea",
+      "jumpChorus": "Ir al coro",
+      "emergencyClear": "Borrado de emergencia"
+    },
+    "tooltips": {
+      "prevVerse": "Verso anterior (Flecha izquierda)",
+      "nextVerse": "Siguiente verso (Flecha derecha)",
+      "prevLine": "Ventana de línea anterior (Flecha arriba)",
+      "nextLine": "Ventana de siguiente línea (Flecha abajo)",
+      "jumpChorus": "Mostrar coro si está disponible",
+      "emergencyClear": "Ocultar inmediatamente la superposición de la transmisión"
+    }
+  },
+  "display": {
+    "title": "Controles de visualización",
+    "displayLabel": "Visualización",
+    "liveIndicator": "EN VIVO",
+    "resetButton": "Restablecer",
+    "resetTooltip": "Restablecer al primer verso, primera línea",
+    "linesPerDisplay": "Líneas por visualización"
+  },
+  "preview": {
+    "title": "Vista previa de himnos"
+  },
+  "styles": {
+    "title": "Estilos",
+    "fontFamily": "Familia de fuente",
+    "fontSize": "Tamaño de fuente",
+    "bold": "Negrita",
+    "italic": "Cursiva",
+    "shadow": "Sombra",
+    "glow": "Resplandor",
+    "outline": "Contorno",
+    "outlineColor": "Color del contorno",
+    "outlineWidth": "Ancho del contorno",
+    "textColor": "Color del texto",
+    "bgType": "Tipo de fondo",
+    "bgColorA": "Color de fondo A",
+    "bgColorB": "Color de fondo B (para gradiente)",
+    "animation": "Animación",
+    "position": "Posición",
+    "bgTypes": {
+      "transparent": "Transparente",
+      "solid": "Sólido",
+      "gradient": "Gradiente"
+    },
+    "animations": {
+      "fade": "Desvanecer",
+      "slide": "Deslizar",
+      "none": "Ninguno"
+    },
+    "positions": {
+      "bottom": "Tercio inferior",
+      "middle": "Medio",
+      "top": "Superior"
+    }
+  },
+  "modal": {
+    "editHymn": "Editar himno",
+    "addHymn": "Agregar himno",
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Guardar cambios"
+    }
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "languageLabel": "Idioma de la interfaz"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN",
+    "status": {
+      "live": "EN DIRECT",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Cantiques",
+    "searchPlaceholder": "Rechercher des cantiques",
+    "searchLabel": "Rechercher des cantiques par titre, auteur ou numéro",
+    "noHymnsFound": "Aucun cantique trouvé",
+    "selectedTitle": "Titre du cantique sélectionné",
+    "buttons": {
+      "add": "+ Ajouter",
+      "edit": "✏️ Modifier",
+      "remove": "- Supprimer",
+      "import": "Importer",
+      "export": "Exporter"
+    },
+    "labels": {
+      "hymnNumber": "Numéro du cantique",
+      "sourceAbbr": "Abréviation de la source",
+      "sourceName": "Nom de la source",
+      "title": "Titre",
+      "author": "Auteur",
+      "verses": "Versets",
+      "chorus": "Refrain",
+      "versesSeparator": "(séparer les versets par une ligne vide)",
+      "chorusOptional": "(optionnel)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "ex., 123",
+      "sourceAbbr": "ex., CH, PD, HB",
+      "sourceName": "ex., Recueil d'hymnes, Domaine public",
+      "title": "Titre du cantique",
+      "author": "Nom de l'auteur",
+      "verses": "Texte du verset 1\n\nTexte du verset 2\n\nTexte du verset 3",
+      "chorus": "Texte du refrain"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "newButton": "+ Nouveau",
+    "namePlaceholder": "Nom du service (ex., Dimanche matin)",
+    "buttons": {
+      "addHymn": "+ Ajouter un cantique",
+      "save": "Enregistrer le service",
+      "cancel": "Annuler"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verset {current}/{total} · Lignes {startLine}-{endLine} sur {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Précédent",
+      "nextVerse": "Suivant ⟶",
+      "prevLine": "⬆ Ligne précédente",
+      "nextLine": "⬇ Ligne suivante",
+      "jumpChorus": "Aller au refrain",
+      "emergencyClear": "Effacement d'urgence"
+    },
+    "tooltips": {
+      "prevVerse": "Verset précédent (Flèche gauche)",
+      "nextVerse": "Verset suivant (Flèche droite)",
+      "prevLine": "Fenêtre de ligne précédente (Flèche haut)",
+      "nextLine": "Fenêtre de ligne suivante (Flèche bas)",
+      "jumpChorus": "Afficher le refrain si disponible",
+      "emergencyClear": "Masquer immédiatement la superposition du flux"
+    }
+  },
+  "display": {
+    "title": "Contrôles d'affichage",
+    "displayLabel": "Affichage",
+    "liveIndicator": "EN DIRECT",
+    "resetButton": "Réinitialiser",
+    "resetTooltip": "Réinitialiser au premier verset, première ligne",
+    "linesPerDisplay": "Lignes par affichage"
+  },
+  "preview": {
+    "title": "Aperçu des cantiques"
+  },
+  "styles": {
+    "title": "Styles",
+    "fontFamily": "Police de caractères",
+    "fontSize": "Taille de police",
+    "bold": "Gras",
+    "italic": "Italique",
+    "shadow": "Ombre",
+    "glow": "Lueur",
+    "outline": "Contour",
+    "outlineColor": "Couleur du contour",
+    "outlineWidth": "Largeur du contour",
+    "textColor": "Couleur du texte",
+    "bgType": "Type d'arrière-plan",
+    "bgColorA": "Couleur d'arrière-plan A",
+    "bgColorB": "Couleur d'arrière-plan B (pour dégradé)",
+    "animation": "Animation",
+    "position": "Position",
+    "bgTypes": {
+      "transparent": "Transparent",
+      "solid": "Solide",
+      "gradient": "Dégradé"
+    },
+    "animations": {
+      "fade": "Fondu",
+      "slide": "Glissement",
+      "none": "Aucun"
+    },
+    "positions": {
+      "bottom": "Tiers inférieur",
+      "middle": "Milieu",
+      "top": "Haut"
+    }
+  },
+  "modal": {
+    "editHymn": "Modifier le cantique",
+    "addHymn": "Ajouter un cantique",
+    "buttons": {
+      "cancel": "Annuler",
+      "save": "Enregistrer les modifications"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "languageLabel": "Langue de l'interface"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "OBS 찬송가 하단 3분의 1 컨트롤러",
+    "status": {
+      "live": "라이브",
+      "storage": "로컬스토리지"
+    }
+  },
+  "hymns": {
+    "title": "찬송가",
+    "searchPlaceholder": "찬송가 검색",
+    "searchLabel": "제목, 작가 또는 번호로 찬송가 검색",
+    "noHymnsFound": "찬송가를 찾을 수 없습니다",
+    "selectedTitle": "선택된 찬송가 제목",
+    "buttons": {
+      "add": "+ 추가",
+      "edit": "✏️ 편집",
+      "remove": "- 삭제",
+      "import": "가져오기",
+      "export": "내보내기"
+    },
+    "labels": {
+      "hymnNumber": "찬송가 번호",
+      "sourceAbbr": "출처 약어",
+      "sourceName": "출처 이름",
+      "title": "제목",
+      "author": "작가",
+      "verses": "절",
+      "chorus": "후렴",
+      "versesSeparator": "（빈 줄로 절 구분）",
+      "chorusOptional": "（선택 사항）",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "예: 123",
+      "sourceAbbr": "예: CH, PD, HB",
+      "sourceName": "예: 교회 찬송가, 퍼블릭 도메인",
+      "title": "찬송가 제목",
+      "author": "작가 이름",
+      "verses": "1절 가사\n\n2절 가사\n\n3절 가사",
+      "chorus": "후렴 가사"
+    }
+  },
+  "services": {
+    "title": "예배",
+    "newButton": "+ 새로 만들기",
+    "namePlaceholder": "예배 이름 (예: 주일 오전 예배)",
+    "buttons": {
+      "addHymn": "+ 찬송가 추가",
+      "save": "예배 저장",
+      "cancel": "취소"
+    }
+  },
+  "navigation": {
+    "verseInfo": "절 {current}/{total} · {totalLines}줄 중 {startLine}-{endLine}줄",
+    "buttons": {
+      "prevVerse": "⟵ 이전",
+      "nextVerse": "다음 ⟶",
+      "prevLine": "⬆ 이전 줄",
+      "nextLine": "⬇ 다음 줄",
+      "jumpChorus": "후렴으로 이동",
+      "emergencyClear": "긴급 지우기"
+    },
+    "tooltips": {
+      "prevVerse": "이전 절 (왼쪽 화살표)",
+      "nextVerse": "다음 절 (오른쪽 화살표)",
+      "prevLine": "이전 줄 창 (위쪽 화살표)",
+      "nextLine": "다음 줄 창 (아래쪽 화살표)",
+      "jumpChorus": "후렴이 있으면 표시",
+      "emergencyClear": "스트림에서 오버레이 즉시 숨기기"
+    }
+  },
+  "display": {
+    "title": "디스플레이 컨트롤",
+    "displayLabel": "디스플레이",
+    "liveIndicator": "라이브",
+    "resetButton": "재설정",
+    "resetTooltip": "첫 번째 절, 첫 번째 줄로 재설정",
+    "linesPerDisplay": "디스플레이당 줄 수"
+  },
+  "preview": {
+    "title": "찬송가 미리보기"
+  },
+  "styles": {
+    "title": "스타일",
+    "fontFamily": "글꼴 종류",
+    "fontSize": "글꼴 크기",
+    "bold": "굵게",
+    "italic": "기울임",
+    "shadow": "그림자",
+    "glow": "빛",
+    "outline": "윤곽선",
+    "outlineColor": "윤곽선 색상",
+    "outlineWidth": "윤곽선 두께",
+    "textColor": "텍스트 색상",
+    "bgType": "배경 유형",
+    "bgColorA": "배경 색상 A",
+    "bgColorB": "배경 색상 B (그라데이션용)",
+    "animation": "애니메이션",
+    "position": "위치",
+    "bgTypes": {
+      "transparent": "투명",
+      "solid": "단색",
+      "gradient": "그라데이션"
+    },
+    "animations": {
+      "fade": "페이드",
+      "slide": "슬라이드",
+      "none": "없음"
+    },
+    "positions": {
+      "bottom": "하단 3분의 1",
+      "middle": "중간",
+      "top": "상단"
+    }
+  },
+  "modal": {
+    "editHymn": "찬송가 편집",
+    "addHymn": "찬송가 추가",
+    "buttons": {
+      "cancel": "취소",
+      "save": "변경사항 저장"
+    }
+  },
+  "settings": {
+    "title": "설정",
+    "language": "언어",
+    "languageLabel": "인터페이스 언어"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Controlador de terço inferior para OBS HYMN",
+    "status": {
+      "live": "AO VIVO",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Hinos",
+    "searchPlaceholder": "Pesquisar hinos",
+    "searchLabel": "Pesquisar hinos por título, autor ou número",
+    "noHymnsFound": "Nenhum hino encontrado",
+    "selectedTitle": "Título do hino selecionado",
+    "buttons": {
+      "add": "+ Adicionar",
+      "edit": "✏️ Editar",
+      "remove": "- Remover",
+      "import": "Importar",
+      "export": "Exportar"
+    },
+    "labels": {
+      "hymnNumber": "Número do hino",
+      "sourceAbbr": "Abreviação da fonte",
+      "sourceName": "Nome da fonte",
+      "title": "Título",
+      "author": "Autor",
+      "verses": "Versos",
+      "chorus": "Refrão",
+      "versesSeparator": "(separe os versos com linha em branco)",
+      "chorusOptional": "(opcional)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "ex., 123",
+      "sourceAbbr": "ex., HC, DP, HB",
+      "sourceName": "ex., Hinário Cristão, Domínio Público",
+      "title": "Título do hino",
+      "author": "Nome do autor",
+      "verses": "Texto do verso 1\n\nTexto do verso 2\n\nTexto do verso 3",
+      "chorus": "Texto do refrão"
+    }
+  },
+  "services": {
+    "title": "Serviços",
+    "newButton": "+ Novo",
+    "namePlaceholder": "Nome do serviço (ex., Domingo de manhã)",
+    "buttons": {
+      "addHymn": "+ Adicionar hino",
+      "save": "Salvar serviço",
+      "cancel": "Cancelar"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Verso {current}/{total} · Linhas {startLine}-{endLine} de {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Anterior",
+      "nextVerse": "Próximo ⟶",
+      "prevLine": "⬆ Linha anterior",
+      "nextLine": "⬇ Próxima linha",
+      "jumpChorus": "Ir para o refrão",
+      "emergencyClear": "Limpeza de emergência"
+    },
+    "tooltips": {
+      "prevVerse": "Verso anterior (Seta esquerda)",
+      "nextVerse": "Próximo verso (Seta direita)",
+      "prevLine": "Janela de linha anterior (Seta para cima)",
+      "nextLine": "Janela de próxima linha (Seta para baixo)",
+      "jumpChorus": "Exibir refrão se disponível",
+      "emergencyClear": "Ocultar imediatamente a sobreposição da transmissão"
+    }
+  },
+  "display": {
+    "title": "Controles de exibição",
+    "displayLabel": "Exibição",
+    "liveIndicator": "AO VIVO",
+    "resetButton": "Redefinir",
+    "resetTooltip": "Redefinir para o primeiro verso, primeira linha",
+    "linesPerDisplay": "Linhas por exibição"
+  },
+  "preview": {
+    "title": "Visualização de hinos"
+  },
+  "styles": {
+    "title": "Estilos",
+    "fontFamily": "Família da fonte",
+    "fontSize": "Tamanho da fonte",
+    "bold": "Negrito",
+    "italic": "Itálico",
+    "shadow": "Sombra",
+    "glow": "Brilho",
+    "outline": "Contorno",
+    "outlineColor": "Cor do contorno",
+    "outlineWidth": "Largura do contorno",
+    "textColor": "Cor do texto",
+    "bgType": "Tipo de fundo",
+    "bgColorA": "Cor de fundo A",
+    "bgColorB": "Cor de fundo B (para gradiente)",
+    "animation": "Animação",
+    "position": "Posição",
+    "bgTypes": {
+      "transparent": "Transparente",
+      "solid": "Sólido",
+      "gradient": "Gradiente"
+    },
+    "animations": {
+      "fade": "Desvanecer",
+      "slide": "Deslizar",
+      "none": "Nenhum"
+    },
+    "positions": {
+      "bottom": "Terço inferior",
+      "middle": "Meio",
+      "top": "Topo"
+    }
+  },
+  "modal": {
+    "editHymn": "Editar hino",
+    "addHymn": "Adicionar hino",
+    "buttons": {
+      "cancel": "Cancelar",
+      "save": "Salvar alterações"
+    }
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "languageLabel": "Idioma da interface"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN",
+    "status": {
+      "live": "MOJA KWA MOJA",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Nyimbo",
+    "searchPlaceholder": "Tafuta nyimbo",
+    "searchLabel": "Tafuta nyimbo kwa jina, mwandishi, au nambari",
+    "noHymnsFound": "Hakuna nyimbo zilizopatikana",
+    "selectedTitle": "Jina la wimbo uliochaguliwa",
+    "buttons": {
+      "add": "+ Ongeza",
+      "edit": "✏️ Hariri",
+      "remove": "- Ondoa",
+      "import": "Ingiza",
+      "export": "Toa"
+    },
+    "labels": {
+      "hymnNumber": "Nambari ya wimbo",
+      "sourceAbbr": "Kifupisho cha chanzo",
+      "sourceName": "Jina la chanzo",
+      "title": "Jina",
+      "author": "Mwandishi",
+      "verses": "Beti",
+      "chorus": "Kiitikio",
+      "versesSeparator": "(tenganisha beti kwa mstari tupu)",
+      "chorusOptional": "(si lazima)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "mfano, 123",
+      "sourceAbbr": "mfano, CH, PD, HB",
+      "sourceName": "mfano, Kitabu cha Nyimbo za Kanisa, Eneo la Umma",
+      "title": "Jina la wimbo",
+      "author": "Jina la mwandishi",
+      "verses": "Maandishi ya beti ya 1\n\nMaandishi ya beti ya 2\n\nMaandishi ya beti ya 3",
+      "chorus": "Maandishi ya kiitikio"
+    }
+  },
+  "services": {
+    "title": "Huduma",
+    "newButton": "+ Mpya",
+    "namePlaceholder": "Jina la huduma (mfano, Jumapili asubuhi)",
+    "buttons": {
+      "addHymn": "+ Ongeza wimbo",
+      "save": "Hifadhi huduma",
+      "cancel": "Ghairi"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Beti {current}/{total} · Mistari {startLine}-{endLine} ya {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Iliyotangulia",
+      "nextVerse": "Ifuatayo ⟶",
+      "prevLine": "⬆ Mstari uliotangulia",
+      "nextLine": "⬇ Mstari ufuatao",
+      "jumpChorus": "Nenda kwa kiitikio",
+      "emergencyClear": "Futa dharura"
+    },
+    "tooltips": {
+      "prevVerse": "Beti iliyotangulia (Mshale wa kushoto)",
+      "nextVerse": "Beti ifuatayo (Mshale wa kulia)",
+      "prevLine": "Dirisha la mstari uliotangulia (Mshale wa juu)",
+      "nextLine": "Dirisha la mstari ufuatao (Mshale wa chini)",
+      "jumpChorus": "Onyesha kiitikio ikiwa inapatikana",
+      "emergencyClear": "Ficha mara moja daraja kutoka kwa mtiririko"
+    }
+  },
+  "display": {
+    "title": "Vidhibiti vya kuonyesha",
+    "displayLabel": "Onyesha",
+    "liveIndicator": "MOJA KWA MOJA",
+    "resetButton": "Weka upya",
+    "resetTooltip": "Weka upya kwa beti ya kwanza, mstari wa kwanza",
+    "linesPerDisplay": "Mistari kwa onyesho"
+  },
+  "preview": {
+    "title": "Maonyesho ya nyimbo"
+  },
+  "styles": {
+    "title": "Mitindo",
+    "fontFamily": "Familia ya fonti",
+    "fontSize": "Ukubwa wa fonti",
+    "bold": "Nzito",
+    "italic": "Italiki",
+    "shadow": "Kivuli",
+    "glow": "Mwangaza",
+    "outline": "Mpaka",
+    "outlineColor": "Rangi ya mpaka",
+    "outlineWidth": "Upana wa mpaka",
+    "textColor": "Rangi ya maandishi",
+    "bgType": "Aina ya mandharinyuma",
+    "bgColorA": "Rangi ya mandharinyuma A",
+    "bgColorB": "Rangi ya mandharinyuma B (kwa mwingiliano)",
+    "animation": "Uhuishaji",
+    "position": "Nafasi",
+    "bgTypes": {
+      "transparent": "Uwazi",
+      "solid": "Imara",
+      "gradient": "Mwingiliano"
+    },
+    "animations": {
+      "fade": "Fifia",
+      "slide": "Teleza",
+      "none": "Hakuna"
+    },
+    "positions": {
+      "bottom": "Sehemu ya chini",
+      "middle": "Katikati",
+      "top": "Juu"
+    }
+  },
+  "modal": {
+    "editHymn": "Hariri wimbo",
+    "addHymn": "Ongeza wimbo",
+    "buttons": {
+      "cancel": "Ghairi",
+      "save": "Hifadhi mabadiliko"
+    }
+  },
+  "settings": {
+    "title": "Mipangilio",
+    "language": "Lugha",
+    "languageLabel": "Lugha ya kiolesura"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Tagapangasiwa ng lower-third para sa OBS HYMN",
+    "status": {
+      "live": "LIVE",
+      "storage": "localStorage"
+    }
+  },
+  "hymns": {
+    "title": "Mga Himno",
+    "searchPlaceholder": "Maghanap ng mga himno",
+    "searchLabel": "Maghanap ng mga himno sa pamamagitan ng pamagat, may-akda, o numero",
+    "noHymnsFound": "Walang nahanap na himno",
+    "selectedTitle": "Pamagat ng napiling himno",
+    "buttons": {
+      "add": "+ Magdagdag",
+      "edit": "✏️ I-edit",
+      "remove": "- Alisin",
+      "import": "Mag-import",
+      "export": "Mag-export"
+    },
+    "labels": {
+      "hymnNumber": "Numero ng himno",
+      "sourceAbbr": "Pagdadaglat ng pinagmulan",
+      "sourceName": "Pangalan ng pinagmulan",
+      "title": "Pamagat",
+      "author": "May-akda",
+      "verses": "Mga Taludtod",
+      "chorus": "Koro",
+      "versesSeparator": "(paghiwalayin ang mga taludtod gamit ang blangkong linya)",
+      "chorusOptional": "(opsyonal)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "hal., 123",
+      "sourceAbbr": "hal., CH, PD, HB",
+      "sourceName": "hal., Church Hymnal, Public Domain",
+      "title": "Pamagat ng himno",
+      "author": "Pangalan ng may-akda",
+      "verses": "Teksto ng taludtod 1\n\nTeksto ng taludtod 2\n\nTeksto ng taludtod 3",
+      "chorus": "Teksto ng koro"
+    }
+  },
+  "services": {
+    "title": "Mga Serbisyo",
+    "newButton": "+ Bago",
+    "namePlaceholder": "Pangalan ng serbisyo (hal., Linggo ng umaga)",
+    "buttons": {
+      "addHymn": "+ Magdagdag ng himno",
+      "save": "I-save ang serbisyo",
+      "cancel": "Kanselahin"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Taludtod {current}/{total} · Mga linya {startLine}-{endLine} ng {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Nakaraan",
+      "nextVerse": "Susunod ⟶",
+      "prevLine": "⬆ Nakaraang linya",
+      "nextLine": "⬇ Susunod na linya",
+      "jumpChorus": "Pumunta sa koro",
+      "emergencyClear": "Emergency na pag-clear"
+    },
+    "tooltips": {
+      "prevVerse": "Nakaraang taludtod (Kaliwang arrow)",
+      "nextVerse": "Susunod na taludtod (Kanang arrow)",
+      "prevLine": "Nakaraang window ng linya (Pataas na arrow)",
+      "nextLine": "Susunod na window ng linya (Pababa na arrow)",
+      "jumpChorus": "Ipakita ang koro kung available",
+      "emergencyClear": "Itago kaagad ang overlay mula sa stream"
+    }
+  },
+  "display": {
+    "title": "Mga kontrol sa pagpapakita",
+    "displayLabel": "Ipakita",
+    "liveIndicator": "LIVE",
+    "resetButton": "I-reset",
+    "resetTooltip": "I-reset sa unang taludtod, unang linya",
+    "linesPerDisplay": "Mga linya bawat pagpapakita"
+  },
+  "preview": {
+    "title": "Mga preview ng himno"
+  },
+  "styles": {
+    "title": "Mga Estilo",
+    "fontFamily": "Pamilya ng font",
+    "fontSize": "Laki ng font",
+    "bold": "Bold",
+    "italic": "Italic",
+    "shadow": "Anino",
+    "glow": "Ningning",
+    "outline": "Balangkas",
+    "outlineColor": "Kulay ng balangkas",
+    "outlineWidth": "Lapad ng balangkas",
+    "textColor": "Kulay ng teksto",
+    "bgType": "Uri ng background",
+    "bgColorA": "Kulay ng background A",
+    "bgColorB": "Kulay ng background B (para sa gradient)",
+    "animation": "Animation",
+    "position": "Posisyon",
+    "bgTypes": {
+      "transparent": "Transparent",
+      "solid": "Solid",
+      "gradient": "Gradient"
+    },
+    "animations": {
+      "fade": "Fade",
+      "slide": "Slide",
+      "none": "Wala"
+    },
+    "positions": {
+      "bottom": "Ibabang bahagi",
+      "middle": "Gitna",
+      "top": "Itaas"
+    }
+  },
+  "modal": {
+    "editHymn": "I-edit ang himno",
+    "addHymn": "Magdagdag ng himno",
+    "buttons": {
+      "cancel": "Kanselahin",
+      "save": "I-save ang mga pagbabago"
+    }
+  },
+  "settings": {
+    "title": "Mga Setting",
+    "language": "Wika",
+    "languageLabel": "Wika ng interface"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "Olùṣàkóso isàlẹ̀-ìdámẹ́ta fún OBS HYMN",
+    "status": {
+      "live": "LÁÀYÈ",
+      "storage": "localStorage",
+      "ready": "Ṣetán ({storage})"
+    }
+  },
+  "hymns": {
+    "title": "Àwọn Orin Ìyìn",
+    "searchPlaceholder": "Wá àwọn orin ìyìn",
+    "searchLabel": "Wá àwọn orin ìyìn nípa àkọlé, olùkọ́, tàbí nọ́mbà",
+    "noHymnsFound": "Kò sí orin ìyìn tí a rí",
+    "noHymnSelected": "Kò sí orin tí a yàn",
+    "selectedTitle": "Àkọlé Orin Ìyìn Tí A Yàn",
+    "buttons": {
+      "add": "+ Fi Kún",
+      "edit": "✏️ Ṣàtúnṣe",
+      "remove": "- Yọ Kúrò",
+      "import": "Gbé Wọlé",
+      "export": "Gbé Jáde"
+    },
+    "labels": {
+      "hymnNumber": "Nọ́mbà Orin Ìyìn",
+      "sourceAbbr": "Ìkúnrẹ́ Orísun",
+      "sourceName": "Orúkọ Orísun",
+      "title": "Àkọlé",
+      "author": "Olúkọ̀",
+      "verses": "Àwọn Ìfẹsẹ̀wọnsẹ̀",
+      "chorus": "Ẹgbẹ́",
+      "versesSeparator": "(ya àwọn ìfẹsẹ̀wọnsẹ̀ sọ́tọ̀ pẹ̀lú ìlà òfò)",
+      "chorusOptional": "(àìdánilójú)",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "àpẹrẹ, 123",
+      "sourceAbbr": "àpẹrẹ, CH, PD, HB",
+      "sourceName": "àpẹrẹ, Ìwé Orin Ìjọ, Ìní Gbogbogbò",
+      "title": "Àkọlé orin ìyìn",
+      "author": "Orúkọ olúkọ̀",
+      "verses": "Ọ̀rọ̀ ìfẹsẹ̀wọnsẹ̀ kìíní\n\nỌ̀rọ̀ ìfẹsẹ̀wọnsẹ̀ kejì\n\nỌ̀rọ̀ ìfẹsẹ̀wọnsẹ̀ kẹta",
+      "chorus": "Ọ̀rọ̀ ẹgbẹ́"
+    }
+  },
+  "services": {
+    "title": "Àwọn Ìsìn",
+    "newButton": "+ Tuntun",
+    "namePlaceholder": "Orúkọ ìsìn (àpẹrẹ, Ìsìn Àárọ̀ Ọjọ́ Ìsinmi)",
+    "noServicesFound": "Kò sí ìsìn kankan tí a dásílẹ̀",
+    "hymnsCount": "Orin ìyìn {count}",
+    "buttons": {
+      "addHymn": "+ Fi Orin Ìyìn Kún",
+      "save": "Fi Ìsìn Pamọ́",
+      "cancel": "Fàgìlé"
+    }
+  },
+  "navigation": {
+    "verseInfo": "Ìfẹsẹ̀wọnsẹ̀ {current}/{total} · Àwọn ìlà {startLine}-{endLine} nínú {totalLines}",
+    "chorusInfo": "Ẹgbẹ́ · Àwọn ìlà {startLine}-{endLine} nínú {totalLines}",
+    "buttons": {
+      "prevVerse": "⟵ Tẹ́lẹ̀",
+      "nextVerse": "Tókàn ⟶",
+      "prevLine": "⬆ Ìlà Tẹ́lẹ̀",
+      "nextLine": "⬇ Ìlà Tókàn",
+      "jumpChorus": "Fò lọ sí Ẹgbẹ́",
+      "emergencyClear": "Ìparẹ́ Ìpààrọ̀"
+    },
+    "tooltips": {
+      "prevVerse": "Ìfẹsẹ̀wọnsẹ̀ tẹ́lẹ̀ (Ọ̀pá òsì)",
+      "nextVerse": "Ìfẹsẹ̀wọnsẹ̀ tókàn (Ọ̀pá ọ̀tún)",
+      "prevLine": "Ojú-ọ̀nà ìlà tẹ́lẹ̀ (Ọ̀pá òkè)",
+      "nextLine": "Ojú-ọ̀nà ìlà tókàn (Ọ̀pá ìsàlẹ̀)",
+      "jumpChorus": "Ṣàfihàn ẹgbẹ́ tó bá wà",
+      "emergencyClear": "Fi pamọ́ lẹ́sẹkẹsẹ láti orí ìṣàn náà"
+    }
+  },
+  "display": {
+    "title": "Àwọn Ìṣàkóso Ìfihàn",
+    "displayLabel": "Ìfihàn",
+    "liveIndicator": "LÁÀYÈ",
+    "resetButton": "Tún Ṣètò",
+    "resetTooltip": "Tún ṣètò sí ìfẹsẹ̀wọnsẹ̀ àkọ́kọ́, ìlà àkọ́kọ́",
+    "linesPerDisplay": "Àwọn ìlà fún ìfihàn kọ̀ọ̀kan"
+  },
+  "preview": {
+    "title": "Àwòran Orin Ìyìn"
+  },
+  "styles": {
+    "title": "Àwọn Ọ̀nà",
+    "fontFamily": "Ìdílé Ọ̀nà-kíkọ",
+    "fontSize": "Ìwọ̀n ọ̀nà-kíkọ",
+    "bold": "Tóbi",
+    "italic": "Tẹ̀lẹ̀",
+    "shadow": "Òjìji",
+    "glow": "Ìmọ́lẹ̀",
+    "outline": "Ìpèsè",
+    "outlineColor": "Àwọ̀ Ìpèsè",
+    "outlineWidth": "Ìbú Ìpèsè",
+    "textColor": "Àwọ̀ Ọ̀rọ̀",
+    "bgType": "Irú ẹ̀yìn",
+    "bgColorA": "Àwọ̀ ẹ̀yìn A",
+    "bgColorB": "Àwọ̀ ẹ̀yìn B (fún àmójútó)",
+    "animation": "Ìṣàmúlò",
+    "position": "Ipò",
+    "bgTypes": {
+      "transparent": "Wéwé",
+      "solid": "Líle",
+      "gradient": "Àmójútó"
+    },
+    "animations": {
+      "fade": "Parẹ́",
+      "slide": "Yọ́",
+      "none": "Kò sí"
+    },
+    "positions": {
+      "bottom": "Ìsàlẹ̀ Ìdámẹ́ta",
+      "middle": "Àárín",
+      "top": "Òkè"
+    }
+  },
+  "modal": {
+    "editHymn": "Ṣàtúnṣe Orin Ìyìn",
+    "addHymn": "Fi Orin Ìyìn Kún",
+    "buttons": {
+      "cancel": "Fàgìlé",
+      "save": "Fi Àwọn Àyípadà Pamọ́"
+    }
+  },
+  "settings": {
+    "title": "Àwọn Ètò",
+    "language": "Èdè",
+    "languageLabel": "Èdè Ojú-òpó"
+  }
+}
+{
+  "app": {
+    "title": "HymnFlow Dock",
+    "subtitle": "OBS 赞美诗下三分之一控制器",
+    "status": {
+      "live": "直播",
+      "storage": "本地存储"
+    }
+  },
+  "hymns": {
+    "title": "赞美诗",
+    "searchPlaceholder": "搜索赞美诗",
+    "searchLabel": "按标题、作者或编号搜索赞美诗",
+    "noHymnsFound": "未找到赞美诗",
+    "selectedTitle": "已选赞美诗标题",
+    "buttons": {
+      "add": "+ 添加",
+      "edit": "✏️ 编辑",
+      "remove": "- 删除",
+      "import": "导入",
+      "export": "导出"
+    },
+    "labels": {
+      "hymnNumber": "赞美诗编号",
+      "sourceAbbr": "来源缩写",
+      "sourceName": "来源名称",
+      "title": "标题",
+      "author": "作者",
+      "verses": "诗节",
+      "chorus": "副歌",
+      "versesSeparator": "（用空行分隔诗节）",
+      "chorusOptional": "（可选）",
+      "required": "*"
+    },
+    "placeholders": {
+      "number": "例如：123",
+      "sourceAbbr": "例如：CH, PD, HB",
+      "sourceName": "例如：教会赞美诗集, 公有领域",
+      "title": "赞美诗标题",
+      "author": "作者姓名",
+      "verses": "第1节诗文\n\n第2节诗文\n\n第3节诗文",
+      "chorus": "副歌诗文"
+    }
+  },
+  "services": {
+    "title": "礼拜",
+    "newButton": "+ 新建",
+    "namePlaceholder": "礼拜名称（例如：主日晨礼拜）",
+    "buttons": {
+      "addHymn": "+ 添加赞美诗",
+      "save": "保存礼拜",
+      "cancel": "取消"
+    }
+  },
+  "navigation": {
+    "verseInfo": "第 {current}/{total} 节 · 第 {startLine}-{endLine} 行，共 {totalLines} 行",
+    "buttons": {
+      "prevVerse": "⟵ 上一节",
+      "nextVerse": "下一节 ⟶",
+      "prevLine": "⬆ 上一行",
+      "nextLine": "⬇ 下一行",
+      "jumpChorus": "跳转到副歌",
+      "emergencyClear": "紧急清除"
+    },
+    "tooltips": {
+      "prevVerse": "上一节（左箭头）",
+      "nextVerse": "下一节（右箭头）",
+      "prevLine": "上一行窗口（上箭头）",
+      "nextLine": "下一行窗口（下箭头）",
+      "jumpChorus": "显示副歌（如果有）",
+      "emergencyClear": "立即从直播中隐藏叠加层"
+    }
+  },
+  "display": {
+    "title": "显示控制",
+    "displayLabel": "显示",
+    "liveIndicator": "直播",
+    "resetButton": "重置",
+    "resetTooltip": "重置到第一节，第一行",
+    "linesPerDisplay": "每次显示的行数"
+  },
+  "preview": {
+    "title": "赞美诗预览"
+  },
+  "styles": {
+    "title": "样式",
+    "fontFamily": "字体系列",
+    "fontSize": "字体大小",
+    "bold": "粗体",
+    "italic": "斜体",
+    "shadow": "阴影",
+    "glow": "发光",
+    "outline": "轮廓",
+    "outlineColor": "轮廓颜色",
+    "outlineWidth": "轮廓宽度",
+    "textColor": "文字颜色",
+    "bgType": "背景类型",
+    "bgColorA": "背景颜色 A",
+    "bgColorB": "背景颜色 B（用于渐变）",
+    "animation": "动画",
+    "position": "位置",
+    "bgTypes": {
+      "transparent": "透明",
+      "solid": "实心",
+      "gradient": "渐变"
+    },
+    "animations": {
+      "fade": "淡入淡出",
+      "slide": "滑动",
+      "none": "无"
+    },
+    "positions": {
+      "bottom": "下三分之一",
+      "middle": "中间",
+      "top": "顶部"
+    }
+  },
+  "modal": {
+    "editHymn": "编辑赞美诗",
+    "addHymn": "添加赞美诗",
+    "buttons": {
+      "cancel": "取消",
+      "save": "保存更改"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "languageLabel": "界面语言"
+  }
+}

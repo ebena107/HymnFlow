@@ -25,12 +25,19 @@ set RELEASE_DIR=hymnflow-v!VERSION!
 if exist "!RELEASE_DIR!" rmdir /s /q "!RELEASE_DIR!"
 mkdir "!RELEASE_DIR!"
 
+REM Consolidate translations
+echo Consolidating translations...
+python scripts\combine_translations.py
+
 REM Copy files
 echo Packaging files...
 xcopy public\obs-dock "!RELEASE_DIR!\obs-dock\" /E /Y > nul
 xcopy public\obs-overlay "!RELEASE_DIR!\obs-overlay\" /E /Y > nul
 xcopy public\data "!RELEASE_DIR!\data\" /E /Y > nul
 xcopy public\parsers "!RELEASE_DIR!\parsers\" /E /Y > nul
+xcopy public\i18n "!RELEASE_DIR!\i18n\" /E /Y > nul
+copy public\obs-setup.html "!RELEASE_DIR!\" > nul
+copy public\validation.js "!RELEASE_DIR!\" > nul
 copy README.md "!RELEASE_DIR!\" > nul
 copy doc\SETUP.md "!RELEASE_DIR!\" > nul
 copy doc\TROUBLESHOOTING.md "!RELEASE_DIR!\" > nul

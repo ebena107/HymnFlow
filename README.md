@@ -14,7 +14,7 @@
 - 🔄 **Real-Time Updates** - Overlay updates automatically as you navigate
 - 💾 **Persistent Storage** - Hymns saved in browser localStorage
 - 🌍 **Multi-Language Support** - Interface in 9 languages (EN, ES, FR, PT, SW, TL, YO, ZH, KO)
-- 📦 **Hymn Bundle** - Optional high-quality collections (including CAC GHB/YHB) separated for small base size
+- 📦 **Hymn Bundle** - Optional high-quality collections (including CAC GHB/YHB) available as **separate download** for small base size
 
 ## 🚀 Quick Start
 
@@ -45,10 +45,26 @@ Height: 1080
 ✅ Refresh browser when scene becomes active
 ```
 
-#### Step 3: Import Your Hymns
+#### Step 3: Download Hymn Bundle (Separate Download)
+
+> [!IMPORTANT]
+> The hymn collections are **NOT included** in the main plugin download to keep it lightweight (~150KB).
+> You must download hymn files separately.
+
+**Option 1: Download from GitHub Repository**
+- Visit the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle) on GitHub
+- Download individual `.json` files you need (e.g., `cac_ghb.json`, `cac_yhb.json`)
+- Save them to a location on your computer (e.g., `C:\HymnFlow\hymn-bundle\`)
+
+**Option 2: Download from Releases**
+- Visit the [Releases page](https://github.com/ebena107/HymnFlow/releases)
+- Download the `hymn-bundle.zip` file (if available)
+- Extract to your preferred location
+
+#### Step 4: Import Your Hymns
 
 - Click **Import** button in the dock
-- Select your `.txt` or `.json` hymn file from the **Hymn Bundle**
+- Select your downloaded `.json` hymn file
 - Start displaying hymns!
 
 ### Alternative: Python HTTP Server
@@ -139,12 +155,20 @@ HymnFlow supports multiple languages for the user interface:
 - 🇨🇳 **Mandarin Chinese** (zh - 中文)
 - 🇰🇷 **Korean** (ko - 한국어)
 
-### Official Hymn Collections
+### Official Hymn Collections (Separate Download)
 
-The v2.3.0 release introduces the **Hymn Bundle**, featuring:
-- **CAC GHB**: Christ Apostolic Church Gospel Hymn Book (English) - 1000 hymns
+> [!NOTE]
+> Hymn collections are **not included** in the main plugin package to keep the download size small.
+
+The **Hymn Bundle** is available as a separate download, featuring:
+- **CAC GHB**: Christ Apostolic Church Gospel Hymn Book (English) - 1,001 hymns
 - **CAC YHB**: Iwe Orin CAC (Yoruba) - 997 hymns
 - **Standard Library**: FWS, NNBH, UMH, YBH collections
+
+**How to get hymn files:**
+1. Download from the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle) on GitHub
+2. Or download from [Releases](https://github.com/ebena107/HymnFlow/releases) (if hymn-bundle.zip is available)
+3. Import the `.json` files using the Import button in the HymnFlow dock
 
 ### Changing Language
 

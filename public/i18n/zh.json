@@ -1,10 +1,16 @@
 {
   "app": {
-    "title": "HymnFlow Dock",
-    "subtitle": "OBS 赞美诗下三分之一控制器",
+    "title": "HymnFlow 控制台",
+    "subtitle": "OBS HYMN 的下三分之一控制器",
     "status": {
-      "live": "直播",
-      "storage": "本地存储"
+      "live": "直播中",
+      "storage": "本地存储",
+      "ready": "准备就绪 ({storage})",
+      "hymnUpdated": "赞美诗已更新",
+      "hymnAdded": "赞美诗已添加"
+    },
+    "errors": {
+      "sendFailed": "发送到叠加层时出错: {error}"
     }
   },
   "hymns": {
@@ -12,44 +18,85 @@
     "searchPlaceholder": "搜索赞美诗",
     "searchLabel": "按标题、作者或编号搜索赞美诗",
     "noHymnsFound": "未找到赞美诗",
-    "selectedTitle": "已选赞美诗标题",
+    "noHymnSelected": "未选择赞美诗",
+    "selectedTitle": "选定的赞美诗标题",
     "buttons": {
       "add": "+ 添加",
       "edit": "✏️ 编辑",
-      "remove": "- 删除",
+      "remove": "- 移除",
       "import": "导入",
       "export": "导出"
     },
     "labels": {
       "hymnNumber": "赞美诗编号",
-      "sourceAbbr": "来源缩写",
+      "sourceAbbr": "来源简称",
       "sourceName": "来源名称",
       "title": "标题",
       "author": "作者",
       "verses": "诗节",
       "chorus": "副歌",
-      "versesSeparator": "（用空行分隔诗节）",
-      "chorusOptional": "（可选）",
-      "required": "*"
+      "versesSeparator": "(用空行分隔诗节)",
+      "chorusOptional": "(可选)",
+      "required": "*",
+      "versesCount": "{count} 节"
     },
     "placeholders": {
-      "number": "例如：123",
-      "sourceAbbr": "例如：CH, PD, HB",
-      "sourceName": "例如：教会赞美诗集, 公有领域",
+      "number": "例如: 123",
+      "sourceAbbr": "例如: CH, PD, HB",
+      "sourceName": "例如: 圣诗集, 公有领域",
       "title": "赞美诗标题",
       "author": "作者姓名",
-      "verses": "第1节诗文\n\n第2节诗文\n\n第3节诗文",
-      "chorus": "副歌诗文"
+      "verses": "第 1 节文本\n\n第 2 节文本\n\n第 3 节文本",
+      "chorus": "副歌文本"
+    },
+    "alerts": {
+      "noChorus": "此赞美诗没有副歌",
+      "noHymnSelected": "未选择赞美诗",
+      "noHymnToEdit": "未选择要编辑的赞美诗",
+      "titleRequired": "标题为必填项",
+      "versesRequired": "至少需要一节诗",
+      "validationFailed": "赞美诗验证失败:\n{errors}",
+      "importFailed": "导入失败: {error}"
+    },
+    "confirmations": {
+      "delete": "确实要删除 \"{title}\" 吗？"
+    },
+    "status": {
+      "exported": "已导出 {filename}",
+      "imported": "已导入 {count} 首赞美诗{skipped}"
     }
   },
   "services": {
-    "title": "礼拜",
+    "title": "崇拜安排",
     "newButton": "+ 新建",
-    "namePlaceholder": "礼拜名称（例如：主日晨礼拜）",
+    "namePlaceholder": "安排名称 (例如: 主日早崇拜)",
+    "noServicesFound": "尚未创建安排",
+    "noHymnsInService": "尚未添加赞美诗",
+    "hymnsCount": "{count} 首赞美诗",
     "buttons": {
       "addHymn": "+ 添加赞美诗",
-      "save": "保存礼拜",
-      "cancel": "取消"
+      "save": "保存安排",
+      "cancel": "取消",
+      "load": "加载",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "alerts": {
+      "nameRequired": "安排名称为必填项",
+      "atLeastOneHymn": "请至少向安排中添加一首赞美诗",
+      "validationFailed": "安排验证失败:\n{errors}"
+    },
+    "confirmations": {
+      "delete": "确实要删除此安排吗？"
+    },
+    "status": {
+      "validationIssues": "警告: 安排存在验证问题",
+      "loaded": "已加载安排: {name} ({count} 首赞美诗)",
+      "deleted": "安排已删除",
+      "saved": "安排已保存"
+    },
+    "errors": {
+      "saveFailed": "保存安排时出错: {error}"
     }
   },
   "navigation": {
@@ -59,49 +106,49 @@
       "nextVerse": "下一节 ⟶",
       "prevLine": "⬆ 上一行",
       "nextLine": "⬇ 下一行",
-      "jumpChorus": "跳转到副歌",
+      "jumpChorus": "跳至副歌",
       "emergencyClear": "紧急清除"
     },
     "tooltips": {
-      "prevVerse": "上一节（左箭头）",
-      "nextVerse": "下一节（右箭头）",
-      "prevLine": "上一行窗口（上箭头）",
-      "nextLine": "下一行窗口（下箭头）",
-      "jumpChorus": "显示副歌（如果有）",
+      "prevVerse": "上一节 (左方向键)",
+      "nextVerse": "下一节 (右方向键)",
+      "prevLine": "上一行窗口 (上方向键)",
+      "nextLine": "下一行窗口 (下方向键)",
+      "jumpChorus": "显示副歌 (如果可用)",
       "emergencyClear": "立即从直播中隐藏叠加层"
     }
   },
   "display": {
     "title": "显示控制",
     "displayLabel": "显示",
-    "liveIndicator": "直播",
+    "liveIndicator": "直播中",
     "resetButton": "重置",
-    "resetTooltip": "重置到第一节，第一行",
-    "linesPerDisplay": "每次显示的行数"
+    "resetTooltip": "重置为第一节、第一行",
+    "linesPerDisplay": "每屏行数"
   },
   "preview": {
     "title": "赞美诗预览"
   },
   "styles": {
     "title": "样式",
-    "fontFamily": "字体系列",
+    "fontFamily": "字体名称",
     "fontSize": "字体大小",
-    "bold": "粗体",
-    "italic": "斜体",
+    "bold": "加粗",
+    "italic": "倾斜",
     "shadow": "阴影",
     "glow": "发光",
-    "outline": "轮廓",
-    "outlineColor": "轮廓颜色",
-    "outlineWidth": "轮廓宽度",
-    "textColor": "文字颜色",
+    "outline": "描边",
+    "outlineColor": "描边颜色",
+    "outlineWidth": "描边宽度",
+    "textColor": "文本颜色",
     "bgType": "背景类型",
     "bgColorA": "背景颜色 A",
-    "bgColorB": "背景颜色 B（用于渐变）",
-    "animation": "动画",
+    "bgColorB": "背景颜色 B (用于渐变)",
+    "animation": "动画效果",
     "position": "位置",
     "bgTypes": {
       "transparent": "透明",
-      "solid": "实心",
+      "solid": "纯色",
       "gradient": "渐变"
     },
     "animations": {
@@ -110,7 +157,7 @@
       "none": "无"
     },
     "positions": {
-      "bottom": "下三分之一",
+      "bottom": "底部三分之一",
       "middle": "中间",
       "top": "顶部"
     }
