@@ -158,7 +158,41 @@
       hymns = DEFAULT_HYMNS || [];
       localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
     }
+    if (normalizeHymnNumbers(hymns)) {
+      saveHymns();
+    }
     filtered = hymns;
+  }
+
+  function normalizeHymnNumbers(items) {
+    let changed = false;
+    (items || []).forEach(hymn => {
+      if (!hymn || !hymn.metadata || hymn.metadata.number === undefined || hymn.metadata.number === null) {
+        return;
+      }
+
+      const rawNumber = hymn.metadata.number;
+      if (typeof rawNumber === 'string') {
+        const parsedNumber = parseInt(rawNumber, 10);
+        if (Number.isFinite(parsedNumber) && parsedNumber >= 0) {
+          if (parsedNumber !== rawNumber) {
+            hymn.metadata.number = parsedNumber;
+            changed = true;
+          }
+        } else {
+          delete hymn.metadata.number;
+          changed = true;
+        }
+        return;
+      }
+
+      if (!Number.isFinite(rawNumber) || !Number.isInteger(rawNumber) || rawNumber < 0) {
+        delete hymn.metadata.number;
+        changed = true;
+      }
+    });
+
+    return changed;
   }
 
   function saveHymns() {
@@ -584,7 +618,12 @@
         hymn.metadata = hymn.metadata || {};
 
         if (number) {
-          hymn.metadata.number = parseInt(number, 10);
+          const parsedNumber = parseInt(number, 10);
+          if (Number.isFinite(parsedNumber)) {
+            hymn.metadata.number = parsedNumber;
+          } else {
+            delete hymn.metadata.number;
+          }
         } else {
           delete hymn.metadata.number;
         }
@@ -612,7 +651,12 @@
     } else {
       // Add new hymn
       const metadata = {};
-      if (number) metadata.number = parseInt(number, 10);
+      if (number) {
+        const parsedNumber = parseInt(number, 10);
+        if (Number.isFinite(parsedNumber)) {
+          metadata.number = parsedNumber;
+        }
+      }
       if (sourceAbbr) metadata.sourceAbbr = sourceAbbr;
       if (source) metadata.source = source;
 
@@ -1096,7 +1140,8 @@
 
       // Generate unique IDs BEFORE validation (validators expect id field)
       parsed.forEach((h) => {
-        if (!h.id) h.id = generateUniqueHymnId();
+        const hasValidId = typeof h.id === 'string' && h.id.startsWith('hymn_');
+        if (!hasValidId) h.id = generateUniqueHymnId();
         if (!h.createdAt) h.createdAt = new Date().toISOString();
       });
 
@@ -1145,9 +1190,9 @@
     a.click();
     URL.revokeObjectURL(url);
     if (window.HymnFlowI18n) {
-      statusEl.textContent = window.HymnFlowI18n.getTranslation('hymns.status.exported', { filename: 'hymns.json' });
+      statusEl.textContent = window.HymnFlowI18n.getTranslation('hymns.status.exported', { filename: 'hymnflow-export.json' });
     } else {
-      statusEl.textContent = 'Exported hymns.json';
+      statusEl.textContent = 'Exported hymnflow-export.json';
     }
   }
 

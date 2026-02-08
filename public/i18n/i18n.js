@@ -128,19 +128,20 @@
   // Change language
   // ========================================
   function changeLanguage(lang) {
-    if (!AVAILABLE_LANGUAGES[lang]) {
-      console.error(`Language ${lang} is not supported`);
-      return false;
+    let resolvedLang = lang;
+    if (!AVAILABLE_LANGUAGES[resolvedLang]) {
+      console.warn(`Language ${lang} is not supported. Falling back to ${DEFAULT_LANGUAGE}.`);
+      resolvedLang = DEFAULT_LANGUAGE;
     }
 
     try {
-      translations = loadTranslations(lang);
-      currentLanguage = lang;
-      localStorage.setItem(STORAGE_KEY, lang);
+      translations = loadTranslations(resolvedLang);
+      currentLanguage = resolvedLang;
+      localStorage.setItem(STORAGE_KEY, resolvedLang);
       applyTranslations();
       return true;
     } catch (error) {
-      console.error(`Failed to change language to ${lang}:`, error);
+      console.error(`Failed to change language to ${resolvedLang}:`, error);
       return false;
     }
   }
