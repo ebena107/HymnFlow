@@ -56,11 +56,10 @@ The dock will appear in OBS (may take a moment to load).
 
 ### Step 4: Test It!
 
-1. Click a hymn in the dock
-2. You should see the preview update
-3. The overlay should appear in your OBS preview
-4. Try pressing → to advance to the next verse
-5. The display should update automatically
+1. Open the **Library** tab in the dock and click any hymn
+2. Switch to the **Live** tab — you should see the hymn preview update
+3. Press → to advance to the next verse — the overlay should update in OBS
+4. Press Space (or click **Display**) to toggle the overlay on/off
 
 **✅ Setup complete!** You're ready to stream.
 
@@ -70,9 +69,49 @@ The dock will appear in OBS (may take a moment to load).
 |--------|-----|
 | **Next Verse** | Press → (right arrow) |
 | **Previous Verse** | Press ← (left arrow) |
-| **Next Line** | Press ↓ (down arrow) |
-| **Previous Line** | Press ↑ (up arrow) |
 | **Toggle Display** | Press Space or click Display button |
+
+## 📖 Bible Lookup Setup
+
+The Quick Scripture panel lets you look up and display any verse live during a service. Bible data is **not bundled** in the plugin — import any compatible public domain JSON file.
+
+### Option A: Download Direct (No Python Required)
+
+Download a pre-formatted KJV JSON file from either public-domain repository:
+
+- **[thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json)** — click **Raw**, then Save As → `kjv.json`
+- **[aruljohn/Bible-kjv](https://github.com/aruljohn/Bible-kjv/blob/master/kjv.json)** — click **Raw**, then Save As → `kjv.json`
+
+Then import it into HymnFlow:
+
+1. Open the **Library** tab → **Bible** section
+2. Type `KJV` in the name field
+3. Click **Import JSON** and select the file you downloaded
+4. The status badge changes to `KJV ✓` — Bible is ready
+
+### Option B: Generate Locally (Python)
+
+If you have Python 3 installed, this script downloads and converts KJV automatically:
+
+```
+python scripts/bundle_bible_kjv.py
+```
+
+It writes `public/data/bible-kjv.js`. Import that file via the Library tab → Bible section (name it `KJV`).
+
+### Using Quick Scripture
+
+Once a translation is loaded, switch to the **Live** tab and use the **Scripture** panel:
+
+- Type a reference: `John 3:16`, `Ps 23`, `1 Cor 13:4-7`, `Jude 1`
+- Press 🔍 (or Enter) to look up
+- Press **Display** to send the first verse to the overlay
+- Use **←** / **→** to step through verses
+- Chapter-only references (e.g., `Ps 23`) load all verses as individual navigable chunks
+
+### Multiple Translations
+
+Each translation is stored separately. To load an additional translation, repeat the import with a different name (e.g., `NIV`, `ESV`). Switch between them using the inline selector in the Live tab.
 
 ## 📥 Import Your Own Hymns
 
@@ -140,16 +179,15 @@ Choose one of these options:
 3. Extract to your preferred location
 
 **Step 2: Import into HymnFlow**
-1. Open the HymnFlow Dock in OBS
-2. Click **Import** button in the Hymns section
-3. Navigate to where you saved the hymn file (`.json`, `.txt`, or `.csv`)
-4. Select the hymn file (e.g., `cac_ghb.json`)
-5. Hymns are added to your library instantly
-6. ✅ Done! Click any hymn to display it
+1. Open the HymnFlow dock in OBS
+2. Go to the **Library** tab → **Hymns** section
+3. Click **Import** and select your hymn file (`.json`, `.txt`, or `.csv`)
+4. Hymns are added to your library instantly
+5. ✅ Done! Click any hymn to select it, then switch to **Live** to display it
 
 ## 🎨 Customize the Display
 
-In the dock's **Settings** panel:
+Open the **Style** tab in the dock:
 
 - **Font Size**: Drag slider (24px - 96px)
 - **Font Family**: Choose from pre-loaded fonts
@@ -178,6 +216,11 @@ Changes apply instantly to the overlay!
 - Ensure verses are separated by blank lines
 - Check for special characters in text
 
+### Bible lookup returns nothing
+- Make sure a translation is imported: **Library** tab → **Bible** section
+- Check the reference format: `John 3:16`, `Ps 23`, `1 Cor 13:4-7`
+- Chapter-only: `Ps 23` (no verse number) loads the whole chapter
+
 ### Text won't display
 - Check font size isn't too small
 - Verify text color contrasts with background
@@ -185,12 +228,12 @@ Changes apply instantly to the overlay!
 
 ## 🆘 Need More Help?
 
-See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for detailed solutions.
+See [OBS_DOCK_README.md](OBS_DOCK_README.md) for detailed usage.
 
-Or visit: https://github.com/yourusername/HymnFlow/issues
+Or visit: https://github.com/ebena107/HymnFlow/issues
 
 ## 🚀 Next Steps
 
 - [Customize colors and fonts](OBS_DOCK_README.md#customization)
-- [Import official hymn bundle](hymn-bundle/)
-- [Learn all keyboard shortcuts](README.md#keyboard-shortcuts)
+- [Import official hymn bundle](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle)
+- [Learn all keyboard shortcuts](OBS_DOCK_README.md)

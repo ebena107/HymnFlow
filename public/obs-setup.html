@@ -363,8 +363,8 @@
             <ol style="margin: 10px 0 0 20px;">
               <li><strong>Download:</strong> Click the download button, or right-click and select "Save link as..." if
                 your browser opens the JSON file instead of downloading it</li>
-              <li>Open HymnFlow Dock in OBS</li>
-              <li>Click the <strong>Import</strong> button in the Hymns section</li>
+              <li>Open HymnFlow Dock in OBS → go to the <strong>Library</strong> tab</li>
+              <li>Click the <strong>Import</strong> button in the <strong>Hymns</strong> section</li>
               <li data-i18n="setup.import.selectFile">Select the downloaded <code>.json</code>, <code>.txt</code>, or <code>.csv</code> file</li>
               <li>Your hymns will be imported and ready to use!</li>
             </ol>
@@ -461,6 +461,16 @@
       </div>
 
       <div class="card">
+        <h3>📖 Bible / Quick Scripture</h3>
+        <ul>
+          <li>Import any Bible translation (KJV, NIV, ESV…)</li>
+          <li>Look up any verse or chapter live</li>
+          <li>Step through verses with ← → navigation</li>
+          <li>Supports multiple loaded translations</li>
+        </ul>
+      </div>
+
+      <div class="card">
         <h3>🌍 Multi-Language Support</h3>
         <ul>
           <li>9 languages supported</li>
@@ -474,7 +484,7 @@
         <h3>🎨 Styling Options</h3>
         <ul>
           <li>5+ font families</li>
-          <li>Font size: 24-96px</li>
+          <li>Font size: 24-96px (auto-fit for long text)</li>
           <li>Bold, italic, shadow, glow</li>
           <li>Color picker for text</li>
         </ul>
@@ -499,6 +509,36 @@
           <li>Smooth transitions</li>
         </ul>
       </div>
+    </div>
+
+    <h2>📖 Bible Lookup Setup</h2>
+
+    <div class="steps">
+      <p>The Quick Scripture panel lets you look up and display verses live. Bible data is <strong>not bundled</strong> — import a free public domain JSON file.</p>
+
+      <h3>Step 1: Get a Bible JSON File</h3>
+      <p>Download the KJV (public domain) from one of these GitHub repositories:</p>
+      <ul>
+        <li><a href="https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json" target="_blank" style="color: var(--accent-primary);">thiagobodruk/bible → en_kjv.json</a> — click <strong>Raw</strong>, then Save As → <code>kjv.json</code></li>
+        <li><a href="https://github.com/aruljohn/Bible-kjv/blob/master/kjv.json" target="_blank" style="color: var(--accent-primary);">aruljohn/Bible-kjv → kjv.json</a> — click <strong>Raw</strong>, then Save As → <code>kjv.json</code></li>
+      </ul>
+      <p>Or if you have Python 3: run <code>python scripts/bundle_bible_kjv.py</code> — it downloads and converts automatically.</p>
+
+      <h3>Step 2: Import into HymnFlow</h3>
+      <ol>
+        <li>Open HymnFlow Dock → <strong>Library</strong> tab → <strong>Bible</strong> section</li>
+        <li>Type <code>KJV</code> in the name field</li>
+        <li>Click <strong>Import JSON</strong> and select the file</li>
+        <li>Status badge shows <code>KJV ✓</code> — you're ready</li>
+      </ol>
+
+      <h3>Step 3: Use Quick Scripture</h3>
+      <ol>
+        <li>Switch to the <strong>Live</strong> tab → <strong>Scripture</strong> panel</li>
+        <li>Type a reference: <code>John 3:16</code>, <code>Ps 23</code>, <code>1 Cor 13:4-7</code>, <code>Jude 1</code></li>
+        <li>Press 🔍 or Enter to look up</li>
+        <li>Press <strong>Display</strong> to send to overlay, then use ← → to step through verses</li>
+      </ol>
     </div>
 
     <h2>📖 Usage Example</h2>
@@ -571,7 +611,7 @@ Verse 2 text here</pre>
         <li><strong>Position:</strong> Choose bottom-third (default), middle, or top placement</li>
         <li><strong>Backup:</strong> Export your hymns regularly to avoid data loss</li>
         <li><strong>Performance:</strong> Use transparent background for best overlay quality</li>
-        <li><strong>Language:</strong> Change interface language in Settings section (9 languages available)</li>
+        <li><strong>Language:</strong> Change interface language in the <strong>Style</strong> tab (9 languages available)</li>
       </ul>
     </div>
 
@@ -593,7 +633,7 @@ Verse 2 text here</pre>
       <p><strong>To change language:</strong></p>
       <ol>
         <li>Open the HymnFlow Dock in OBS</li>
-        <li>Scroll to the <strong>Settings</strong> section</li>
+        <li>Click the <strong>Style</strong> tab</li>
         <li>Find the <strong>Interface Language</strong> dropdown</li>
         <li>Select your preferred language</li>
         <li>The UI updates immediately - all labels, buttons, and tooltips will be in your selected language</li>
