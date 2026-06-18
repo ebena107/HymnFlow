@@ -174,5 +174,19 @@
     "title": "설정",
     "language": "언어",
     "languageLabel": "인터페이스 언어"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "다운로드한 .json, .txt 또는 .csv 파일을 선택하세요"
+    },
+    "controls": {
+      "exportDesc": "hymnflow-export.json에 찬송가를 저장합니다"
+    },
+    "features": {
+      "importFormats": ".txt, .csv 또는 .json 파일 가져오기"
+    },
+    "importFormats": {
+      "csv": "CSV 형식"
+    }
   }
 }

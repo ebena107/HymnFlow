@@ -96,7 +96,15 @@ And grace my fears relieved;
 - Blank lines separate verses
 - Multiple verses supported
 
-### Format 2: JSON File
+### Format 2: CSV File
+
+```csv
+Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
+"Amazing Grace","John Newton",1,"Amazing grace! How sweet the sound...","","CH","Church Hymnal",123
+"Amazing Grace","John Newton",2,"'Twas grace that taught my heart to fear...","","CH","Church Hymnal",123
+```
+
+### Format 3: JSON File
 
 ```json
 [
@@ -134,7 +142,7 @@ Choose one of these options:
 **Step 2: Import into HymnFlow**
 1. Open the HymnFlow Dock in OBS
 2. Click **Import** button in the Hymns section
-3. Navigate to where you saved the `.json` file
+3. Navigate to where you saved the hymn file (`.json`, `.txt`, or `.csv`)
 4. Select the hymn file (e.g., `cac_ghb.json`)
 5. Hymns are added to your library instantly
 6. ✅ Done! Click any hymn to display it
@@ -166,7 +174,7 @@ Changes apply instantly to the overlay!
 - Try refreshing the browser source (right-click → Refresh)
 
 ### Hymns won't import
-- Check file format (TXT or JSON only)
+- Check file format (TXT, CSV, or JSON only)
 - Ensure verses are separated by blank lines
 - Check for special characters in text
 

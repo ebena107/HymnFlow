@@ -33,10 +33,12 @@ async function parseJson(file) {
   
   // Validate and normalize hymn objects
   return hymns.map(hymn => ({
+    id: hymn.id,
     title: hymn.title || 'Untitled',
     author: hymn.author || '',
     verses: Array.isArray(hymn.verses) ? hymn.verses : [],
     chorus: hymn.chorus || '',
-    metadata: hymn.metadata || {}
+    metadata: hymn.metadata || {},
+    createdAt: hymn.createdAt
   }));
 }

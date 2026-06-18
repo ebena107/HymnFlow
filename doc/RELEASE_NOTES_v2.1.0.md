@@ -256,7 +256,7 @@ Pre-organize hymns for services, programs, and events. Perfect for:
 ## 🙏 Credits
 
 **Feature Requests by:** Michael Fasina  
-**Implementation:** HymnFlow Development Team  
+**Implementation:** HymnFlow Development Team (**Gloryland Baptist Church, Owode-Ede, Nigeria**)
 **Community Feedback:** Global worship leaders and A/V operators
 
 ---

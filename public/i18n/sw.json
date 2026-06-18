@@ -174,5 +174,19 @@
     "title": "Mipangilio",
     "language": "Lugha",
     "languageLabel": "Lugha ya kiolesura"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "Chagua faili iliyopakuliwa ya .json, .txt, au .csv"
+    },
+    "controls": {
+      "exportDesc": "Hifadhi nyimbo kwenye hymnflow-export.json"
+    },
+    "features": {
+      "importFormats": "Leta faili za .txt, .csv, au .json"
+    },
+    "importFormats": {
+      "csv": "Muundo wa CSV"
+    }
   }
 }

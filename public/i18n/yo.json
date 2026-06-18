@@ -175,5 +175,19 @@
     "title": "Àwọn Ètò",
     "language": "Èdè",
     "languageLabel": "Èdè Ìkọ́nilọ́wọ́"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "Yan faili .json, .txt, tabi .csv ti o gba"
+    },
+    "controls": {
+      "exportDesc": "Fi awon orin pamọ si hymnflow-export.json"
+    },
+    "features": {
+      "importFormats": "Gbe faili .txt, .csv, tabi .json wole"
+    },
+    "importFormats": {
+      "csv": "Iru CSV"
+    }
   }
 }

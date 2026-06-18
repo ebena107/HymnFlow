@@ -173,5 +173,19 @@
     "title": "Paramètres",
     "language": "Langue",
     "languageLabel": "Langue de l'interface"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "Sélectionnez le fichier téléchargé .json, .txt ou .csv"
+    },
+    "controls": {
+      "exportDesc": "Enregistrez les cantiques dans hymnflow-export.json"
+    },
+    "features": {
+      "importFormats": "Importer des fichiers .txt, .csv ou .json"
+    },
+    "importFormats": {
+      "csv": "Format CSV"
+    }
   }
 }

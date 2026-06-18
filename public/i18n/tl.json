@@ -174,5 +174,19 @@
     "title": "Mga Setting",
     "language": "Wika",
     "languageLabel": "Wika ng Interface"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "Piliin ang na-download na .json, .txt, o .csv na file"
+    },
+    "controls": {
+      "exportDesc": "I-save ang mga himno sa hymnflow-export.json"
+    },
+    "features": {
+      "importFormats": "Mag-import ng .txt, .csv, o .json na mga file"
+    },
+    "importFormats": {
+      "csv": "Format ng CSV"
+    }
   }
 }

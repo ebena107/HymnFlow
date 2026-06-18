@@ -179,6 +179,20 @@ window.HymnFlowTranslations = {
       "title": "Settings",
       "language": "Language",
       "languageLabel": "Interface Language"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Select the downloaded .json, .txt, or .csv file"
+      },
+      "controls": {
+        "exportDesc": "Save hymns to hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Import .txt, .csv, or .json files"
+      },
+      "importFormats": {
+        "csv": "CSV Format"
+      }
     }
   },
   "es": {
@@ -356,6 +370,20 @@ window.HymnFlowTranslations = {
       "title": "Configuración",
       "language": "Idioma",
       "languageLabel": "Idioma de la interfaz"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Seleccione el archivo descargado .json, .txt o .csv"
+      },
+      "controls": {
+        "exportDesc": "Guarde los himnos en hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Importe archivos .txt, .csv o .json"
+      },
+      "importFormats": {
+        "csv": "Formato CSV"
+      }
     }
   },
   "fr": {
@@ -533,6 +561,20 @@ window.HymnFlowTranslations = {
       "title": "Paramètres",
       "language": "Langue",
       "languageLabel": "Langue de l'interface"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Sélectionnez le fichier téléchargé .json, .txt ou .csv"
+      },
+      "controls": {
+        "exportDesc": "Enregistrez les cantiques dans hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Importer des fichiers .txt, .csv ou .json"
+      },
+      "importFormats": {
+        "csv": "Format CSV"
+      }
     }
   },
   "ko": {
@@ -711,6 +753,20 @@ window.HymnFlowTranslations = {
       "title": "설정",
       "language": "언어",
       "languageLabel": "인터페이스 언어"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "다운로드한 .json, .txt 또는 .csv 파일을 선택하세요"
+      },
+      "controls": {
+        "exportDesc": "hymnflow-export.json에 찬송가를 저장합니다"
+      },
+      "features": {
+        "importFormats": ".txt, .csv 또는 .json 파일 가져오기"
+      },
+      "importFormats": {
+        "csv": "CSV 형식"
+      }
     }
   },
   "pt": {
@@ -888,6 +944,20 @@ window.HymnFlowTranslations = {
       "title": "Configurações",
       "language": "Idioma",
       "languageLabel": "Idioma da interface"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Selecione o arquivo baixado .json, .txt ou .csv"
+      },
+      "controls": {
+        "exportDesc": "Salve os hinos em hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Importe arquivos .txt, .csv ou .json"
+      },
+      "importFormats": {
+        "csv": "Formato CSV"
+      }
     }
   },
   "sw": {
@@ -1066,6 +1136,20 @@ window.HymnFlowTranslations = {
       "title": "Mipangilio",
       "language": "Lugha",
       "languageLabel": "Lugha ya kiolesura"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Chagua faili iliyopakuliwa ya .json, .txt, au .csv"
+      },
+      "controls": {
+        "exportDesc": "Hifadhi nyimbo kwenye hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Leta faili za .txt, .csv, au .json"
+      },
+      "importFormats": {
+        "csv": "Muundo wa CSV"
+      }
     }
   },
   "tl": {
@@ -1244,6 +1328,20 @@ window.HymnFlowTranslations = {
       "title": "Mga Setting",
       "language": "Wika",
       "languageLabel": "Wika ng Interface"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Piliin ang na-download na .json, .txt, o .csv na file"
+      },
+      "controls": {
+        "exportDesc": "I-save ang mga himno sa hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Mag-import ng .txt, .csv, o .json na mga file"
+      },
+      "importFormats": {
+        "csv": "Format ng CSV"
+      }
     }
   },
   "yo": {
@@ -1423,6 +1521,20 @@ window.HymnFlowTranslations = {
       "title": "Àwọn Ètò",
       "language": "Èdè",
       "languageLabel": "Èdè Ìkọ́nilọ́wọ́"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "Yan faili .json, .txt, tabi .csv ti o gba"
+      },
+      "controls": {
+        "exportDesc": "Fi awon orin pamọ si hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "Gbe faili .txt, .csv, tabi .json wole"
+      },
+      "importFormats": {
+        "csv": "Iru CSV"
+      }
     }
   },
   "zh": {
@@ -1601,6 +1713,20 @@ window.HymnFlowTranslations = {
       "title": "设置",
       "language": "语言",
       "languageLabel": "界面语言"
+    },
+    "setup": {
+      "import": {
+        "selectFile": "选择下载的 .json、.txt 或 .csv 文件"
+      },
+      "controls": {
+        "exportDesc": "将赞美诗保存到 hymnflow-export.json"
+      },
+      "features": {
+        "importFormats": "导入 .txt、.csv 或 .json 文件"
+      },
+      "importFormats": {
+        "csv": "CSV 格式"
+      }
     }
   }
 };

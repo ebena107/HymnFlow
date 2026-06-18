@@ -365,7 +365,7 @@
                 your browser opens the JSON file instead of downloading it</li>
               <li>Open HymnFlow Dock in OBS</li>
               <li>Click the <strong>Import</strong> button in the Hymns section</li>
-              <li>Select the downloaded <code>.json</code> file</li>
+              <li data-i18n="setup.import.selectFile">Select the downloaded <code>.json</code>, <code>.txt</code>, or <code>.csv</code> file</li>
               <li>Your hymns will be imported and ready to use!</li>
             </ol>
           </div>
@@ -441,7 +441,7 @@
           </tr>
           <tr>
             <td><strong>Export</strong></td>
-            <td>Save hymns to JSON</td>
+            <td data-i18n="setup.controls.exportDesc">Save hymns to hymnflow-export.json</td>
           </tr>
         </table>
       </div>
@@ -455,7 +455,7 @@
         <ul>
           <li>Add, edit, delete hymns</li>
           <li>Search by title or author</li>
-          <li>Import .txt or .json files</li>
+          <li data-i18n="setup.features.importFormats">Import .txt, .csv, or .json files</li>
           <li>Export your library</li>
         </ul>
       </div>
@@ -527,6 +527,13 @@ Verse 1 text here
 Multiple lines allowed
 
 Verse 2 text here</pre>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="setup.importFormats.csv">CSV Format</h3>
+        <pre>Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
+"Amazing Grace","John Newton",1,"Verse 1 text","","CH","Church Hymnal",123
+"Amazing Grace","John Newton",2,"Verse 2 text","","CH","Church Hymnal",123</pre>
       </div>
 
       <div class="card">

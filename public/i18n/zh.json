@@ -174,5 +174,19 @@
     "title": "设置",
     "language": "语言",
     "languageLabel": "界面语言"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "选择下载的 .json、.txt 或 .csv 文件"
+    },
+    "controls": {
+      "exportDesc": "将赞美诗保存到 hymnflow-export.json"
+    },
+    "features": {
+      "importFormats": "导入 .txt、.csv 或 .json 文件"
+    },
+    "importFormats": {
+      "csv": "CSV 格式"
+    }
   }
 }

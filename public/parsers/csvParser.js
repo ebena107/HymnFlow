@@ -59,7 +59,12 @@ async function parseCsv(file) {
         verses: [],
         chorus: row.chorus || '',
         metadata: {
-          number: row['hymn number'] || row.number ? parseInt(row['hymn number'] || row.number, 10) : undefined,
+          number: (() => {
+            const rawNumber = row['hymn number'] || row.number;
+            if (!rawNumber) return undefined;
+            const parsedNumber = parseInt(rawNumber, 10);
+            return Number.isFinite(parsedNumber) ? parsedNumber : undefined;
+          })(),
           sourceAbbr: (row['source abbr'] || row['source abbreviation'] || '').toUpperCase() || undefined,
           source: row.source || undefined
         }
@@ -76,7 +81,13 @@ async function parseCsv(file) {
     
     // Update metadata if values found in later rows
     if (row['hymn number'] || row.number) {
-      hymn.metadata.number = parseInt(row['hymn number'] || row.number, 10);
+      const rawNumber = row['hymn number'] || row.number;
+      const parsedNumber = parseInt(rawNumber, 10);
+      if (Number.isFinite(parsedNumber)) {
+        hymn.metadata.number = parsedNumber;
+      } else {
+        delete hymn.metadata.number;
+      }
     }
     if (row['source abbr'] || row['source abbreviation']) {
       hymn.metadata.sourceAbbr = (row['source abbr'] || row['source abbreviation']).toUpperCase();

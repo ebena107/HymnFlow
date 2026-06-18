@@ -173,5 +173,19 @@
     "title": "Configurações",
     "language": "Idioma",
     "languageLabel": "Idioma da interface"
+  },
+  "setup": {
+    "import": {
+      "selectFile": "Selecione o arquivo baixado .json, .txt ou .csv"
+    },
+    "controls": {
+      "exportDesc": "Salve os hinos em hymnflow-export.json"
+    },
+    "features": {
+      "importFormats": "Importe arquivos .txt, .csv ou .json"
+    },
+    "importFormats": {
+      "csv": "Formato CSV"
+    }
   }
 }

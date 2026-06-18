@@ -7,7 +7,7 @@
 ### Core Features
 
 - ✅ Add, edit, delete, and search hymns within the dock
-- ✅ Import/export hymns in .txt and .json formats
+- ✅ Import/export hymns in .txt, .csv, and .json formats
 - ✅ Keyboard shortcuts for next/prev verse and lines
 - ✅ Adjustable lines per display (1-6 lines at once)
 - ✅ Select specific verses and line ranges to display
@@ -76,7 +76,7 @@
 **Method 2: Import File**
 
 1. Click **Import** button
-2. Select a `.txt` or `.json` file
+2. Select a `.txt`, `.csv`, or `.json` file
 3. Hymns will be added to your library
 
 **TXT Format Example:**
@@ -90,6 +90,14 @@ That saved a wretch like me!
 
 'Twas grace that taught my heart to fear,
 And grace my fears relieved;
+```
+
+**CSV Format Example:**
+
+```csv
+Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
+"Amazing Grace","John Newton",1,"Amazing grace! How sweet the sound...","","CH","Church Hymnal",123
+"Amazing Grace","John Newton",2,"'Twas grace that taught my heart to fear...","","CH","Church Hymnal",123
 ```
 
 **JSON Format Example:**
@@ -117,7 +125,7 @@ The overlay now updates **automatically** as you navigate! No need to press Disp
 2. **Navigate Verses**: Click **⟵ Prev Verse** / **Next Verse ⟶** → Overlay updates instantly
 3. **Navigate Lines**: Click **⬆ Prev Lines** / **⬇ Next Lines** → Overlay updates instantly
 4. **Toggle Display**: Click **👁️ Display** button or press **Spacebar**
-5. **Visual Feedback**: 
+5. **Visual Feedback**:
    - **Display** (purple, 👁️ eye icon) = Overlay is hidden
    - **Hide** (red, 🚫 icon, pulsing glow) = Overlay is visible
 
@@ -167,7 +175,7 @@ All settings in the **Styles** panel apply in real-time:
 ### Exporting Hymns
 
 1. Click **Export** button
-2. Save `HymnFlow-export.json`
+2. Save `hymnflow-export.json`
 3. Share or backup your hymn library
 
 ## 🎬 Workflow Example
@@ -229,9 +237,10 @@ public/
 │   └── overlay.js          ← Overlay listener
 ├── data/
 │   └── hymns-data.js       ← Default hymns
-└── parsers/
-    ├── txtParser.js        ← TXT parser
-    └── jsonParser.js       ← JSON parser
+├── parsers/
+   ├── txtParser.js        ← TXT parser
+   ├── csvParser.js        ← CSV parser
+   └── jsonParser.js       ← JSON parser
 ```
 
 ## 🔧 Troubleshooting
@@ -350,4 +359,3 @@ For issues or questions:
 ---
 
 **Enjoy seamless hymn display in OBS! 🎵**
-

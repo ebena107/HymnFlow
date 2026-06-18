@@ -7,7 +7,7 @@
 - 📋 **Full Hymn Management** - Add, edit, delete, search hymns
 - ⌨️ **Keyboard-Driven Navigation** - Arrow keys for verse/line navigation
 - 🎨 **Customizable Styling** - Fonts, colors, effects, backgrounds, animations
-- 📥 **Import/Export** - Support for .txt and .json hymn files
+- 📥 **Import/Export** - Support for .txt, .csv, and .json hymn files
 - 🎯 **Smart Navigation** - Auto-advance between verses at line boundaries
 - 👁️ **Visual Feedback** - Toggle button with color/icon state indicators
 - 📱 **Responsive Design** - Works on any screen size including vertical displays
@@ -64,7 +64,7 @@ Height: 1080
 #### Step 4: Import Your Hymns
 
 - Click **Import** button in the dock
-- Select your downloaded `.json` hymn file
+- Select your downloaded hymn file (`.json`, `.txt`, or `.csv`)
 - Start displaying hymns!
 
 ### Alternative: Python HTTP Server
@@ -110,6 +110,14 @@ That saved a wretch like me!
 
 'Twas grace that taught my heart to fear,
 And grace my fears relieved;
+```
+
+#### CSV Format
+
+```csv
+Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
+"Amazing Grace","John Newton",1,"Amazing grace! How sweet the sound...","","CH","Church Hymnal",123
+"Amazing Grace","John Newton",2,"'Twas grace that taught my heart to fear...","","CH","Church Hymnal",123
 ```
 
 #### JSON Format

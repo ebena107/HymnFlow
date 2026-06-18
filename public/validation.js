@@ -70,7 +70,7 @@ const HymnValidator = {
       if (typeof hymn.metadata !== 'object' || Array.isArray(hymn.metadata)) {
         errors.push('Metadata must be an object (not array)');
       } else if (hymn.metadata.number !== undefined) {
-        if (typeof hymn.metadata.number !== 'number' || hymn.metadata.number < 0) {
+        if (!Number.isFinite(hymn.metadata.number) || !Number.isInteger(hymn.metadata.number) || hymn.metadata.number < 0) {
           errors.push('Hymn number must be a non-negative integer');
         }
       }

@@ -67,14 +67,20 @@
 
   function show(data) {
     const { title, verseNumber, totalVerses, lines, settings } = data;
-    const hymnNumber = data.metadata?.number ? `${data.metadata.number} • ` : '';
+    const sourceAbbr = data.metadata?.sourceAbbr || '';
+    const hymnNumber = data.metadata?.number ? `${data.metadata.number}` : '';
+    const hymnRef = sourceAbbr && hymnNumber
+      ? `${sourceAbbr} ${hymnNumber} • `
+      : hymnNumber
+        ? `${hymnNumber} • `
+        : '';
     
     applyStyles(settings);
 
     if (data.isChorus) {
-      titleBarEl.textContent = `${hymnNumber}${title} • Chorus`;
+      titleBarEl.textContent = `${hymnRef}${title} • Chorus`;
     } else {
-      titleBarEl.textContent = `${hymnNumber}${title} • Verse ${verseNumber}/${totalVerses}`;
+      titleBarEl.textContent = `${hymnRef}${title} • Verse ${verseNumber}/${totalVerses}`;
     }
     
     // Ensure lines is an array and join properly
