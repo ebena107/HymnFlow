@@ -152,6 +152,7 @@ window.HymnFlowTranslations = {
       "hint": "live · ad-hoc",
       "refPlaceholder": "Reference (e.g., John 3:16)",
       "textPlaceholder": "Verse text — blank line separates pages",
+      "lookupButton": "🔍",
       "displayButton": "Display",
       "clearButton": "Clear",
       "status": "Scripture: {ref}",

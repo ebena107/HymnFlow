@@ -726,6 +726,30 @@
     if (next) next.disabled = total === 0 || qsChunkIdx >= total - 1;
   }
 
+  function qsLookup() {
+    const refInput = document.getElementById('qsRef');
+    const textArea = document.getElementById('qsText');
+    const ref = (refInput?.value || '').trim();
+    if (!ref) { refInput?.focus(); return; }
+
+    if (!window.HymnFlowBibleLookup?.isLoaded()) {
+      if (statusEl) statusEl.textContent = 'Bible data not loaded — run: python scripts/bundle_bible_kjv.py';
+      return;
+    }
+
+    const result = window.HymnFlowBibleLookup.lookup(ref);
+    if (result.found) {
+      if (refInput) refInput.value = result.reference;
+      if (textArea) textArea.value = result.text;
+      if (statusEl) statusEl.textContent = result.verseCount > 1
+        ? `Found ${result.verseCount} verses — use ← → to step through`
+        : `Found: ${result.reference}`;
+    } else {
+      if (statusEl) statusEl.textContent = result.error;
+      refInput?.select();
+    }
+  }
+
   function displayQuickScripture() {
     const ref = (document.getElementById('qsRef')?.value || '').trim();
     const rawText = (document.getElementById('qsText')?.value || '').trim();
@@ -1586,10 +1610,14 @@
     });
 
     // Quick Scripture controls (Live tab)
+    document.getElementById('btnQsLookup').onclick = qsLookup;
     document.getElementById('btnQsDisplay').onclick = displayQuickScripture;
     document.getElementById('btnQsNext').onclick = qsNext;
     document.getElementById('btnQsPrev').onclick = qsPrev;
     document.getElementById('btnQsClear').onclick = clearTextSlide;
+    document.getElementById('qsRef').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); qsLookup(); }
+    });
     document.getElementById('qsText').addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();

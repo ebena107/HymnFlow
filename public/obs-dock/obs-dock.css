@@ -455,6 +455,24 @@ body {
 /* ========================================
    Quick Scripture Panel
    ======================================== */
+.qs-ref-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.qs-ref-row .search-input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.qs-lookup-btn {
+  flex: 0 0 auto;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
 .qs-controls {
   display: flex;
   align-items: center;

@@ -220,10 +220,14 @@
           <h3 data-i18n="quickScripture.title">Quick Scripture</h3>
           <span class="text-slide-hint" data-i18n="quickScripture.hint">live · ad-hoc</span>
         </div>
-        <input id="qsRef" type="text" class="search-input"
-          placeholder="Reference (e.g., John 3:16)"
-          data-i18n-placeholder="quickScripture.refPlaceholder"
-          aria-label="Scripture reference">
+        <div class="qs-ref-row">
+          <input id="qsRef" type="text" class="search-input"
+            placeholder="Reference (e.g., John 3:16)"
+            data-i18n-placeholder="quickScripture.refPlaceholder"
+            aria-label="Scripture reference">
+          <button id="btnQsLookup" class="btn btn-secondary qs-lookup-btn"
+            aria-label="Look up verse" title="Look up verse from KJV (run bundle_bible_kjv.py first)">&#128269;</button>
+        </div>
         <textarea id="qsText" class="text-slide-textarea" rows="3"
           placeholder="Verse text — blank line separates pages"
           data-i18n-placeholder="quickScripture.textPlaceholder"
@@ -425,6 +429,8 @@
   </div>
 
   <script src="../data/hymns-data.js"></script>
+  <script src="../data/bible-kjv.js?v=2.4.1"></script>
+  <script src="../data/bible-lookup.js?v=2.4.1"></script>
   <script src="../validation.js"></script>
   <script src="../parsers/txtParser.js"></script>
   <script src="../parsers/jsonParser.js"></script>
