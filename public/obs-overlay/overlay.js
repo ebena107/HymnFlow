@@ -3,6 +3,7 @@
   const titleBarEl = document.getElementById('titleBar');
   const contentEl = document.getElementById('content');
   const STORAGE_KEY = 'hymnflow-lowerthird-command';
+  const TEXTSLIDE_KEY = 'hymnflow-textslide-command';
   let isVisible = false;
 
   function applyStyles(settings) {
@@ -50,14 +51,26 @@
       titleBarEl.style.webkitTextStrokeWidth = '0';
     }
 
+    const opacity = typeof s.bgOpacity === 'number' ? s.bgOpacity / 100 : 0.8;
+
+    function hexToRgba(hex, alpha) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${alpha})`;
+    }
+
     if (s.bgType === 'transparent') {
       titleBarEl.style.background = 'transparent';
       contentEl.style.background = 'transparent';
     } else if (s.bgType === 'solid') {
-      titleBarEl.style.background = s.bgColorA;
-      contentEl.style.background = s.bgColorA;
+      const color = hexToRgba(s.bgColorA, opacity);
+      titleBarEl.style.background = color;
+      contentEl.style.background = color;
     } else if (s.bgType === 'gradient') {
-      const grad = `linear-gradient(135deg, ${s.bgColorA}, ${s.bgColorB})`;
+      const colorA = hexToRgba(s.bgColorA, opacity);
+      const colorB = hexToRgba(s.bgColorB, opacity);
+      const grad = `linear-gradient(135deg, ${colorA}, ${colorB})`;
       titleBarEl.style.background = grad;
       contentEl.style.background = grad;
     }
@@ -113,17 +126,45 @@
     isVisible = false;
   }
 
+  function showTextSlide(data) {
+    const { lines, settings } = data;
+    applyStyles(settings);
+    titleBarEl.textContent = '';
+    contentEl.textContent = Array.isArray(lines) ? lines.join('\n') : String(lines);
+    overlayEl.classList.remove('hidden', 'fade-out', 'slide-out');
+    overlayEl.classList.add('visible');
+    if (settings.animation === 'fade') {
+      overlayEl.classList.add('fade-in');
+    } else if (settings.animation === 'slide') {
+      overlayEl.classList.add('slide-in');
+    }
+    isVisible = true;
+  }
+
   window.addEventListener('storage', (e) => {
-    if (e.key !== STORAGE_KEY || !e.newValue) return;
-    try {
-      const cmd = JSON.parse(e.newValue);
-      if (cmd.type === 'show') {
-        show(cmd);
-      } else if (cmd.type === 'hide') {
-        hide(cmd.settings);
+    if (e.key === STORAGE_KEY && e.newValue) {
+      try {
+        const cmd = JSON.parse(e.newValue);
+        if (cmd.type === 'show') {
+          show(cmd);
+        } else if (cmd.type === 'hide') {
+          hide(cmd.settings);
+        }
+      } catch (err) {
+        console.error('[Overlay Storage Error]', err);
       }
-    } catch (err) {
-      console.error('[Overlay Storage Error]', err);
+    }
+    if (e.key === TEXTSLIDE_KEY && e.newValue) {
+      try {
+        const cmd = JSON.parse(e.newValue);
+        if (cmd.type === 'textslide') {
+          showTextSlide(cmd);
+        } else if (cmd.type === 'hide') {
+          hide(cmd.settings);
+        }
+      } catch (err) {
+        console.error('[Text Slide Storage Error]', err);
+      }
     }
   });
 

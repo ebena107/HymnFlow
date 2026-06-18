@@ -46,6 +46,7 @@
         <input id="search" type="text" class="search-input" data-i18n-placeholder="hymns.searchPlaceholder"
           placeholder="Search hymns" data-i18n-aria="hymns.searchLabel"
           aria-label="Search hymns by title, author, or number">
+        <div id="sourceFilters" class="source-filters" role="group" aria-label="Filter by source"></div>
         <div id="hymnList" class="hymn-list" role="listbox" aria-label="Hymns library"></div>
         <div class="import-export-actions">
           <button id="btnImport" class="btn btn-secondary" data-i18n="hymns.buttons.import"
@@ -77,6 +78,30 @@
         </div>
       </section>
 
+      <!-- Text Slide / Scripture Mode -->
+      <section class="section">
+        <div class="section-header">
+          <h3>Text Slide</h3>
+          <span class="text-slide-hint">scripture, announcement, blank</span>
+        </div>
+        <textarea id="textSlideInput" class="text-slide-textarea" rows="3"
+          placeholder="Type any text to send to overlay&#10;(scripture, announcement, blank screen...)"></textarea>
+        <div class="text-slide-actions">
+          <button id="btnSendTextSlide" class="btn btn-add">Send to Overlay</button>
+          <button id="btnClearTextSlide" class="btn btn-secondary">Clear Slide</button>
+        </div>
+      </section>
+
+      <!-- Active Service Banner (shown when a service is loaded) -->
+      <div id="serviceBanner" class="service-banner" style="display: none;" aria-live="polite">
+        <div class="service-banner-name" id="serviceBannerName"></div>
+        <div class="service-banner-controls">
+          <button id="btnPrevHymn" class="btn btn-secondary service-banner-btn" title="Previous hymn in service">⟵</button>
+          <span id="serviceBannerPos" class="service-banner-pos"></span>
+          <button id="btnNextHymn" class="btn btn-secondary service-banner-btn" title="Next hymn in service">⟶</button>
+        </div>
+      </div>
+
       <!-- Selected Hymn Controls -->
       <section class="section">
         <div class="section-header-single">
@@ -100,9 +125,11 @@
           <button id="btnJumpChorus" class="btn btn-nav btn-chorus" data-i18n="navigation.buttons.jumpChorus"
             data-i18n-aria="navigation.buttons.jumpChorus" data-i18n-title="navigation.tooltips.jumpChorus">Jump to
             Chorus</button>
+        </div>
+        <div class="emergency-clear-row">
           <button id="btnClear" class="btn btn-emergency" data-i18n="navigation.buttons.emergencyClear"
             data-i18n-aria="navigation.buttons.emergencyClear"
-            data-i18n-title="navigation.tooltips.emergencyClear">Emergency Clear</button>
+            data-i18n-title="navigation.tooltips.emergencyClear">&#9940; Emergency Clear</button>
         </div>
       </section>
 
@@ -141,10 +168,15 @@
         </div>
       </section>
 
-      <!-- Hymn Preview -->
-      <section class="section">
-        <h4 class="preview-title" data-i18n="preview.title">Hymn Previews</h4>
-        <div id="preview" class="preview"></div>
+      <!-- Hymn Preview (collapsible) -->
+      <section class="section section-preview" id="previewSection">
+        <button class="preview-toggle" id="previewToggle" aria-expanded="false" aria-controls="previewBody">
+          <span data-i18n="preview.title">Hymn Preview</span>
+          <span class="preview-toggle-icon">▶</span>
+        </button>
+        <div id="previewBody" class="preview-body" hidden>
+          <div id="preview" class="preview"></div>
+        </div>
       </section>
 
       <!-- Language Settings -->
@@ -237,6 +269,12 @@
             <input type="color" id="bgColorB" value="#2b2b2b" class="form-color">
           </label>
 
+          <label class="form-label" id="bgOpacityRow">
+            <span>Background Opacity</span> <span id="bgOpacityValue">80%</span>
+            <input type="range" id="bgOpacity" min="0" max="100" value="80" class="form-slider"
+              aria-label="Background opacity">
+          </label>
+
           <label class="form-label">
             <span data-i18n="styles.animation">Animation</span>
             <select id="animation" class="form-select">
@@ -269,24 +307,9 @@
       </div>
       <div class="modal-body">
         <label class="form-label">
-          <span data-i18n="hymns.labels.hymnNumber">Hymn Number</span>
-          <input type="number" id="editNumber" class="form-input" data-i18n-placeholder="hymns.placeholders.number"
-            placeholder="e.g., 123">
-        </label>
-        <label class="form-label">
-          <span data-i18n="hymns.labels.sourceAbbr">Source Abbreviation</span>
-          <input type="text" id="editSourceAbbr" class="form-input"
-            data-i18n-placeholder="hymns.placeholders.sourceAbbr" placeholder="e.g., CH, PD, HB" maxlength="5">
-        </label>
-        <label class="form-label">
-          <span data-i18n="hymns.labels.sourceName">Source Name</span>
-          <input type="text" id="editSource" class="form-input" data-i18n-placeholder="hymns.placeholders.sourceName"
-            placeholder="e.g., Church Hymnal, Public Domain">
-        </label>
-        <label class="form-label">
           <span data-i18n="hymns.labels.title">Title</span> <span data-i18n="hymns.labels.required">*</span>
           <input type="text" id="editTitle" class="form-input" data-i18n-placeholder="hymns.placeholders.title"
-            placeholder="Hymn title" required>
+            placeholder="Hymn title" required autofocus>
         </label>
         <label class="form-label">
           <span data-i18n="hymns.labels.author">Author</span>
@@ -304,6 +327,23 @@
             data-i18n="hymns.labels.chorusOptional">(optional)</span>
           <textarea id="editChorus" class="form-textarea" rows="3" data-i18n-placeholder="hymns.placeholders.chorus"
             placeholder="Chorus text"></textarea>
+        </label>
+        <div class="modal-metadata-row">
+          <label class="form-label">
+            <span data-i18n="hymns.labels.hymnNumber">Hymn #</span>
+            <input type="number" id="editNumber" class="form-input" data-i18n-placeholder="hymns.placeholders.number"
+              placeholder="e.g., 123">
+          </label>
+          <label class="form-label">
+            <span data-i18n="hymns.labels.sourceAbbr">Source Abbr.</span>
+            <input type="text" id="editSourceAbbr" class="form-input"
+              data-i18n-placeholder="hymns.placeholders.sourceAbbr" placeholder="e.g., CH" maxlength="5">
+          </label>
+        </div>
+        <label class="form-label">
+          <span data-i18n="hymns.labels.sourceName">Source Name</span>
+          <input type="text" id="editSource" class="form-input" data-i18n-placeholder="hymns.placeholders.sourceName"
+            placeholder="e.g., Church Hymnal, Public Domain">
         </label>
       </div>
       <div class="modal-footer">

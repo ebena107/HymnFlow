@@ -18,6 +18,8 @@
   let services = [];
   let currentService = null;
   let editingService = null;
+  let activeSourceFilter = 'all';
+  let currentSearchQuery = '';
 
   const settings = {
     linesPerPage: 2,
@@ -34,6 +36,7 @@
     bgType: 'transparent',
     bgColorA: '#000000',
     bgColorB: '#2b2b2b',
+    bgOpacity: 80,
     animation: 'fade',
     position: 'bottom'
   };
@@ -41,6 +44,7 @@
   const storageKeys = {
     hymns: 'hymnflow-hymns',
     cmd: 'hymnflow-lowerthird-command',
+    textslide: 'hymnflow-textslide-command',
     prefs: 'hymnflow-dock-settings',
     services: 'hymnflow-services'
   };
@@ -235,14 +239,33 @@
     }, 300); // Debounce: wait 300ms after last change before saving
   }
 
+  function highlightMatch(text, query) {
+    if (!query || !text) return escapeHtml(text || '');
+    const escaped = escapeHtml(text);
+    const escapedQuery = escapeHtml(query);
+    const idx = escaped.toLowerCase().indexOf(escapedQuery.toLowerCase());
+    if (idx === -1) return escaped;
+    return (
+      escaped.slice(0, idx) +
+      '<mark>' + escaped.slice(idx, idx + escapedQuery.length) + '</mark>' +
+      escaped.slice(idx + escapedQuery.length)
+    );
+  }
+
   function renderList() {
-    if (!filtered.length) {
+    let display = filtered;
+    if (activeSourceFilter !== 'all') {
+      display = filtered.filter(h => (h.metadata?.sourceAbbr || '') === activeSourceFilter);
+    }
+
+    if (!display.length) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.noHymnsFound') : 'No hymns found';
       listEl.innerHTML = `<div class="list-item">${msg}</div>`;
       return;
     }
-    listEl.innerHTML = filtered.map(h => {
-      // Build hymn reference (sourceAbbr + number, or just number)
+
+    const q = currentSearchQuery.trim();
+    listEl.innerHTML = display.map(h => {
       const sourceAbbr = h.metadata?.sourceAbbr || '';
       const number = h.metadata?.number || '';
       let hymnRef = '';
@@ -251,16 +274,34 @@
       } else if (number) {
         hymnRef = `${number} - `;
       }
-      const safeTitle = escapeHtml(hymnRef + h.title);
+      const fullTitle = hymnRef + h.title;
+      const highlightedTitle = highlightMatch(fullTitle, q);
       const safeAuthor = escapeHtml(h.author || 'Unknown');
       const isActive = currentHymn && currentHymn.id === h.id ? ' active' : '';
       const versesLabel = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.labels.versesCount', { count: h.verses.length }) : `${h.verses.length} verse(s)`;
       return `
       <div class="list-item${isActive}" data-id="${h.id}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
-        <div class="title">${safeTitle}</div>
+        <div class="title">${highlightedTitle}</div>
         <div class="meta">${safeAuthor} • ${versesLabel}</div>
       </div>`;
     }).join('');
+  }
+
+  function renderSourceFilters() {
+    const container = document.getElementById('sourceFilters');
+    if (!container) return;
+
+    const sources = [...new Set(hymns.map(h => h.metadata?.sourceAbbr).filter(Boolean))].sort();
+    if (sources.length === 0) {
+      container.innerHTML = '';
+      return;
+    }
+
+    const allChip = `<button class="source-chip${activeSourceFilter === 'all' ? ' active' : ''}" data-source="all">All</button>`;
+    const chips = sources.map(src =>
+      `<button class="source-chip${activeSourceFilter === src ? ' active' : ''}" data-source="${escapeHtml(src)}">${escapeHtml(src)}</button>`
+    ).join('');
+    container.innerHTML = allChip + chips;
   }
 
   function selectHymn(id) {
@@ -268,7 +309,17 @@
     currentVerse = 0;
     currentLineOffset = 0;
     isShowingChorus = false;
+
+    // Auto-expand preview when hymn is selected
+    const toggle = document.getElementById('previewToggle');
+    const body = document.getElementById('previewBody');
+    if (toggle && body && toggle.getAttribute('aria-expanded') === 'false') {
+      toggle.setAttribute('aria-expanded', 'true');
+      body.hidden = false;
+    }
+
     updatePreview();
+    updateServiceBanner();
     renderList();
     sendCommand('show'); // Auto-display when hymn is selected
   }
@@ -282,13 +333,12 @@
       }
       verseInfoEl.textContent = '-';
       previewEl.textContent = '';
+      updateNavButtonStates();
       return;
     }
     currentTitleEl.textContent = currentHymn.title;
-    currentTitleEl.textContent = currentHymn.title;
 
     let lines = [];
-    let label = '';
 
     if (isShowingChorus && currentHymn.chorus) {
       lines = currentHymn.chorus.split('\n');
@@ -300,6 +350,11 @@
     const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
     previewEl.textContent = windowed.join('\n');
 
+    const isLastVerse = currentVerse === currentHymn.verses.length - 1;
+    const isLastVerseLabel = isLastVerse && !isShowingChorus && !currentHymn.chorus
+      ? ' · Last verse'
+      : (isLastVerse && isShowingChorus ? ' · Last chorus' : '');
+
     if (window.HymnFlowI18n) {
       const i18nKey = (isShowingChorus && currentHymn.chorus) ? 'navigation.chorusInfo' : 'navigation.verseInfo';
       verseInfoEl.textContent = window.HymnFlowI18n.getTranslation(i18nKey, {
@@ -308,8 +363,43 @@
         startLine: currentLineOffset + 1,
         endLine: Math.min(lines.length, currentLineOffset + settings.linesPerPage),
         totalLines: lines.length
-      });
+      }) + isLastVerseLabel;
     }
+
+    updateNavButtonStates();
+  }
+
+  function updateNavButtonStates() {
+    const btnPrevVerse = document.getElementById('btnPrevVerse');
+    const btnNextVerse = document.getElementById('btnNextVerse');
+    const btnPrevLine = document.getElementById('btnPrevLine');
+    const btnNextLine = document.getElementById('btnNextLine');
+    const btnJumpChorus = document.getElementById('btnJumpChorus');
+
+    if (!currentHymn) {
+      [btnPrevVerse, btnNextVerse, btnPrevLine, btnNextLine, btnJumpChorus].forEach(b => { if (b) b.disabled = true; });
+      return;
+    }
+
+    const atFirstContent = currentVerse === 0 && !isShowingChorus;
+    const atLastContent = currentVerse === currentHymn.verses.length - 1 &&
+      (!currentHymn.chorus || isShowingChorus);
+
+    let currentLines = [];
+    if (isShowingChorus && currentHymn.chorus) {
+      currentLines = currentHymn.chorus.split('\n');
+    } else {
+      currentLines = (currentHymn.verses[currentVerse] || '').split('\n');
+    }
+
+    const atFirstLineWindow = currentLineOffset === 0;
+    const atLastLineWindow = currentLineOffset + settings.linesPerPage >= currentLines.length;
+
+    if (btnPrevVerse) btnPrevVerse.disabled = atFirstContent;
+    if (btnNextVerse) btnNextVerse.disabled = atLastContent;
+    if (btnPrevLine) btnPrevLine.disabled = atFirstContent && atFirstLineWindow;
+    if (btnNextLine) btnNextLine.disabled = atLastContent && atLastLineWindow;
+    if (btnJumpChorus) btnJumpChorus.disabled = !currentHymn.chorus;
   }
 
   function sendCommand(type) {
@@ -369,6 +459,7 @@
   function updateDisplayButton() {
     const toggle = document.getElementById('displayToggle');
     const liveIndicator = document.getElementById('liveIndicator');
+    const navSection = document.querySelector('.section .navigation-controls')?.closest('.section');
     if (toggle) {
       toggle.checked = isDisplaying;
     }
@@ -377,6 +468,13 @@
         liveIndicator.classList.add('active');
       } else {
         liveIndicator.classList.remove('active');
+      }
+    }
+    if (navSection) {
+      if (isDisplaying) {
+        navSection.classList.remove('display-off');
+      } else {
+        navSection.classList.add('display-off');
       }
     }
   }
@@ -501,6 +599,34 @@
         updatePreview();
         sendCommand('show');
       }
+    }
+  }
+
+  function sendTextSlide() {
+    const input = document.getElementById('textSlideInput');
+    const text = input ? input.value.trim() : '';
+    if (!text) return;
+    try {
+      const payload = {
+        type: 'textslide',
+        lines: text.split('\n'),
+        settings: { ...settings },
+        timestamp: Date.now()
+      };
+      localStorage.setItem(storageKeys.textslide, JSON.stringify(payload));
+      sendCommand('hide'); // Hide hymn overlay when text slide is sent
+      if (statusEl) statusEl.textContent = 'Text slide sent';
+    } catch (err) {
+      console.error('[Text Slide Error]', err);
+    }
+  }
+
+  function clearTextSlide() {
+    try {
+      localStorage.setItem(storageKeys.textslide, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
+      if (statusEl) statusEl.textContent = 'Text slide cleared';
+    } catch (err) {
+      console.error('[Text Slide Clear Error]', err);
     }
   }
 
@@ -683,6 +809,7 @@
 
     saveHymns();
     filtered = hymns;
+    renderSourceFilters();
     renderList();
     updatePreview();
     closeEditModal();
@@ -723,8 +850,23 @@
   function deleteHymn(id) {
     hymns = hymns.filter(h => h.id !== id);
     if (currentHymn && currentHymn.id === id) currentHymn = null;
+
+    // Clean stale references from all services
+    let servicesModified = 0;
+    services.forEach(service => {
+      const before = service.hymns.length;
+      service.hymns = service.hymns.filter(hId => hId !== id);
+      if (service.hymns.length < before) servicesModified++;
+    });
+    if (servicesModified > 0) {
+      saveServices();
+      renderServicesList();
+      statusEl.textContent = `Hymn deleted (${servicesModified} service${servicesModified > 1 ? 's' : ''} updated)`;
+    }
+
     saveHymns();
     filtered = hymns;
+    renderSourceFilters();
     renderList();
     updatePreview();
   }
@@ -886,6 +1028,54 @@
     }
   }
 
+  function updateServiceBanner() {
+    const banner = document.getElementById('serviceBanner');
+    const bannerName = document.getElementById('serviceBannerName');
+    const bannerPos = document.getElementById('serviceBannerPos');
+    const btnPrevHymn = document.getElementById('btnPrevHymn');
+    const btnNextHymn = document.getElementById('btnNextHymn');
+
+    if (!currentService || currentService.hymns.length === 0) {
+      if (banner) banner.style.display = 'none';
+      return;
+    }
+
+    const validHymns = currentService.hymns.filter(id => hymns.find(h => h.id === id));
+    if (validHymns.length === 0) {
+      if (banner) banner.style.display = 'none';
+      return;
+    }
+
+    const currentIdx = currentHymn
+      ? validHymns.indexOf(currentHymn.id)
+      : -1;
+
+    if (banner) banner.style.display = 'flex';
+    if (bannerName) bannerName.textContent = currentService.name;
+    if (bannerPos) {
+      bannerPos.textContent = currentIdx >= 0
+        ? `${currentIdx + 1}/${validHymns.length}`
+        : `0/${validHymns.length}`;
+    }
+    if (btnPrevHymn) btnPrevHymn.disabled = currentIdx <= 0;
+    if (btnNextHymn) btnNextHymn.disabled = currentIdx >= validHymns.length - 1;
+  }
+
+  function prevServiceHymn() {
+    if (!currentService) return;
+    const validHymns = currentService.hymns.filter(id => hymns.find(h => h.id === id));
+    const currentIdx = currentHymn ? validHymns.indexOf(currentHymn.id) : -1;
+    if (currentIdx > 0) selectHymn(validHymns[currentIdx - 1]);
+  }
+
+  function nextServiceHymn() {
+    if (!currentService) return;
+    const validHymns = currentService.hymns.filter(id => hymns.find(h => h.id === id));
+    const currentIdx = currentHymn ? validHymns.indexOf(currentHymn.id) : -1;
+    if (currentIdx < validHymns.length - 1) selectHymn(validHymns[currentIdx + 1]);
+    else if (currentIdx === -1 && validHymns.length > 0) selectHymn(validHymns[0]);
+  }
+
   function selectService(serviceId) {
     const service = services.find(s => s.id === serviceId);
     if (service) {
@@ -906,6 +1096,7 @@
         statusEl.textContent = `Loaded service: ${currentService.name} (${currentService.hymns.length} hymns)`;
       }
     }
+    updateServiceBanner();
     renderServicesList();
   }
 
@@ -959,8 +1150,17 @@
 
   function attachEvents() {
     searchEl.addEventListener('input', async (e) => {
+      currentSearchQuery = e.target.value;
       const results = await performSearch(e.target.value);
       filtered = results;
+      renderList();
+    });
+
+    document.getElementById('sourceFilters').addEventListener('click', (e) => {
+      const chip = e.target.closest('.source-chip');
+      if (!chip) return;
+      activeSourceFilter = chip.dataset.source;
+      renderSourceFilters();
       renderList();
     });
 
@@ -1058,6 +1258,8 @@
     };
     document.getElementById('bgType').onchange = (e) => {
       settings.bgType = e.target.value;
+      const opacityRow = document.getElementById('bgOpacityRow');
+      if (opacityRow) opacityRow.style.display = settings.bgType === 'transparent' ? 'none' : '';
       saveSettings();
       if (isDisplaying && currentHymn) sendCommand('show');
     };
@@ -1071,6 +1273,14 @@
       saveSettings();
       if (isDisplaying && currentHymn) sendCommand('show');
     };
+    document.getElementById('bgOpacity').oninput = (e) => {
+      settings.bgOpacity = parseInt(e.target.value, 10);
+      document.getElementById('bgOpacityValue').textContent = settings.bgOpacity + '%';
+      const row = document.getElementById('bgOpacityRow');
+      if (row) row.style.display = settings.bgType === 'transparent' ? 'none' : '';
+      saveSettings();
+      if (isDisplaying && currentHymn) sendCommand('show');
+    };
     document.getElementById('animation').onchange = (e) => {
       settings.animation = e.target.value;
       saveSettings();
@@ -1080,6 +1290,14 @@
       settings.position = e.target.value;
       saveSettings();
       if (isDisplaying && currentHymn) sendCommand('show');
+    };
+
+    document.getElementById('previewToggle').onclick = () => {
+      const toggle = document.getElementById('previewToggle');
+      const body = document.getElementById('previewBody');
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      body.hidden = expanded;
     };
 
     document.getElementById('btnImport').onclick = () => document.getElementById('fileInput').click();
@@ -1095,6 +1313,14 @@
     document.getElementById('editModal').onclick = (e) => {
       if (e.target.id === 'editModal') closeEditModal();
     };
+
+    // Text slide controls
+    document.getElementById('btnSendTextSlide').onclick = sendTextSlide;
+    document.getElementById('btnClearTextSlide').onclick = clearTextSlide;
+
+    // Service banner Prev/Next Hymn
+    document.getElementById('btnPrevHymn').onclick = prevServiceHymn;
+    document.getElementById('btnNextHymn').onclick = nextServiceHymn;
 
     // Service controls
     document.getElementById('btnNewService').onclick = () => openServiceEditor();
@@ -1157,9 +1383,29 @@
         throw new Error(`No valid hymns found. ${invalid.length} entries had errors: ${invalid[0]?.errors[0] || 'Unknown error'}`);
       }
 
-      hymns = [...hymns, ...valid];
+      // Chunked merge — keeps UI responsive on large imports (1000+ hymns)
+      await new Promise(resolve => {
+        const CHUNK = 100;
+        let offset = 0;
+        function processChunk() {
+          const slice = valid.slice(offset, offset + CHUNK);
+          hymns = [...hymns, ...slice];
+          offset += CHUNK;
+          if (statusEl) {
+            statusEl.textContent = `Importing… (${Math.min(offset, valid.length)}/${valid.length})`;
+          }
+          if (offset < valid.length) {
+            setTimeout(processChunk, 0);
+          } else {
+            resolve();
+          }
+        }
+        processChunk();
+      });
+
       saveHymns();
       filtered = hymns;
+      renderSourceFilters();
       renderList();
 
       if (window.HymnFlowI18n) {
@@ -1226,6 +1472,12 @@
     document.getElementById('bgType').value = settings.bgType;
     document.getElementById('bgColorA').value = settings.bgColorA;
     document.getElementById('bgColorB').value = settings.bgColorB;
+    const opacityVal = typeof settings.bgOpacity === 'number' ? settings.bgOpacity : 80;
+    settings.bgOpacity = opacityVal;
+    document.getElementById('bgOpacity').value = opacityVal;
+    document.getElementById('bgOpacityValue').textContent = opacityVal + '%';
+    const opacityRow = document.getElementById('bgOpacityRow');
+    if (opacityRow) opacityRow.style.display = settings.bgType === 'transparent' ? 'none' : '';
     document.getElementById('animation').value = settings.animation;
     document.getElementById('position').value = settings.position;
   }
@@ -1275,8 +1527,10 @@
   loadSettings();
   loadServices();
   buildSearchIndex();
+  renderSourceFilters();
   renderList();
   renderServicesList();
+  updateServiceBanner();
   attachEvents();
   setupLanguageSelector();
   if (window.HymnFlowI18n) {
