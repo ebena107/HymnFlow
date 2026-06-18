@@ -148,7 +148,9 @@ window.HymnFlowTranslations = {
       "cleared": "Text slide cleared"
     },
     "bible": {
+      "title": "Bible",
       "label": "Bible (KJV)",
+      "description": "Import a KJV JSON file to enable verse lookup in Quick Scripture. One-time setup — persists across sessions.",
       "importButton": "Import Bible JSON",
       "loading": "Loading Bible…",
       "notLoaded": "Not loaded"

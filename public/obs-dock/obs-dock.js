@@ -1818,8 +1818,15 @@
     const badge = document.getElementById('bibleStatusBadge');
     if (!badge) return;
     const loaded = window.HymnFlowBibleLookup?.isLoaded();
-    badge.textContent = loaded ? 'KJV ✓' : 'Not loaded';
-    badge.className = 'bible-status-badge ' + (loaded ? 'loaded' : 'not-loaded');
+    if (loaded) {
+      badge.textContent = 'KJV ✓';
+      badge.className = 'bible-status-badge loaded';
+    } else {
+      badge.textContent = window.HymnFlowI18n
+        ? window.HymnFlowI18n.getTranslation('bible.notLoaded')
+        : 'Not loaded';
+      badge.className = 'bible-status-badge not-loaded';
+    }
   }
 
   async function handleBibleImport(e) {

@@ -83,9 +83,15 @@
           <input type="file" id="fileInput" accept=".txt,.json,.csv" hidden aria-label="Select hymn file to import">
         </div>
 
-        <div class="bible-import-row">
-          <span class="bible-import-label" data-i18n="bible.label">Bible (KJV)</span>
-          <span id="bibleStatusBadge" class="bible-status-badge" aria-live="polite">—</span>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h3 data-i18n="bible.title">Bible</h3>
+          <span id="bibleStatusBadge" class="bible-status-badge not-loaded" aria-live="polite" data-i18n="bible.notLoaded">Not loaded</span>
+        </div>
+        <p class="bible-description" data-i18n="bible.description">Import a KJV JSON file to enable verse lookup in Quick Scripture. One-time setup — persists across sessions.</p>
+        <div class="import-export-actions">
           <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import Bible JSON</button>
           <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select KJV Bible JSON file">
         </div>
