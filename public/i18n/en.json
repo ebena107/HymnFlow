@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "Lower-third controller for OBS HYMN",
+    "subtitle": "Lower-third controller for OBS HYMN by @gbcowode",
     "status": {
       "live": "LIVE",
       "storage": "localStorage",

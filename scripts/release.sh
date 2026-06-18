@@ -21,10 +21,6 @@ if [ -d "$RELEASE_DIR" ]; then
 fi
 mkdir -p "$RELEASE_DIR"
 
-# Consolidate translations
-echo "🔄 Consolidating translations..."
-python3 scripts/combine_translations.py || python scripts/combine_translations.py
-
 # Copy essential files
 echo "📦 Packaging files..."
 cp -r public/obs-dock "$RELEASE_DIR/"

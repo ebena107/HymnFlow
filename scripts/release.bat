@@ -25,10 +25,6 @@ set RELEASE_DIR=hymnflow-v!VERSION!
 if exist "!RELEASE_DIR!" rmdir /s /q "!RELEASE_DIR!"
 mkdir "!RELEASE_DIR!"
 
-REM Consolidate translations
-echo Consolidating translations...
-python scripts\combine_translations.py
-
 REM Copy files
 echo Packaging files...
 xcopy public\obs-dock "!RELEASE_DIR!\obs-dock\" /E /Y > nul
@@ -50,6 +46,10 @@ echo Creating ZIP: !ZIP_FILE!...
 REM Using PowerShell for compression (Windows 10+)
 powershell -Command "Compress-Archive -Path '!RELEASE_DIR!' -DestinationPath '!ZIP_FILE!' -Force"
 
+REM Create git tag
+echo Creating git tag v!VERSION!...
+git tag -a "v!VERSION!" -m "Release v!VERSION! - HymnFlow OBS Plugin"
+
 echo.
 echo Release created successfully!
 echo.
@@ -60,5 +60,6 @@ echo    Git Tag: v!VERSION!
 echo.
 echo Next steps:
 echo    1. Review the ZIP file contents
-echo    2. Create GitHub release with the ZIP file
-echo    3. Announce release
+echo    2. Push tag: git push origin v!VERSION!
+echo    3. Create GitHub release with the ZIP file
+echo    4. Announce release

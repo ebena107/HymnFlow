@@ -27,6 +27,9 @@ jobs:
           cp -r public/obs-overlay hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp -r public/data hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp -r public/parsers hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp -r public/i18n hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp public/obs-setup.html hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          cp public/validation.js hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp README.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp doc/SETUP.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
           cp doc/TROUBLESHOOTING.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
@@ -47,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload release artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: hymnflow-plugin
           path: hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip

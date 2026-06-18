@@ -1,3 +1,40 @@
+## [2.4.0] - 2026-06-18
+
+### 🎨 Major UX Overhaul — Tabbed Dock & Full Service Scheduling
+
+**Focus**: Tabbed dock interface, complete service editor rewrite with inline panels, fontFamily security allowlist, and ARIA accessibility pass.
+
+### Added
+
+- 🗂️ **Tabbed dock** — Library, Service, Live, Style tabs; active tab persisted in settings
+- 📋 **Service item types** — Scripture, Announcement, and Divider items alongside hymns
+- 🔍 **Inline hymn picker** — search panel opens inside Service tab (`+ Hymn`), no cross-tab navigation
+- ✏️ **Inline item form** — shared form panel for Scripture/Announce/Divider; correct titles, placeholders, and submit labels per type
+- ✎ **Inline editing** — non-hymn items have an Edit button; form pre-populates with existing content
+- 💾 **Unsaved-changes guard** — `confirm()` dialog when closing service editor with pending changes
+- 🔒 **Font allowlist** — `safeFont()` in overlay.js validates `fontFamily` against 5 known-safe values; closes localStorage CSS-injection vector
+- ♿ **ARIA completeness** — `aria-label`, `aria-pressed`, `aria-current`, `role="list/listitem"`, `aria-live` across all panels
+- 🌍 **i18n keys** — `lastVerse`, `lastChorus`, service `addButtons`, `banner`, `alerts`, `status`, `itemForm` keys (all 9 languages)
+
+### Changed
+
+- ↑↓ Reorder buttons disabled at list bounds
+- Subtitle updated to "Lower-third controller for OBS HYMN by @gbcowode"
+- Style tab collapsible; language selector moved to bottom of Style tab
+- GitHub Actions release now includes `public/i18n/`, `obs-setup.html`, `validation.js` (previously missing)
+- `actions/upload-artifact@v3` → `v4`
+- Release scripts no longer call `combine_translations.py` (would have wiped v2.4 keys)
+- Release scripts now create annotated git tag
+
+### Fixed
+
+- Crash opening service editor for a deleted service (`null` guard on `editingService`)
+- Variable shadowing in `renderHymnPicker` (`filtered` local vs. module-level state)
+- `navigation.lastVerse`/`navigation.lastChorus` returning raw key strings (missing from `translations.js`)
+- Item form title div rendering an empty border line when no content was set
+
+---
+
 ## [2.3.1] - 2026-01-14
 
 ### 📝 Documentation Clarification Release

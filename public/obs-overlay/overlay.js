@@ -11,6 +11,17 @@
     return HEX_COLOR.test(val) ? val : fallback;
   }
 
+  const FONT_ALLOWLIST = new Set([
+    'Inter, sans-serif',
+    "'Segoe UI', sans-serif",
+    "'Roboto', sans-serif",
+    "'Georgia', serif",
+    "'Montserrat', sans-serif",
+  ]);
+  function safeFont(val) {
+    return FONT_ALLOWLIST.has(val) ? val : 'Inter, sans-serif';
+  }
+
   function applyStyles(settings) {
     const s = {
       ...settings,
@@ -19,7 +30,7 @@
       bgColorA: safeColor(settings.bgColorA, '#000000'),
       bgColorB: safeColor(settings.bgColorB, '#000000'),
     };
-    contentEl.style.fontFamily = s.fontFamily;
+    contentEl.style.fontFamily = safeFont(s.fontFamily);
     contentEl.style.fontSize = s.fontSize + 'px';
     contentEl.style.fontWeight = s.bold ? '700' : '400';
     contentEl.style.fontStyle = s.italic ? 'italic' : 'normal';

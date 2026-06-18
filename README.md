@@ -4,7 +4,9 @@
 
 ## ✨ Features
 
+- 🗂️ **Tabbed Dock** - Library, Service, Live, and Style tabs keep controls organized
 - 📋 **Full Hymn Management** - Add, edit, delete, search hymns
+- 📅 **Service Scheduling** - Build and save service orders with Hymns, Scripture, Announcements, and Dividers
 - ⌨️ **Keyboard-Driven Navigation** - Arrow keys for verse/line navigation
 - 🎨 **Customizable Styling** - Fonts, colors, effects, backgrounds, animations
 - 📥 **Import/Export** - Support for .txt, .csv, and .json hymn files

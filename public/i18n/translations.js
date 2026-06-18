@@ -5,7 +5,7 @@ window.HymnFlowTranslations = {
   "en": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Lower-third controller for OBS HYMN",
+      "subtitle": "Lower-third controller for OBS HYMN by @gbcowode",
       "status": {
         "live": "LIVE",
         "storage": "localStorage",
@@ -85,9 +85,20 @@ window.HymnFlowTranslations = {
         "edit": "Edit",
         "delete": "Del"
       },
+      "addButtons": {
+        "hymn": "+ Hymn",
+        "scripture": "+ Scripture",
+        "announce": "+ Announce",
+        "divider": "+ Divider"
+      },
+      "banner": {
+        "prevItem": "Previous item in service",
+        "nextItem": "Next item in service"
+      },
       "alerts": {
         "nameRequired": "Service name is required",
         "atLeastOneHymn": "Add at least one hymn to the service",
+        "itemRequired": "Add at least one item to the service",
         "validationFailed": "Service validation failed:\n{errors}"
       },
       "confirmations": {
@@ -95,17 +106,52 @@ window.HymnFlowTranslations = {
       },
       "status": {
         "validationIssues": "Warning: Service has validation issues",
-        "loaded": "Loaded service: {name} ({count} hymns)",
+        "loaded": "Loaded: {name} ({count} item(s))",
         "deleted": "Service deleted",
-        "saved": "Service saved"
+        "saved": "Service saved",
+        "hymnNotFound": "Hymn not found in library",
+        "hymnDeleted": "Hymn deleted ({count} service(s) updated)",
+        "divider": "▸ {label}"
       },
       "errors": {
         "saveFailed": "Error saving services: {error}"
+      },
+      "itemForm": {
+        "titles": {
+          "addScripture": "Add Scripture",
+          "editScripture": "Edit Scripture",
+          "addAnnounce": "Add Announcement",
+          "editAnnounce": "Edit Announcement",
+          "addDivider": "Add Divider",
+          "editDivider": "Edit Divider"
+        },
+        "placeholders": {
+          "scriptureRef": "Reference (e.g., John 3:16)",
+          "scriptureText": "Verse text (e.g., For God so loved the world…)",
+          "announceText": "Announcement text (e.g., Join us for fellowship after service)",
+          "dividerLabel": "Section label (e.g., Offering, Sermon, Prayer)"
+        },
+        "buttons": {
+          "addScripture": "Add Scripture",
+          "addAnnounce": "Add Announcement",
+          "addDivider": "Add Divider",
+          "save": "Save"
+        }
       }
+    },
+    "textSlide": {
+      "title": "Text Slide",
+      "hint": "scripture, announcement, blank",
+      "sendButton": "Send to Overlay",
+      "clearButton": "Clear Slide",
+      "sent": "Text slide sent",
+      "cleared": "Text slide cleared"
     },
     "navigation": {
       "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
       "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",
+      "lastVerse": " · Last verse",
+      "lastChorus": " · Last chorus",
       "buttons": {
         "prevVerse": "⟵ Previous",
         "nextVerse": "Next ⟶",
@@ -180,6 +226,12 @@ window.HymnFlowTranslations = {
       "language": "Language",
       "languageLabel": "Interface Language"
     },
+    "tabs": {
+      "library": "Library",
+      "service": "Service",
+      "live": "Live",
+      "style": "Style"
+    },
     "setup": {
       "import": {
         "selectFile": "Select the downloaded .json, .txt, or .csv file"
@@ -198,7 +250,7 @@ window.HymnFlowTranslations = {
   "es": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Controlador de tercio inferior para OBS HYMN",
+      "subtitle": "Controlador de tercio inferior para OBS HYMN by @gbcowode",
       "status": {
         "live": "EN VIVO",
         "ready": "Listo ({storage})",
@@ -289,11 +341,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "Advertencia: El servicio tiene problemas de validación",
         "loaded": "Servicio cargado: {name} ({count} himnos)",
         "deleted": "Servicio eliminado",
-        "saved": "Servicio guardado"
+        "saved": "Servicio guardado",
+        "hymnNotFound": "Himno no encontrado en la biblioteca"
       },
       "errors": {
         "saveFailed": "Error al guardar los servicios: {error}"
       }
+    },
+    "textSlide": {
+      "title": "Diapositiva de Texto",
+      "hint": "escritura, anuncio, pantalla en blanco",
+      "sendButton": "Enviar a Overlay",
+      "clearButton": "Borrar Diapositiva",
+      "sent": "Diapositiva de texto enviada",
+      "cleared": "Diapositiva de texto borrada"
     },
     "navigation": {
       "verseInfo": "Verso {current}/{total} · Líneas {startLine}-{endLine} de {totalLines}",
@@ -371,6 +432,12 @@ window.HymnFlowTranslations = {
       "language": "Idioma",
       "languageLabel": "Idioma de la interfaz"
     },
+    "tabs": {
+      "library": "Biblioteca",
+      "service": "Servicio",
+      "live": "En Vivo",
+      "style": "Estilo"
+    },
     "setup": {
       "import": {
         "selectFile": "Seleccione el archivo descargado .json, .txt o .csv"
@@ -389,7 +456,7 @@ window.HymnFlowTranslations = {
   "fr": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN",
+      "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN by @gbcowode",
       "status": {
         "live": "EN DIRECT",
         "ready": "Prêt ({storage})",
@@ -480,11 +547,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "Attention : Le service présente des problèmes de validation",
         "loaded": "Service chargé : {name} ({count} cantiques)",
         "deleted": "Service supprimé",
-        "saved": "Service enregistré"
+        "saved": "Service enregistré",
+        "hymnNotFound": "Cantique introuvable dans la bibliothèque"
       },
       "errors": {
         "saveFailed": "Erreur lors de l'enregistrement des services : {error}"
       }
+    },
+    "textSlide": {
+      "title": "Diapositive Texte",
+      "hint": "écriture, annonce, écran vide",
+      "sendButton": "Envoyer à l'Overlay",
+      "clearButton": "Effacer la Diapositive",
+      "sent": "Diapositive texte envoyée",
+      "cleared": "Diapositive texte effacée"
     },
     "navigation": {
       "verseInfo": "Verset {current}/{total} · Lignes {startLine}-{endLine} sur {totalLines}",
@@ -562,6 +638,12 @@ window.HymnFlowTranslations = {
       "language": "Langue",
       "languageLabel": "Langue de l'interface"
     },
+    "tabs": {
+      "library": "Bibliothèque",
+      "service": "Service",
+      "live": "En Direct",
+      "style": "Style"
+    },
     "setup": {
       "import": {
         "selectFile": "Sélectionnez le fichier téléchargé .json, .txt ou .csv"
@@ -580,7 +662,7 @@ window.HymnFlowTranslations = {
   "ko": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "OBS HYMN용 하단 3분위 컨트롤러",
+      "subtitle": "OBS HYMN용 하단 3분위 컨트롤러 by @gbcowode",
       "status": {
         "live": "라이브",
         "storage": "로컬 저장소",
@@ -672,11 +754,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "경고: 순서에 검증 문제가 있습니다",
         "loaded": "순서를 불러왔습니다: {name} ({count}곡)",
         "deleted": "순서가 삭제되었습니다",
-        "saved": "순서가 저장되었습니다"
+        "saved": "순서가 저장되었습니다",
+        "hymnNotFound": "라이브러리에서 찬송가를 찾을 수 없음"
       },
       "errors": {
         "saveFailed": "순서 저장 중 오류 발생: {error}"
       }
+    },
+    "textSlide": {
+      "title": "텍스트 슬라이드",
+      "hint": "성경 구절, 공지사항, 빈 화면",
+      "sendButton": "오버레이로 전송",
+      "clearButton": "슬라이드 지우기",
+      "sent": "텍스트 슬라이드 전송됨",
+      "cleared": "텍스트 슬라이드 지워짐"
     },
     "navigation": {
       "verseInfo": "{current}/{total}절 · {totalLines}행 중 {startLine}-{endLine}행",
@@ -754,6 +845,12 @@ window.HymnFlowTranslations = {
       "language": "언어",
       "languageLabel": "인터페이스 언어"
     },
+    "tabs": {
+      "library": "라이브러리",
+      "service": "서비스",
+      "live": "라이브",
+      "style": "스타일"
+    },
     "setup": {
       "import": {
         "selectFile": "다운로드한 .json, .txt 또는 .csv 파일을 선택하세요"
@@ -772,7 +869,7 @@ window.HymnFlowTranslations = {
   "pt": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Controlador de terço inferior para OBS HYMN",
+      "subtitle": "Controlador de terço inferior para OBS HYMN by @gbcowode",
       "status": {
         "live": "AO VIVO",
         "ready": "Pronto ({storage})",
@@ -863,11 +960,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "Aviso: O serviço tem problemas de validação",
         "loaded": "Serviço carregado: {name} ({count} hinos)",
         "deleted": "Serviço excluído",
-        "saved": "Serviço salvo"
+        "saved": "Serviço salvo",
+        "hymnNotFound": "Hino não encontrado na biblioteca"
       },
       "errors": {
         "saveFailed": "Erro ao salvar os serviços: {error}"
       }
+    },
+    "textSlide": {
+      "title": "Slide de Texto",
+      "hint": "escritura, anúncio, tela em branco",
+      "sendButton": "Enviar ao Overlay",
+      "clearButton": "Limpar Slide",
+      "sent": "Slide de texto enviado",
+      "cleared": "Slide de texto removido"
     },
     "navigation": {
       "verseInfo": "Verso {current}/{total} · Linhas {startLine}-{endLine} de {totalLines}",
@@ -945,6 +1051,12 @@ window.HymnFlowTranslations = {
       "language": "Idioma",
       "languageLabel": "Idioma da interface"
     },
+    "tabs": {
+      "library": "Biblioteca",
+      "service": "Serviço",
+      "live": "Ao Vivo",
+      "style": "Estilo"
+    },
     "setup": {
       "import": {
         "selectFile": "Selecione o arquivo baixado .json, .txt ou .csv"
@@ -963,7 +1075,7 @@ window.HymnFlowTranslations = {
   "sw": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN",
+      "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN by @gbcowode",
       "status": {
         "live": "MOJA KWA MOJA",
         "storage": "localStorage",
@@ -1055,11 +1167,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "Onyo: Huduma ina masuala ya uthibitishaji",
         "loaded": "Huduma iliyopakiwa: {name} ({count} nyimbo)",
         "deleted": "Huduma imefutwa",
-        "saved": "Huduma imehifadhiwa"
+        "saved": "Huduma imehifadhiwa",
+        "hymnNotFound": "Wimbo haujapatikana kwenye maktaba"
       },
       "errors": {
         "saveFailed": "Hitilafu wakati wa kuhifadhi huduma: {error}"
       }
+    },
+    "textSlide": {
+      "title": "Slaidi ya Maandishi",
+      "hint": "maandiko, tangazo, skrini tupu",
+      "sendButton": "Tuma kwa Overlay",
+      "clearButton": "Futa Slaidi",
+      "sent": "Slaidi ya maandishi imetumwa",
+      "cleared": "Slaidi ya maandishi imefutwa"
     },
     "navigation": {
       "verseInfo": "Beti {current}/{total} · Mistari {startLine}-{endLine} ya {totalLines}",
@@ -1137,6 +1258,12 @@ window.HymnFlowTranslations = {
       "language": "Lugha",
       "languageLabel": "Lugha ya kiolesura"
     },
+    "tabs": {
+      "library": "Maktaba",
+      "service": "Huduma",
+      "live": "Moja kwa Moja",
+      "style": "Mtindo"
+    },
     "setup": {
       "import": {
         "selectFile": "Chagua faili iliyopakuliwa ya .json, .txt, au .csv"
@@ -1155,7 +1282,7 @@ window.HymnFlowTranslations = {
   "tl": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Lower-third controller para sa OBS HYMN",
+      "subtitle": "Lower-third controller para sa OBS HYMN by @gbcowode",
       "status": {
         "live": "LIVE",
         "storage": "localStorage",
@@ -1247,11 +1374,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "Babala: May mga isyu sa pag-validate ang serbisyo",
         "loaded": "Na-load ang serbisyo: {name} ({count} (na) himno)",
         "deleted": "Na-delete ang serbisyo",
-        "saved": "Na-save ang serbisyo"
+        "saved": "Na-save ang serbisyo",
+        "hymnNotFound": "Hindi mahanap ang himno sa library"
       },
       "errors": {
         "saveFailed": "Error sa pag-save ng mga serbisyo: {error}"
       }
+    },
+    "textSlide": {
+      "title": "Slide ng Teksto",
+      "hint": "kasulatan, anunsyo, blangkong screen",
+      "sendButton": "Ipadala sa Overlay",
+      "clearButton": "Burahin ang Slide",
+      "sent": "Naipadala ang slide ng teksto",
+      "cleared": "Na-clear ang slide ng teksto"
     },
     "navigation": {
       "verseInfo": "Bersikulo {current}/{total} · Mga Linya {startLine}-{endLine} ng {totalLines}",
@@ -1329,6 +1465,12 @@ window.HymnFlowTranslations = {
       "language": "Wika",
       "languageLabel": "Wika ng Interface"
     },
+    "tabs": {
+      "library": "Library",
+      "service": "Serbisyo",
+      "live": "Live",
+      "style": "Estilo"
+    },
     "setup": {
       "import": {
         "selectFile": "Piliin ang na-download na .json, .txt, o .csv na file"
@@ -1347,7 +1489,7 @@ window.HymnFlowTranslations = {
   "yo": {
     "app": {
       "title": "HymnFlow Dock",
-      "subtitle": "Atunṣe isalẹ-kẹta fun OBS HYMN",
+      "subtitle": "Atunṣe isalẹ-kẹta fun OBS HYMN by @gbcowode",
       "status": {
         "live": "LÓRÍ ATFẸFERẸ",
         "storage": "localStorage",
@@ -1439,11 +1581,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "Ìkìlọ̀: Ìsìn yìí ní àwọn ìṣòro ìfihàn",
         "loaded": "Ìsìn tí a gbé jáde: {name} (orin {count})",
         "deleted": "A ti pa ìsìn rẹ́",
-        "saved": "A ti fi ìsìn pa mọ́"
+        "saved": "A ti fi ìsìn pa mọ́",
+        "hymnNotFound": "A kò rí orin náà nínú ìkójọpọ̀"
       },
       "errors": {
         "saveFailed": "Àṣìṣe nígbà tí a ń fi ìsìn pa mọ́: {error}"
       }
+    },
+    "textSlide": {
+      "title": "Ìfáwọlé Ọ̀rọ̀",
+      "hint": "ìwé mímọ́, ìkéde, ojú-ìwé òfo",
+      "sendButton": "Fi ránṣẹ sí Overlay",
+      "clearButton": "Mọ́ Ìfáwọlé",
+      "sent": "A ti fi ìfáwọlé ọ̀rọ̀ ránṣẹ",
+      "cleared": "A ti mọ́ ìfáwọlé ọ̀rọ̀"
     },
     "navigation": {
       "verseInfo": "Ẹsẹ {current}/{total} · Ìlà {startLine}-{endLine} nínú {totalLines}",
@@ -1522,6 +1673,12 @@ window.HymnFlowTranslations = {
       "language": "Èdè",
       "languageLabel": "Èdè Ìkọ́nilọ́wọ́"
     },
+    "tabs": {
+      "library": "Ìkójọpọ̀",
+      "service": "Ìsìn",
+      "live": "Alãáyẹ",
+      "style": "Ìpele"
+    },
     "setup": {
       "import": {
         "selectFile": "Yan faili .json, .txt, tabi .csv ti o gba"
@@ -1540,7 +1697,7 @@ window.HymnFlowTranslations = {
   "zh": {
     "app": {
       "title": "HymnFlow 控制台",
-      "subtitle": "OBS HYMN 的下三分之一控制器",
+      "subtitle": "OBS HYMN 的下三分之一控制器 by @gbcowode",
       "status": {
         "live": "直播中",
         "storage": "本地存储",
@@ -1632,11 +1789,20 @@ window.HymnFlowTranslations = {
         "validationIssues": "警告: 安排存在验证问题",
         "loaded": "已加载安排: {name} ({count} 首赞美诗)",
         "deleted": "安排已删除",
-        "saved": "安排已保存"
+        "saved": "安排已保存",
+        "hymnNotFound": "在库中找不到赞美诗"
       },
       "errors": {
         "saveFailed": "保存安排时出错: {error}"
       }
+    },
+    "textSlide": {
+      "title": "文字幻灯片",
+      "hint": "经文、公告、空白屏幕",
+      "sendButton": "发送到叠加层",
+      "clearButton": "清除幻灯片",
+      "sent": "文字幻灯片已发送",
+      "cleared": "文字幻灯片已清除"
     },
     "navigation": {
       "verseInfo": "第 {current}/{total} 节 · 第 {startLine}-{endLine} 行，共 {totalLines} 行",
@@ -1713,6 +1879,12 @@ window.HymnFlowTranslations = {
       "title": "设置",
       "language": "语言",
       "languageLabel": "界面语言"
+    },
+    "tabs": {
+      "library": "曲库",
+      "service": "安排",
+      "live": "直播",
+      "style": "样式"
     },
     "setup": {
       "import": {
