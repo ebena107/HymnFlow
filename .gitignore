@@ -49,6 +49,6 @@ server/data/hymns.json.backup
 release/
 artifacts/
 
-# Generated Bible bundle (run scripts/bundle_bible_kjv.py to create)
-# Keep the stub placeholder (bible-kjv.js) but ignore the generated full version
-# Note: git tracks the stub; after running the script the generated file is too large for the repo
+# Generated Bible bundle — run scripts/bundle_bible_kjv.py to create locally
+# Not committed: ~4.4MB; load via "Import Bible JSON" button in the Library tab instead
+public/data/bible-kjv.js

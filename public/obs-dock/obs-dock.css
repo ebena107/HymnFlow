@@ -453,6 +453,50 @@ body {
 }
 
 /* ========================================
+   Bible Import Row (Library tab)
+   ======================================== */
+.bible-import-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.bible-import-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  flex: 0 0 auto;
+}
+
+.bible-status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  flex: 0 0 auto;
+}
+
+.bible-status-badge.not-loaded {
+  background: var(--border);
+  color: var(--text-muted);
+}
+
+.bible-status-badge.loaded {
+  background: var(--success);
+  color: #000;
+}
+
+.bible-import-row #btnImportBible {
+  margin-left: auto;
+}
+
+/* ========================================
    Quick Scripture Panel
    ======================================== */
 .qs-ref-row {

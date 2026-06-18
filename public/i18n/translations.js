@@ -147,6 +147,12 @@ window.HymnFlowTranslations = {
       "sent": "Text slide sent",
       "cleared": "Text slide cleared"
     },
+    "bible": {
+      "label": "Bible (KJV)",
+      "importButton": "Import Bible JSON",
+      "loading": "Loading Bible…",
+      "notLoaded": "Not loaded"
+    },
     "quickScripture": {
       "title": "Quick Scripture",
       "hint": "live · ad-hoc",

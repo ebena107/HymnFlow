@@ -1588,6 +1588,8 @@
     document.getElementById('btnImport').onclick = () => document.getElementById('fileInput').click();
     document.getElementById('fileInput').onchange = handleImport;
     document.getElementById('btnExport').onclick = handleExport;
+    document.getElementById('btnImportBible').onclick = () => document.getElementById('bibleFileInput').click();
+    document.getElementById('bibleFileInput').onchange = handleBibleImport;
 
     // Modal controls
     document.getElementById('btnCloseModal').onclick = closeEditModal;
@@ -1812,6 +1814,25 @@
     }
   }
 
+  function updateBibleStatusBadge() {
+    const badge = document.getElementById('bibleStatusBadge');
+    if (!badge) return;
+    const loaded = window.HymnFlowBibleLookup?.isLoaded();
+    badge.textContent = loaded ? 'KJV ✓' : 'Not loaded';
+    badge.className = 'bible-status-badge ' + (loaded ? 'loaded' : 'not-loaded');
+  }
+
+  async function handleBibleImport(e) {
+    const file = e.target.files[0];
+    e.target.value = '';
+    if (!file || !window.HymnFlowBibleLookup) return;
+    if (statusEl) statusEl.textContent = 'Loading Bible…';
+    const result = await window.HymnFlowBibleLookup.importFile(file);
+    if (statusEl) statusEl.textContent = result.message;
+    updateBibleStatusBadge();
+    updateQsControls();
+  }
+
   function handleExport() {
     const blob = new Blob([JSON.stringify(hymns, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -1911,6 +1932,10 @@
   loadHymns();
   loadSettings();
   loadServices();
+  if (window.HymnFlowBibleLookup) {
+    window.HymnFlowBibleLookup.restoreFromStorage();
+    updateBibleStatusBadge();
+  }
   buildSearchIndex();
   renderSourceFilters();
   renderList();

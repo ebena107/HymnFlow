@@ -105,9 +105,131 @@
     return { bookCode, chapter, verseStart, verseEnd };
   }
 
+  // ── Canonical book data (used by convertRawArray) ──────────────────────
+  const BOOK_CODES = [
+    'GEN','EXO','LEV','NUM','DEU','JOS','JDG','RUT',
+    '1SA','2SA','1KI','2KI','1CH','2CH','EZR','NEH',
+    'EST','JOB','PSA','PRO','ECC','SNG','ISA','JER',
+    'LAM','EZK','DAN','HOS','JOL','AMO','OBA','JON',
+    'MIC','NAH','HAB','ZEP','HAG','ZEC','MAL',
+    'MAT','MRK','LUK','JHN','ACT','ROM','1CO','2CO',
+    'GAL','EPH','PHP','COL','1TH','2TH','1TI','2TI',
+    'TIT','PHM','HEB','JAS','1PE','2PE','1JN','2JN',
+    '3JN','JUD','REV',
+  ];
+  const BOOK_NAMES = [
+    'Genesis','Exodus','Leviticus','Numbers','Deuteronomy','Joshua','Judges','Ruth',
+    '1 Samuel','2 Samuel','1 Kings','2 Kings','1 Chronicles','2 Chronicles',
+    'Ezra','Nehemiah','Esther','Job','Psalms','Proverbs','Ecclesiastes',
+    'Song of Solomon','Isaiah','Jeremiah','Lamentations','Ezekiel','Daniel',
+    'Hosea','Joel','Amos','Obadiah','Jonah','Micah','Nahum','Habakkuk',
+    'Zephaniah','Haggai','Zechariah','Malachi',
+    'Matthew','Mark','Luke','John','Acts','Romans',
+    '1 Corinthians','2 Corinthians','Galatians','Ephesians','Philippians',
+    'Colossians','1 Thessalonians','2 Thessalonians','1 Timothy','2 Timothy',
+    'Titus','Philemon','Hebrews','James','1 Peter','2 Peter',
+    '1 John','2 John','3 John','Jude','Revelation',
+  ];
+
+  // Converts the raw source array format (thiagobodruk / aruljohn — 0-indexed)
+  // into the HymnFlow 1-indexed object format used by lookup().
+  function convertRawArray(arr) {
+    const result = {};
+    arr.forEach((book, i) => {
+      if (i >= BOOK_CODES.length) return;
+      const code = BOOK_CODES[i];
+      const name = book.name || book.book || BOOK_NAMES[i] || code;
+      const chapters = [null]; // 1-indexed: chapters[0] unused
+      (book.chapters || []).forEach(ch => {
+        chapters.push([null, ...ch]); // 1-indexed: verses[0] unused
+      });
+      result[code] = { name, chapters };
+    });
+    return result;
+  }
+
+  // Detects and parses Bible file content (JSON array or HymnFlow JS/JSON).
+  // Returns the HymnFlow-format object or throws on invalid content.
+  function parseBibleFile(text) {
+    let json = text.trim();
+    // Strip JS assignment wrapper if present (bible-kjv.js format)
+    if (json.startsWith('//') || json.includes('window.HymnFlowBible')) {
+      const m = json.match(/window\.HymnFlowBible\s*=\s*([\s\S]+?);\s*$/);
+      if (!m) throw new Error('Could not extract JSON from .js file');
+      json = m[1];
+    }
+    const data = JSON.parse(json);
+    if (Array.isArray(data)) {
+      // Raw source format — convert to HymnFlow format
+      if (data.length < 66) throw new Error(`Only ${data.length} books found — expected 66`);
+      return convertRawArray(data);
+    }
+    if (data && typeof data === 'object' && data.GEN) {
+      // Already HymnFlow format
+      return data;
+    }
+    throw new Error('Unrecognised Bible JSON format');
+  }
+
+  const STORAGE_KEY = 'hymnflow-bible-kjv';
+
+  function persistBible(bibleData) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bibleData));
+      return true;
+    } catch (e) {
+      if (e.name === 'QuotaExceededError') return false;
+      throw e;
+    }
+  }
+
+  function restoreBible() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        window.HymnFlowBible = JSON.parse(raw);
+        return true;
+      }
+    } catch (e) {
+      console.warn('[Bible] Could not restore from storage:', e);
+    }
+    return false;
+  }
+
+  // ── Public API ───────────────────────────────────────────────────────────
   window.HymnFlowBibleLookup = {
     isLoaded() {
       return !!(window.HymnFlowBible && typeof window.HymnFlowBible === 'object');
+    },
+
+    // Called on startup — restores previously imported Bible from localStorage.
+    restoreFromStorage: restoreBible,
+
+    // Imports Bible data from a File object (from <input type="file">).
+    // Returns a Promise resolving to { ok, message, persisted }.
+    importFile(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const bibleData = parseBibleFile(e.target.result);
+            const bookCount = Object.keys(bibleData).length;
+            const verseCount = Object.values(bibleData).reduce((n, b) =>
+              n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
+            window.HymnFlowBible = bibleData;
+            const persisted = persistBible(bibleData);
+            resolve({
+              ok: true,
+              message: `KJV loaded — ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only — storage full)'}`,
+              persisted,
+            });
+          } catch (err) {
+            resolve({ ok: false, message: `Import failed: ${err.message}` });
+          }
+        };
+        reader.onerror = () => resolve({ ok: false, message: 'Could not read file' });
+        reader.readAsText(file);
+      });
     },
 
     // Returns { found, reference, text, verseCount } or { found: false, error }
@@ -116,7 +238,7 @@
       if (!this.isLoaded()) {
         return {
           found: false,
-          error: 'Bible data not loaded. Run: python scripts/bundle_bible_kjv.py',
+          error: 'Bible not loaded — use Import Bible JSON in the Library tab',
         };
       }
       const parsed = parseRef(refStr);

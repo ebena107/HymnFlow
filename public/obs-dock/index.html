@@ -82,6 +82,13 @@
             data-i18n-aria="hymns.buttons.export" data-i18n-title="hymns.buttons.export">Export</button>
           <input type="file" id="fileInput" accept=".txt,.json,.csv" hidden aria-label="Select hymn file to import">
         </div>
+
+        <div class="bible-import-row">
+          <span class="bible-import-label" data-i18n="bible.label">Bible (KJV)</span>
+          <span id="bibleStatusBadge" class="bible-status-badge" aria-live="polite">—</span>
+          <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import Bible JSON</button>
+          <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select KJV Bible JSON file">
+        </div>
       </section>
 
     </div>
