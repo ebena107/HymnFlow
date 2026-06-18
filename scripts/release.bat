@@ -20,6 +20,18 @@ if "!VERSION!"=="" (
 
 echo Releasing HymnFlow v!VERSION!...
 
+REM Abort if there are uncommitted changes - tag must point to a clean commit
+git diff --quiet >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (
+    echo Error: You have unstaged changes. Commit everything before releasing.
+    exit /b 1
+)
+git diff --cached --quiet >nul 2>&1
+if %ERRORLEVEL% NEQ 0 (
+    echo Error: You have staged but uncommitted changes. Commit everything before releasing.
+    exit /b 1
+)
+
 REM Create release directory
 set RELEASE_DIR=hymnflow-v!VERSION!
 if exist "!RELEASE_DIR!" rmdir /s /q "!RELEASE_DIR!"

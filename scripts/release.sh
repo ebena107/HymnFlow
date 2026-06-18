@@ -14,6 +14,12 @@ fi
 
 echo "🚀 Creating HymnFlow v$VERSION release..."
 
+# Abort if there are uncommitted changes - tag must point to a clean commit
+if ! git diff --quiet || ! git diff --cached --quiet; then
+    echo "Error: You have uncommitted changes. Commit everything before releasing."
+    exit 1
+fi
+
 # Create release directory
 RELEASE_DIR="hymnflow-v$VERSION"
 if [ -d "$RELEASE_DIR" ]; then
