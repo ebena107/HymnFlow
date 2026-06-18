@@ -1000,18 +1000,55 @@ body {
 
 .service-hymn-item-info {
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
 .service-hymn-number {
   font-weight: 600;
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 .service-hymn-title {
   font-size: 13px;
   color: var(--text);
-  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+.service-add-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.service-add-buttons .btn {
+  flex: 1;
+  min-width: 58px;
+  font-size: 11px;
+  padding: 4px 6px;
+}
+
+.service-item-badge {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+
+.badge-hymn     { background: #1e3a8a; color: #bfdbfe; }
+.badge-scripture { background: #14532d; color: #bbf7d0; }
+.badge-announce  { background: #7c2d12; color: #fed7aa; }
+.badge-divider   { background: #374151; color: #d1d5db; }
 
 .service-hymn-controls {
   display: flex;

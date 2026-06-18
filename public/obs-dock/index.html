@@ -70,9 +70,13 @@
           <input id="serviceName" type="text" class="search-input" data-i18n-placeholder="services.namePlaceholder"
             placeholder="Service name (e.g., Sunday Morning)">
           <div id="serviceHymns" class="service-hymns"></div>
-          <div style="display: flex; gap: 8px; margin-top: 10px;">
-            <button id="btnAddToService" class="btn btn-secondary" data-i18n="services.buttons.addHymn">+ Add
-              Hymn</button>
+          <div class="service-add-buttons">
+            <button id="btnAddToService" class="btn btn-secondary">+ Hymn</button>
+            <button id="btnAddScripture" class="btn btn-secondary">+ Scripture</button>
+            <button id="btnAddAnnounce" class="btn btn-secondary">+ Announce</button>
+            <button id="btnAddDivider" class="btn btn-secondary">+ Divider</button>
+          </div>
+          <div style="display: flex; gap: 8px; margin-top: 8px;">
             <button id="btnSaveService" class="btn btn-add" data-i18n="services.buttons.save">Save Service</button>
             <button id="btnCancelService" class="btn btn-secondary" data-i18n="services.buttons.cancel">Cancel</button>
           </div>
@@ -89,7 +93,8 @@
           placeholder="Type any text to send to overlay&#10;(scripture, announcement, blank screen...)"></textarea>
         <div class="text-slide-actions">
           <button id="btnSendTextSlide" class="btn btn-add" data-i18n="textSlide.sendButton">Send to Overlay</button>
-          <button id="btnClearTextSlide" class="btn btn-secondary" data-i18n="textSlide.clearButton">Clear Slide</button>
+          <button id="btnClearTextSlide" class="btn btn-secondary" data-i18n="textSlide.clearButton">Clear
+            Slide</button>
         </div>
       </section>
 
@@ -181,6 +186,106 @@
         </div>
       </section>
 
+      <!-- Styles Section (collapsible) -->
+      <section class="section section-preview" id="stylesSection">
+        <button class="preview-toggle" id="stylesToggle" aria-expanded="false" aria-controls="stylesBody">
+          <span data-i18n="styles.title">Styles</span>
+          <span class="preview-toggle-icon">▶</span>
+        </button>
+        <div id="stylesBody" class="preview-body" hidden>
+          <div class="styles-form">
+            <label class="form-label">
+              <span data-i18n="styles.fontFamily">Font Family</span>
+              <select id="fontFamily" class="form-select">
+                <option value="Inter, sans-serif">Inter</option>
+                <option value="'Segoe UI', sans-serif">Segoe UI</option>
+                <option value="'Roboto', sans-serif">Roboto</option>
+                <option value="'Georgia', serif">Georgia</option>
+                <option value="'Montserrat', sans-serif">Montserrat</option>
+              </select>
+            </label>
+
+            <label class="form-label">
+              <span data-i18n="styles.fontSize">Font size</span> <span id="fontSizeValue">48px</span>
+              <input type="range" id="fontSize" min="24" max="96" value="48" class="form-slider">
+            </label>
+
+            <div class="style-options">
+              <label class="checkbox-label"><input type="checkbox" id="bold"> <span
+                  data-i18n="styles.bold">Bold</span></label>
+              <label class="checkbox-label"><input type="checkbox" id="italic"> <span
+                  data-i18n="styles.italic">Italic</span></label>
+              <label class="checkbox-label"><input type="checkbox" id="shadow"> <span
+                  data-i18n="styles.shadow">Shadow</span></label>
+              <label class="checkbox-label"><input type="checkbox" id="glow"> <span
+                  data-i18n="styles.glow">Glow</span></label>
+              <label class="checkbox-label"><input type="checkbox" id="outline"> <span
+                  data-i18n="styles.outline">Outline</span></label>
+            </div>
+
+            <div id="outlineControls" class="outline-controls" style="display: none;">
+              <label class="form-label">
+                <span data-i18n="styles.outlineColor">Outline Color</span>
+                <input type="color" id="outlineColor" value="#000000" class="form-color">
+              </label>
+
+              <label class="form-label">
+                <span data-i18n="styles.outlineWidth">Outline Width</span> <span id="outlineWidthValue">2px</span>
+                <input type="range" id="outlineWidth" min="1" max="5" value="2" class="form-slider">
+              </label>
+            </div>
+
+            <label class="form-label">
+              <span data-i18n="styles.textColor">Text Color</span>
+              <input type="color" id="textColor" value="#ffffff" class="form-color">
+            </label>
+
+            <label class="form-label">
+              <span data-i18n="styles.bgType">Background type</span>
+              <select id="bgType" class="form-select">
+                <option value="transparent" data-i18n="styles.bgTypes.transparent">Transparent</option>
+                <option value="solid" data-i18n="styles.bgTypes.solid">Solid</option>
+                <option value="gradient" data-i18n="styles.bgTypes.gradient">Gradient</option>
+              </select>
+            </label>
+
+            <label class="form-label">
+              <span data-i18n="styles.bgColorA">Background color A</span>
+              <input type="color" id="bgColorA" value="#000000" class="form-color">
+            </label>
+
+            <label class="form-label bg-gradient">
+              <span data-i18n="styles.bgColorB">Background color B (for gradient)</span>
+              <input type="color" id="bgColorB" value="#2b2b2b" class="form-color">
+            </label>
+
+            <label class="form-label" id="bgOpacityRow">
+              <span>Background Opacity</span> <span id="bgOpacityValue">80%</span>
+              <input type="range" id="bgOpacity" min="0" max="100" value="80" class="form-slider"
+                aria-label="Background opacity">
+            </label>
+
+            <label class="form-label">
+              <span data-i18n="styles.animation">Animation</span>
+              <select id="animation" class="form-select">
+                <option value="fade" data-i18n="styles.animations.fade">Fade</option>
+                <option value="slide" data-i18n="styles.animations.slide">Slide</option>
+                <option value="none" data-i18n="styles.animations.none">None</option>
+              </select>
+            </label>
+
+            <label class="form-label">
+              <span data-i18n="styles.position">Position</span>
+              <select id="position" class="form-select">
+                <option value="bottom" data-i18n="styles.positions.bottom">Bottom Third</option>
+                <option value="middle" data-i18n="styles.positions.middle">Middle</option>
+                <option value="top" data-i18n="styles.positions.top">Top</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </section>
+
       <!-- Language Settings -->
       <section class="section">
         <h3 data-i18n="settings.title">Settings</h3>
@@ -197,101 +302,6 @@
               <option value="yo">Yorùbá</option>
               <option value="zh">中文</option>
               <option value="ko">한국어</option>
-            </select>
-          </label>
-        </div>
-      </section>
-
-      <!-- Styles Section -->
-      <section class="section">
-        <h3 data-i18n="styles.title">Styles</h3>
-        <div class="styles-form">
-          <label class="form-label">
-            <span data-i18n="styles.fontFamily">Font Family</span>
-            <select id="fontFamily" class="form-select">
-              <option value="Inter, sans-serif">Inter</option>
-              <option value="'Segoe UI', sans-serif">Segoe UI</option>
-              <option value="'Roboto', sans-serif">Roboto</option>
-              <option value="'Georgia', serif">Georgia</option>
-              <option value="'Montserrat', sans-serif">Montserrat</option>
-            </select>
-          </label>
-
-          <label class="form-label">
-            <span data-i18n="styles.fontSize">Font size</span> <span id="fontSizeValue">48px</span>
-            <input type="range" id="fontSize" min="24" max="96" value="48" class="form-slider">
-          </label>
-
-          <div class="style-options">
-            <label class="checkbox-label"><input type="checkbox" id="bold"> <span
-                data-i18n="styles.bold">Bold</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="italic"> <span
-                data-i18n="styles.italic">Italic</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="shadow"> <span
-                data-i18n="styles.shadow">Shadow</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="glow"> <span
-                data-i18n="styles.glow">Glow</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="outline"> <span
-                data-i18n="styles.outline">Outline</span></label>
-          </div>
-
-          <div id="outlineControls" class="outline-controls" style="display: none;">
-            <label class="form-label">
-              <span data-i18n="styles.outlineColor">Outline Color</span>
-              <input type="color" id="outlineColor" value="#000000" class="form-color">
-            </label>
-
-            <label class="form-label">
-              <span data-i18n="styles.outlineWidth">Outline Width</span> <span id="outlineWidthValue">2px</span>
-              <input type="range" id="outlineWidth" min="1" max="5" value="2" class="form-slider">
-            </label>
-          </div>
-
-          <label class="form-label">
-            <span data-i18n="styles.textColor">Text Color</span>
-            <input type="color" id="textColor" value="#ffffff" class="form-color">
-          </label>
-
-          <label class="form-label">
-            <span data-i18n="styles.bgType">Background type</span>
-            <select id="bgType" class="form-select">
-              <option value="transparent" data-i18n="styles.bgTypes.transparent">Transparent</option>
-              <option value="solid" data-i18n="styles.bgTypes.solid">Solid</option>
-              <option value="gradient" data-i18n="styles.bgTypes.gradient">Gradient</option>
-            </select>
-          </label>
-
-          <label class="form-label">
-            <span data-i18n="styles.bgColorA">Background color A</span>
-            <input type="color" id="bgColorA" value="#000000" class="form-color">
-          </label>
-
-          <label class="form-label bg-gradient">
-            <span data-i18n="styles.bgColorB">Background color B (for gradient)</span>
-            <input type="color" id="bgColorB" value="#2b2b2b" class="form-color">
-          </label>
-
-          <label class="form-label" id="bgOpacityRow">
-            <span>Background Opacity</span> <span id="bgOpacityValue">80%</span>
-            <input type="range" id="bgOpacity" min="0" max="100" value="80" class="form-slider"
-              aria-label="Background opacity">
-          </label>
-
-          <label class="form-label">
-            <span data-i18n="styles.animation">Animation</span>
-            <select id="animation" class="form-select">
-              <option value="fade" data-i18n="styles.animations.fade">Fade</option>
-              <option value="slide" data-i18n="styles.animations.slide">Slide</option>
-              <option value="none" data-i18n="styles.animations.none">None</option>
-            </select>
-          </label>
-
-          <label class="form-label">
-            <span data-i18n="styles.position">Position</span>
-            <select id="position" class="form-select">
-              <option value="bottom" data-i18n="styles.positions.bottom">Bottom Third</option>
-              <option value="middle" data-i18n="styles.positions.middle">Middle</option>
-              <option value="top" data-i18n="styles.positions.top">Top</option>
             </select>
           </label>
         </div>

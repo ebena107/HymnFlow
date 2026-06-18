@@ -31,14 +31,14 @@ async function parseJson(file) {
     throw new Error('Invalid JSON format. Expected array or object with "hymns" property.');
   }
   
-  // Validate and normalize hymn objects
+  // Validate and normalize hymn objects — coerce all string fields explicitly
   return hymns.map(hymn => ({
     id: hymn.id,
-    title: hymn.title || 'Untitled',
-    author: hymn.author || '',
-    verses: Array.isArray(hymn.verses) ? hymn.verses : [],
-    chorus: hymn.chorus || '',
-    metadata: hymn.metadata || {},
+    title: typeof hymn.title === 'string' ? hymn.title || 'Untitled' : String(hymn.title ?? 'Untitled'),
+    author: typeof hymn.author === 'string' ? hymn.author : String(hymn.author ?? ''),
+    verses: Array.isArray(hymn.verses) ? hymn.verses.map(v => typeof v === 'string' ? v : String(v ?? '')) : [],
+    chorus: typeof hymn.chorus === 'string' ? hymn.chorus : String(hymn.chorus ?? ''),
+    metadata: hymn.metadata && typeof hymn.metadata === 'object' && !Array.isArray(hymn.metadata) ? hymn.metadata : {},
     createdAt: hymn.createdAt
   }));
 }

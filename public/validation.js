@@ -114,18 +114,17 @@ const HymnValidator = {
       errors.push('Service name is required');
     }
 
-    // Hymns validation
-    if (!Array.isArray(service.hymns)) {
-      errors.push('Service hymns must be an array of IDs');
-    } else if (service.hymns.length === 0) {
-      errors.push('Service must contain at least one hymn');
+    // Items validation
+    if (!Array.isArray(service.items)) {
+      errors.push('Service items must be an array');
+    } else if (service.items.length === 0) {
+      errors.push('Service must contain at least one item');
     } else {
-      // Verify all hymn IDs exist (if reference array provided)
       if (allHymns.length > 0) {
         const validIds = new Set(allHymns.map(h => h.id));
-        service.hymns.forEach((hymnId, idx) => {
-          if (!validIds.has(hymnId)) {
-            errors.push(`Hymn at position ${idx + 1} (ID: ${hymnId}) not found in library`);
+        service.items.forEach((item, idx) => {
+          if (item.type === 'hymn' && !validIds.has(item.hymnId)) {
+            errors.push(`Hymn at position ${idx + 1} (ID: ${item.hymnId}) not found in library`);
           }
         });
       }

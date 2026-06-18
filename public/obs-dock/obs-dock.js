@@ -26,6 +26,7 @@
   let isShowingChorus = false;
   let services = [];
   let currentService = null;
+  let currentServiceItemIndex = -1;
   let editingService = null;
   let activeSourceFilter = 'all';
   let currentSearchQuery = '';
@@ -106,6 +107,21 @@
     return (text || '').replace(/[&<>"']/g, (char) => map[char]);
   }
 
+  function itemDisplayLabel(item) {
+    if (item.type === 'hymn') {
+      const h = hymns.find(h => h.id === item.hymnId);
+      if (!h) return '(Hymn not found)';
+      const num = h.metadata?.number ? `${h.metadata.number} - ` : '';
+      return num + (typeof h.title === 'string' ? h.title : String(h.title ?? ''));
+    }
+    return item.label || '(Untitled)';
+  }
+
+  function itemTypeBadge(type) {
+    const map = { hymn: 'Hymn', scripture: 'Scripture', announce: 'Announce', divider: 'Divider' };
+    return map[type] || type;
+  }
+
   // ========================================
   // Search Optimization with Debouncing
   // ========================================
@@ -173,10 +189,30 @@
       hymns = DEFAULT_HYMNS || [];
       localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
     }
-    if (normalizeHymnNumbers(hymns)) {
-      saveHymns();
-    }
+    const numChanged = normalizeHymnNumbers(hymns);
+    const strChanged = normalizeHymnStrings(hymns);
+    if (numChanged || strChanged) saveHymns();
     filtered = hymns;
+  }
+
+  function normalizeHymnStrings(items) {
+    let changed = false;
+    (items || []).forEach(hymn => {
+      if (!hymn) return;
+      if (typeof hymn.title !== 'string') {
+        hymn.title = hymn.title != null ? String(hymn.title) : 'Untitled';
+        changed = true;
+      }
+      if (typeof hymn.author !== 'string') {
+        hymn.author = hymn.author != null ? String(hymn.author) : '';
+        changed = true;
+      }
+      if (typeof hymn.chorus !== 'string') {
+        hymn.chorus = hymn.chorus != null ? String(hymn.chorus) : '';
+        changed = true;
+      }
+    });
+    return changed;
   }
 
   function normalizeHymnNumbers(items) {
@@ -296,9 +332,9 @@
       } else if (number) {
         hymnRef = `${number} - `;
       }
-      const fullTitle = hymnRef + h.title;
+      const fullTitle = hymnRef + (typeof h.title === 'string' ? h.title : String(h.title ?? ''));
       const highlightedTitle = highlightMatch(fullTitle, q);
-      const safeAuthor = escapeHtml(h.author || 'Unknown');
+      const safeAuthor = escapeHtml(typeof h.author === 'string' ? h.author || 'Unknown' : 'Unknown');
       const isActive = currentHymn && currentHymn.id === h.id ? ' active' : '';
       const versesLabel = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.labels.versesCount', { count: h.verses.length }) : `${h.verses.length} verse(s)`;
       return `
@@ -342,6 +378,10 @@
       body.hidden = false;
     }
 
+    if (currentService) {
+      const idx = currentService.items.findIndex(item => item.type === 'hymn' && item.hymnId === id);
+      currentServiceItemIndex = idx;
+    }
     updatePreview();
     updateServiceBanner();
     renderList();
@@ -602,7 +642,6 @@
         timestamp: Date.now()
       };
       localStorage.setItem(storageKeys.textslide, JSON.stringify(payload));
-      sendCommand('hide'); // Hide hymn overlay when text slide is sent
       if (statusEl) statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('textSlide.sent') : 'Text slide sent';
     } catch (err) {
       console.error('[Text Slide Error]', err);
@@ -613,6 +652,7 @@
     try {
       localStorage.setItem(storageKeys.textslide, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
       if (statusEl) statusEl.textContent = 'Text slide cleared';
+      if (isDisplaying && currentHymn) sendCommand('show');
     } catch (err) {
       console.error('[Text Slide Clear Error]', err);
     }
@@ -867,9 +907,15 @@
     // Clean stale references from all services
     let servicesModified = 0;
     services.forEach(service => {
-      const before = service.hymns.length;
-      service.hymns = service.hymns.filter(hId => hId !== id);
-      if (service.hymns.length < before) servicesModified++;
+      const before = service.items.length;
+      if (currentService && currentService.id === service.id) {
+        const curItem = service.items[currentServiceItemIndex];
+        if (curItem && curItem.type === 'hymn' && curItem.hymnId === id) {
+          currentServiceItemIndex = -1;
+        }
+      }
+      service.items = service.items.filter(item => !(item.type === 'hymn' && item.hymnId === id));
+      if (service.items.length < before) servicesModified++;
     });
     if (servicesModified > 0) {
       saveServices();
@@ -888,6 +934,16 @@
     const stored = localStorage.getItem(storageKeys.services);
     try {
       services = stored ? JSON.parse(stored) : [];
+      let migrated = false;
+      services = services.map(s => {
+        if (!s.items && Array.isArray(s.hymns)) {
+          migrated = true;
+          return { ...s, items: s.hymns.map(hymnId => ({ type: 'hymn', hymnId })) };
+        }
+        if (!s.items) s.items = [];
+        return s;
+      });
+      if (migrated) saveServices();
     } catch (err) {
       console.error('[Services Load Error] Corrupted data:', err);
       services = [];
@@ -916,33 +972,34 @@
     }
     listEl.innerHTML = services.map(service => {
       const isActive = currentService && currentService.id === service.id;
-      const hymnsHtml = isActive ? service.hymns.map((hymnId, index) => {
-        const hymn = hymns.find(h => h.id === hymnId);
-        if (!hymn) return '';
-        const number = hymn.metadata?.number ? `${hymn.metadata.number} - ` : '';
-        const safeTitle = escapeHtml(number + hymn.title);
-        const isCurrentHymn = currentHymn && currentHymn.id === hymnId;
+      const itemsHtml = isActive ? service.items.map((item, index) => {
+        const label = itemDisplayLabel(item);
+        const badge = itemTypeBadge(item.type);
+        const isCurrentItem = index === currentServiceItemIndex;
         return `
-          <div class="service-hymn-list-item${isCurrentHymn ? ' active' : ''}" onclick="window.hymnflowSelectHymnFromService('${hymnId}')">
+          <div class="service-hymn-list-item${isCurrentItem ? ' active' : ''}" onclick="window.hymnflowSelectItemFromService(${index})">
             <span class="service-hymn-order">${index + 1}.</span>
-            <span class="service-hymn-title">${safeTitle}</span>
+            <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
+            <span class="service-hymn-title">${escapeHtml(label)}</span>
           </div>
         `;
       }).join('') : '';
 
       const safeServiceName = escapeHtml(service.name);
+      const count = service.items.length;
+      const countLabel = `${count} item${count !== 1 ? 's' : ''}`;
       return `
         <div class="service-item${isActive ? ' active' : ''}" data-service-id="${service.id}">
           <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
             <div class="service-item-name">${safeServiceName}</div>
-            <div class="service-item-count">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.hymnsCount', { count: service.hymns.length }) : service.hymns.length + ' hymn(s)'}</div>
+            <div class="service-item-count">${escapeHtml(countLabel)}</div>
           </div>
           <div class="service-item-actions">
             <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.load') : 'Load'}</button>
             <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.edit') : 'Edit'}</button>
             <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.delete') : 'Del'}</button>
           </div>
-          ${isActive ? `<div class="service-hymns-list">${hymnsHtml}</div>` : ''}
+          ${isActive ? `<div class="service-hymns-list">${itemsHtml}</div>` : ''}
         </div>
       `;
     }).join('');
@@ -951,17 +1008,16 @@
   function openServiceEditor(serviceId = null) {
     const editor = document.getElementById('serviceEditor');
     const nameInput = document.getElementById('serviceName');
-    const hymnsContainer = document.getElementById('serviceHymns');
 
     if (serviceId) {
       editingService = services.find(s => s.id === serviceId);
       nameInput.value = editingService.name;
     } else {
-      editingService = { id: generateUniqueServiceId(), name: '', hymns: [] };
+      editingService = { id: generateUniqueServiceId(), name: '', items: [] };
       nameInput.value = '';
     }
 
-    renderServiceHymns();
+    renderServiceItems();
     editor.style.display = 'block';
   }
 
@@ -970,28 +1026,26 @@
     editingService = null;
   }
 
-  function renderServiceHymns() {
+  function renderServiceItems() {
     const container = document.getElementById('serviceHymns');
-    if (!editingService || editingService.hymns.length === 0) {
-      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.noHymnsInService') : 'No hymns added yet';
-      container.innerHTML = `<div style="padding: 12px; text-align: center; color: var(--text-muted); font-size: 12px;">${msg}</div>`;
+    if (!editingService || editingService.items.length === 0) {
+      container.innerHTML = `<div style="padding: 12px; text-align: center; color: var(--text-muted); font-size: 12px;">No items added yet</div>`;
       return;
     }
-    container.innerHTML = editingService.hymns.map((hymnId, index) => {
-      const hymn = hymns.find(h => h.id === hymnId);
-      if (!hymn) return '';
-      const number = hymn.metadata?.number ? `${hymn.metadata.number} - ` : '';
-      const safeTitle = escapeHtml(number + hymn.title);
+    container.innerHTML = editingService.items.map((item, index) => {
+      const label = itemDisplayLabel(item);
+      const badge = itemTypeBadge(item.type);
       return `
         <div class="service-hymn-item">
           <div class="service-hymn-item-info">
             <div class="service-hymn-number">#${index + 1}</div>
-            <div class="service-hymn-title">${safeTitle}</div>
+            <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
+            <div class="service-hymn-title">${escapeHtml(label)}</div>
           </div>
           <div class="service-hymn-controls">
-            <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceHymn(${index}, -1)">↑</button>
-            <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceHymn(${index}, 1)">↓</button>
-            <button class="btn btn-remove" onclick="window.hymnflowRemoveServiceHymn(${index})">×</button>
+            <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceItem(${index}, -1)">↑</button>
+            <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceItem(${index}, 1)">↓</button>
+            <button class="btn btn-remove" onclick="window.hymnflowRemoveServiceItem(${index})">×</button>
           </div>
         </div>
       `;
@@ -1008,15 +1062,13 @@
       return;
     }
 
-    if (editingService.hymns.length === 0) {
-      const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.atLeastOneHymn') : 'Add at least one hymn to the service';
-      alert(msg);
+    if (editingService.items.length === 0) {
+      alert('Add at least one item to the service');
       return;
     }
 
     editingService.name = name;
 
-    // Validate service structure before saving
     const { valid, errors } = window.HymnValidator.validateService(editingService, hymns);
     if (!valid) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.validationFailed', { errors: errors.join('\n') }) : 'Service validation failed:\n' + errors.join('\n');
@@ -1034,11 +1086,7 @@
     saveServices();
     renderServicesList();
     closeServiceEditor();
-    if (window.HymnFlowI18n) {
-      statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.saved');
-    } else {
-      statusEl.textContent = 'Service saved';
-    }
+    statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.status.saved') : 'Service saved';
   }
 
   function updateServiceBanner() {
@@ -1048,77 +1096,84 @@
     const btnPrevHymn = document.getElementById('btnPrevHymn');
     const btnNextHymn = document.getElementById('btnNextHymn');
 
-    if (!currentService || currentService.hymns.length === 0) {
+    if (!currentService || currentService.items.length === 0) {
       if (banner) banner.style.display = 'none';
       return;
     }
 
-    const validHymns = currentService.hymns.filter(id => hymns.find(h => h.id === id));
-    if (validHymns.length === 0) {
-      if (banner) banner.style.display = 'none';
-      return;
-    }
-
-    const currentIdx = currentHymn
-      ? validHymns.indexOf(currentHymn.id)
-      : -1;
+    const total = currentService.items.length;
+    const idx = currentServiceItemIndex;
 
     if (banner) banner.style.display = 'flex';
     if (bannerName) bannerName.textContent = currentService.name;
     if (bannerPos) {
-      bannerPos.textContent = currentIdx >= 0
-        ? `${currentIdx + 1}/${validHymns.length}`
-        : `0/${validHymns.length}`;
+      bannerPos.textContent = idx >= 0 ? `${idx + 1}/${total}` : `–/${total}`;
     }
-    if (btnPrevHymn) btnPrevHymn.disabled = currentIdx <= 0;
-    if (btnNextHymn) btnNextHymn.disabled = currentIdx >= validHymns.length - 1;
+    if (btnPrevHymn) btnPrevHymn.disabled = idx <= 0;
+    if (btnNextHymn) btnNextHymn.disabled = total === 0 || idx >= total - 1;
   }
 
-  function prevServiceHymn() {
-    if (!currentService) return;
-    const validHymns = currentService.hymns.filter(id => hymns.find(h => h.id === id));
-    const currentIdx = currentHymn ? validHymns.indexOf(currentHymn.id) : -1;
-    if (currentIdx > 0) selectHymn(validHymns[currentIdx - 1]);
+  function activateServiceItem(index) {
+    if (!currentService || index < 0 || index >= currentService.items.length) return;
+    const item = currentService.items[index];
+
+    if (item.type === 'hymn') {
+      const hymn = hymns.find(h => h.id === item.hymnId);
+      if (hymn) {
+        selectHymn(hymn.id);
+        currentServiceItemIndex = index; // pin to this slot in case hymn appears twice
+        updateServiceBanner();
+        renderServicesList();
+        return;
+      }
+      statusEl.textContent = 'Hymn not found in library';
+    } else if (item.type === 'scripture' || item.type === 'announce') {
+      const text = item.text || item.label || '';
+      const payload = { type: 'textslide', lines: text.split('\n'), settings: getSettingsSnapshot(), timestamp: Date.now() };
+      try {
+        localStorage.setItem(storageKeys.textslide, JSON.stringify(payload));
+        statusEl.textContent = item.label || 'Text slide sent';
+      } catch (err) { console.error('[Service Item Error]', err); }
+    } else if (item.type === 'divider') {
+      statusEl.textContent = `▸ ${item.label || 'Section'}`;
+    }
+
+    currentServiceItemIndex = index;
+    updateServiceBanner();
+    renderServicesList();
   }
 
-  function nextServiceHymn() {
+  function prevServiceItem() {
+    if (!currentService || currentServiceItemIndex <= 0) return;
+    activateServiceItem(currentServiceItemIndex - 1);
+  }
+
+  function nextServiceItem() {
     if (!currentService) return;
-    const validHymns = currentService.hymns.filter(id => hymns.find(h => h.id === id));
-    const currentIdx = currentHymn ? validHymns.indexOf(currentHymn.id) : -1;
-    if (currentIdx < validHymns.length - 1) selectHymn(validHymns[currentIdx + 1]);
-    else if (currentIdx === -1 && validHymns.length > 0) selectHymn(validHymns[0]);
+    const total = currentService.items.length;
+    if (currentServiceItemIndex === -1 && total > 0) activateServiceItem(0);
+    else if (currentServiceItemIndex < total - 1) activateServiceItem(currentServiceItemIndex + 1);
   }
 
   function selectService(serviceId) {
     const service = services.find(s => s.id === serviceId);
     if (service) {
-      // Validate service before loading
       const { valid, errors } = window.HymnValidator.validateService(service, hymns);
       if (!valid) {
         console.warn('[Service Validation] Issues loading service:', errors);
-        if (window.HymnFlowI18n) {
-          statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.validationIssues');
-        } else {
-          statusEl.textContent = 'Warning: Service has validation issues';
-        }
+        statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.status.validationIssues') : 'Warning: Service has validation issues';
       }
       currentService = service;
-      if (window.HymnFlowI18n) {
-        statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.loaded', { name: currentService.name, count: currentService.hymns.length });
-      } else {
-        statusEl.textContent = `Loaded service: ${currentService.name} (${currentService.hymns.length} hymns)`;
-      }
+      currentServiceItemIndex = -1;
+      const count = service.items.length;
+      statusEl.textContent = `Loaded: ${currentService.name} (${count} item${count !== 1 ? 's' : ''})`;
     }
     updateServiceBanner();
     renderServicesList();
   }
 
-  function selectHymnFromService(hymnId) {
-    const hymn = hymns.find(h => h.id === hymnId);
-    if (hymn) {
-      selectHymn(hymn.id);
-      renderServicesList(); // Re-render to show active hymn
-    }
+  function selectItemFromService(index) {
+    activateServiceItem(index);
   }
 
   function deleteService(serviceId) {
@@ -1144,21 +1199,21 @@
 
   // Global functions for onclick handlers
   window.hymnflowSelectService = selectService;
-  window.hymnflowSelectHymnFromService = selectHymnFromService;
+  window.hymnflowSelectItemFromService = selectItemFromService;
   window.hymnflowEditService = openServiceEditor;
   window.hymnflowDeleteService = deleteService;
-  window.hymnflowMoveServiceHymn = (index, direction) => {
+  window.hymnflowMoveServiceItem = (index, direction) => {
     if (!editingService) return;
     const newIndex = index + direction;
-    if (newIndex >= 0 && newIndex < editingService.hymns.length) {
-      [editingService.hymns[index], editingService.hymns[newIndex]] = [editingService.hymns[newIndex], editingService.hymns[index]];
-      renderServiceHymns();
+    if (newIndex >= 0 && newIndex < editingService.items.length) {
+      [editingService.items[index], editingService.items[newIndex]] = [editingService.items[newIndex], editingService.items[index]];
+      renderServiceItems();
     }
   };
-  window.hymnflowRemoveServiceHymn = (index) => {
+  window.hymnflowRemoveServiceItem = (index) => {
     if (!editingService) return;
-    editingService.hymns.splice(index, 1);
-    renderServiceHymns();
+    editingService.items.splice(index, 1);
+    renderServiceItems();
   };
 
 
@@ -1321,6 +1376,14 @@
       body.hidden = expanded;
     };
 
+    document.getElementById('stylesToggle').onclick = () => {
+      const toggle = document.getElementById('stylesToggle');
+      const body = document.getElementById('stylesBody');
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      body.hidden = expanded;
+    };
+
     document.getElementById('btnImport').onclick = () => document.getElementById('fileInput').click();
     document.getElementById('fileInput').onchange = handleImport;
     document.getElementById('btnExport').onclick = handleExport;
@@ -1345,9 +1408,9 @@
       }
     });
 
-    // Service banner Prev/Next Hymn
-    document.getElementById('btnPrevHymn').onclick = prevServiceHymn;
-    document.getElementById('btnNextHymn').onclick = nextServiceHymn;
+    // Service banner Prev/Next Item
+    document.getElementById('btnPrevHymn').onclick = prevServiceItem;
+    document.getElementById('btnNextHymn').onclick = nextServiceItem;
 
     // Service controls
     document.getElementById('btnNewService').onclick = () => openServiceEditor();
@@ -1357,10 +1420,34 @@
         alert(msg);
         return;
       }
-      if (!editingService.hymns.includes(currentHymn.id)) {
-        editingService.hymns.push(currentHymn.id);
-        renderServiceHymns();
+      if (!editingService.items.find(it => it.type === 'hymn' && it.hymnId === currentHymn.id)) {
+        editingService.items.push({ type: 'hymn', hymnId: currentHymn.id });
+        renderServiceItems();
       }
+    };
+    document.getElementById('btnAddScripture').onclick = () => {
+      if (!editingService) return;
+      const ref = prompt('Scripture reference (e.g., John 3:16):');
+      if (!ref) return;
+      const text = prompt(`Text for "${ref.trim()}":`);
+      if (text === null) return;
+      editingService.items.push({ type: 'scripture', label: ref.trim(), text: text.trim() });
+      renderServiceItems();
+    };
+    document.getElementById('btnAddAnnounce').onclick = () => {
+      if (!editingService) return;
+      const text = prompt('Announcement text:');
+      if (!text) return;
+      const label = text.length > 35 ? text.substring(0, 35) + '…' : text;
+      editingService.items.push({ type: 'announce', label: label.trim(), text: text.trim() });
+      renderServiceItems();
+    };
+    document.getElementById('btnAddDivider').onclick = () => {
+      if (!editingService) return;
+      const label = prompt('Section label (e.g., Offering, Sermon, Prayer):');
+      if (!label) return;
+      editingService.items.push({ type: 'divider', label: label.trim() });
+      renderServiceItems();
     };
     document.getElementById('btnSaveService').onclick = saveService;
     document.getElementById('btnCancelService').onclick = closeServiceEditor;
