@@ -151,7 +151,7 @@
   function showTextSlide(data) {
     const { lines, settings } = data;
     applyStyles(settings);
-    titleBarEl.textContent = '';
+    titleBarEl.textContent = data.title || '';
     contentEl.textContent = Array.isArray(lines) ? lines.join('\n') : String(lines);
     overlayEl.classList.remove('hidden', 'fade-out', 'slide-out', 'fade-in', 'slide-in');
     overlayEl.classList.add('visible');

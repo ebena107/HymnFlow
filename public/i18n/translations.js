@@ -147,6 +147,16 @@ window.HymnFlowTranslations = {
       "sent": "Text slide sent",
       "cleared": "Text slide cleared"
     },
+    "quickScripture": {
+      "title": "Quick Scripture",
+      "hint": "live · ad-hoc",
+      "refPlaceholder": "Reference (e.g., John 3:16)",
+      "textPlaceholder": "Verse text — blank line separates pages",
+      "displayButton": "Display",
+      "clearButton": "Clear",
+      "status": "Scripture: {ref}",
+      "statusNoRef": "Scripture displayed"
+    },
     "navigation": {
       "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
       "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",

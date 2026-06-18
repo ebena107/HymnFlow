@@ -33,6 +33,8 @@
   let serviceEditorDirty = false;
   let activeSourceFilter = 'all';
   let currentSearchQuery = '';
+  let qsChunks = [];
+  let qsChunkIdx = 0;
   let cachedSettingsJson = null;
   let settingsCacheValid = false;
 
@@ -675,6 +677,9 @@
   }
 
   function clearTextSlide() {
+    qsChunks = [];
+    qsChunkIdx = 0;
+    updateQsControls();
     try {
       localStorage.setItem(storageKeys.textslide, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
       if (statusEl) statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('textSlide.cleared') : 'Text slide cleared';
@@ -682,6 +687,73 @@
     } catch (err) {
       console.error('[Text Slide Clear Error]', err);
     }
+  }
+
+  // Silently clears the textslide overlay without resetting QS state or status bar.
+  // Used when a service item transition should hide any active text slide.
+  function _clearTextSlideOnly() {
+    try {
+      localStorage.setItem(storageKeys.textslide, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
+    } catch (err) {}
+  }
+
+  function sendScriptureToOverlay(reference, text) {
+    try {
+      const payload = {
+        type: 'textslide',
+        title: reference || '',
+        lines: text.split('\n'),
+        settings: getSettingsSnapshot(),
+        timestamp: Date.now()
+      };
+      localStorage.setItem(storageKeys.textslide, JSON.stringify(payload));
+    } catch (err) {
+      console.error('[Scripture Overlay Error]', err);
+    }
+  }
+
+  function parseScriptureChunks(text) {
+    return text.split(/\n[ \t]*\n/).map(s => s.trim()).filter(Boolean);
+  }
+
+  function updateQsControls() {
+    const total = qsChunks.length;
+    const info = document.getElementById('qsChunkInfo');
+    const prev = document.getElementById('btnQsPrev');
+    const next = document.getElementById('btnQsNext');
+    if (info) info.textContent = total > 0 ? `${qsChunkIdx + 1}/${total}` : '—';
+    if (prev) prev.disabled = qsChunkIdx <= 0 || total === 0;
+    if (next) next.disabled = total === 0 || qsChunkIdx >= total - 1;
+  }
+
+  function displayQuickScripture() {
+    const ref = (document.getElementById('qsRef')?.value || '').trim();
+    const rawText = (document.getElementById('qsText')?.value || '').trim();
+    if (!rawText) { document.getElementById('qsText')?.focus(); return; }
+    qsChunks = parseScriptureChunks(rawText);
+    if (!qsChunks.length) return;
+    qsChunkIdx = 0;
+    sendScriptureToOverlay(ref, qsChunks[0]);
+    updateQsControls();
+    if (statusEl) statusEl.textContent = ref
+      ? (window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('quickScripture.status', { ref }) : `Scripture: ${ref}`)
+      : (window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('quickScripture.statusNoRef') : 'Scripture displayed');
+  }
+
+  function qsNext() {
+    if (qsChunkIdx >= qsChunks.length - 1) return;
+    qsChunkIdx++;
+    const ref = (document.getElementById('qsRef')?.value || '').trim();
+    sendScriptureToOverlay(ref, qsChunks[qsChunkIdx]);
+    updateQsControls();
+  }
+
+  function qsPrev() {
+    if (qsChunkIdx <= 0) return;
+    qsChunkIdx--;
+    const ref = (document.getElementById('qsRef')?.value || '').trim();
+    sendScriptureToOverlay(ref, qsChunks[qsChunkIdx]);
+    updateQsControls();
   }
 
   function resetPosition() {
@@ -707,6 +779,9 @@
   function emergencyClear() {
     sendCommand('hide');
     localStorage.setItem(storageKeys.textslide, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
+    qsChunks = [];
+    qsChunkIdx = 0;
+    updateQsControls();
     currentHymn = null;
     currentVerse = 0;
     currentLineOffset = 0;
@@ -1204,6 +1279,7 @@
     if (item.type === 'hymn') {
       const hymn = hymns.find(h => h.id === item.hymnId);
       if (hymn) {
+        _clearTextSlideOnly();
         selectHymn(hymn.id);
         currentServiceItemIndex = index; // pin to this slot in case hymn appears twice
         updateServiceBanner();
@@ -1211,14 +1287,14 @@
         return;
       }
       statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.status.hymnNotFound') : 'Hymn not found in library';
-    } else if (item.type === 'scripture' || item.type === 'announce') {
-      const text = item.text || item.label || '';
-      const payload = { type: 'textslide', lines: text.split('\n'), settings: getSettingsSnapshot(), timestamp: Date.now() };
-      try {
-        localStorage.setItem(storageKeys.textslide, JSON.stringify(payload));
-        statusEl.textContent = item.label || 'Text slide sent';
-      } catch (err) { console.error('[Service Item Error]', err); }
+    } else if (item.type === 'scripture') {
+      sendScriptureToOverlay(item.label || '', item.text || '');
+      statusEl.textContent = item.label || 'Scripture displayed';
+    } else if (item.type === 'announce') {
+      sendScriptureToOverlay('', item.text || item.label || '');
+      statusEl.textContent = item.label || 'Announcement displayed';
     } else if (item.type === 'divider') {
+      _clearTextSlideOnly();
       statusEl.textContent = window.HymnFlowI18n
         ? window.HymnFlowI18n.getTranslation('services.status.divider', { label: item.label || 'Section' })
         : `▸ ${item.label || 'Section'}`;
@@ -1506,6 +1582,18 @@
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault();
         sendTextSlide();
+      }
+    });
+
+    // Quick Scripture controls (Live tab)
+    document.getElementById('btnQsDisplay').onclick = displayQuickScripture;
+    document.getElementById('btnQsNext').onclick = qsNext;
+    document.getElementById('btnQsPrev').onclick = qsPrev;
+    document.getElementById('btnQsClear').onclick = clearTextSlide;
+    document.getElementById('qsText').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        displayQuickScripture();
       }
     });
 

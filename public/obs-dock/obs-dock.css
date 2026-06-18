@@ -453,6 +453,38 @@ body {
 }
 
 /* ========================================
+   Quick Scripture Panel
+   ======================================== */
+.qs-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.qs-page-btn {
+  padding: 4px 10px;
+  min-width: 36px;
+  font-size: 14px;
+}
+
+.qs-chunk-info {
+  min-width: 32px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.qs-controls #btnQsDisplay {
+  flex: 1;
+}
+
+.qs-controls #btnQsClear {
+  flex: 0 0 auto;
+}
+
+/* ========================================
    Active Service Banner
    ======================================== */
 .service-banner {
