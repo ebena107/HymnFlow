@@ -6,8 +6,19 @@
   const TEXTSLIDE_KEY = 'hymnflow-textslide-command';
   let isVisible = false;
 
+  const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
+  function safeColor(val, fallback) {
+    return HEX_COLOR.test(val) ? val : fallback;
+  }
+
   function applyStyles(settings) {
-    const s = settings;
+    const s = {
+      ...settings,
+      textColor: safeColor(settings.textColor, '#ffffff'),
+      outlineColor: safeColor(settings.outlineColor, '#000000'),
+      bgColorA: safeColor(settings.bgColorA, '#000000'),
+      bgColorB: safeColor(settings.bgColorB, '#000000'),
+    };
     contentEl.style.fontFamily = s.fontFamily;
     contentEl.style.fontSize = s.fontSize + 'px';
     contentEl.style.fontWeight = s.bold ? '700' : '400';
@@ -100,13 +111,13 @@
     const displayText = Array.isArray(lines) ? lines.join('\n') : String(lines);
     contentEl.textContent = displayText;
 
-    overlayEl.classList.remove('hidden', 'fade-out', 'slide-out');
+    overlayEl.classList.remove('hidden', 'fade-out', 'slide-out', 'fade-in', 'slide-in');
     overlayEl.classList.add('visible');
 
-    if (settings.animation === 'fade') {
-      overlayEl.classList.add('fade-in');
-    } else if (settings.animation === 'slide') {
-      overlayEl.classList.add('slide-in');
+    if (settings.animation === 'fade' || settings.animation === 'slide') {
+      // Force reflow so removing+re-adding the class restarts the CSS animation
+      void overlayEl.offsetWidth;
+      overlayEl.classList.add(settings.animation === 'fade' ? 'fade-in' : 'slide-in');
     }
     isVisible = true;
   }
@@ -131,12 +142,11 @@
     applyStyles(settings);
     titleBarEl.textContent = '';
     contentEl.textContent = Array.isArray(lines) ? lines.join('\n') : String(lines);
-    overlayEl.classList.remove('hidden', 'fade-out', 'slide-out');
+    overlayEl.classList.remove('hidden', 'fade-out', 'slide-out', 'fade-in', 'slide-in');
     overlayEl.classList.add('visible');
-    if (settings.animation === 'fade') {
-      overlayEl.classList.add('fade-in');
-    } else if (settings.animation === 'slide') {
-      overlayEl.classList.add('slide-in');
+    if (settings.animation === 'fade' || settings.animation === 'slide') {
+      void overlayEl.offsetWidth;
+      overlayEl.classList.add(settings.animation === 'fade' ? 'fade-in' : 'slide-in');
     }
     isVisible = true;
   }

@@ -99,9 +99,18 @@
       "saveFailed": "Error saving services: {error}"
     }
   },
+  "textSlide": {
+    "title": "Text Slide",
+    "hint": "scripture, announcement, blank",
+    "sendButton": "Send to Overlay",
+    "clearButton": "Clear Slide",
+    "sent": "Text slide sent"
+  },
   "navigation": {
     "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
     "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",
+    "lastVerse": " · Last verse",
+    "lastChorus": " · Last chorus",
     "buttons": {
       "prevVerse": "⟵ Previous",
       "nextVerse": "Next ⟶",

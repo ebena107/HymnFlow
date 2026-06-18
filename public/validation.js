@@ -22,9 +22,10 @@ const HymnValidator = {
       return { valid: false, errors };
     }
 
-    // ID validation
-    if (!hymn.id || typeof hymn.id !== 'string' || !hymn.id.startsWith('hymn_')) {
-      errors.push('Invalid or missing hymn ID (must start with "hymn_")');
+    // ID validation — safe alphanumeric/underscore/hyphen chars only
+    const SAFE_ID = /^hymn_[\w-]{1,80}$/;
+    if (!hymn.id || typeof hymn.id !== 'string' || !SAFE_ID.test(hymn.id)) {
+      errors.push('Invalid or missing hymn ID (must match hymn_[word-chars], max 80 chars)');
     }
 
     // Title validation (required)

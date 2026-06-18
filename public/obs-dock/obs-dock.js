@@ -8,6 +8,15 @@
   const verseInfoEl = document.getElementById('verseInfo');
   const currentTitleEl = document.getElementById('currentTitle');
 
+  // Cached nav button refs — avoid getElementById on every keypress
+  const navBtns = {
+    prevVerse: null,
+    nextVerse: null,
+    prevLine: null,
+    nextLine: null,
+    jumpChorus: null,
+  };
+
   let hymns = [];
   let filtered = [];
   let currentHymn = null;
@@ -20,6 +29,8 @@
   let editingService = null;
   let activeSourceFilter = 'all';
   let currentSearchQuery = '';
+  let cachedSettingsJson = null;
+  let settingsCacheValid = false;
 
   const settings = {
     linesPerPage: 2,
@@ -202,10 +213,14 @@
   function saveHymns() {
     try {
       localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
-      buildSearchIndex(); // Rebuild index when hymns change
+      buildSearchIndex();
     } catch (err) {
       console.error('[Hymns Save Error]', err);
-      statusEl.textContent = 'Error saving hymns: ' + err.message;
+      if (err.name === 'QuotaExceededError') {
+        statusEl.textContent = `Storage full (${hymns.length} hymns). Export your hymns then clear storage to continue.`;
+      } else {
+        statusEl.textContent = 'Error saving hymns: ' + err.message;
+      }
     }
   }
 
@@ -216,9 +231,9 @@
         Object.assign(settings, JSON.parse(stored));
       } catch (err) {
         console.error('[Settings Load Error] Corrupted settings, using defaults:', err);
-        // Settings object keeps defaults, no action needed
       }
     }
+    settingsCacheValid = false;
     applySettingsUI();
   }
 
@@ -229,12 +244,17 @@
     settingsSaveTimeout = setTimeout(() => {
       try {
         localStorage.setItem(storageKeys.prefs, JSON.stringify(settings));
+        settingsCacheValid = false;
         if (isDisplaying && currentHymn) {
-          sendCommand('show'); // Update overlay with new settings
+          sendCommand('show');
         }
       } catch (err) {
         console.error('[Settings Save Error]', err);
-        statusEl.textContent = 'Error saving settings: ' + err.message;
+        if (err.name === 'QuotaExceededError') {
+          statusEl.textContent = 'Storage full — export hymns to free space.';
+        } else {
+          statusEl.textContent = 'Error saving settings: ' + err.message;
+        }
       }
     }, 300); // Debounce: wait 300ms after last change before saving
   }
@@ -243,14 +263,12 @@
     if (!query || !text) return escapeHtml(text || '');
     const escaped = escapeHtml(text);
     const escapedQuery = escapeHtml(query);
-    const idx = escaped.toLowerCase().indexOf(escapedQuery.toLowerCase());
-    if (idx === -1) return escaped;
-    return (
-      escaped.slice(0, idx) +
-      '<mark>' + escaped.slice(idx, idx + escapedQuery.length) + '</mark>' +
-      escaped.slice(idx + escapedQuery.length)
-    );
+    if (!escapedQuery) return escaped;
+    const regex = new RegExp(escapedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    return escaped.replace(regex, m => `<mark>${m}</mark>`);
   }
+
+  const LIST_CAP = 200;
 
   function renderList() {
     let display = filtered;
@@ -263,6 +281,10 @@
       listEl.innerHTML = `<div class="list-item">${msg}</div>`;
       return;
     }
+
+    const total = display.length;
+    const capped = total > LIST_CAP;
+    if (capped) display = display.slice(0, LIST_CAP);
 
     const q = currentSearchQuery.trim();
     listEl.innerHTML = display.map(h => {
@@ -280,11 +302,13 @@
       const isActive = currentHymn && currentHymn.id === h.id ? ' active' : '';
       const versesLabel = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.labels.versesCount', { count: h.verses.length }) : `${h.verses.length} verse(s)`;
       return `
-      <div class="list-item${isActive}" data-id="${h.id}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
+      <div class="list-item${isActive}" data-id="${escapeHtml(h.id)}" role="option" aria-selected="${isActive ? 'true' : 'false'}">
         <div class="title">${highlightedTitle}</div>
         <div class="meta">${safeAuthor} • ${versesLabel}</div>
       </div>`;
-    }).join('');
+    }).join('') + (capped
+      ? `<div class="list-cap-notice">Showing ${LIST_CAP} of ${total} — refine your search</div>`
+      : '');
   }
 
   function renderSourceFilters() {
@@ -324,6 +348,20 @@
     sendCommand('show'); // Auto-display when hymn is selected
   }
 
+  function getSettingsSnapshot() {
+    if (!settingsCacheValid) {
+      cachedSettingsJson = JSON.stringify(settings);
+      settingsCacheValid = true;
+    }
+    return JSON.parse(cachedSettingsJson);
+  }
+
+  function getCurrentLines() {
+    if (!currentHymn) return [];
+    if (isShowingChorus && currentHymn.chorus) return currentHymn.chorus.split('\n');
+    return (currentHymn.verses[currentVerse] || '').split('\n');
+  }
+
   function updatePreview() {
     if (!currentHymn) {
       if (window.HymnFlowI18n) {
@@ -338,22 +376,17 @@
     }
     currentTitleEl.textContent = currentHymn.title;
 
-    let lines = [];
-
-    if (isShowingChorus && currentHymn.chorus) {
-      lines = currentHymn.chorus.split('\n');
-    } else {
-      const verseText = currentHymn.verses[currentVerse] || '';
-      lines = verseText.split('\n');
-    }
-
+    const lines = getCurrentLines();
     const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
     previewEl.textContent = windowed.join('\n');
 
     const isLastVerse = currentVerse === currentHymn.verses.length - 1;
+    const i18n = window.HymnFlowI18n;
     const isLastVerseLabel = isLastVerse && !isShowingChorus && !currentHymn.chorus
-      ? ' · Last verse'
-      : (isLastVerse && isShowingChorus ? ' · Last chorus' : '');
+      ? (i18n ? i18n.getTranslation('navigation.lastVerse') : ' · Last verse')
+      : (isLastVerse && isShowingChorus
+          ? (i18n ? i18n.getTranslation('navigation.lastChorus') : ' · Last chorus')
+          : '');
 
     if (window.HymnFlowI18n) {
       const i18nKey = (isShowingChorus && currentHymn.chorus) ? 'navigation.chorusInfo' : 'navigation.verseInfo';
@@ -370,36 +403,25 @@
   }
 
   function updateNavButtonStates() {
-    const btnPrevVerse = document.getElementById('btnPrevVerse');
-    const btnNextVerse = document.getElementById('btnNextVerse');
-    const btnPrevLine = document.getElementById('btnPrevLine');
-    const btnNextLine = document.getElementById('btnNextLine');
-    const btnJumpChorus = document.getElementById('btnJumpChorus');
+    const { prevVerse, nextVerse, prevLine, nextLine, jumpChorus } = navBtns;
 
     if (!currentHymn) {
-      [btnPrevVerse, btnNextVerse, btnPrevLine, btnNextLine, btnJumpChorus].forEach(b => { if (b) b.disabled = true; });
+      [prevVerse, nextVerse, prevLine, nextLine, jumpChorus].forEach(b => { if (b) b.disabled = true; });
       return;
     }
 
+    const lines = getCurrentLines();
     const atFirstContent = currentVerse === 0 && !isShowingChorus;
     const atLastContent = currentVerse === currentHymn.verses.length - 1 &&
       (!currentHymn.chorus || isShowingChorus);
-
-    let currentLines = [];
-    if (isShowingChorus && currentHymn.chorus) {
-      currentLines = currentHymn.chorus.split('\n');
-    } else {
-      currentLines = (currentHymn.verses[currentVerse] || '').split('\n');
-    }
-
     const atFirstLineWindow = currentLineOffset === 0;
-    const atLastLineWindow = currentLineOffset + settings.linesPerPage >= currentLines.length;
+    const atLastLineWindow = currentLineOffset + settings.linesPerPage >= lines.length;
 
-    if (btnPrevVerse) btnPrevVerse.disabled = atFirstContent;
-    if (btnNextVerse) btnNextVerse.disabled = atLastContent;
-    if (btnPrevLine) btnPrevLine.disabled = atFirstContent && atFirstLineWindow;
-    if (btnNextLine) btnNextLine.disabled = atLastContent && atLastLineWindow;
-    if (btnJumpChorus) btnJumpChorus.disabled = !currentHymn.chorus;
+    if (prevVerse)  prevVerse.disabled  = atFirstContent;
+    if (nextVerse)  nextVerse.disabled  = atLastContent;
+    if (prevLine)   prevLine.disabled   = atFirstContent && atFirstLineWindow;
+    if (nextLine)   nextLine.disabled   = atLastContent && atLastLineWindow;
+    if (jumpChorus) jumpChorus.disabled = !currentHymn.chorus;
   }
 
   function sendCommand(type) {
@@ -412,14 +434,7 @@
       }
       if (!currentHymn) return;
 
-      let lines = [];
-      if (isShowingChorus && currentHymn.chorus) {
-        lines = currentHymn.chorus.split('\n');
-      } else {
-        const verseText = currentHymn.verses[currentVerse] || '';
-        lines = verseText.split('\n');
-      }
-
+      const lines = getCurrentLines();
       const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
 
       const payload = {
@@ -432,7 +447,7 @@
         totalVerses: currentHymn.verses.length,
         isChorus: isShowingChorus,
         lines: windowed,
-        settings: { ...settings },
+        settings: getSettingsSnapshot(),
         timestamp: Date.now()
       };
       localStorage.setItem(storageKeys.cmd, JSON.stringify(payload));
@@ -535,13 +550,7 @@
   function nextLineWindow() {
     if (!currentHymn) return;
 
-    let lines = [];
-    if (isShowingChorus && currentHymn.chorus) {
-      lines = currentHymn.chorus.split('\n');
-    } else {
-      lines = currentHymn.verses[currentVerse].split('\n');
-    }
-
+    const lines = getCurrentLines();
     if (currentLineOffset + settings.linesPerPage < lines.length) {
       currentLineOffset += settings.linesPerPage;
       updatePreview();
@@ -570,30 +579,9 @@
 
       // If state changed, calculate new offset
       if (currentVerse !== oldVerse || isShowingChorus !== oldChorus) {
-        let prevLines = [];
-        if (isShowingChorus && currentHymn.chorus) {
-          prevLines = currentHymn.chorus.split('\n');
-        } else {
-          prevLines = currentHymn.verses[currentVerse].split('\n');
-        }
-
-        // Calculate last page offset
+        const prevLines = getCurrentLines();
         if (prevLines.length > 0) {
-          const remainder = prevLines.length % settings.linesPerPage;
-          if (remainder === 0) {
-            currentLineOffset = Math.max(0, prevLines.length - settings.linesPerPage);
-          } else {
-            currentLineOffset = Math.floor(prevLines.length / settings.linesPerPage) * settings.linesPerPage;
-            // Wait, if 5 lines, 2 per page: 0-1, 2-3, 4. 
-            // Length 5. Floor(5/2)*2 = 4. Correct.
-            // If 4 lines, 2 per page: 0-1, 2-3.
-            // Length 4. Floor(4/2)*2 = 4. Incorrect. Should be 2.
-            // If exact multiple, logic should be length - perPage.
-          }
-
-          // Simplified logic that covers both:
-          currentLineOffset = Math.floor((prevLines.length - 1) / settings.linesPerPage) * settings.linesPerPage;
-          if (currentLineOffset < 0) currentLineOffset = 0;
+          currentLineOffset = Math.max(0, Math.floor((prevLines.length - 1) / settings.linesPerPage) * settings.linesPerPage);
         }
 
         updatePreview();
@@ -610,12 +598,12 @@
       const payload = {
         type: 'textslide',
         lines: text.split('\n'),
-        settings: { ...settings },
+        settings: getSettingsSnapshot(),
         timestamp: Date.now()
       };
       localStorage.setItem(storageKeys.textslide, JSON.stringify(payload));
       sendCommand('hide'); // Hide hymn overlay when text slide is sent
-      if (statusEl) statusEl.textContent = 'Text slide sent';
+      if (statusEl) statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('textSlide.sent') : 'Text slide sent';
     } catch (err) {
       console.error('[Text Slide Error]', err);
     }
@@ -671,6 +659,25 @@
     }
   }
 
+  function trapFocus(modal) {
+    const focusable = modal.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    modal.addEventListener('keydown', function onKey(e) {
+      if (e.key !== 'Tab') {
+        if (e.key === 'Escape') closeEditModal();
+        return;
+      }
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }, { signal: modal._trapSignal?.signal });
+  }
+
   function openEditModal(hymn) {
     const modal = document.getElementById('editModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -700,6 +707,12 @@
     }
 
     modal.style.display = 'flex';
+    // Move focus to first field and trap Tab within modal
+    requestAnimationFrame(() => {
+      const firstInput = modal.querySelector('input, textarea');
+      if (firstInput) firstInput.focus();
+      trapFocus(modal);
+    });
   }
 
   function closeEditModal() {
@@ -1116,6 +1129,7 @@
         services = services.filter(s => s.id !== serviceId);
         if (currentService && currentService.id === serviceId) {
           currentService = null;
+          updateServiceBanner();
         }
         saveServices();
         renderServicesList();
@@ -1149,6 +1163,13 @@
 
 
   function attachEvents() {
+    // Populate cached nav button refs once
+    navBtns.prevVerse  = document.getElementById('btnPrevVerse');
+    navBtns.nextVerse  = document.getElementById('btnNextVerse');
+    navBtns.prevLine   = document.getElementById('btnPrevLine');
+    navBtns.nextLine   = document.getElementById('btnNextLine');
+    navBtns.jumpChorus = document.getElementById('btnJumpChorus');
+
     searchEl.addEventListener('input', async (e) => {
       currentSearchQuery = e.target.value;
       const results = await performSearch(e.target.value);
@@ -1317,6 +1338,12 @@
     // Text slide controls
     document.getElementById('btnSendTextSlide').onclick = sendTextSlide;
     document.getElementById('btnClearTextSlide').onclick = clearTextSlide;
+    document.getElementById('textSlideInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        sendTextSlide();
+      }
+    });
 
     // Service banner Prev/Next Hymn
     document.getElementById('btnPrevHymn').onclick = prevServiceHymn;
@@ -1353,9 +1380,15 @@
     });
   }
 
+  let importInProgress = false;
+
   async function handleImport(e) {
     const file = e.target.files[0];
     if (!file) return;
+    if (importInProgress) return;
+    importInProgress = true;
+    const btnImport = document.getElementById('btnImport');
+    if (btnImport) btnImport.disabled = true;
     try {
       const ext = file.name.split('.').pop().toLowerCase();
       let parsed = [];
@@ -1364,9 +1397,9 @@
       else if (ext === 'json') parsed = await parseJson(file);
       else throw new Error('Use .txt, .csv, or .json');
 
-      // Generate unique IDs BEFORE validation (validators expect id field)
+      const SAFE_ID = /^hymn_[\w-]{1,80}$/;
       parsed.forEach((h) => {
-        const hasValidId = typeof h.id === 'string' && h.id.startsWith('hymn_');
+        const hasValidId = typeof h.id === 'string' && SAFE_ID.test(h.id);
         if (!hasValidId) h.id = generateUniqueHymnId();
         if (!h.createdAt) h.createdAt = new Date().toISOString();
       });
@@ -1424,6 +1457,9 @@
       console.error('[Import Error]', err);
     } finally {
       e.target.value = '';
+      importInProgress = false;
+      const btnImportEl = document.getElementById('btnImport');
+      if (btnImportEl) btnImportEl.disabled = false;
     }
   }
 
