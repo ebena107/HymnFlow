@@ -100,6 +100,18 @@
     overlayEl.className = `overlay ${s.position}`;
   }
 
+  // Shrinks contentEl font size until the overlay fits within the viewport.
+  // applyStyles() must have already set the desired base size before this is called.
+  function fitTextToOverlay() {
+    const MIN_PX = 16;
+    const STEP   = 2;
+    while (parseFloat(contentEl.style.fontSize) > MIN_PX) {
+      const r = overlayEl.getBoundingClientRect();
+      if (r.top >= 0 && r.bottom <= window.innerHeight) break;
+      contentEl.style.fontSize = (parseFloat(contentEl.style.fontSize) - STEP) + 'px';
+    }
+  }
+
   function show(data) {
     const { title, verseNumber, totalVerses, lines, settings } = data;
     const sourceAbbr = data.metadata?.sourceAbbr || '';
@@ -121,6 +133,7 @@
     // Ensure lines is an array and join properly
     const displayText = Array.isArray(lines) ? lines.join('\n') : String(lines);
     contentEl.textContent = displayText;
+    fitTextToOverlay();
 
     overlayEl.classList.remove('hidden', 'fade-out', 'slide-out', 'fade-in', 'slide-in');
     overlayEl.classList.add('visible');
@@ -153,6 +166,7 @@
     applyStyles(settings);
     titleBarEl.textContent = data.title || '';
     contentEl.textContent = Array.isArray(lines) ? lines.join('\n') : String(lines);
+    fitTextToOverlay();
     overlayEl.classList.remove('hidden', 'fade-out', 'slide-out', 'fade-in', 'slide-in');
     overlayEl.classList.add('visible');
     if (settings.animation === 'fade' || settings.animation === 'slide') {

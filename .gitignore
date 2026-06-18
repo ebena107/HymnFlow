@@ -49,6 +49,7 @@ server/data/hymns.json.backup
 release/
 artifacts/
 
-# Generated Bible bundle — run scripts/bundle_bible_kjv.py to create locally
-# Not committed: ~4.4MB; load via "Import Bible JSON" button in the Library tab instead
+# Generated Bible bundles — run scripts/bundle_bible_kjv.py or import via Library tab
+# Not committed: large data files; load via "Import JSON" button in the Library tab instead
 public/data/bible-kjv.js
+public/data/*.json

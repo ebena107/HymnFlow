@@ -733,7 +733,7 @@
     if (!ref) { refInput?.focus(); return; }
 
     if (!window.HymnFlowBibleLookup?.isLoaded()) {
-      if (statusEl) statusEl.textContent = 'Bible data not loaded — run: python scripts/bundle_bible_kjv.py';
+      if (statusEl) statusEl.textContent = 'Bible not loaded — import a translation in the Library tab';
       return;
     }
 
@@ -742,8 +742,8 @@
       if (refInput) refInput.value = result.reference;
       if (textArea) textArea.value = result.text;
       if (statusEl) statusEl.textContent = result.verseCount > 1
-        ? `Found ${result.verseCount} verses — use ← → to step through`
-        : `Found: ${result.reference}`;
+        ? `Found ${result.verseCount} verses — press Display, then use ← → to step through`
+        : `Found: ${result.reference} — press Display to send to overlay`;
     } else {
       if (statusEl) statusEl.textContent = result.error;
       refInput?.select();
@@ -1211,9 +1211,8 @@
     if (type === 'scripture') {
       titleEl.textContent = existing ? t('services.itemForm.titles.editScripture', 'Edit Scripture') : t('services.itemForm.titles.addScripture', 'Add Scripture');
       refRow.hidden = false;
-      refInput.placeholder = t('services.itemForm.placeholders.scriptureRef', 'Reference (e.g., John 3:16)');
-      textRow.hidden = false;
-      textArea.placeholder = t('services.itemForm.placeholders.scriptureText', 'Verse text (e.g., For God so loved the world…)');
+      refInput.placeholder = t('services.itemForm.placeholders.scriptureRef', 'Reference (e.g., Ps 23, John 3:16)');
+      textRow.hidden = true;
       addBtn.textContent = existing ? t('services.itemForm.buttons.save', 'Save') : t('services.itemForm.buttons.addScripture', 'Add Scripture');
       setTimeout(() => refInput.focus(), 0);
     } else if (type === 'announce') {
@@ -1312,8 +1311,10 @@
       }
       statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.status.hymnNotFound') : 'Hymn not found in library';
     } else if (item.type === 'scripture') {
-      sendScriptureToOverlay(item.label || '', item.text || '');
-      statusEl.textContent = item.label || 'Scripture displayed';
+      switchTab('live');
+      const qsRefEl = document.getElementById('qsRef');
+      if (qsRefEl) qsRefEl.value = item.label || '';
+      qsLookup();
     } else if (item.type === 'announce') {
       sendScriptureToOverlay('', item.text || item.label || '');
       statusEl.textContent = item.label || 'Announcement displayed';
@@ -1617,6 +1618,11 @@
     document.getElementById('btnQsNext').onclick = qsNext;
     document.getElementById('btnQsPrev').onclick = qsPrev;
     document.getElementById('btnQsClear').onclick = clearTextSlide;
+    document.getElementById('qsTranslation').onchange = (e) => {
+      window.HymnFlowBibleLookup?.setActiveTranslation(e.target.value);
+      renderBibleList();
+      updateBibleStatusBadge();
+    };
     document.getElementById('qsRef').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') { e.preventDefault(); qsLookup(); }
     });
@@ -1677,8 +1683,7 @@
       let newItem = null;
       if (currentItemFormType === 'scripture') {
         if (!ref) { document.getElementById('itemFormRef').focus(); return; }
-        if (!text) { document.getElementById('itemFormText').focus(); return; }
-        newItem = { type: 'scripture', label: ref, text };
+        newItem = { type: 'scripture', label: ref };
       } else if (currentItemFormType === 'announce') {
         if (!text) { document.getElementById('itemFormText').focus(); return; }
         const label = text.length > 35 ? text.substring(0, 35) + '…' : text;
@@ -1704,6 +1709,12 @@
       currentItemFormType = null;
       editingItemIndex = null;
     };
+    document.getElementById('itemFormRef').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        document.getElementById('btnItemFormAdd').click();
+      }
+    });
     document.getElementById('btnSaveService').onclick = saveService;
     document.getElementById('btnCancelService').onclick = closeServiceEditor;
 
@@ -1814,12 +1825,73 @@
     }
   }
 
+  function updateQsTranslationSelect() {
+    const sel = document.getElementById('qsTranslation');
+    if (!sel || !window.HymnFlowBibleLookup) return;
+    const names = window.HymnFlowBibleLookup.listTranslations();
+    const active = window.HymnFlowBibleLookup.getActiveTranslation();
+    sel.innerHTML = '';
+    if (!names.length) {
+      sel.hidden = true;
+      return;
+    }
+    sel.hidden = false;
+    names.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      if (name === active) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+
+  function renderBibleList() {
+    const list = document.getElementById('bibleTranslationList');
+    if (!list || !window.HymnFlowBibleLookup) return;
+    const names = window.HymnFlowBibleLookup.listTranslations();
+    const active = window.HymnFlowBibleLookup.getActiveTranslation();
+    if (!names.length) {
+      list.innerHTML = '<p class="bible-empty-state">No translations loaded</p>';
+      return;
+    }
+    list.innerHTML = names.map(name => {
+      const n = escapeHtml(name);
+      return `
+      <div class="bible-translation-item${name === active ? ' active' : ''}" data-name="${n}">
+        <span class="bible-translation-name">${n}${name === active ? ' ✓' : ''}</span>
+        <div class="bible-translation-actions">
+          ${name !== active ? `<button class="btn btn-secondary bible-set-active-btn" data-name="${n}">Set active</button>` : ''}
+          <button class="btn bible-remove-btn" data-name="${n}" title="Remove ${n}">✕</button>
+        </div>
+      </div>`;
+    }).join('');
+
+    list.querySelectorAll('.bible-set-active-btn').forEach(btn => {
+      btn.onclick = () => {
+        window.HymnFlowBibleLookup.setActiveTranslation(btn.dataset.name);
+        renderBibleList();
+        updateQsTranslationSelect();
+        updateBibleStatusBadge();
+      };
+    });
+    list.querySelectorAll('.bible-remove-btn').forEach(btn => {
+      btn.onclick = () => {
+        window.HymnFlowBibleLookup.removeBible(btn.dataset.name);
+        renderBibleList();
+        updateQsTranslationSelect();
+        updateBibleStatusBadge();
+      };
+    });
+  }
+
   function updateBibleStatusBadge() {
     const badge = document.getElementById('bibleStatusBadge');
     if (!badge) return;
     const loaded = window.HymnFlowBibleLookup?.isLoaded();
     if (loaded) {
-      badge.textContent = 'KJV ✓';
+      const active = window.HymnFlowBibleLookup.getActiveTranslation();
+      const count = window.HymnFlowBibleLookup.listTranslations().length;
+      badge.textContent = count > 1 ? `${active} ✓ (+${count - 1})` : `${active} ✓`;
       badge.className = 'bible-status-badge loaded';
     } else {
       badge.textContent = window.HymnFlowI18n
@@ -1833,10 +1905,18 @@
     const file = e.target.files[0];
     e.target.value = '';
     if (!file || !window.HymnFlowBibleLookup) return;
-    if (statusEl) statusEl.textContent = 'Loading Bible…';
-    const result = await window.HymnFlowBibleLookup.importFile(file);
+    const nameInput = document.getElementById('bibleTranslationName');
+    const rawName = (nameInput?.value || '').trim();
+    // Derive name from filename if input is blank: "en_kjv.json" → "KJV"
+    const derived = file.name.replace(/\.(json|js)$/i, '').split(/[\W_]+/).pop().toUpperCase() || 'BIBLE';
+    const name = rawName || derived;
+    if (nameInput) nameInput.value = '';
+    if (statusEl) statusEl.textContent = window.HymnFlowI18n?.getTranslation('bible.loading') || 'Loading Bible…';
+    const result = await window.HymnFlowBibleLookup.importFile(file, name);
     if (statusEl) statusEl.textContent = result.message;
     updateBibleStatusBadge();
+    renderBibleList();
+    updateQsTranslationSelect();
     updateQsControls();
   }
 
@@ -1942,6 +2022,8 @@
   if (window.HymnFlowBibleLookup) {
     window.HymnFlowBibleLookup.restoreFromStorage();
     updateBibleStatusBadge();
+    renderBibleList();
+    updateQsTranslationSelect();
   }
   buildSearchIndex();
   renderSourceFilters();

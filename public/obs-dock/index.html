@@ -90,11 +90,13 @@
           <h3 data-i18n="bible.title">Bible</h3>
           <span id="bibleStatusBadge" class="bible-status-badge not-loaded" aria-live="polite" data-i18n="bible.notLoaded">Not loaded</span>
         </div>
-        <p class="bible-description" data-i18n="bible.description">Import a KJV JSON file to enable verse lookup in Quick Scripture. One-time setup — persists across sessions.</p>
-        <div class="import-export-actions">
-          <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import Bible JSON</button>
-          <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select KJV Bible JSON file">
+        <p class="bible-description" data-i18n="bible.description">Import a Bible JSON file (any translation) to enable verse lookup. Each translation is stored separately — switch between them anytime.</p>
+        <div class="bible-import-row">
+          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name (e.g. KJV, NIV)" maxlength="20" aria-label="Translation abbreviation">
+          <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import JSON</button>
+          <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select Bible JSON file">
         </div>
+        <div id="bibleTranslationList"></div>
       </section>
 
     </div>
@@ -238,8 +240,9 @@
             placeholder="Reference (e.g., John 3:16)"
             data-i18n-placeholder="quickScripture.refPlaceholder"
             aria-label="Scripture reference">
+          <select id="qsTranslation" class="qs-translation-select" aria-label="Bible translation" title="Active translation"></select>
           <button id="btnQsLookup" class="btn btn-secondary qs-lookup-btn"
-            aria-label="Look up verse" title="Look up verse from KJV (run bundle_bible_kjv.py first)">&#128269;</button>
+            aria-label="Look up verse" title="Look up verse">&#128269;</button>
         </div>
         <textarea id="qsText" class="text-slide-textarea" rows="3"
           placeholder="Verse text — blank line separates pages"
@@ -444,10 +447,10 @@
   <script src="../data/hymns-data.js"></script>
   <script src="../data/bible-kjv.js?v=2.4.1"></script>
   <script src="../data/bible-lookup.js?v=2.4.1"></script>
-  <script src="../validation.js"></script>
-  <script src="../parsers/txtParser.js"></script>
-  <script src="../parsers/jsonParser.js"></script>
-  <script src="obs-dock.js"></script>
+  <script src="../validation.js?v=2.4.1"></script>
+  <script src="../parsers/txtParser.js?v=2.4.1"></script>
+  <script src="../parsers/jsonParser.js?v=2.4.1"></script>
+  <script src="obs-dock.js?v=2.4.1"></script>
 </body>
 
 </html>

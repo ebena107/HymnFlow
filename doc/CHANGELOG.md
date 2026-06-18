@@ -1,3 +1,35 @@
+## [2.4.1] - 2026-06-18
+
+### Bible Lookup & Scripture Workflow Improvements
+
+**Focus**: Bundled KJV Bible lookup, Quick Scripture panel, auto-fit overlay text, and service-integrated scripture navigation.
+
+### Added
+
+- 📖 **Multi-translation Bible support** — import any Bible JSON file (KJV, NIV, ESV, etc.) via Library tab; each translation stored separately in localStorage under `hymnflow-bible-data-{NAME}`; active translation persisted in `hymnflow-bible-active`
+- 🔄 **Translation switcher** — Library tab shows all loaded translations with Set Active / Remove buttons; Quick Scripture panel has a compact inline select to switch mid-service
+- 🔍 **Quick Scripture panel** (Live tab) — type any reference (`Ps 23`, `John 3:16`, `Jude 1:1-5`), press 🔍 to look up, step through verses with ← → chunk navigation
+- 📑 **Chapter-only lookup** — `Jude 1`, `Ps 23`, `Gen 1` load all verses of the chapter as individual navigable chunks
+- 🗂️ **Bible section card** in Library tab — status badge shows active translation + count; name input auto-derives from filename when blank
+- ⛪ **Scripture service items** — reference-only; activating a scripture item auto-switches to Live tab and loads it into Quick Scripture for chunk navigation
+- 🔗 **Scripture reference in overlay title bar** — reference string + translation name shows above verse text on the overlay
+- 📐 **Auto-fit text** — overlay shrinks font size automatically (2px steps, min 16px) when content would overflow viewport; applies to both hymns and scripture
+- 🌍 **i18n** — `bible.*` and `quickScripture.*` keys added to all 9 languages (en, es, fr, ko, pt, sw, tl, yo, zh)
+- `scripts/bundle_bible_kjv.py` — Python generator for offline KJV bundle creation (optional; any Bible JSON importable via the Import button)
+
+### Changed
+
+- Scripture service items now store reference only (no text); text is fetched live from Bible data on activation
+- `+ Scripture` service item form simplified to reference-only input
+- Activating a scripture service item navigates to Live tab instead of firing directly to overlay
+
+### Fixed
+
+- Chapter-only references (`Jude 1`, `Ps 23`) now resolve correctly — previously required explicit verse number
+- "Bible not loaded" status message now directs users to Import button instead of Python script
+
+---
+
 ## [2.4.0] - 2026-06-18
 
 ### 🎨 Major UX Overhaul — Tabbed Dock & Full Service Scheduling

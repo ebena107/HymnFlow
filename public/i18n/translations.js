@@ -149,9 +149,9 @@ window.HymnFlowTranslations = {
     },
     "bible": {
       "title": "Bible",
-      "label": "Bible (KJV)",
-      "description": "Import a KJV JSON file to enable verse lookup in Quick Scripture. One-time setup — persists across sessions.",
-      "importButton": "Import Bible JSON",
+      "label": "Bible",
+      "description": "Import a Bible JSON file (any translation) to enable verse lookup. Each translation is stored separately — switch between them anytime.",
+      "importButton": "Import JSON",
       "loading": "Loading Bible…",
       "notLoaded": "Not loaded"
     },
@@ -375,6 +375,25 @@ window.HymnFlowTranslations = {
       "sent": "Diapositiva de texto enviada",
       "cleared": "Diapositiva de texto borrada"
     },
+    "bible": {
+      "title": "Biblia",
+      "label": "Biblia",
+      "description": "Importa un archivo JSON de cualquier traducción para habilitar la búsqueda de versículos. Cada traducción se guarda por separado — cambia entre ellas en cualquier momento.",
+      "importButton": "Importar JSON",
+      "loading": "Cargando Biblia…",
+      "notLoaded": "No cargada"
+    },
+    "quickScripture": {
+      "title": "Escritura Rápida",
+      "hint": "en vivo · ad-hoc",
+      "refPlaceholder": "Referencia (ej., Juan 3:16)",
+      "textPlaceholder": "Texto del versículo — línea en blanco separa páginas",
+      "lookupButton": "🔍",
+      "displayButton": "Mostrar",
+      "clearButton": "Borrar",
+      "status": "Escritura: {ref}",
+      "statusNoRef": "Escritura mostrada"
+    },
     "navigation": {
       "verseInfo": "Verso {current}/{total} · Líneas {startLine}-{endLine} de {totalLines}",
       "buttons": {
@@ -580,6 +599,25 @@ window.HymnFlowTranslations = {
       "clearButton": "Effacer la Diapositive",
       "sent": "Diapositive texte envoyée",
       "cleared": "Diapositive texte effacée"
+    },
+    "bible": {
+      "title": "Bible",
+      "label": "Bible",
+      "description": "Importez un fichier JSON de n'importe quelle traduction pour activer la recherche de versets. Chaque traduction est stockée séparément — changez à tout moment.",
+      "importButton": "Importer JSON",
+      "loading": "Chargement de la Bible…",
+      "notLoaded": "Non chargée"
+    },
+    "quickScripture": {
+      "title": "Scripture Express",
+      "hint": "en direct · ad-hoc",
+      "refPlaceholder": "Référence (ex., Jean 3:16)",
+      "textPlaceholder": "Texte du verset — ligne vide sépare les pages",
+      "lookupButton": "🔍",
+      "displayButton": "Afficher",
+      "clearButton": "Effacer",
+      "status": "Écriture : {ref}",
+      "statusNoRef": "Écriture affichée"
     },
     "navigation": {
       "verseInfo": "Verset {current}/{total} · Lignes {startLine}-{endLine} sur {totalLines}",
@@ -788,6 +826,25 @@ window.HymnFlowTranslations = {
       "sent": "텍스트 슬라이드 전송됨",
       "cleared": "텍스트 슬라이드 지워짐"
     },
+    "bible": {
+      "title": "성경",
+      "label": "성경",
+      "description": "어떤 번역본이든 JSON 파일을 가져와 구절 검색을 활성화하세요. 각 번역본은 별도로 저장되며 언제든지 전환할 수 있습니다.",
+      "importButton": "JSON 가져오기",
+      "loading": "성경 로딩 중…",
+      "notLoaded": "로드되지 않음"
+    },
+    "quickScripture": {
+      "title": "빠른 성경",
+      "hint": "라이브 · 즉석",
+      "refPlaceholder": "참조 (예: 요한복음 3:16)",
+      "textPlaceholder": "절 텍스트 — 빈 줄이 페이지를 구분합니다",
+      "lookupButton": "🔍",
+      "displayButton": "표시",
+      "clearButton": "지우기",
+      "status": "성경: {ref}",
+      "statusNoRef": "성경이 표시되었습니다"
+    },
     "navigation": {
       "verseInfo": "{current}/{total}절 · {totalLines}행 중 {startLine}-{endLine}행",
       "buttons": {
@@ -993,6 +1050,25 @@ window.HymnFlowTranslations = {
       "clearButton": "Limpar Slide",
       "sent": "Slide de texto enviado",
       "cleared": "Slide de texto removido"
+    },
+    "bible": {
+      "title": "Bíblia",
+      "label": "Bíblia",
+      "description": "Importe um arquivo JSON de qualquer tradução para ativar a pesquisa de versículos. Cada tradução é armazenada separadamente — alterne entre elas a qualquer momento.",
+      "importButton": "Importar JSON",
+      "loading": "Carregando Bíblia…",
+      "notLoaded": "Não carregada"
+    },
+    "quickScripture": {
+      "title": "Escritura Rápida",
+      "hint": "ao vivo · ad-hoc",
+      "refPlaceholder": "Referência (ex., João 3:16)",
+      "textPlaceholder": "Texto do versículo — linha em branco separa páginas",
+      "lookupButton": "🔍",
+      "displayButton": "Exibir",
+      "clearButton": "Limpar",
+      "status": "Escritura: {ref}",
+      "statusNoRef": "Escritura exibida"
     },
     "navigation": {
       "verseInfo": "Verso {current}/{total} · Linhas {startLine}-{endLine} de {totalLines}",
@@ -1201,6 +1277,25 @@ window.HymnFlowTranslations = {
       "sent": "Slaidi ya maandishi imetumwa",
       "cleared": "Slaidi ya maandishi imefutwa"
     },
+    "bible": {
+      "title": "Biblia",
+      "label": "Biblia",
+      "description": "Ingiza faili la JSON la tafsiri yoyote kuwezesha utafutaji wa mistari. Kila tafsiri huhifadhiwa tofauti — badilisha kati yao wakati wowote.",
+      "importButton": "Ingiza JSON",
+      "loading": "Inapakia Biblia…",
+      "notLoaded": "Haijapakiwa"
+    },
+    "quickScripture": {
+      "title": "Maandiko ya Haraka",
+      "hint": "moja kwa moja · ad-hoc",
+      "refPlaceholder": "Rejeo (mf., Yohana 3:16)",
+      "textPlaceholder": "Maandishi ya aya — mstari wazi unatenganisha kurasa",
+      "lookupButton": "🔍",
+      "displayButton": "Onyesha",
+      "clearButton": "Futa",
+      "status": "Maandiko: {ref}",
+      "statusNoRef": "Maandiko yameonyeshwa"
+    },
     "navigation": {
       "verseInfo": "Beti {current}/{total} · Mistari {startLine}-{endLine} ya {totalLines}",
       "buttons": {
@@ -1407,6 +1502,25 @@ window.HymnFlowTranslations = {
       "clearButton": "Burahin ang Slide",
       "sent": "Naipadala ang slide ng teksto",
       "cleared": "Na-clear ang slide ng teksto"
+    },
+    "bible": {
+      "title": "Biblia",
+      "label": "Biblia",
+      "description": "Mag-import ng JSON file ng anumang salin para i-enable ang paghahanap ng talata. Ang bawat salin ay naka-store nang hiwalay — lumipat sa pagitan nila anumang oras.",
+      "importButton": "I-import ang JSON",
+      "loading": "Naglo-load ng Biblia…",
+      "notLoaded": "Hindi na-load"
+    },
+    "quickScripture": {
+      "title": "Mabilis na Kasulatan",
+      "hint": "live · ad-hoc",
+      "refPlaceholder": "Sanggunian (hal., Juan 3:16)",
+      "textPlaceholder": "Teksto ng talata — blangkong linya ang naghihiwalay ng mga pahina",
+      "lookupButton": "🔍",
+      "displayButton": "Ipakita",
+      "clearButton": "I-clear",
+      "status": "Kasulatan: {ref}",
+      "statusNoRef": "Ipinapakita ang kasulatan"
     },
     "navigation": {
       "verseInfo": "Bersikulo {current}/{total} · Mga Linya {startLine}-{endLine} ng {totalLines}",
@@ -1615,6 +1729,25 @@ window.HymnFlowTranslations = {
       "sent": "A ti fi ìfáwọlé ọ̀rọ̀ ránṣẹ",
       "cleared": "A ti mọ́ ìfáwọlé ọ̀rọ̀"
     },
+    "bible": {
+      "title": "Bibeli",
+      "label": "Bibeli",
+      "description": "Gbe faili JSON ti ìtúmọ̀ kankan wá láti ṣe imuṣiṣẹ wiwa ẹsẹ. Ìtúmọ̀ kọ̀ọ̀kan wà ní àárọ̀ — yí padà láàrin wọn nígbàkigbà.",
+      "importButton": "Gbe JSON Wọlé",
+      "loading": "Ń gbé Bibeli…",
+      "notLoaded": "A kò gbé wọlé"
+    },
+    "quickScripture": {
+      "title": "Ìwé Mímọ́ Yára",
+      "hint": "láàárọ̀ · ad-hoc",
+      "refPlaceholder": "Ìtọ́kasí (fún àpẹẹrẹ, Johanu 3:16)",
+      "textPlaceholder": "Ọ̀rọ̀ ẹsẹ — ìlà òfo ṣe ìyàtọ̀ àwọn ojú-ìwé",
+      "lookupButton": "🔍",
+      "displayButton": "Fihàn",
+      "clearButton": "Pa Rẹ",
+      "status": "Ìwé Mímọ́: {ref}",
+      "statusNoRef": "A ti fihàn Ìwé Mímọ́"
+    },
     "navigation": {
       "verseInfo": "Ẹsẹ {current}/{total} · Ìlà {startLine}-{endLine} nínú {totalLines}",
       "chorusInfo": "Ègbè · Ìlà {startLine}-{endLine} nínú {totalLines}",
@@ -1822,6 +1955,25 @@ window.HymnFlowTranslations = {
       "clearButton": "清除幻灯片",
       "sent": "文字幻灯片已发送",
       "cleared": "文字幻灯片已清除"
+    },
+    "bible": {
+      "title": "圣经",
+      "label": "圣经",
+      "description": "导入任意译本的JSON文件以启用经文查找功能。每个译本单独存储——随时切换。",
+      "importButton": "导入 JSON",
+      "loading": "正在加载圣经…",
+      "notLoaded": "未加载"
+    },
+    "quickScripture": {
+      "title": "快速经文",
+      "hint": "直播 · 即兴",
+      "refPlaceholder": "引用 (例如，约翰福音 3:16)",
+      "textPlaceholder": "经文文本 — 空行分隔页面",
+      "lookupButton": "🔍",
+      "displayButton": "显示",
+      "clearButton": "清除",
+      "status": "经文：{ref}",
+      "statusNoRef": "经文已显示"
     },
     "navigation": {
       "verseInfo": "第 {current}/{total} 节 · 第 {startLine}-{endLine} 行，共 {totalLines} 行",

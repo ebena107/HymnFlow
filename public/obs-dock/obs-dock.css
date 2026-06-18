@@ -479,6 +479,82 @@ body {
   line-height: 1.5;
 }
 
+.bible-import-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.bible-import-row .search-input {
+  width: 90px;
+  flex: 0 0 90px;
+  margin-bottom: 0;
+}
+
+.bible-translation-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: 4px;
+  background: var(--hover);
+}
+
+.bible-translation-item.active {
+  background: var(--selected-bg, rgba(255,255,255,0.08));
+  font-weight: 600;
+}
+
+.bible-translation-name {
+  flex: 1;
+}
+
+.bible-translation-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.bible-set-active-btn {
+  font-size: 11px;
+  padding: 2px 7px;
+}
+
+.bible-remove-btn {
+  font-size: 11px;
+  padding: 2px 6px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.bible-remove-btn:hover {
+  color: #e44;
+  border-color: #e44;
+}
+
+.bible-empty-state {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 6px 0;
+}
+
+.qs-translation-select {
+  flex: 0 0 auto;
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  max-width: 70px;
+}
+
 /* ========================================
    Quick Scripture Panel
    ======================================== */

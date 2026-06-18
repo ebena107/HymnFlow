@@ -1,6 +1,6 @@
-// HymnFlow Bible Lookup
-// Requires window.HymnFlowBible (from bible-kjv.js) for verse text.
-// Reference parsing works without it; isLoaded() returns false until data is present.
+// HymnFlow Bible Lookup — multi-translation support
+// window.HymnFlowBibles: { [name]: HymnFlowFormat } — all loaded translations in memory.
+// Active translation is used for all lookups; persisted across sessions.
 (() => {
   // Maps any common name / abbreviation (lowercase, spaces+dots stripped) → 3-letter code
   const ALIASES = {
@@ -80,6 +80,7 @@
   }
 
   // Parses references like:
+  //   "Jude 1"             → whole chapter
   //   "John 3:16"          → single verse
   //   "John 3:16-18"       → verse range
   //   "1 Cor 13:4-7"       → numbered-book + range
@@ -90,16 +91,16 @@
     // Group 1: optional leading digit + space (e.g. "1 " in "1 Cor")
     // Group 2: book name letters
     // Group 3: chapter
-    // Group 4: verse start
+    // Group 4: verse start (optional — omit for whole chapter)
     // Group 5: verse end (optional)
-    const m = s.match(/^(\d\s+)?([A-Za-z]+)\s+(\d+):(\d+)(?:\s*[-–]\s*(\d+))?$/);
+    const m = s.match(/^(\d\s+)?([A-Za-z]+)\s+(\d+)(?::(\d+)(?:\s*[-–]\s*(\d+))?)?$/);
     if (!m) return null;
     const prefix = (m[1] || '').replace(/\s/g, '');
     const bookRaw = prefix + m[2];
     const chapter = parseInt(m[3], 10);
-    const verseStart = parseInt(m[4], 10);
+    const verseStart = m[4] ? parseInt(m[4], 10) : null; // null = whole chapter
     const verseEnd = m[5] ? parseInt(m[5], 10) : verseStart;
-    if (verseEnd < verseStart) return null;
+    if (verseStart !== null && verseEnd < verseStart) return null;
     const bookCode = resolveBook(bookRaw);
     if (!bookCode) return null;
     return { bookCode, chapter, verseStart, verseEnd };
@@ -160,22 +161,34 @@
     }
     const data = JSON.parse(json);
     if (Array.isArray(data)) {
-      // Raw source format — convert to HymnFlow format
       if (data.length < 66) throw new Error(`Only ${data.length} books found — expected 66`);
       return convertRawArray(data);
     }
     if (data && typeof data === 'object' && data.GEN) {
-      // Already HymnFlow format
       return data;
     }
     throw new Error('Unrecognised Bible JSON format');
   }
 
-  const STORAGE_KEY = 'hymnflow-bible-kjv';
+  // ── Storage ───────────────────────────────────────────────────────────────
+  const INDEX_KEY  = 'hymnflow-bible-index';  // JSON array of loaded translation names
+  const ACTIVE_KEY = 'hymnflow-bible-active'; // name of active translation
+  const LEGACY_KEY = 'hymnflow-bible-kjv';    // old single-translation key (pre-v2.4.1)
+  const dataKey = name => `hymnflow-bible-data-${name}`;
 
-  function persistBible(bibleData) {
+  window.HymnFlowBibles = {};
+  let activeTranslation = '';
+
+  function saveIndex() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(bibleData));
+      localStorage.setItem(INDEX_KEY, JSON.stringify(Object.keys(window.HymnFlowBibles)));
+    } catch (e) { /* ignore */ }
+  }
+
+  function persistOne(name, data) {
+    try {
+      localStorage.setItem(dataKey(name), JSON.stringify(data));
+      saveIndex();
       return true;
     } catch (e) {
       if (e.name === 'QuotaExceededError') return false;
@@ -183,32 +196,70 @@
     }
   }
 
-  function restoreBible() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        window.HymnFlowBible = JSON.parse(raw);
-        return true;
-      }
-    } catch (e) {
-      console.warn('[Bible] Could not restore from storage:', e);
-    }
-    return false;
+  function removeFromStorage(name) {
+    try { localStorage.removeItem(dataKey(name)); } catch (e) { /* ignore */ }
+    saveIndex();
   }
 
-  // ── Public API ───────────────────────────────────────────────────────────
+  function restoreBibles() {
+    // Migrate legacy single-key format to multi-translation format
+    try {
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (legacy && !localStorage.getItem(INDEX_KEY)) {
+        window.HymnFlowBibles['KJV'] = JSON.parse(legacy);
+        activeTranslation = 'KJV';
+        localStorage.setItem(dataKey('KJV'), legacy);
+        localStorage.setItem(INDEX_KEY, JSON.stringify(['KJV']));
+        localStorage.setItem(ACTIVE_KEY, 'KJV');
+        localStorage.removeItem(LEGACY_KEY);
+        return;
+      }
+    } catch (e) { console.warn('[Bible] Legacy migration error:', e); }
+
+    try {
+      const indexRaw = localStorage.getItem(INDEX_KEY);
+      if (!indexRaw) return;
+      const names = JSON.parse(indexRaw);
+      names.forEach(name => {
+        try {
+          const raw = localStorage.getItem(dataKey(name));
+          if (raw) window.HymnFlowBibles[name] = JSON.parse(raw);
+        } catch (e) { console.warn(`[Bible] Could not restore ${name}:`, e); }
+      });
+      const savedActive = localStorage.getItem(ACTIVE_KEY);
+      activeTranslation = (savedActive && window.HymnFlowBibles[savedActive])
+        ? savedActive
+        : (Object.keys(window.HymnFlowBibles)[0] || '');
+    } catch (e) { console.warn('[Bible] Could not restore translations:', e); }
+  }
+
+  // ── Public API ────────────────────────────────────────────────────────────
   window.HymnFlowBibleLookup = {
     isLoaded() {
-      return !!(window.HymnFlowBible && typeof window.HymnFlowBible === 'object');
+      return Object.keys(window.HymnFlowBibles).length > 0;
     },
 
-    // Called on startup — restores previously imported Bible from localStorage.
-    restoreFromStorage: restoreBible,
+    listTranslations() {
+      return Object.keys(window.HymnFlowBibles);
+    },
 
-    // Imports Bible data from a File object (from <input type="file">).
-    // Returns a Promise resolving to { ok, message, persisted }.
-    importFile(file) {
-      return new Promise((resolve, reject) => {
+    getActiveTranslation() {
+      return activeTranslation;
+    },
+
+    setActiveTranslation(name) {
+      if (!window.HymnFlowBibles[name]) return false;
+      activeTranslation = name;
+      try { localStorage.setItem(ACTIVE_KEY, name); } catch (e) { /* ignore */ }
+      return true;
+    },
+
+    restoreFromStorage: restoreBibles,
+
+    // Imports a Bible JSON file under the given translation name.
+    // Returns a Promise resolving to { ok, name, message, persisted }.
+    importFile(file, name) {
+      return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
           try {
@@ -216,11 +267,16 @@
             const bookCount = Object.keys(bibleData).length;
             const verseCount = Object.values(bibleData).reduce((n, b) =>
               n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
-            window.HymnFlowBible = bibleData;
-            const persisted = persistBible(bibleData);
+            window.HymnFlowBibles[name] = bibleData;
+            if (!activeTranslation) activeTranslation = name;
+            const persisted = persistOne(name, bibleData);
+            if (persisted) {
+              try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e2) { /* ignore */ }
+            }
             resolve({
               ok: true,
-              message: `KJV loaded — ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only — storage full)'}`,
+              name,
+              message: `${name} loaded — ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only — storage full)'}`,
               persisted,
             });
           } catch (err) {
@@ -232,61 +288,68 @@
       });
     },
 
+    // Removes a translation from memory and storage.
+    removeBible(name) {
+      if (!window.HymnFlowBibles[name]) return;
+      delete window.HymnFlowBibles[name];
+      removeFromStorage(name);
+      if (activeTranslation === name) {
+        activeTranslation = Object.keys(window.HymnFlowBibles)[0] || '';
+        try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e) { /* ignore */ }
+      }
+    },
+
     // Returns { found, reference, text, verseCount } or { found: false, error }
-    // text uses blank-line separation between verses in a range so QS chunk nav works.
+    // text uses blank-line separation between verses so QS chunk nav works.
     lookup(refStr) {
       if (!this.isLoaded()) {
-        return {
-          found: false,
-          error: 'Bible not loaded — use Import Bible JSON in the Library tab',
-        };
+        return { found: false, error: 'Bible not loaded — import a translation in the Library tab' };
+      }
+      const bible = window.HymnFlowBibles[activeTranslation];
+      if (!bible) {
+        return { found: false, error: 'No active translation — select one in the Library tab' };
       }
       const parsed = parseRef(refStr);
       if (!parsed) {
-        return {
-          found: false,
-          error: 'Format: "Book Chapter:Verse" — e.g. John 3:16 or Rom 8:28-30',
-        };
+        return { found: false, error: 'Format: "Book Chapter" or "Book Chapter:Verse" — e.g. Ps 23 or John 3:16' };
       }
 
       const { bookCode, chapter, verseStart, verseEnd } = parsed;
-      const bookData = window.HymnFlowBible[bookCode];
+      const bookData = bible[bookCode];
       if (!bookData) {
         return { found: false, error: `Book not recognised: "${refStr}"` };
       }
-
       const chapterArr = bookData.chapters[chapter];
       if (!chapterArr) {
         return { found: false, error: `${bookData.name} does not have chapter ${chapter}` };
       }
 
+      if (verseStart === null) {
+        const allVerses = chapterArr.slice(1);
+        const reference = `${bookData.name} ${chapter} (${activeTranslation})`;
+        const text = allVerses.map((t, i) => `${i + 1} ${t}`).join('\n\n');
+        return { found: true, reference, text, verseCount: allVerses.length };
+      }
+
       const verses = [];
       for (let v = verseStart; v <= verseEnd; v++) {
-        const text = chapterArr[v];
-        if (text == null) {
-          return {
-            found: false,
-            error: `${bookData.name} ${chapter} does not have verse ${v}`,
-          };
+        const vText = chapterArr[v];
+        if (vText == null) {
+          return { found: false, error: `${bookData.name} ${chapter} does not have verse ${v}` };
         }
-        verses.push(text);
+        verses.push(vText);
       }
 
       const rangeStr = verseEnd > verseStart ? `${verseStart}-${verseEnd}` : `${verseStart}`;
-      const reference = `${bookData.name} ${chapter}:${rangeStr} (KJV)`;
-
-      let text;
-      if (verses.length === 1) {
-        text = verses[0];
-      } else {
-        // Each verse numbered and blank-line separated → one QS chunk per verse
-        text = verses.map((t, i) => `${verseStart + i} ${t}`).join('\n\n');
-      }
+      const reference = `${bookData.name} ${chapter}:${rangeStr} (${activeTranslation})`;
+      const text = verses.length === 1
+        ? verses[0]
+        : verses.map((t, i) => `${verseStart + i} ${t}`).join('\n\n');
 
       return { found: true, reference, text, verseCount: verses.length };
     },
 
-    // Helper: canParse without needing data loaded (UI can show parse errors early)
+    // Helper: canParse without needing data loaded
     canParse(refStr) {
       return parseRef(refStr) !== null;
     },
