@@ -1470,6 +1470,34 @@ body {
   font-style: italic;
 }
 
+/* OBS Connection */
+.obs-ws-badge {
+  font-size: 14px;
+  line-height: 1;
+  transition: color 0.3s;
+}
+.obs-ws-disconnected { color: var(--text-muted); }
+.obs-ws-connecting   { color: #ff9800; }
+.obs-ws-connected    { color: #4caf50; }
+.obs-ws-error        { color: #f44336; }
+
+.obs-ws-hotkey-ref {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 10px;
+  line-height: 1.7;
+  background: var(--bg-secondary, rgba(255,255,255,.04));
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+.obs-ws-hotkey-ref code {
+  background: rgba(255,255,255,.08);
+  border-radius: 3px;
+  padding: 1px 4px;
+  font-size: 11px;
+  font-family: monospace;
+}
+
 /* ========================================
    Responsive
    ======================================== */

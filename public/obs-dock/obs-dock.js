@@ -56,7 +56,11 @@
     bgOpacity: 80,
     animation: 'fade',
     position: 'bottom',
-    activeTab: 'library'
+    activeTab: 'library',
+    obsWsHost: '127.0.0.1',
+    obsWsPort: 4455,
+    obsWsPassword: '',
+    obsWsEnabled: false
   };
 
   const storageKeys = {
@@ -320,6 +324,103 @@
         }
       }
     }, 300); // Debounce: wait 300ms after last change before saving
+  }
+
+  // ========================================
+  // obs-websocket client  (Layer 2 — global hotkeys)
+  // ========================================
+  let obsWs = null;
+  let obsWsRetryTimer = null;
+  let obsWsIntentional = false;   // true while user wants to be connected
+
+  async function _sha256b64(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return btoa(String.fromCharCode(...new Uint8Array(buf)));
+  }
+
+  function obsWsSetStatus(state) {
+    const badge   = document.getElementById('obsWsBadge');
+    const btnConn = document.getElementById('btnObsWsConnect');
+    const btnDisc = document.getElementById('btnObsWsDisconnect');
+    if (badge) {
+      badge.className = `obs-ws-badge obs-ws-${state}`;
+      badge.title = { connecting:'Connecting…', connected:'Connected', disconnected:'Disconnected', error:'Error' }[state] || state;
+    }
+    if (btnConn) btnConn.disabled = (state === 'connecting' || state === 'connected');
+    if (btnDisc) btnDisc.disabled = (state === 'disconnected');
+  }
+
+  function dispatchHotkeyAction(action) {
+    switch (action) {
+      case 'next_verse':     nextVerse();        break;
+      case 'prev_verse':     prevVerse();        break;
+      case 'next_line':      nextLineWindow();   break;
+      case 'prev_line':      prevLineWindow();   break;
+      case 'next_item':      nextServiceItem();  break;
+      case 'prev_item':      prevServiceItem();  break;
+      case 'toggle_display': toggleDisplay();    break;
+    }
+  }
+
+  async function obsWsConnect() {
+    obsWsIntentional = true;
+    clearTimeout(obsWsRetryTimer);
+    if (obsWs) { obsWs.onclose = null; obsWs.close(); obsWs = null; }
+
+    const host = settings.obsWsHost || '127.0.0.1';
+    const port = settings.obsWsPort || 4455;
+    obsWsSetStatus('connecting');
+
+    let ws;
+    try { ws = new WebSocket(`ws://${host}:${port}`); }
+    catch (_) { obsWsSetStatus('error'); return; }
+
+    obsWs = ws;
+
+    ws.onmessage = async (e) => {
+      let msg;
+      try { msg = JSON.parse(e.data); } catch (_) { return; }
+
+      if (msg.op === 0) {  // Hello — authenticate and identify
+        const auth = msg.d.authentication;
+        let authStr;
+        if (auth && settings.obsWsPassword) {
+          const secret = await _sha256b64(settings.obsWsPassword + auth.salt);
+          authStr = await _sha256b64(secret + auth.challenge);
+        }
+        const identify = { op: 1, d: { rpcVersion: 1, eventSubscriptions: 1 } };
+        if (authStr) identify.d.authentication = authStr;
+        ws.send(JSON.stringify(identify));
+      }
+
+      if (msg.op === 2) {  // Identified — handshake complete
+        obsWsSetStatus('connected');
+      }
+
+      if (msg.op === 5 && msg.d.eventType === 'CustomEvent') {  // Event
+        const data = msg.d.eventData || {};
+        if (data.source === 'hymnflow') dispatchHotkeyAction(data.action);
+      }
+    };
+
+    ws.onerror = () => obsWsSetStatus('error');
+
+    ws.onclose = () => {
+      obsWs = null;
+      obsWsSetStatus('disconnected');
+      if (obsWsIntentional) {
+        obsWsRetryTimer = setTimeout(obsWsConnect, 5000);
+      }
+    };
+  }
+
+  function obsWsDisconnect() {
+    obsWsIntentional = false;
+    clearTimeout(obsWsRetryTimer);
+    if (obsWs) { obsWs.onclose = null; obsWs.close(); obsWs = null; }
+    obsWsSetStatus('disconnected');
+    settings.obsWsEnabled = false;
+    saveSettings();
   }
 
   function highlightMatch(text, query) {
@@ -1808,6 +1909,20 @@
     document.getElementById('btnSaveService').onclick = saveService;
     document.getElementById('btnCancelService').onclick = closeServiceEditor;
 
+    // OBS Connection panel
+    document.getElementById('btnObsWsConnect')?.addEventListener('click', () => {
+      const h = document.getElementById('obsWsHost');
+      const p = document.getElementById('obsWsPort');
+      const pw = document.getElementById('obsWsPassword');
+      if (h)  settings.obsWsHost     = h.value.trim()    || '127.0.0.1';
+      if (p)  settings.obsWsPort     = parseInt(p.value, 10) || 4455;
+      if (pw) settings.obsWsPassword = pw.value;
+      settings.obsWsEnabled = true;
+      saveSettings();
+      obsWsConnect();
+    });
+    document.getElementById('btnObsWsDisconnect')?.addEventListener('click', obsWsDisconnect);
+
     // Drag-and-drop reorder for service editor items
     const serviceHymns = document.getElementById('serviceHymns');
     let dragSrcIndex = null;
@@ -1859,10 +1974,16 @@
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
         return;
       }
+      // Verse navigation
       if (e.key === 'ArrowRight') { e.preventDefault(); nextVerse(); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); prevVerse(); }
-      if (e.key === 'ArrowUp') { e.preventDefault(); prevLineWindow(); }
-      if (e.key === 'ArrowDown') { e.preventDefault(); nextLineWindow(); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); prevVerse(); }
+      // Line-window scroll (multi-line / long verses)
+      if (e.key === 'ArrowDown')  { e.preventDefault(); nextLineWindow(); }
+      if (e.key === 'ArrowUp')    { e.preventDefault(); prevLineWindow(); }
+      // Service item navigation
+      if (e.key === ']' || e.key === 'PageDown') { e.preventDefault(); nextServiceItem(); }
+      if (e.key === '[' || e.key === 'PageUp')   { e.preventDefault(); prevServiceItem(); }
+      // Toggle display
       if (e.key === ' ') { e.preventDefault(); toggleDisplay(); }
     });
   }
@@ -2098,6 +2219,13 @@
     if (opacityRow) opacityRow.style.display = settings.bgType === 'transparent' ? 'none' : '';
     document.getElementById('animation').value = settings.animation;
     document.getElementById('position').value = settings.position;
+
+    const obsHostEl = document.getElementById('obsWsHost');
+    const obsPortEl = document.getElementById('obsWsPort');
+    const obsPwdEl  = document.getElementById('obsWsPassword');
+    if (obsHostEl) obsHostEl.value = settings.obsWsHost || '127.0.0.1';
+    if (obsPortEl) obsPortEl.value = settings.obsWsPort || 4455;
+    if (obsPwdEl)  obsPwdEl.value  = settings.obsWsPassword || '';
   }
 
   // ========================================
@@ -2143,6 +2271,7 @@
   // Initialize
   loadHymns();
   loadSettings();
+  if (settings.obsWsEnabled) obsWsConnect();
   loadServices();
   if (window.HymnFlowBibleLookup) {
     window.HymnFlowBibleLookup.restoreFromStorage().then(() => {

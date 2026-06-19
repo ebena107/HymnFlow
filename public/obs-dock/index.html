@@ -371,6 +371,40 @@
         </div>
       </section>
 
+      <!-- OBS Connection (obs-websocket + global hotkeys) -->
+      <section class="section">
+        <h3 style="margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          OBS Connection
+          <span id="obsWsBadge" class="obs-ws-badge obs-ws-disconnected" title="Disconnected">●</span>
+        </h3>
+        <div class="styles-form">
+          <label class="form-label">
+            <span>Host</span>
+            <input id="obsWsHost" type="text" class="form-input" value="127.0.0.1" placeholder="127.0.0.1">
+          </label>
+          <label class="form-label">
+            <span>Port</span>
+            <input id="obsWsPort" type="number" class="form-input" value="4455" min="1024" max="65535">
+          </label>
+          <label class="form-label">
+            <span>Password</span>
+            <input id="obsWsPassword" type="password" class="form-input" placeholder="(leave blank if none)">
+          </label>
+          <div style="display: flex; gap: 6px; margin-top: 6px;">
+            <button id="btnObsWsConnect"    class="btn btn-add"       style="flex: 1;">Connect</button>
+            <button id="btnObsWsDisconnect" class="btn btn-secondary" style="flex: 1;" disabled>Disconnect</button>
+          </div>
+          <div class="obs-ws-hotkey-ref">
+            <strong>Hotkeys (dock focus)</strong><br>
+            <code>→</code> Next Verse &nbsp; <code>←</code> Prev Verse<br>
+            <code>↓</code> Next Line &nbsp;&nbsp; <code>↑</code> Prev Line<br>
+            <code>]</code> / <code>PgDn</code> Next Item &nbsp; <code>[</code> / <code>PgUp</code> Prev Item<br>
+            <code>Space</code> Toggle Display<br>
+            <span style="color: var(--text-muted);">Global hotkeys (any window): load <code>scripts/hymnflow-obs-hotkeys.py</code> in OBS → Tools → Scripts, then bind keys in Settings → Hotkeys.</span>
+          </div>
+        </div>
+      </section>
+
       <section class="section">
         <h3 data-i18n="settings.title" style="margin-bottom: 12px;">Settings</h3>
         <div class="styles-form">
