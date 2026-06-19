@@ -136,6 +136,29 @@ Generic converter for plain-text Bibles downloaded from eBible.org, Crosswire, e
 
 ---
 
+## Scripture Lookup Improvements
+
+The reference parser has been significantly hardened:
+
+**New abbreviations**
+- `is` → Isaiah ("Is 53:5" now works)
+- `rm` → Romans ("Rm 8:28" now works)
+- `dn` → Daniel
+- `lm` → Lamentations
+- `sg`, `songofsongs` → Song of Solomon
+- `rv` → Revelation
+
+**Multi-word book names** (e.g. "Song of Solomon 1:1") now parse correctly.  
+The old regex split on the first space; the new parser splits from the right so "Song of Solomon", "Song of Songs", and any future multi-word name just work.
+
+**Compact numbered-book form** — "1Cor 3:16" (no space between digit and book name) now resolves. The old regex required a space ("1 Cor").
+
+**Space-instead-of-colon** — "Jn 3 16" is accepted as an alias for "Jn 3:16". Useful for quick keyboard entry.
+
+**Single-chapter books** — Obadiah, Philemon, 2 John, 3 John, Jude have only one chapter. "Jude 24" is now interpreted as Jude 1:24 (verse 24) instead of chapter 24 (which doesn't exist).
+
+---
+
 ## Files Changed
 
 | File | Change |
@@ -143,7 +166,7 @@ Generic converter for plain-text Bibles downloaded from eBible.org, Crosswire, e
 | `public/obs-dock/obs-dock.js` | Service fixes, obs-websocket client, keyboard shortcuts |
 | `public/obs-dock/index.html` | OBS Connection panel, service banner element, notes field |
 | `public/obs-dock/obs-dock.css` | Connection badge, past-item styles, drag styles, notes styles |
-| `public/data/bible-lookup.js` | IndexedDB storage, migration from localStorage |
+| `public/data/bible-lookup.js` | IndexedDB storage, migration from localStorage, parser improvements |
 | `scripts/hymnflow-obs-hotkeys.py` | New — OBS global hotkey bridge script |
 | `scripts/convert_yoruba_bible.py` | New — Yoruba Bible converter |
 | `scripts/convert_bible_txt.py` | New — Generic Bible text converter |

@@ -26,12 +26,13 @@
     psalms:'PSA',psalm:'PSA',psa:'PSA',ps:'PSA',
     proverbs:'PRO',pro:'PRO',prov:'PRO',prv:'PRO',
     ecclesiastes:'ECC',ecc:'ECC',eccl:'ECC',eccles:'ECC',qoh:'ECC',
-    songofsolomon:'SNG',song:'SNG',sng:'SNG',sos:'SNG',ss:'SNG',canticles:'SNG',
-    isaiah:'ISA',isa:'ISA',
+    songofsolomon:'SNG',songofsongs:'SNG',
+    song:'SNG',sng:'SNG',sg:'SNG',sos:'SNG',ss:'SNG',canticles:'SNG',
+    isaiah:'ISA',isa:'ISA',is:'ISA',
     jeremiah:'JER',jer:'JER',
-    lamentations:'LAM',lam:'LAM',
+    lamentations:'LAM',lam:'LAM',lm:'LAM',
     ezekiel:'EZK',ezk:'EZK',eze:'EZK',ezek:'EZK',
-    daniel:'DAN',dan:'DAN',
+    daniel:'DAN',dan:'DAN',dn:'DAN',
     hosea:'HOS',hos:'HOS',
     joel:'JOL',jol:'JOL',joe:'JOL',
     amos:'AMO',amo:'AMO',am:'AMO',
@@ -50,7 +51,7 @@
     luke:'LUK',luk:'LUK',lk:'LUK',
     john:'JHN',jhn:'JHN',jn:'JHN',
     acts:'ACT',act:'ACT',ac:'ACT',
-    romans:'ROM',rom:'ROM',ro:'ROM',
+    romans:'ROM',rom:'ROM',ro:'ROM',rm:'ROM',
     '1corinthians':'1CO','1co':'1CO','1cor':'1CO','1corinth':'1CO',
     '2corinthians':'2CO','2co':'2CO','2cor':'2CO','2corinth':'2CO',
     galatians:'GAL',gal:'GAL',
@@ -71,8 +72,11 @@
     '2john':'2JN','2jn':'2JN','2jo':'2JN',
     '3john':'3JN','3jn':'3JN','3jo':'3JN',
     jude:'JUD',jud:'JUD',jd:'JUD',
-    revelation:'REV',rev:'REV',re:'REV',apoc:'REV',
+    revelation:'REV',rev:'REV',re:'REV',rv:'REV',apoc:'REV',
   };
+
+  // Books that have only one chapter; bare "Jude 4" means verse 4, not chapter 4.
+  const SINGLE_CHAPTER_BOOKS = new Set(['OBA', 'PHM', '2JN', '3JN', 'JUD']);
 
   function resolveBook(raw) {
     const key = raw.toLowerCase().replace(/[\s.]/g, '');
@@ -80,29 +84,51 @@
   }
 
   // Parses references like:
-  //   "Jude 1"             → whole chapter
-  //   "John 3:16"          → single verse
-  //   "John 3:16-18"       → verse range
-  //   "1 Cor 13:4-7"       → numbered-book + range
-  //   "Psalm 23:1"         → standard
-  //   "Rev 22:20-21"       → end of Bible
+  //   "Jude 1"               → whole chapter (single-chapter books: verse 1 of ch 1)
+  //   "John 3:16"            → single verse
+  //   "John 3 16"            → same (space instead of colon)
+  //   "John 3:16-18"         → verse range
+  //   "1 Cor 13:4-7"         → numbered-book + range
+  //   "1Cor 13:4-7"          → compact numbered-book (no space)
+  //   "Song of Solomon 1:1"  → multi-word book name
+  //   "Jude 24"              → single-chapter book: treated as Jude 1:24
   function parseRef(refStr) {
     const s = refStr.trim();
-    // Group 1: optional leading digit + space (e.g. "1 " in "1 Cor")
-    // Group 2: book name letters
-    // Group 3: chapter
-    // Group 4: verse start (optional — omit for whole chapter)
-    // Group 5: verse end (optional)
-    const m = s.match(/^(\d\s+)?([A-Za-z]+)\s+(\d+)(?::(\d+)(?:\s*[-–]\s*(\d+))?)?$/);
+    // Right-anchored split: book name is everything to the left of the last
+    // space+number group, so multi-word names and compact "1Cor" both resolve.
+    const m = s.match(/^(.*\S)\s+(\d+)(?::(\d+)(?:\s*[-–]\s*(\d+))?)?$/);
     if (!m) return null;
-    const prefix = (m[1] || '').replace(/\s/g, '');
-    const bookRaw = prefix + m[2];
-    const chapter = parseInt(m[3], 10);
-    const verseStart = m[4] ? parseInt(m[4], 10) : null; // null = whole chapter
-    const verseEnd = m[5] ? parseInt(m[5], 10) : verseStart;
-    if (verseStart !== null && verseEnd < verseStart) return null;
-    const bookCode = resolveBook(bookRaw);
+
+    let bookPart = m[1];
+    let chapter = parseInt(m[2], 10);
+    let verseStart = m[3] ? parseInt(m[3], 10) : null;
+    let verseEnd   = m[4] ? parseInt(m[4], 10) : verseStart;
+
+    let bookCode = resolveBook(bookPart);
+
+    // Fallback: "Book Chapter Verse" with a space instead of a colon ("Jn 3 16").
+    // Primary matched bookPart="Jn 3", chapter=16 — try splitting one token earlier.
+    if (!bookCode) {
+      const m2 = s.match(/^(.*\S)\s+(\d+)\s+(\d+)$/);
+      if (m2) {
+        const code2 = resolveBook(m2[1]);
+        if (code2) {
+          bookCode   = code2;
+          chapter    = parseInt(m2[2], 10);
+          verseStart = parseInt(m2[3], 10);
+          verseEnd   = verseStart;
+        }
+      }
+    }
+
     if (!bookCode) return null;
+    if (verseStart !== null && verseEnd < verseStart) return null;
+
+    // Single-chapter books: "Jude 24" means verse 24, not chapter 24.
+    if (verseStart === null && SINGLE_CHAPTER_BOOKS.has(bookCode) && chapter > 1) {
+      return { bookCode, chapter: 1, verseStart: chapter, verseEnd: chapter };
+    }
+
     return { bookCode, chapter, verseStart, verseEnd };
   }
 
@@ -377,7 +403,7 @@
       }
       const parsed = parseRef(refStr);
       if (!parsed) {
-        return { found: false, error: 'Format: "Book Chapter" or "Book Chapter:Verse" — e.g. Ps 23 or John 3:16' };
+        return { found: false, error: 'Format: "Book Chapter:Verse" — e.g. John 3:16  or  Ps 23  or  Jn 3 16  or  1Cor 13:4' };
       }
 
       const { bookCode, chapter, verseStart, verseEnd } = parsed;

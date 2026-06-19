@@ -32,6 +32,7 @@
 #### Bible
 - 💾 **IndexedDB storage** — Bible translations moved from localStorage (5 MB limit) to IndexedDB (no practical limit); auto-migrates from two prior localStorage formats
 - 🌍 **Yoruba Bible support** — `scripts/convert_yoruba_bible.py` converts the Yoruba Bible text file to HymnFlow JSON; handles inline verse format, diacritics, and all 66 books
+- 📖 **Scripture reference parser hardened** — new abbreviations (`is`, `rm`, `dn`, `lm`, `sg`, `rv`); multi-word book names ("Song of Solomon 1:1"); compact numbered books ("1Cor 3:16"); space-as-colon shorthand ("Jn 3 16"); single-chapter book auto-remap ("Jude 24" → Jude 1:24)
 
 ### Fixed
 
