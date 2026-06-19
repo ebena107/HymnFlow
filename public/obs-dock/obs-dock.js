@@ -579,7 +579,14 @@
       isShowingChorus = false;
       currentLineOffset = 0;
       updatePreview();
-      sendCommand('show'); // Auto-update overlay
+      sendCommand('show');
+      return;
+    }
+
+    // At last content — advance to next service item if one exists
+    if (currentService && currentServiceItemIndex >= 0 &&
+        currentServiceItemIndex < currentService.items.length - 1) {
+      nextServiceItem();
     }
   }
 
@@ -820,7 +827,16 @@
       alert(msg);
       return;
     }
-    const confirmMsg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.confirmations.delete', { title: currentHymn.title }) : 'Delete "' + currentHymn.title + '"?';
+    const affected = services.filter(s =>
+      s.items.some(item => item.type === 'hymn' && item.hymnId === currentHymn.id)
+    );
+    let confirmMsg = window.HymnFlowI18n
+      ? window.HymnFlowI18n.getTranslation('hymns.confirmations.delete', { title: currentHymn.title })
+      : `Delete "${currentHymn.title}"?`;
+    if (affected.length > 0) {
+      const names = affected.map(s => `• ${s.name}`).join('\n');
+      confirmMsg += `\n\nThis hymn is used in ${affected.length} service(s):\n${names}\nIt will be removed from those services.`;
+    }
     if (confirm(confirmMsg)) {
       deleteHymn(currentHymn.id);
     }
@@ -1081,9 +1097,10 @@
         const label = itemDisplayLabel(item);
         const badge = itemTypeBadge(item.type);
         const isCurrentItem = index === currentServiceItemIndex;
+        const isPast = currentServiceItemIndex >= 0 && index < currentServiceItemIndex;
         return `
-          <div class="service-hymn-list-item${isCurrentItem ? ' active' : ''}" role="listitem" aria-current="${isCurrentItem ? 'true' : 'false'}" onclick="window.hymnflowSelectItemFromService(${index})">
-            <span class="service-hymn-order">${index + 1}.</span>
+          <div class="service-hymn-list-item${isCurrentItem ? ' active' : ''}${isPast ? ' past' : ''}" role="listitem" aria-current="${isCurrentItem ? 'true' : 'false'}" onclick="window.hymnflowSelectItemFromService(${index})">
+            <span class="service-hymn-order">${isPast ? '✓' : (index + 1) + '.'}</span>
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
             <span class="service-hymn-title">${escapeHtml(label)}</span>
           </div>
@@ -1102,6 +1119,7 @@
           <div class="service-item-actions">
             <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.load') : 'Load'}</button>
             <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.edit') : 'Edit'}</button>
+            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowDuplicateService('${service.id}')" title="Duplicate this service">Dup</button>
             <button class="btn btn-remove" onclick="event.stopPropagation(); window.hymnflowDeleteService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.delete') : 'Del'}</button>
           </div>
           ${isActive ? `<div class="service-hymns-list" role="list">${itemsHtml}</div>` : ''}
@@ -1115,8 +1133,10 @@
     const nameInput = document.getElementById('serviceName');
 
     if (serviceId) {
-      editingService = services.find(s => s.id === serviceId);
-      if (!editingService) return;
+      const original = services.find(s => s.id === serviceId);
+      if (!original) return;
+      // Deep-copy so edits don't mutate the live service while it's running
+      editingService = JSON.parse(JSON.stringify(original));
       nameInput.value = editingService.name;
     } else {
       editingService = { id: generateUniqueServiceId(), name: '', items: [] };
@@ -1155,12 +1175,18 @@
     container.innerHTML = editingService.items.map((item, index) => {
       const label = itemDisplayLabel(item);
       const badge = itemTypeBadge(item.type);
+      const notesHtml = item.notes
+        ? `<div class="service-item-notes">${escapeHtml(item.notes)}</div>`
+        : '';
       return `
-        <div class="service-hymn-item" role="listitem">
+        <div class="service-hymn-item" role="listitem" draggable="true" data-drag-index="${index}">
           <div class="service-hymn-item-info">
             <div class="service-hymn-number">#${index + 1}</div>
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
-            <div class="service-hymn-title">${escapeHtml(label)}</div>
+            <div class="service-hymn-title-wrap">
+              <div class="service-hymn-title">${escapeHtml(label)}</div>
+              ${notesHtml}
+            </div>
           </div>
           <div class="service-hymn-controls">
             ${item.type !== 'hymn' ? `<button class="btn btn-secondary" onclick="window.hymnflowEditServiceItem(${index})" title="Edit">✎</button>` : ''}
@@ -1195,6 +1221,15 @@
     }).join('');
   }
 
+  function updateAnnounceHint(text) {
+    const hint = document.getElementById('announceCharHint');
+    if (!hint) return;
+    if (!text) { hint.hidden = true; return; }
+    const label = text.length > 35 ? text.substring(0, 35) + '…' : text;
+    hint.textContent = `List label: "${label}"`;
+    hint.hidden = false;
+  }
+
   function showItemForm(type, existingIndex = null) {
     currentItemFormType = type;
     editingItemIndex = existingIndex;
@@ -1207,6 +1242,8 @@
     const addBtn = document.getElementById('btnItemFormAdd');
     refInput.value = existing ? (existing.label || '') : '';
     textArea.value = existing ? (existing.text || '') : '';
+    const notesInput = document.getElementById('itemFormNotes');
+    if (notesInput) notesInput.value = existing ? (existing.notes || '') : '';
     const t = (key, fb) => window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation(key) : fb;
     if (type === 'scripture') {
       titleEl.textContent = existing ? t('services.itemForm.titles.editScripture', 'Edit Scripture') : t('services.itemForm.titles.addScripture', 'Add Scripture');
@@ -1221,6 +1258,7 @@
       textRow.hidden = false;
       textArea.placeholder = t('services.itemForm.placeholders.announceText', 'Announcement text (e.g., Join us for fellowship after service)');
       addBtn.textContent = existing ? t('services.itemForm.buttons.save', 'Save') : t('services.itemForm.buttons.addAnnounce', 'Add Announcement');
+      updateAnnounceHint(textArea.value);
       setTimeout(() => textArea.focus(), 0);
     } else if (type === 'divider') {
       titleEl.textContent = existing ? t('services.itemForm.titles.editDivider', 'Edit Divider') : t('services.itemForm.titles.addDivider', 'Add Divider');
@@ -1260,6 +1298,22 @@
 
     const existingIndex = services.findIndex(s => s.id === editingService.id);
     if (existingIndex >= 0) {
+      // If this is the currently running service, update the live reference and
+      // try to keep the active item index pointing at the same item after any reorder.
+      if (currentService && currentService.id === editingService.id) {
+        const prevItem = currentService.items[currentServiceItemIndex];
+        currentService = editingService;
+        if (prevItem) {
+          const newIdx = editingService.items.findIndex(item => {
+            if (item.type !== prevItem.type) return false;
+            if (item.type === 'hymn') return item.hymnId === prevItem.hymnId;
+            return item.label === prevItem.label && item.text === prevItem.text;
+          });
+          currentServiceItemIndex = newIdx >= 0 ? newIdx : -1;
+        } else {
+          currentServiceItemIndex = -1;
+        }
+      }
       services[existingIndex] = editingService;
     } else {
       services.push(editingService);
@@ -1267,14 +1321,16 @@
 
     saveServices();
     renderServicesList();
+    updateServiceBanner();
     closeServiceEditor(true);
     statusEl.textContent = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.status.saved') : 'Service saved';
   }
 
   function updateServiceBanner() {
-    const banner = document.getElementById('serviceBanner');
+    const banner     = document.getElementById('serviceBanner');
     const bannerName = document.getElementById('serviceBannerName');
-    const bannerPos = document.getElementById('serviceBannerPos');
+    const bannerPos  = document.getElementById('serviceBannerPos');
+    const bannerNext = document.getElementById('serviceBannerNext');
     const btnPrevHymn = document.getElementById('btnPrevHymn');
     const btnNextHymn = document.getElementById('btnNextHymn');
 
@@ -1284,7 +1340,7 @@
     }
 
     const total = currentService.items.length;
-    const idx = currentServiceItemIndex;
+    const idx   = currentServiceItemIndex;
 
     if (banner) banner.style.display = 'flex';
     if (bannerName) bannerName.textContent = currentService.name;
@@ -1293,6 +1349,17 @@
     }
     if (btnPrevHymn) btnPrevHymn.disabled = idx <= 0;
     if (btnNextHymn) btnNextHymn.disabled = total === 0 || idx >= total - 1;
+
+    // "Coming next" hint
+    if (bannerNext) {
+      const nextItem = (idx + 1 < total) ? currentService.items[idx + 1] : null;
+      if (nextItem) {
+        bannerNext.textContent = `Next: ${itemTypeBadge(nextItem.type)} ${itemDisplayLabel(nextItem)}`;
+        bannerNext.hidden = false;
+      } else {
+        bannerNext.hidden = true;
+      }
+    }
   }
 
   function activateServiceItem(index) {
@@ -1386,11 +1453,24 @@
     }
   }
 
+  function duplicateService(serviceId) {
+    const original = services.find(s => s.id === serviceId);
+    if (!original) return;
+    const copy = JSON.parse(JSON.stringify(original));
+    copy.id = generateUniqueServiceId();
+    copy.name = original.name + ' (Copy)';
+    services.push(copy);
+    saveServices();
+    renderServicesList();
+    statusEl.textContent = `Duplicated: "${copy.name}"`;
+  }
+
   // Global functions for onclick handlers
   window.hymnflowSelectService = selectService;
   window.hymnflowSelectItemFromService = selectItemFromService;
   window.hymnflowEditService = openServiceEditor;
   window.hymnflowDeleteService = deleteService;
+  window.hymnflowDuplicateService = duplicateService;
   window.hymnflowPickHymn = (hymnId) => {
     if (!editingService) return;
     editingService.items.push({ type: 'hymn', hymnId });
@@ -1683,6 +1763,11 @@
       let newItem = null;
       if (currentItemFormType === 'scripture') {
         if (!ref) { document.getElementById('itemFormRef').focus(); return; }
+        // Validate against loaded Bible — warn but allow saving if unrecognised
+        if (window.HymnFlowBibleLookup?.isLoaded() && !window.HymnFlowBibleLookup.canParse(ref)) {
+          const warn = `"${ref}" doesn't look like a valid Bible reference.\nAdd it anyway?`;
+          if (!confirm(warn)) { document.getElementById('itemFormRef').focus(); return; }
+        }
         newItem = { type: 'scripture', label: ref };
       } else if (currentItemFormType === 'announce') {
         if (!text) { document.getElementById('itemFormText').focus(); return; }
@@ -1693,6 +1778,8 @@
         newItem = { type: 'divider', label: ref };
       }
       if (!newItem) return;
+      const notes = (document.getElementById('itemFormNotes')?.value || '').trim();
+      if (notes) newItem.notes = notes;
       if (editingItemIndex !== null) {
         editingService.items[editingItemIndex] = newItem;
         editingItemIndex = null;
@@ -1715,8 +1802,46 @@
         document.getElementById('btnItemFormAdd').click();
       }
     });
+    document.getElementById('itemFormText').addEventListener('input', (e) => {
+      if (currentItemFormType === 'announce') updateAnnounceHint(e.target.value);
+    });
     document.getElementById('btnSaveService').onclick = saveService;
     document.getElementById('btnCancelService').onclick = closeServiceEditor;
+
+    // Drag-and-drop reorder for service editor items
+    const serviceHymns = document.getElementById('serviceHymns');
+    let dragSrcIndex = null;
+    serviceHymns.addEventListener('dragstart', e => {
+      const el = e.target.closest('[data-drag-index]');
+      if (!el) return;
+      dragSrcIndex = parseInt(el.dataset.dragIndex, 10);
+      e.dataTransfer.effectAllowed = 'move';
+      el.classList.add('dragging');
+    });
+    serviceHymns.addEventListener('dragend', () => {
+      serviceHymns.querySelectorAll('[data-drag-index]').forEach(el => {
+        el.classList.remove('dragging', 'drag-over');
+      });
+      dragSrcIndex = null;
+    });
+    serviceHymns.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      const el = e.target.closest('[data-drag-index]');
+      serviceHymns.querySelectorAll('[data-drag-index]').forEach(n => n.classList.remove('drag-over'));
+      if (el) el.classList.add('drag-over');
+    });
+    serviceHymns.addEventListener('drop', e => {
+      e.preventDefault();
+      const toEl = e.target.closest('[data-drag-index]');
+      if (!toEl || !editingService || dragSrcIndex === null) return;
+      const toIndex = parseInt(toEl.dataset.dragIndex, 10);
+      if (dragSrcIndex === toIndex) return;
+      const [moved] = editingService.items.splice(dragSrcIndex, 1);
+      editingService.items.splice(toIndex, 0, moved);
+      serviceEditorDirty = true;
+      renderServiceItems();
+    });
 
     // Keyboard shortcuts
     window.addEventListener('keydown', (e) => {

@@ -649,6 +649,15 @@ body {
   min-width: 36px;
 }
 
+.service-banner-next {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 2px 8px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* ========================================
    Navigation Controls
    ======================================== */
@@ -1413,6 +1422,52 @@ body {
   font-size: 13px;
   color: var(--text);
   flex: 1;
+}
+
+/* Past (already-played) items */
+.service-hymn-list-item.past {
+  opacity: 0.52;
+}
+.service-hymn-list-item.past .service-hymn-order {
+  color: #4caf50;
+  font-size: 11px;
+}
+
+/* Drag-and-drop in the service editor */
+.service-hymn-item[draggable="true"] {
+  cursor: grab;
+}
+.service-hymn-item[draggable="true"]:active {
+  cursor: grabbing;
+}
+.service-hymn-item.dragging {
+  opacity: 0.35;
+}
+.service-hymn-item.drag-over {
+  border-top: 2px solid var(--primary);
+}
+
+/* Notes / cue line below item title in editor */
+.service-hymn-title-wrap {
+  flex: 1;
+  min-width: 0;
+}
+.service-item-notes {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Announcement character-count hint */
+.announce-char-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 3px;
+  font-style: italic;
 }
 
 /* ========================================

@@ -51,6 +51,7 @@
         <button id="btnNextHymn" class="btn btn-secondary service-banner-btn"
           aria-label="Next item in service" data-i18n-aria="services.banner.nextItem" title="Next item in service">⟶</button>
       </div>
+      <div id="serviceBannerNext" class="service-banner-next" hidden></div>
     </div>
 
     <!-- Library Tab: Hymns -->
@@ -132,6 +133,10 @@
             </div>
             <div id="itemFormTextRow">
               <textarea id="itemFormText" class="text-slide-textarea" rows="3" placeholder="Enter text…"></textarea>
+              <div id="announceCharHint" class="announce-char-hint" hidden></div>
+            </div>
+            <div id="itemFormNotesRow">
+              <input id="itemFormNotes" type="text" class="search-input" placeholder="Internal notes / cue (optional, not shown on screen)" style="font-size: 12px; margin-top: 4px;">
             </div>
             <div style="display: flex; gap: 6px; margin-top: 6px;">
               <button id="btnItemFormAdd" class="btn btn-add" style="flex: 1;">Add</button>
