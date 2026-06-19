@@ -170,62 +170,124 @@
     throw new Error('Unrecognised Bible JSON format');
   }
 
-  // ── Storage ───────────────────────────────────────────────────────────────
-  const INDEX_KEY  = 'hymnflow-bible-index';  // JSON array of loaded translation names
-  const ACTIVE_KEY = 'hymnflow-bible-active'; // name of active translation
-  const LEGACY_KEY = 'hymnflow-bible-kjv';    // old single-translation key (pre-v2.4.1)
-  const dataKey = name => `hymnflow-bible-data-${name}`;
+  // ── Storage — IndexedDB (large Bible data) + localStorage (tiny metadata) ──
+  const ACTIVE_KEY = 'hymnflow-bible-active'; // name of active translation (localStorage)
+  const DB_NAME    = 'HymnFlowBibles';
+  const DB_VERSION = 1;
+  const STORE      = 'translations';
 
   window.HymnFlowBibles = {};
   let activeTranslation = '';
 
-  function saveIndex() {
-    try {
-      localStorage.setItem(INDEX_KEY, JSON.stringify(Object.keys(window.HymnFlowBibles)));
-    } catch (e) { /* ignore */ }
+  // Cached IDB connection promise
+  let _dbPromise = null;
+  function openDB() {
+    if (_dbPromise) return _dbPromise;
+    _dbPromise = new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = e => {
+        e.target.result.createObjectStore(STORE, { keyPath: 'name' });
+      };
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror   = e => reject(e.target.error);
+    });
+    return _dbPromise;
   }
 
+  function idbPut(name, data) {
+    return openDB().then(db => new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).put({ name, data });
+      tx.oncomplete = () => resolve(true);
+      tx.onerror    = e => reject(e.target.error);
+    }));
+  }
+
+  function idbGet(name) {
+    return openDB().then(db => new Promise((resolve, reject) => {
+      const req = db.transaction(STORE, 'readonly').objectStore(STORE).get(name);
+      req.onsuccess = e => resolve(e.target.result ? e.target.result.data : null);
+      req.onerror   = e => reject(e.target.error);
+    }));
+  }
+
+  function idbDelete(name) {
+    return openDB().then(db => new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).delete(name);
+      tx.oncomplete = () => resolve();
+      tx.onerror    = e => reject(e.target.error);
+    }));
+  }
+
+  function idbAllKeys() {
+    return openDB().then(db => new Promise((resolve, reject) => {
+      const req = db.transaction(STORE, 'readonly').objectStore(STORE).getAllKeys();
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror   = e => reject(e.target.error);
+    }));
+  }
+
+  // Returns a Promise<boolean> — true if successfully persisted.
   function persistOne(name, data) {
-    try {
-      localStorage.setItem(dataKey(name), JSON.stringify(data));
-      saveIndex();
-      return true;
-    } catch (e) {
-      if (e.name === 'QuotaExceededError') return false;
-      throw e;
-    }
+    return idbPut(name, data).then(() => true).catch(err => {
+      console.warn('[Bible] IndexedDB persist failed:', err);
+      return false;
+    });
   }
 
+  // Fire-and-forget removal from IDB.
   function removeFromStorage(name) {
-    try { localStorage.removeItem(dataKey(name)); } catch (e) { /* ignore */ }
-    saveIndex();
+    idbDelete(name).catch(e => console.warn('[Bible] IDB delete failed:', e));
   }
 
-  function restoreBibles() {
-    // Migrate legacy single-key format to multi-translation format
+  // Returns a Promise that resolves once all stored translations are loaded into memory.
+  // Also migrates any data still in the old localStorage formats.
+  async function restoreBibles() {
+    // ── Migration: pre-v2.4.1 single localStorage key ──────────────────────
     try {
-      const legacy = localStorage.getItem(LEGACY_KEY);
-      if (legacy && !localStorage.getItem(INDEX_KEY)) {
-        window.HymnFlowBibles['KJV'] = JSON.parse(legacy);
+      const legacy = localStorage.getItem('hymnflow-bible-kjv');
+      if (legacy) {
+        const data = JSON.parse(legacy);
+        window.HymnFlowBibles['KJV'] = data;
         activeTranslation = 'KJV';
-        localStorage.setItem(dataKey('KJV'), legacy);
-        localStorage.setItem(INDEX_KEY, JSON.stringify(['KJV']));
+        await idbPut('KJV', data).catch(() => {});
         localStorage.setItem(ACTIVE_KEY, 'KJV');
-        localStorage.removeItem(LEGACY_KEY);
-        return;
+        localStorage.removeItem('hymnflow-bible-kjv');
+        localStorage.removeItem('hymnflow-bible-index');
       }
     } catch (e) { console.warn('[Bible] Legacy migration error:', e); }
 
+    // ── Migration: v2.4.1 multi-key localStorage format → IDB ───────────────
     try {
-      const indexRaw = localStorage.getItem(INDEX_KEY);
-      if (!indexRaw) return;
-      const names = JSON.parse(indexRaw);
-      names.forEach(name => {
+      const indexRaw = localStorage.getItem('hymnflow-bible-index');
+      if (indexRaw) {
+        const names = JSON.parse(indexRaw);
+        for (const name of names) {
+          const raw = localStorage.getItem(`hymnflow-bible-data-${name}`);
+          if (raw) {
+            try {
+              const data = JSON.parse(raw);
+              window.HymnFlowBibles[name] = data;
+              await idbPut(name, data).catch(() => {});
+              localStorage.removeItem(`hymnflow-bible-data-${name}`);
+            } catch (e) { console.warn(`[Bible] Migration failed for ${name}:`, e); }
+          }
+        }
+        localStorage.removeItem('hymnflow-bible-index');
+      }
+    } catch (e) { console.warn('[Bible] localStorage migration error:', e); }
+
+    // ── Normal IDB restore ───────────────────────────────────────────────────
+    try {
+      const keys = await idbAllKeys();
+      for (const name of keys) {
+        if (window.HymnFlowBibles[name]) continue; // already migrated above
         try {
-          const raw = localStorage.getItem(dataKey(name));
-          if (raw) window.HymnFlowBibles[name] = JSON.parse(raw);
+          const data = await idbGet(name);
+          if (data) window.HymnFlowBibles[name] = data;
         } catch (e) { console.warn(`[Bible] Could not restore ${name}:`, e); }
-      });
+      }
       const savedActive = localStorage.getItem(ACTIVE_KEY);
       activeTranslation = (savedActive && window.HymnFlowBibles[savedActive])
         ? savedActive
@@ -254,7 +316,8 @@
       return true;
     },
 
-    restoreFromStorage: restoreBibles,
+    // Returns a Promise — callers must await before rendering Bible UI.
+    restoreFromStorage() { return restoreBibles(); },
 
     // Imports a Bible JSON file under the given translation name.
     // Returns a Promise resolving to { ok, name, message, persisted }.
@@ -262,26 +325,29 @@
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
+          let bibleData;
           try {
-            const bibleData = parseBibleFile(e.target.result);
-            const bookCount = Object.keys(bibleData).length;
-            const verseCount = Object.values(bibleData).reduce((n, b) =>
-              n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
-            window.HymnFlowBibles[name] = bibleData;
-            if (!activeTranslation) activeTranslation = name;
-            const persisted = persistOne(name, bibleData);
+            bibleData = parseBibleFile(e.target.result);
+          } catch (err) {
+            resolve({ ok: false, message: `Import failed: ${err.message}` });
+            return;
+          }
+          const bookCount = Object.keys(bibleData).length;
+          const verseCount = Object.values(bibleData).reduce((n, b) =>
+            n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
+          window.HymnFlowBibles[name] = bibleData;
+          if (!activeTranslation) activeTranslation = name;
+          persistOne(name, bibleData).then(persisted => {
             if (persisted) {
               try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e2) { /* ignore */ }
             }
             resolve({
               ok: true,
               name,
-              message: `${name} loaded — ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only — storage full)'}`,
+              message: `${name} loaded — ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only — storage unavailable)'}`,
               persisted,
             });
-          } catch (err) {
-            resolve({ ok: false, message: `Import failed: ${err.message}` });
-          }
+          });
         };
         reader.onerror = () => resolve({ ok: false, message: 'Could not read file' });
         reader.readAsText(file);

@@ -2020,10 +2020,11 @@
   loadSettings();
   loadServices();
   if (window.HymnFlowBibleLookup) {
-    window.HymnFlowBibleLookup.restoreFromStorage();
-    updateBibleStatusBadge();
-    renderBibleList();
-    updateQsTranslationSelect();
+    window.HymnFlowBibleLookup.restoreFromStorage().then(() => {
+      updateBibleStatusBadge();
+      renderBibleList();
+      updateQsTranslationSelect();
+    });
   }
   buildSearchIndex();
   renderSourceFilters();
