@@ -1,123 +1,204 @@
-# HymnFlow Quick Setup Guide
+# HymnFlow Quick Setup Guide — v2.5.0
 
 ## ⚡ 5-Minute Setup
 
 ### Prerequisites
-- OBS Studio v27 or higher
+- OBS Studio v28 or higher (v27 works without global hotkeys)
 - Web browser (Chrome, Edge, Firefox)
 
 ### Step 1: Locate Your HymnFlow Files
 
 Extract the downloaded release to a permanent location:
 ```
-C:\HymnFlow\              ← Recommended location
-├── public/                ← Core application files (from plugin download)
+C:\HymnFlow\
+├── public/                  ← Core application files
 │   ├── obs-dock/
 │   └── obs-overlay/
-└── hymn-bundle/          ← SEPARATE DOWNLOAD (not included in plugin)
-    ├── cac_ghb.json      ← Download these individually from GitHub
-    ├── cac_yhb.json
-    └── [other hymns]
+├── scripts/                 ← Converter & OBS hotkey scripts
+│   └── hymnflow-obs-hotkeys.py
+└── hymn-bundle/             ← SEPARATE DOWNLOAD (see Step 3)
 ```
 
-> [!IMPORTANT]
-> The `hymn-bundle/` files are **NOT included** in the main plugin download.
-> You must download hymn files separately from the [GitHub repository](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle).
+**Note your full path** — you'll need it below. Use forward slashes in URLs: `C:/HymnFlow/`
 
-**Note your full path** - you'll need it below.
+---
 
 ### Step 2: Add Custom Dock to OBS
 
 1. Open **OBS Studio**
 2. Go to **View → Docks → Custom Browser Docks**
-3. In the dialog:
+3. Set:
    - **Dock Name**: `HymnFlow Control`
    - **URL**: `file:///C:/HymnFlow/public/obs-dock/index.html`
-     - (Replace `C:\HymnFlow` with your actual path)
-     - Use forward slashes `/` not backslashes `\`
-     - Use three slashes: `file:///`
 4. Click **Apply**
 
 The dock will appear in OBS (may take a moment to load).
 
+---
+
 ### Step 3: Add Browser Source for Overlay
 
-1. In your OBS scene, add a new source
-2. Select **Browser Source**
-3. In the properties:
+1. In your OBS scene, add a new source → **Browser Source**
+2. Set:
    - **Name**: `Hymn Lower-Third`
    - **URL**: `file:///C:/HymnFlow/public/obs-overlay/index.html`
-   - **Width**: `1920`
-   - **Height**: `1080`
-4. Check these options:
+   - **Width**: `1920` · **Height**: `1080`
+3. Enable:
    - ✅ **Shutdown source when not visible**
    - ✅ **Refresh browser when scene becomes active**
-5. Click **OK**
+4. Click **OK**
+
+---
 
 ### Step 4: Test It!
 
 1. Open the **Library** tab in the dock and click any hymn
-2. Switch to the **Live** tab — you should see the hymn preview update
-3. Press → to advance to the next verse — the overlay should update in OBS
-4. Press Space (or click **Display**) to toggle the overlay on/off
+2. Switch to the **Live** tab — the hymn preview should update
+3. Press `→` to advance to the next verse — the overlay should update in OBS
+4. Press `Space` to toggle the overlay on/off
 
-**✅ Setup complete!** You're ready to stream.
+**✅ Core setup complete!**
 
-## 🎮 Basic Controls
+---
 
-| Action | How |
-|--------|-----|
-| **Next Verse** | Press → (right arrow) |
-| **Previous Verse** | Press ← (left arrow) |
-| **Toggle Display** | Press Space or click Display button |
+## 🎮 Keyboard Shortcuts
+
+| Key | Action |
+|---|---|
+| `→` | Next verse |
+| `←` | Previous verse |
+| `↓` | Next line window (long/multi-line verses) |
+| `↑` | Previous line window |
+| `Space` | Toggle display on/off |
+| `]` or `PageDown` | Next service item |
+| `[` or `PageUp` | Previous service item |
+
+> These shortcuts work when the **dock panel has keyboard focus**. For global hotkeys that work from any OBS window, see the next section.
+
+---
+
+## 🎛️ Global OBS Hotkeys (Optional — OBS 28+)
+
+Global hotkeys work even when the dock doesn't have focus — essential when you're watching the output preview or managing scenes.
+
+### Setup
+
+**Step 1: Enable obs-websocket**
+1. OBS → **Tools → obs-websocket Settings**
+2. Check **Enable WebSocket server**
+3. Set a password if desired; note the port (default: `4455`)
+4. Click **OK**
+
+**Step 2: Load the hotkey script**
+1. OBS → **Tools → Scripts**
+2. Click `+` → select `scripts/hymnflow-obs-hotkeys.py`
+3. In the script panel: enter your obs-websocket host (`127.0.0.1`), port, and password
+
+**Step 3: Bind keys in OBS**
+1. OBS → **Settings → Hotkeys**
+2. Search **"HymnFlow"** — 7 actions appear:
+   - HymnFlow: Next Verse / Previous Verse
+   - HymnFlow: Next Line / Previous Line
+   - HymnFlow: Next Service Item / Previous Service Item
+   - HymnFlow: Toggle Display
+3. Click the field next to each and press your desired key (e.g., `F5`, `F6`)
+4. Click **OK**
+
+**Step 4: Connect the dock**
+1. HymnFlow dock → **Style** tab → **OBS Connection** section
+2. Enter the same host, port, and password
+3. Click **Connect** — the badge turns green ●
+4. HymnFlow will auto-reconnect on OBS restarts
+
+---
 
 ## 📖 Bible Lookup Setup
 
-The Quick Scripture panel lets you look up and display any verse live during a service. Bible data is **not bundled** in the plugin — import any compatible public domain JSON file.
+The Quick Scripture panel lets you look up and display any verse live during a service. Bible data is **not bundled** in the plugin — import a free public-domain JSON file.
 
-### Option A: Download Direct (No Python Required)
+### Option A: Direct Download (No Python)
 
-Download a pre-formatted KJV JSON file from either public-domain repository:
+Download a pre-formatted Bible JSON from one of these repositories:
 
-- **[thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json)** — click **Raw**, then Save As → `kjv.json`
-- **[aruljohn/Bible-kjv](https://github.com/aruljohn/Bible-kjv/blob/master/kjv.json)** — click **Raw**, then Save As → `kjv.json`
+**English:**
+- **KJV** — [thiagobodruk/bible → en_kjv.json](https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json) → click **Raw**, Save As `kjv.json`
+- **ASV** — [thiagobodruk/bible → en_asv.json](https://github.com/thiagobodruk/bible/blob/master/json/en_asv.json) → click **Raw**, Save As `asv.json`
+- **KJV (alternate)** — [aruljohn/Bible-kjv → kjv.json](https://github.com/aruljohn/Bible-kjv/blob/master/kjv.json)
 
-Then import it into HymnFlow:
+**Spanish (Reina Valera):**
+- [thiagobodruk/bible → es_rvr.json](https://github.com/thiagobodruk/bible/blob/master/json/es_rvr.json) → Save As `rvr.json`
 
-1. Open the **Library** tab → **Bible** section
-2. Type `KJV` in the name field
-3. Click **Import JSON** and select the file you downloaded
-4. The status badge changes to `KJV ✓` — Bible is ready
+**Portuguese (Almeida):**
+- [thiagobodruk/bible → pt_aa.json](https://github.com/thiagobodruk/bible/blob/master/json/pt_aa.json) → Save As `pt_aa.json`
 
-### Option B: Generate Locally (Python)
+**French (Segond):**
+- [thiagobodruk/bible → fr_apee.json](https://github.com/thiagobodruk/bible/blob/master/json/fr_apee.json) → Save As `fr.json`
 
-If you have Python 3 installed, this script downloads and converts KJV automatically:
+Then import it:
+1. Open HymnFlow Dock → **Library** tab → **Bible** section
+2. Type a name (e.g., `KJV`) in the name field
+3. Click **Import JSON** → select the downloaded file
+4. Status badge shows `KJV ✓` — Bible is ready
 
+### Option B: Convert a Text Bible (Python)
+
+If you have a Bible in plain-text format (downloaded from eBible.org, Crosswire, etc.):
+
+```bash
+# Auto-detect format (verse_per_line, pipe, tab, or headed)
+python scripts/convert_bible_txt.py "path/to/bible.txt" --name KJV
+
+# Yoruba Bible (specific format)
+python scripts/convert_yoruba_bible.py "path/to/yoruba.txt"
 ```
+
+Output: a `.js` file or JSON file ready to import via the Library tab.
+
+### Option C: KJV Auto-Download (Python)
+
+```bash
 python scripts/bundle_bible_kjv.py
+# writes public/data/bible-kjv.js
 ```
 
-It writes `public/data/bible-kjv.js`. Import that file via the Library tab → Bible section (name it `KJV`).
+### Public Domain Bible Sources
+
+| Source | URL | Notes |
+|---|---|---|
+| thiagobodruk/bible | https://github.com/thiagobodruk/bible | KJV, ASV, RVR, Almeida, Segond, Tagalog — JSON |
+| scrollmapper/bible_databases | https://github.com/scrollmapper/bible_databases | KJV, ASV — JSON + SQLite |
+| seven1m/open-bibles | https://github.com/seven1m/open-bibles | WEB, YLT, Darby — OSIS XML |
+| eBible.org | https://ebible.org/find/ | 500+ translations; Yoruba, Swahili, Hausa, Korean — plain text / USFM |
+| Crosswire Bible Society | https://www.crosswire.org/sword/modules/ | 200+ languages — Sword module format |
+| Open.Bible | https://open.bible | Community open-license translations |
+
+**Public-domain translations quick reference:**
+
+| Code | Full Name | Language |
+|---|---|---|
+| KJV | King James Version (1769) | English |
+| ASV | American Standard Version (1901) | English |
+| WEB | World English Bible | English |
+| YLT | Young's Literal Translation | English |
+| DBY | Darby Bible (1890) | English |
+| RVR60 | Reina-Valera Revisada 1960 | Spanish |
+| AA | Almeida Atualizada | Portuguese |
+| LS | Louis Segond 1910 | French |
+| BYO | Bibeli Mimo (Yoruba) | Yoruba |
 
 ### Using Quick Scripture
 
-Once a translation is loaded, switch to the **Live** tab and use the **Scripture** panel:
+1. Switch to the **Live** tab → **Scripture** panel
+2. Select your translation from the inline dropdown
+3. Type a reference: `John 3:16`, `Ps 23`, `1 Cor 13:4-7`, `Jude 1`
+4. Press 🔍 or Enter to look up
+5. Press **Display** to send to overlay, then use `←` / `→` to step through verses
 
-- Type a reference: `John 3:16`, `Ps 23`, `1 Cor 13:4-7`, `Jude 1`
-- Press 🔍 (or Enter) to look up
-- Press **Display** to send the first verse to the overlay
-- Use **←** / **→** to step through verses
-- Chapter-only references (e.g., `Ps 23`) load all verses as individual navigable chunks
-
-### Multiple Translations
-
-Each translation is stored separately. To load an additional translation, repeat the import with a different name (e.g., `NIV`, `ESV`). Switch between them using the inline selector in the Live tab.
+---
 
 ## 📥 Import Your Own Hymns
 
 ### Format 1: TXT File
-
-Create a text file with this format:
 
 ```
 Title: Amazing Grace
@@ -133,7 +214,6 @@ And grace my fears relieved;
 - Each hymn starts with `Title:`
 - `Author:` is optional
 - Blank lines separate verses
-- Multiple verses supported
 
 ### Format 2: CSV File
 
@@ -158,82 +238,72 @@ Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
 ]
 ```
 
-### Import Process
+**To import:**
+1. Library tab → **Import**
+2. Select your file (`.json`, `.txt`, or `.csv`)
+3. Hymns appear instantly
 
-> [!IMPORTANT]
-> To reduce the initial download size, official hymn collections (CAC English/Yoruba, etc.) are provided as a **separate download** and are **NOT included** in the main plugin package.
+---
 
-**Step 1: Download Hymn Files**
+## 📅 Service Planning
 
-Choose one of these options:
+1. **Service tab** → `+ New Service` → give it a name
+2. Add items: `+ Hymn`, `+ Scripture`, `+ Announcement`, `+ Divider`
+3. Drag items to reorder; add optional internal notes per item
+4. Click **Save**, then **Load** to run the service
+5. The service banner at the top shows the current item and "Next:" preview
+6. Press `]` or the banner `⟶` button to advance to the next item
+7. At the last verse of a hymn, `→` auto-advances to the next service item
 
-**Option A: Download Individual Files from GitHub**
-1. Visit the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle) on GitHub
-2. Click on the hymn file you want (e.g., `cac_ghb.json`)
-3. Click the "Download raw file" button or right-click "Raw" and select "Save link as..."
-4. Save to your computer (e.g., `C:\HymnFlow\hymn-bundle\`)
-
-**Option B: Download from Releases**
-1. Visit the [Releases page](https://github.com/ebena107/HymnFlow/releases)
-2. Download the `hymn-bundle.zip` file (if available)
-3. Extract to your preferred location
-
-**Step 2: Import into HymnFlow**
-1. Open the HymnFlow dock in OBS
-2. Go to the **Library** tab → **Hymns** section
-3. Click **Import** and select your hymn file (`.json`, `.txt`, or `.csv`)
-4. Hymns are added to your library instantly
-5. ✅ Done! Click any hymn to select it, then switch to **Live** to display it
+---
 
 ## 🎨 Customize the Display
 
-Open the **Style** tab in the dock:
+Open the **Style** tab:
 
-- **Font Size**: Drag slider (24px - 96px)
-- **Font Family**: Choose from pre-loaded fonts
-- **Text Color**: Click color picker
-- **Background**: Transparent, solid, or gradient
-- **Effects**: Toggle bold, italic, shadow, glow
-- **Animation**: Fade, slide, or none
-- **Position**: Bottom, middle, or top third
+| Setting | Options |
+|---|---|
+| Font family | Inter, Segoe UI, Roboto, Georgia, Montserrat |
+| Font size | 24 – 96 px slider (auto-fit for overflow) |
+| Effects | Bold, italic, shadow, glow, outline (color + width) |
+| Background | Transparent, solid, or gradient |
+| Animation | Fade, slide, or none |
+| Position | Bottom, middle, or top |
 
-Changes apply instantly to the overlay!
+Changes apply instantly to the overlay.
+
+---
 
 ## ❓ Troubleshooting
 
-### Dock doesn't appear
-- Check the URL uses forward slashes: `file:///C:/...` not `C:\`
-- Make sure file path is correct
-- Restart OBS
+**Dock doesn't appear:**
+- URL must use forward slashes: `file:///C:/HymnFlow/…` not `C:\HymnFlow\…`
+- Restart OBS after adding the dock
 
-### Overlay doesn't show
-- Verify Browser Source URL is correct
-- Check browser source is in an active scene
-- Try refreshing the browser source (right-click → Refresh)
+**Overlay doesn't update:**
+- Both dock and overlay must come from the same origin (same `file://` folder or same HTTP server)
+- Right-click Browser Source → **Refresh**
 
-### Hymns won't import
-- Check file format (TXT, CSV, or JSON only)
-- Ensure verses are separated by blank lines
-- Check for special characters in text
+**Bible lost after OBS restart:**
+- v2.5 uses IndexedDB for persistent storage — should survive restarts
+- If migrating from v2.4.x, re-import your Bible once; it will migrate automatically
 
-### Bible lookup returns nothing
-- Make sure a translation is imported: **Library** tab → **Bible** section
-- Check the reference format: `John 3:16`, `Ps 23`, `1 Cor 13:4-7`
-- Chapter-only: `Ps 23` (no verse number) loads the whole chapter
+**Global hotkeys not working:**
+- Confirm obs-websocket is enabled: OBS → Tools → obs-websocket Settings
+- Confirm the script loaded: OBS → Tools → Scripts
+- Check the green ● badge in the dock's OBS Connection panel
+- Keys must be bound in OBS Settings → Hotkeys (search "HymnFlow")
 
-### Text won't display
-- Check font size isn't too small
-- Verify text color contrasts with background
-- Try changing to "Transparent" background
+**Hymns won't import:**
+- Use .txt, .csv, or .json only
+- TXT: verses must be separated by blank lines
+- JSON: `verses` must be an array of strings
+
+---
 
 ## 🆘 Need More Help?
 
-See [OBS_DOCK_README.md](OBS_DOCK_README.md) for detailed usage.
-
-Or visit: https://github.com/ebena107/HymnFlow/issues
-
-## 🚀 Next Steps
-
-- [Customize colors and fonts](OBS_DOCK_README.md#customization)
-- [Import official hymn bundle](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle)
-- [Learn all keyboard shortcuts](OBS_DOCK_README.md)
+- [Full documentation](OBS_DOCK_README.md)
+- [Troubleshooting guide](TROUBLESHOOTING.md)
+- [GitHub Issues](https://github.com/ebena107/HymnFlow/issues)
+- [Interactive setup wizard](../public/obs-setup.html)

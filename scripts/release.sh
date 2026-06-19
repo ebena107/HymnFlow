@@ -29,17 +29,29 @@ mkdir -p "$RELEASE_DIR"
 
 # Copy essential files
 echo "📦 Packaging files..."
-cp -r public/obs-dock "$RELEASE_DIR/"
+cp -r public/obs-dock    "$RELEASE_DIR/"
 cp -r public/obs-overlay "$RELEASE_DIR/"
-cp -r public/data "$RELEASE_DIR/"
-cp -r public/parsers "$RELEASE_DIR/"
-cp -r public/i18n "$RELEASE_DIR/"
+cp -r public/data        "$RELEASE_DIR/"
+cp -r public/parsers     "$RELEASE_DIR/"
+cp -r public/i18n        "$RELEASE_DIR/"
 cp public/obs-setup.html "$RELEASE_DIR/"
-cp public/validation.js "$RELEASE_DIR/"
-cp README.md "$RELEASE_DIR/"
-cp doc/SETUP.md "$RELEASE_DIR/"
+cp public/validation.js  "$RELEASE_DIR/"
+
+# Scripts: OBS hotkey bridge + Bible converters
+echo "📦 Packaging scripts..."
+mkdir -p "$RELEASE_DIR/scripts"
+cp scripts/hymnflow-obs-hotkeys.py  "$RELEASE_DIR/scripts/"
+cp scripts/convert_bible_txt.py     "$RELEASE_DIR/scripts/"
+cp scripts/convert_yoruba_bible.py  "$RELEASE_DIR/scripts/"
+cp scripts/bundle_bible_kjv.py      "$RELEASE_DIR/scripts/"
+
+# Documentation
+cp README.md              "$RELEASE_DIR/"
+cp doc/SETUP.md           "$RELEASE_DIR/"
 cp doc/TROUBLESHOOTING.md "$RELEASE_DIR/"
-cp doc/SECURITY.md "$RELEASE_DIR/"
+cp doc/SECURITY.md        "$RELEASE_DIR/"
+# Include version-specific release notes if they exist
+[ -f "doc/RELEASE_NOTES_v$VERSION.md" ] && cp "doc/RELEASE_NOTES_v$VERSION.md" "$RELEASE_DIR/" || true
 
 # Create ZIP
 ZIP_FILE="hymnflow-v$VERSION-plugin.zip"

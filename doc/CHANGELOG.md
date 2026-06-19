@@ -1,3 +1,50 @@
+## [2.5.0] - 2026-06-19
+
+### Service Planning Overhaul & Global OBS Hotkeys
+
+**Focus**: Complete service workflow rewrite, native OBS global hotkeys via obs-websocket, enhanced keyboard shortcuts, and persistent Bible storage via IndexedDB.
+
+### Added
+
+#### Service Planning
+- 🔄 **Deep-copy service editing** — editor now works on an isolated copy; saving reconciles the active index by value-match so live navigation is never corrupted
+- ⏭️ **Auto-advance to next service item** — pressing `→` at the last verse of a hymn in a running service automatically loads the next item
+- ✅ **Scripture validation at add time** — warns if a reference doesn't parse against the loaded Bible (overridable)
+- ⚠️ **Hymn deletion warning** — confirm dialog lists every service that uses the hymn before deleting
+- 🏷️ **"Coming next" banner** — service banner shows the type + title of the next item in real time
+- 📢 **Announcement label preview** — live `"List label: …"` hint as you type so the 35-char truncation is never a surprise
+- ☑️ **Past-item checkmarks** — played items dim and show ✓ so current position is obvious in long service lists
+- 📋 **Duplicate service** — one-click Dup button clones a service as a starting template for next week
+- 📝 **Notes / cues field** — all non-hymn items gain an optional internal notes input; shown italicised in the editor, not on screen
+- ↕️ **Drag-and-drop reorder** — service editor items are draggable; no more repeated ↑/↓ clicks
+
+#### Global OBS Hotkeys
+- 🎛️ **`scripts/hymnflow-obs-hotkeys.py`** — OBS Python Script that registers 7 hotkeys natively in OBS (appear in Settings → Hotkeys)
+- 🔌 **obs-websocket client** — HymnFlow dock connects to obs-websocket 5.x; auth via Web Crypto SHA-256; auto-reconnects every 5 s
+- 🟢 **OBS Connection panel** — host/port/password inputs + live status badge (grey/orange/green/red) in Style tab
+- Hotkeys: Next Verse, Prev Verse, Next Line, Prev Line, Next Service Item, Prev Service Item, Toggle Display
+
+#### Keyboard Shortcuts
+- `]` / `PageDown` → Next Service Item
+- `[` / `PageUp` → Previous Service Item
+- (existing `↓`/`↑` retained for line-window navigation)
+
+#### Bible
+- 💾 **IndexedDB storage** — Bible translations moved from localStorage (5 MB limit) to IndexedDB (no practical limit); auto-migrates from two prior localStorage formats
+- 🌍 **Yoruba Bible support** — `scripts/convert_yoruba_bible.py` converts the Yoruba Bible text file to HymnFlow JSON; handles inline verse format, diacritics, and all 66 books
+
+### Fixed
+
+- Reordering items while a service is live no longer corrupts `currentServiceItemIndex`
+- `editingService` was a direct reference (not a copy) — mutations to the editor immediately affected the live service; now uses deep copy
+
+### Scripts
+- `scripts/hymnflow-obs-hotkeys.py` — new OBS hotkey bridge script (pure Python stdlib, no pip required)
+- `scripts/convert_yoruba_bible.py` — new Yoruba-specific Bible converter
+- `scripts/convert_bible_txt.py` — generic Bible converter; auto-detects 4 plain-text formats
+
+---
+
 ## [2.4.1] - 2026-06-18
 
 ### Bible Lookup & Scripture Workflow Improvements

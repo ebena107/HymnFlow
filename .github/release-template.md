@@ -1,63 +1,86 @@
-## HymnFlow v2.4.1 — Bible Lookup & Multi-Translation Support
+## HymnFlow v2.5.0 — Service Planning Overhaul & Global OBS Hotkeys
 
 ### 🎉 What's New
 
-**Multi-Translation Bible Lookup**
-- Import any Bible JSON file (KJV, NIV, ESV, etc.) via Library tab → Bible section
-- Each translation stored separately in localStorage — switch between them anytime
-- Translation selector in both Library tab (Set active / Remove) and Live tab inline select
-- Status badge shows active translation name and count of loaded translations
+**Service Planning — 10 workflow improvements**
+- Deep-copy service editor: editing a live service no longer corrupts navigation
+- `→` at last verse auto-advances to the next service item
+- Scripture references validated at add time (overridable)
+- Deleting a hymn warns which services will be affected
+- "Coming next" preview in the service banner
+- Live announcement label hint (35-char truncation preview)
+- Past items show ✓ and dim so current position is obvious
+- Duplicate service with one click — clone last week as a template
+- Notes/cues field on every item (internal only; not shown on screen)
+- Drag-and-drop reorder in the service editor
 
-**Quick Scripture Panel (Live Tab)**
-- Type any reference — `Ps 23`, `John 3:16-18`, `Jude 1`, `1 Cor 13:4-7`
-- Chapter-only references load all verses as individual navigable chunks
-- Press Display, then step through verses with ← → (same model as hymn navigation)
-- Overlay title bar shows reference + translation name (e.g., `Psalms 23 (KJV)`)
+**Global OBS Hotkeys**
+- New file: `scripts/hymnflow-obs-hotkeys.py` — drop into OBS → Tools → Scripts
+- 7 hotkeys registered in OBS Settings → Hotkeys (search "HymnFlow")
+- Works via obs-websocket 5.x (built into OBS 28+) — no extra plugin needed
+- HymnFlow dock connects to obs-websocket; auto-reconnects on OBS restart
+- Pure Python stdlib — no `pip install` required
 
-**Scripture in Service Orders**
-- `+ Scripture` stores reference only — no pre-cached text
-- Activating a scripture item auto-switches to Live tab, loads the reference into Quick Scripture, and sends verse 1 to overlay immediately
+**Enhanced Keyboard Shortcuts** (dock focus)
+- `]` / `PageDown` → Next service item
+- `[` / `PageUp` → Previous service item
+- All existing shortcuts retained (`→` `←` `↓` `↑` `Space`)
 
-**Overlay Auto-Fit Text**
-- Overlay shrinks font size (2px steps, min 16px) when content would overflow the viewport
-- Applies to hymn verses, scripture, and announcements
+**Persistent Bible Storage**
+- Bible translations moved from localStorage (5 MB limit) to IndexedDB
+- Survives OBS restarts reliably; auto-migrates from prior formats
 
-**Security**
-- XSS fix: translation names escaped via `escapeHtml()` before DOM insertion
+**Yoruba Bible Support**
+- `scripts/convert_yoruba_bible.py` converts the Yoruba Bible text to HymnFlow JSON
+- Handles inline verse format, diacritics, all 66 books
 
-**Bug Fixes**
-- Chapter-only references (`Jude 1`, `Ps 23`) now resolve correctly
-- Overlay text no longer clips when verse text exceeds configured font size
-- Stale "run python script" error message replaced with user-facing guidance
-- Removed always-hidden dead button (`btnItemFormLookup`)
-
-**i18n**
-- `bible.*` and `quickScripture.*` keys added to all 9 languages (en, es, fr, ko, pt, sw, tl, yo, zh)
+---
 
 ### 📥 Installation
 
-1. Download `hymnflow-v2.4.1-plugin.zip` below
-2. Extract to a folder (e.g., `C:\HymnFlow\`)
-3. In OBS: **View → Docks → Custom Browser Docks**
+1. Download `hymnflow-v2.5.0-plugin.zip` below and extract to a permanent folder (e.g., `C:\HymnFlow\`)
+2. In OBS: **View → Docks → Custom Browser Docks**
    - URL: `file:///C:/HymnFlow/obs-dock/index.html`
-4. Add Browser Source (1920×1080): `file:///C:/HymnFlow/obs-overlay/index.html`
+3. Add Browser Source (1920×1080): `file:///C:/HymnFlow/obs-overlay/index.html`
 
-To import a Bible translation: Library tab → Bible → enter name (e.g. `KJV`) → **Import JSON**
+**Optional — Global Hotkeys:**
+1. OBS → Tools → obs-websocket Settings → Enable
+2. OBS → Tools → Scripts → `+` → `scripts/hymnflow-obs-hotkeys.py`
+3. OBS → Settings → Hotkeys → search "HymnFlow" → bind keys
+4. HymnFlow dock → Style tab → OBS Connection → Connect
 
-See [SETUP.md](https://github.com/ebena107/HymnFlow/blob/master/doc/SETUP.md) for full instructions.
+---
+
+### 📦 Downloading Bible Translations
+
+Bible data is **not bundled** — import free public-domain JSON files:
+
+| Translation | Language | Source |
+|---|---|---|
+| KJV | English | [thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json) |
+| ASV | English | [thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/en_asv.json) |
+| RVR | Spanish | [thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/es_rvr.json) |
+| Almeida | Portuguese | [thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/pt_aa.json) |
+| Segond | French | [thiagobodruk/bible](https://github.com/thiagobodruk/bible/blob/master/json/fr_apee.json) |
+| 500+ others | Yoruba, Swahili, Korean… | [eBible.org](https://ebible.org/find/) |
+
+Import: Library tab → Bible section → enter name → **Import JSON**
+
+---
 
 ### 📦 Hymn Bundle
 
-Hymn collections are a **separate download** (keeps plugin at ~150KB). Download from the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle).
+Hymn collections are a **separate download** (keeps plugin at ~150 KB). Download from the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle).
+
+---
 
 ### 📚 Documentation
 
-- [README](https://github.com/ebena107/HymnFlow) — Overview
-- [SETUP.md](https://github.com/ebena107/HymnFlow/blob/master/doc/SETUP.md) — Quick start
-- [OBS_DOCK_README.md](https://github.com/ebena107/HymnFlow/blob/master/doc/OBS_DOCK_README.md) — Detailed usage
+- [README](https://github.com/ebena107/HymnFlow) — Overview & quick start
+- [SETUP.md](https://github.com/ebena107/HymnFlow/blob/master/doc/SETUP.md) — Step-by-step setup guide
 - [CHANGELOG.md](https://github.com/ebena107/HymnFlow/blob/master/doc/CHANGELOG.md) — Full version history
-- [RELEASE_NOTES_v2.4.1.md](https://github.com/ebena107/HymnFlow/blob/master/doc/RELEASE_NOTES_v2.4.1.md) — Detailed release notes
+- [obs-setup.html](https://github.com/ebena107/HymnFlow/blob/master/public/obs-setup.html) — Interactive setup wizard
 
 ### 📄 License
 
-MIT — Free to use and modify
+GPL-2.0 — Free to use and modify for your worship services.

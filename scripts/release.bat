@@ -37,19 +37,33 @@ set RELEASE_DIR=hymnflow-v!VERSION!
 if exist "!RELEASE_DIR!" rmdir /s /q "!RELEASE_DIR!"
 mkdir "!RELEASE_DIR!"
 
-REM Copy files
-echo Packaging files...
-xcopy public\obs-dock "!RELEASE_DIR!\obs-dock\" /E /Y > nul
+REM Copy application files
+echo Packaging application files...
+xcopy public\obs-dock    "!RELEASE_DIR!\obs-dock\"    /E /Y > nul
 xcopy public\obs-overlay "!RELEASE_DIR!\obs-overlay\" /E /Y > nul
-xcopy public\data "!RELEASE_DIR!\data\" /E /Y > nul
-xcopy public\parsers "!RELEASE_DIR!\parsers\" /E /Y > nul
-xcopy public\i18n "!RELEASE_DIR!\i18n\" /E /Y > nul
+xcopy public\data        "!RELEASE_DIR!\data\"        /E /Y > nul
+xcopy public\parsers     "!RELEASE_DIR!\parsers\"     /E /Y > nul
+xcopy public\i18n        "!RELEASE_DIR!\i18n\"        /E /Y > nul
 copy public\obs-setup.html "!RELEASE_DIR!\" > nul
-copy public\validation.js "!RELEASE_DIR!\" > nul
-copy README.md "!RELEASE_DIR!\" > nul
-copy doc\SETUP.md "!RELEASE_DIR!\" > nul
+copy public\validation.js  "!RELEASE_DIR!\" > nul
+
+REM Copy scripts: OBS hotkey bridge + Bible converters
+echo Packaging scripts...
+mkdir "!RELEASE_DIR!\scripts" > nul 2>&1
+copy scripts\hymnflow-obs-hotkeys.py  "!RELEASE_DIR!\scripts\" > nul
+copy scripts\convert_bible_txt.py     "!RELEASE_DIR!\scripts\" > nul
+copy scripts\convert_yoruba_bible.py  "!RELEASE_DIR!\scripts\" > nul
+copy scripts\bundle_bible_kjv.py      "!RELEASE_DIR!\scripts\" > nul
+
+REM Copy documentation
+echo Packaging documentation...
+copy README.md              "!RELEASE_DIR!\" > nul
+copy doc\SETUP.md           "!RELEASE_DIR!\" > nul
 copy doc\TROUBLESHOOTING.md "!RELEASE_DIR!\" > nul
-copy doc\SECURITY.md "!RELEASE_DIR!\" > nul
+copy doc\SECURITY.md        "!RELEASE_DIR!\" > nul
+if exist "doc\RELEASE_NOTES_v!VERSION!.md" (
+    copy "doc\RELEASE_NOTES_v!VERSION!.md" "!RELEASE_DIR!\" > nul
+)
 
 REM Create ZIP (requires 7-Zip or built-in compression)
 set ZIP_FILE=hymnflow-v!VERSION!-plugin.zip

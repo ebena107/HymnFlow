@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HymnFlow OBS Dock - Setup Guide</title>
+  <title>HymnFlow OBS Dock — Setup Guide v2.5.0</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap">
-  <script src="i18n/translations.js?v=2.4.1"></script>
-  <script src="i18n/i18n.js?v=2.4.1"></script>
+  <script src="i18n/translations.js?v=2.5.0"></script>
+  <script src="i18n/i18n.js?v=2.5.0"></script>
   <style>
     :root {
       --bg-color: #0f172a;
@@ -24,12 +24,10 @@
       --success-border: #22c55e;
       --warning-bg: rgba(245, 158, 11, 0.2);
       --warning-border: #f59e0b;
+      --new-bg: rgba(129, 140, 248, 0.12);
+      --new-border: #818cf8;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background-color: var(--bg-color);
@@ -42,7 +40,6 @@
       padding: 60px 20px;
       line-height: 1.6;
     }
-
     .container {
       max-width: 1000px;
       margin: 0 auto;
@@ -54,7 +51,6 @@
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       border: 1px solid var(--border-color);
     }
-
     h1 {
       font-family: 'Outfit', sans-serif;
       margin-top: 0;
@@ -67,7 +63,6 @@
       font-weight: 700;
       letter-spacing: -0.02em;
     }
-
     h2 {
       font-family: 'Outfit', sans-serif;
       border-bottom: 2px solid var(--border-color);
@@ -76,14 +71,26 @@
       font-weight: 600;
       color: var(--accent-primary);
     }
-
+    h3 { color: var(--accent-secondary); font-family: 'Outfit', sans-serif; }
+    .version-badge {
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 0.85em;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
     .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
       margin: 30px 0;
     }
-
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin: 24px 0;
+    }
     .card {
       background: rgba(255, 255, 255, 0.03);
       padding: 24px;
@@ -91,19 +98,13 @@
       border: 1px solid var(--border-color);
       transition: all 0.3s ease;
     }
-
     .card:hover {
       background: rgba(255, 255, 255, 0.05);
       transform: translateY(-2px);
       border-color: rgba(255, 255, 255, 0.2);
     }
-
-    .card h3 {
-      margin-top: 0;
-      font-family: 'Outfit', sans-serif;
-      color: var(--accent-secondary);
-    }
-
+    .card h3, .card h4 { margin-top: 0; }
+    .card h4 { color: var(--accent-primary); font-size: 1em; margin-bottom: 6px; }
     code {
       background: rgba(0, 0, 0, 0.4);
       padding: 3px 8px;
@@ -112,7 +113,6 @@
       color: #7dd3fc;
       font-family: 'Fira Code', 'Courier New', monospace;
     }
-
     pre {
       background: rgba(0, 0, 0, 0.5);
       padding: 20px;
@@ -121,7 +121,6 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
       color: #e2e8f0;
     }
-
     .btn {
       display: inline-flex;
       align-items: center;
@@ -138,16 +137,9 @@
       border: none;
       cursor: pointer;
     }
-
-    .btn:hover {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 16px rgba(56, 189, 248, 0.4);
-    }
-
-    .btn:active {
-      transform: translateY(0);
-    }
-
+    .btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 16px rgba(56, 189, 248, 0.4); }
+    .btn:active { transform: translateY(0); }
+    .btn-sm { padding: 8px 16px; font-size: 0.85em; margin: 4px 4px 4px 0; }
     .steps {
       background: rgba(255, 255, 255, 0.02);
       padding: 30px;
@@ -155,96 +147,96 @@
       margin: 30px 0;
       border: 1px solid var(--border-color);
     }
-
-    .steps ol {
-      padding-left: 20px;
-    }
-
-    .steps li {
-      margin: 20px 0;
-      padding-left: 10px;
-    }
-
-    .steps li strong {
-      color: var(--text-main);
-      font-size: 1.1em;
-    }
-
+    .steps ol { padding-left: 20px; }
+    .steps li { margin: 20px 0; padding-left: 10px; }
+    .steps li strong { color: var(--text-main); font-size: 1.1em; }
     .warning {
       background: var(--warning-bg);
       border-left: 4px solid var(--warning-border);
       padding: 20px;
       border-radius: 12px;
-      margin: 30px 0;
+      margin: 20px 0;
     }
-
     .success {
       background: var(--success-bg);
       border-left: 4px solid var(--success-border);
       padding: 20px;
       border-radius: 12px;
-      margin: 30px 0;
+      margin: 20px 0;
     }
-
+    .new-feature {
+      background: var(--new-bg);
+      border-left: 4px solid var(--new-border);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0;
-      margin: 20px 0;
+      margin: 16px 0;
       background: rgba(0, 0, 0, 0.2);
       border-radius: 12px;
       overflow: hidden;
       border: 1px solid var(--border-color);
     }
-
-    th,
-    td {
-      padding: 16px;
-      text-align: left;
-      border-bottom: 1px solid var(--border-color);
-    }
-
+    th, td { padding: 13px 16px; text-align: left; border-bottom: 1px solid var(--border-color); }
     th {
       background: rgba(255, 255, 255, 0.05);
       font-weight: 600;
       text-transform: uppercase;
-      font-size: 0.8em;
+      font-size: 0.78em;
       letter-spacing: 0.05em;
       color: var(--text-muted);
     }
-
-    tr:last-child td {
-      border-bottom: none;
+    tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block;
+      font-size: 0.7em;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      vertical-align: middle;
+      margin-left: 6px;
     }
-
+    .tag-new { background: rgba(129,140,248,.25); color: #a5b4fc; }
+    .tag-opt { background: rgba(56,189,248,.15); color: #7dd3fc; }
     @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .container {
-        padding: 30px 20px;
-      }
-
-      h1 {
-        font-size: 2.2em;
-      }
+      .grid, .grid-3 { grid-template-columns: 1fr; }
+      .container { padding: 30px 20px; }
+      h1 { font-size: 2.2em; }
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+
+    <div class="version-badge">v2.5.0 — 2026-06-19</div>
     <h1 data-i18n="app.title">🎵 HymnFlow OBS Dock Plugin</h1>
     <p style="text-align: center; font-size: 1.2em; opacity: 0.9;" data-i18n="app.subtitle">
-      Complete Lower-Third Hymn Display System for OBS
+      Complete Lower-Third Hymn &amp; Scripture Display System for OBS
     </p>
 
     <div class="success">
-      <strong>✅ Production Ready!</strong> This plugin is fully functional and tested. Follow the setup below to get
-      started.
+      <strong>✅ Production Ready!</strong> Fully tested for live church services. Follow the setup below to get started in under 5 minutes.
     </div>
 
+    <!-- ===== WHAT'S NEW ===== -->
+    <h2>🆕 What's New in v2.5.0</h2>
+    <div class="new-feature">
+      <strong>Service Planning Overhaul</strong> — Build full service orders with hymns, scripture, announcements, and dividers. Drag-and-drop reorder, duplicate services, notes/cues per item, live coming-next preview in the service banner, past-item checkmarks, and auto-advance between items.
+    </div>
+    <div class="new-feature">
+      <strong>Global OBS Hotkeys</strong> — Control HymnFlow from any OBS window. Load <code>scripts/hymnflow-obs-hotkeys.py</code> in OBS → Tools → Scripts; hotkeys appear in OBS Settings → Hotkeys. Works via obs-websocket (OBS 28+, built-in). New keys: Next/Previous Service Item (<code>]</code>/<code>[</code>), Next/Previous Line.
+    </div>
+    <div class="new-feature">
+      <strong>Persistent Bible Storage</strong> — Bible translations now stored in IndexedDB (no 5 MB limit). Survives OBS restarts reliably. Auto-migrates from any prior localStorage format.
+    </div>
+
+    <!-- ===== QUICK SETUP ===== -->
     <h2>📦 Quick Setup (3 Steps)</h2>
 
     <div class="steps">
@@ -259,194 +251,184 @@
             <li>Click <strong>Apply</strong></li>
           </ul>
         </li>
+
         <li>
           <strong>2. Import Your Hymn Data</strong>
-
           <div class="warning" style="margin: 15px 0;">
-            <strong>⚠️ Important:</strong> Hymn files are <strong>NOT included</strong> in the main plugin download.
-            You must download them separately below. Each hymn collection is hosted on GitHub and can be downloaded
-            individually.
+            <strong>⚠️ Important:</strong> Hymn files are <strong>NOT included</strong> in the main plugin download. Download them individually below.
           </div>
-
-          <p style="margin-top: 10px;">Choose and download individual hymn books below. Each file can be imported
-            directly into HymnFlow.</p>
+          <p>Download one or more collections then import via <strong>Library</strong> tab → <strong>Import</strong>.</p>
 
           <div class="grid" style="margin-top: 20px;">
-            <!-- CAC Gospel Hymn Book -->
             <div class="card">
-              <h4 style="margin-top: 0; color: var(--accent-primary);">📖 CAC Gospel Hymn Book</h4>
-              <p style="font-size: 0.9em; opacity: 0.8; margin: 8px 0;">Complete collection from Christ Apostolic Church
-              </p>
-              <div style="display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.85em;">
-                <span>🎵 <strong>1,001</strong> hymns</span>
-                <span>📦 <strong>1.18 MB</strong></span>
+              <h4>📖 CAC Gospel Hymn Book</h4>
+              <p style="font-size: 0.88em; opacity: 0.8; margin: 6px 0;">Christ Apostolic Church (English)</p>
+              <div style="display:flex; justify-content:space-between; font-size:0.85em; margin: 10px 0;">
+                <span>🎵 <strong>1,001</strong> hymns</span><span>📦 1.18 MB</span>
               </div>
               <a href="https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_ghb.json"
-                download="cac_ghb.json" class="btn" style="width: 100%; padding: 10px; font-size: 0.9em;">
-                ⬇️ Download CAC GHB
-              </a>
+                download="cac_ghb.json" class="btn" style="width:100%; padding:10px; font-size:0.88em;">⬇️ Download CAC GHB</a>
             </div>
-
-            <!-- CAC Yoruba Hymn Book -->
             <div class="card">
-              <h4 style="margin-top: 0; color: var(--accent-primary);">🎵 CAC Yoruba Hymn Book</h4>
-              <p style="font-size: 0.9em; opacity: 0.8; margin: 8px 0;">Yoruba hymns from CAC (Iwe Orin CAC)</p>
-              <div style="display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.85em;">
-                <span>🎵 <strong>997</strong> hymns</span>
-                <span>📦 <strong>969 KB</strong></span>
+              <h4>🎵 CAC Yoruba Hymn Book</h4>
+              <p style="font-size: 0.88em; opacity: 0.8; margin: 6px 0;">Iwe Orin CAC (Yoruba)</p>
+              <div style="display:flex; justify-content:space-between; font-size:0.85em; margin: 10px 0;">
+                <span>🎵 <strong>997</strong> hymns</span><span>📦 969 KB</span>
               </div>
               <a href="https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_yhb.json"
-                download="cac_yhb.json" class="btn" style="width: 100%; padding: 10px; font-size: 0.9em;">
-                ⬇️ Download CAC YHB
-              </a>
+                download="cac_yhb.json" class="btn" style="width:100%; padding:10px; font-size:0.88em;">⬇️ Download CAC YHB</a>
             </div>
-
-            <!-- Faith We Sing -->
             <div class="card">
-              <h4 style="margin-top: 0; color: var(--accent-primary);">🎶 Faith We Sing</h4>
-              <p style="font-size: 0.9em; opacity: 0.8; margin: 8px 0;">Contemporary worship supplement</p>
-              <div style="display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.85em;">
-                <span>🎵 <strong>46</strong> hymns</span>
-                <span>📦 <strong>44 KB</strong></span>
+              <h4>🎶 Faith We Sing</h4>
+              <p style="font-size: 0.88em; opacity: 0.8; margin: 6px 0;">Contemporary worship supplement</p>
+              <div style="display:flex; justify-content:space-between; font-size:0.85em; margin: 10px 0;">
+                <span>🎵 <strong>46</strong> hymns</span><span>📦 44 KB</span>
               </div>
               <a href="https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/fws.json"
-                download="fws.json" class="btn" style="width: 100%; padding: 10px; font-size: 0.9em;">
-                ⬇️ Download FWS
-              </a>
+                download="fws.json" class="btn" style="width:100%; padding:10px; font-size:0.88em;">⬇️ Download FWS</a>
             </div>
-
-            <!-- Baptist Hymnal (2008) -->
             <div class="card">
-              <h4 style="margin-top: 0; color: var(--accent-primary);">⛪ Baptist Hymnal (2008)</h4>
-              <p style="font-size: 0.9em; opacity: 0.8; margin: 8px 0;">Published by LifeWay Christian Resources</p>
-              <div style="display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.85em;">
-                <span>🎵 <strong>325</strong> hymns</span>
-                <span>📦 <strong>352 KB</strong></span>
+              <h4>⛪ Baptist Hymnal (NNBH)</h4>
+              <p style="font-size: 0.88em; opacity: 0.8; margin: 6px 0;">Nigerian Baptist hymn collection</p>
+              <div style="display:flex; justify-content:space-between; font-size:0.85em; margin: 10px 0;">
+                <span>🎵 <strong>325</strong> hymns</span><span>📦 352 KB</span>
               </div>
               <a href="https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/nnbh.json"
-                download="nnbh.json" class="btn" style="width: 100%; padding: 10px; font-size: 0.9em;">
-                ⬇️ Download NNBH
-              </a>
+                download="nnbh.json" class="btn" style="width:100%; padding:10px; font-size:0.88em;">⬇️ Download NNBH</a>
             </div>
-
-            <!-- United Methodist Hymnal -->
             <div class="card">
-              <h4 style="margin-top: 0; color: var(--accent-primary);">✝️ United Methodist Hymnal</h4>
-              <p style="font-size: 0.9em; opacity: 0.8; margin: 8px 0;">Official UMC hymnal collection</p>
-              <div style="display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.85em;">
-                <span>🎵 <strong>296</strong> hymns</span>
-                <span>📦 <strong>337 KB</strong></span>
+              <h4>✝️ United Methodist Hymnal</h4>
+              <p style="font-size: 0.88em; opacity: 0.8; margin: 6px 0;">Official UMC hymnal collection</p>
+              <div style="display:flex; justify-content:space-between; font-size:0.85em; margin: 10px 0;">
+                <span>🎵 <strong>296</strong> hymns</span><span>📦 337 KB</span>
               </div>
               <a href="https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/umh.json"
-                download="umh.json" class="btn" style="width: 100%; padding: 10px; font-size: 0.9em;">
-                ⬇️ Download UMH
-              </a>
+                download="umh.json" class="btn" style="width:100%; padding:10px; font-size:0.88em;">⬇️ Download UMH</a>
             </div>
-
-            <!-- Yoruba Baptist Hymnal -->
             <div class="card">
-              <h4 style="margin-top: 0; color: var(--accent-primary);">🌍 Yoruba Baptist Hymnal</h4>
-              <p style="font-size: 0.9em; opacity: 0.8; margin: 8px 0;">Baptist hymns in Yoruba language</p>
-              <div style="display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.85em;">
-                <span>🎵 <strong>650</strong> hymns</span>
-                <span>📦 <strong>582 KB</strong></span>
+              <h4>🌍 Yoruba Baptist Hymnal</h4>
+              <p style="font-size: 0.88em; opacity: 0.8; margin: 6px 0;">Baptist hymns in Yoruba language</p>
+              <div style="display:flex; justify-content:space-between; font-size:0.85em; margin: 10px 0;">
+                <span>🎵 <strong>650</strong> hymns</span><span>📦 582 KB</span>
               </div>
               <a href="https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/ybh.json"
-                download="ybh.json" class="btn" style="width: 100%; padding: 10px; font-size: 0.9em;">
-                ⬇️ Download YBH
-              </a>
+                download="ybh.json" class="btn" style="width:100%; padding:10px; font-size:0.88em;">⬇️ Download YBH</a>
             </div>
           </div>
 
-          <div class="warning" style="margin-top: 20px;">
+          <div class="warning">
             <strong>💡 How to Import:</strong>
             <ol style="margin: 10px 0 0 20px;">
-              <li><strong>Download:</strong> Click the download button, or right-click and select "Save link as..." if
-                your browser opens the JSON file instead of downloading it</li>
-              <li>Open HymnFlow Dock in OBS → go to the <strong>Library</strong> tab</li>
-              <li>Click the <strong>Import</strong> button in the <strong>Hymns</strong> section</li>
-              <li data-i18n="setup.import.selectFile">Select the downloaded <code>.json</code>, <code>.txt</code>, or <code>.csv</code> file</li>
-              <li>Your hymns will be imported and ready to use!</li>
+              <li><strong>Download:</strong> Click the button above (if the browser opens JSON instead of downloading, right-click → Save link as…)</li>
+              <li>Open HymnFlow Dock in OBS → <strong>Library</strong> tab → <strong>Hymns</strong> section</li>
+              <li>Click <strong>Import</strong> and select the downloaded <code>.json</code> file</li>
+              <li>Hymns appear instantly — click any to select, then go to <strong>Live</strong> to display</li>
             </ol>
           </div>
-
         </li>
+
         <li>
           <strong>3. Add Browser Source for Overlay</strong>
           <ul>
             <li>In OBS, add a new <strong>Browser Source</strong></li>
             <li>Name: <code>Hymn Lower-Third</code></li>
             <li>URL: <code id="overlayUrl">file:///C:/HymnFlow/public/obs-overlay/index.html</code></li>
-            <li>Width: <code>1920</code>, Height: <code>1080</code></li>
-            <li>Check ✅ <strong>Shutdown source when not visible</strong></li>
+            <li>Width: <code>1920</code> · Height: <code>1080</code></li>
+            <li>✅ <strong>Shutdown source when not visible</strong></li>
             <li>Click <strong>OK</strong></li>
           </ul>
         </li>
       </ol>
     </div>
 
-    <h2>🎮 Controls</h2>
+    <!-- ===== KEYBOARD SHORTCUTS ===== -->
+    <h2>⌨️ Keyboard Shortcuts</h2>
 
     <div class="grid">
       <div class="card">
-        <h3>Keyboard Shortcuts</h3>
+        <h3>Verse &amp; Line Navigation <span class="tag tag-opt">dock focus</span></h3>
         <table>
-          <tr>
-            <th>Key</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td><code>→</code></td>
-            <td>Next verse (auto-updates overlay)</td>
-          </tr>
-          <tr>
-            <td><code>←</code></td>
-            <td>Previous verse (auto-updates overlay)</td>
-          </tr>
-          <tr>
-            <td><code>↓</code></td>
-            <td>Next lines (auto-updates, advances verse at end)</td>
-          </tr>
-          <tr>
-            <td><code>↑</code></td>
-            <td>Previous lines (auto-updates, retreats verse at start)</td>
-          </tr>
-          <tr>
-            <td><code>Space</code></td>
-            <td>Toggle display (show/hide overlay)</td>
-          </tr>
+          <tr><th>Key</th><th>Action</th></tr>
+          <tr><td><code>→</code></td><td>Next verse</td></tr>
+          <tr><td><code>←</code></td><td>Previous verse</td></tr>
+          <tr><td><code>↓</code></td><td>Next line window (long/multi-line verses)</td></tr>
+          <tr><td><code>↑</code></td><td>Previous line window</td></tr>
+          <tr><td><code>Space</code></td><td>Toggle display on/off</td></tr>
         </table>
-        <p><strong>Smart Navigation:</strong> Line navigation automatically continues to next/previous verse when
-          reaching boundaries!</p>
       </div>
-
       <div class="card">
-        <h3>Button Controls</h3>
+        <h3>Service Navigation <span class="tag tag-new">New in 2.5</span> <span class="tag tag-opt">dock focus</span></h3>
         <table>
-          <tr>
-            <th>Button</th>
-            <th>Action</th>
-          </tr>
-          <tr>
-            <td><strong>👁️ Display / 🚫 Hide</strong></td>
-            <td>Toggle visibility with visual feedback (purple=hidden, red pulsing=visible)</td>
-          </tr>
-          <tr>
-            <td><strong>Reset</strong></td>
-            <td>Return to verse 1, line 1 (auto-updates)</td>
-          </tr>
-          <tr>
-            <td><strong>Import</strong></td>
-            <td>Load hymns from file</td>
-          </tr>
-          <tr>
-            <td><strong>Export</strong></td>
-            <td data-i18n="setup.controls.exportDesc">Save hymns to hymnflow-export.json</td>
-          </tr>
+          <tr><th>Key</th><th>Action</th></tr>
+          <tr><td><code>]</code> or <code>PgDn</code></td><td>Next service item</td></tr>
+          <tr><td><code>[</code> or <code>PgUp</code></td><td>Previous service item</td></tr>
         </table>
+        <p style="font-size: 0.85em; color: var(--text-muted); margin-top: 10px;">
+          At the last verse of a hymn in a service, <code>→</code> auto-advances to the next item.
+        </p>
       </div>
     </div>
 
+    <!-- ===== GLOBAL OBS HOTKEYS ===== -->
+    <h2>🎛️ Global OBS Hotkeys <span class="tag tag-new">New in 2.5</span></h2>
+
+    <p>Global hotkeys work from <strong>any window in OBS</strong> — you don't need to click the dock first. They use OBS's built-in hotkey system and communicate via obs-websocket (included in OBS 28+).</p>
+
+    <div class="steps">
+      <ol>
+        <li>
+          <strong>Enable obs-websocket in OBS</strong>
+          <ul>
+            <li>Open OBS → <code>Tools → obs-websocket Settings</code></li>
+            <li>Check <strong>Enable WebSocket server</strong></li>
+            <li>Note the port (default: <code>4455</code>) and set a password if desired</li>
+            <li>Click <strong>OK</strong></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Load the HymnFlow hotkey script</strong>
+          <ul>
+            <li>Open OBS → <code>Tools → Scripts</code></li>
+            <li>Click <strong>+</strong> and select <code>scripts/hymnflow-obs-hotkeys.py</code></li>
+            <li>In the script panel that appears, enter your obs-websocket host, port, and password</li>
+          </ul>
+        </li>
+        <li>
+          <strong>Bind your keys</strong>
+          <ul>
+            <li>Open OBS → <code>Settings → Hotkeys</code></li>
+            <li>Search <strong>"HymnFlow"</strong> — you'll see 7 actions</li>
+            <li>Click the field next to each action and press your desired key</li>
+            <li>Click <strong>OK</strong></li>
+          </ul>
+        </li>
+        <li>
+          <strong>Connect HymnFlow dock to obs-websocket</strong>
+          <ul>
+            <li>In the HymnFlow dock, go to the <strong>Style</strong> tab → <strong>OBS Connection</strong> section</li>
+            <li>Enter the same host (<code>127.0.0.1</code>), port, and password</li>
+            <li>Click <strong>Connect</strong> — the badge turns green ●</li>
+            <li>HymnFlow will auto-reconnect on OBS restarts once connected</li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+
+    <div class="card" style="margin-top: 0;">
+      <h3>Available Global Hotkeys</h3>
+      <table>
+        <tr><th>OBS Hotkey Name</th><th>Action</th></tr>
+        <tr><td>HymnFlow: Next Verse</td><td>Advance to next verse</td></tr>
+        <tr><td>HymnFlow: Previous Verse</td><td>Go back one verse</td></tr>
+        <tr><td>HymnFlow: Next Line</td><td>Scroll down one line window</td></tr>
+        <tr><td>HymnFlow: Previous Line</td><td>Scroll up one line window</td></tr>
+        <tr><td>HymnFlow: Next Service Item</td><td>Advance to next item in service order</td></tr>
+        <tr><td>HymnFlow: Previous Service Item</td><td>Go back one item in service order</td></tr>
+        <tr><td>HymnFlow: Toggle Display</td><td>Show / hide the overlay</td></tr>
+      </table>
+    </div>
+
+    <!-- ===== FEATURES ===== -->
     <h2>✨ Features</h2>
 
     <div class="grid">
@@ -455,82 +437,111 @@
         <ul>
           <li>Add, edit, delete hymns</li>
           <li>Search by title or author</li>
-          <li data-i18n="setup.features.importFormats">Import .txt, .csv, or .json files</li>
-          <li>Export your library</li>
+          <li>Import .txt, .csv, or .json files</li>
+          <li>Export your full library</li>
         </ul>
       </div>
-
+      <div class="card">
+        <h3>📅 Service Planning <span class="tag tag-new">v2.5</span></h3>
+        <ul>
+          <li>Build service orders: hymns, scripture, announcements, dividers</li>
+          <li>Drag-and-drop reorder; duplicate services as templates</li>
+          <li>Notes/cues per item (internal, not shown on screen)</li>
+          <li>Past-item checkmarks + "coming next" banner</li>
+        </ul>
+      </div>
       <div class="card">
         <h3>📖 Bible / Quick Scripture</h3>
         <ul>
-          <li>Import any Bible translation (KJV, NIV, ESV…)</li>
+          <li>Import any Bible translation (KJV, NIV, ESV, Yoruba…)</li>
           <li>Look up any verse or chapter live</li>
           <li>Step through verses with ← → navigation</li>
-          <li>Supports multiple loaded translations</li>
+          <li>Persistent storage via IndexedDB (no size limit) <span class="tag tag-new">v2.5</span></li>
         </ul>
       </div>
-
       <div class="card">
         <h3>🌍 Multi-Language Support</h3>
         <ul>
-          <li>9 languages supported</li>
-          <li>English, Spanish, French</li>
-          <li>Portuguese, Swahili, Tagalog</li>
-          <li>Yoruba, Mandarin, Korean</li>
+          <li>9 UI languages supported</li>
+          <li>English, Spanish, French, Portuguese</li>
+          <li>Swahili, Tagalog, Yoruba, Mandarin, Korean</li>
         </ul>
       </div>
-
       <div class="card">
         <h3>🎨 Styling Options</h3>
         <ul>
-          <li>5+ font families</li>
-          <li>Font size: 24-96px (auto-fit for long text)</li>
-          <li>Bold, italic, shadow, glow</li>
-          <li>Color picker for text</li>
+          <li>5+ font families; size 24–96 px (auto-fit)</li>
+          <li>Bold, italic, shadow, glow, outline</li>
+          <li>Full color picker for text and backgrounds</li>
+          <li>Transparent, solid, or gradient backgrounds</li>
         </ul>
       </div>
-
       <div class="card">
-        <h3>🖼️ Background Options</h3>
+        <h3>🎬 Display &amp; Animation</h3>
         <ul>
-          <li>Transparent (recommended)</li>
-          <li>Solid color</li>
-          <li>Gradient (2 colors)</li>
-          <li>Customizable opacity</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <h3>🎬 Animations</h3>
-        <ul>
-          <li>Fade in/out</li>
-          <li>Slide in/out</li>
-          <li>Instant (no animation)</li>
-          <li>Smooth transitions</li>
+          <li>Fade, slide, or instant transitions</li>
+          <li>Position: bottom-third, middle, or top</li>
+          <li>Lines-per-display slider (1–6)</li>
+          <li>Auto-fit overflow text</li>
         </ul>
       </div>
     </div>
 
+    <!-- ===== BIBLE LOOKUP SETUP ===== -->
     <h2>📖 Bible Lookup Setup</h2>
 
     <div class="steps">
-      <p>The Quick Scripture panel lets you look up and display verses live. Bible data is <strong>not bundled</strong> — import a free public domain JSON file.</p>
+      <p>The Quick Scripture panel lets you look up and display any verse live during a service. Bible data is <strong>not bundled</strong> in the plugin — import a free public-domain JSON file.</p>
 
       <h3>Step 1: Get a Bible JSON File</h3>
-      <p>Download the KJV (public domain) from one of these GitHub repositories:</p>
-      <ul>
-        <li><a href="https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json" target="_blank" style="color: var(--accent-primary);">thiagobodruk/bible → en_kjv.json</a> — click <strong>Raw</strong>, then Save As → <code>kjv.json</code></li>
-        <li><a href="https://github.com/aruljohn/Bible-kjv/blob/master/kjv.json" target="_blank" style="color: var(--accent-primary);">aruljohn/Bible-kjv → kjv.json</a> — click <strong>Raw</strong>, then Save As → <code>kjv.json</code></li>
-      </ul>
-      <p>Or if you have Python 3: run <code>python scripts/bundle_bible_kjv.py</code> — it downloads and converts automatically.</p>
+      <p>Use one of the quick-download links below, or see the full <strong>Public Domain Bible Directory</strong> further down this page for more translations and languages.</p>
+
+      <div class="grid-3" style="margin: 20px 0;">
+        <div class="card">
+          <h4>KJV English</h4>
+          <p style="font-size:0.85em; opacity:0.8;">King James Version — most widely used public domain English Bible</p>
+          <a href="https://raw.githubusercontent.com/thiagobodruk/bible/master/json/en_kjv.json"
+            download="kjv.json" class="btn btn-sm">⬇️ Download KJV</a>
+        </div>
+        <div class="card">
+          <h4>ASV English</h4>
+          <p style="font-size:0.85em; opacity:0.8;">American Standard Version — precise public domain translation</p>
+          <a href="https://raw.githubusercontent.com/thiagobodruk/bible/master/json/en_asv.json"
+            download="asv.json" class="btn btn-sm">⬇️ Download ASV</a>
+        </div>
+        <div class="card">
+          <h4>RVR Spanish</h4>
+          <p style="font-size:0.85em; opacity:0.8;">Reina Valera Revisada — classic Spanish-language Bible</p>
+          <a href="https://raw.githubusercontent.com/thiagobodruk/bible/master/json/es_rvr.json"
+            download="rvr.json" class="btn btn-sm">⬇️ Download RVR</a>
+        </div>
+        <div class="card">
+          <h4>Almeida Portuguese</h4>
+          <p style="font-size:0.85em; opacity:0.8;">João Ferreira de Almeida — standard Portuguese Bible</p>
+          <a href="https://raw.githubusercontent.com/thiagobodruk/bible/master/json/pt_aa.json"
+            download="pt_aa.json" class="btn btn-sm">⬇️ Download AA</a>
+        </div>
+        <div class="card">
+          <h4>Segond French</h4>
+          <p style="font-size:0.85em; opacity:0.8;">Louis Segond — classic French translation (1910)</p>
+          <a href="https://raw.githubusercontent.com/thiagobodruk/bible/master/json/fr_apee.json"
+            download="fr_apee.json" class="btn btn-sm">⬇️ Download Segond</a>
+        </div>
+        <div class="card">
+          <h4>Yoruba Bible</h4>
+          <p style="font-size:0.85em; opacity:0.8;">Convert Yoruba Bible text using the included Python script</p>
+          <code style="font-size:0.8em; display:block; margin-top:8px;">python scripts/convert_yoruba_bible.py "input.txt"</code>
+        </div>
+      </div>
 
       <h3>Step 2: Import into HymnFlow</h3>
       <ol>
         <li>Open HymnFlow Dock → <strong>Library</strong> tab → <strong>Bible</strong> section</li>
-        <li>Type <code>KJV</code> in the name field</li>
-        <li>Click <strong>Import JSON</strong> and select the file</li>
-        <li>Status badge shows <code>KJV ✓</code> — you're ready</li>
+        <li>Type a short translation name (e.g., <code>KJV</code>, <code>RVR</code>, <code>AA</code>) in the name field</li>
+        <li>Click <strong>Import JSON</strong> and select the downloaded file</li>
+        <li>Status badge shows <code>KJV ✓</code> — Bible is ready</li>
       </ol>
+      <p>You can load <strong>multiple translations</strong> — each stored separately. Switch between them with the inline selector in the Live tab.</p>
 
       <h3>Step 3: Use Quick Scripture</h3>
       <ol>
@@ -541,125 +552,251 @@
       </ol>
     </div>
 
-    <h2>📖 Usage Example</h2>
+    <!-- ===== PUBLIC DOMAIN BIBLE DIRECTORY ===== -->
+    <h2>📚 Public Domain &amp; Open-Source Bible Directory</h2>
+    <p>The following free resources provide Bible text you can import into HymnFlow. All translations listed are either public domain or freely licensed for non-commercial use.</p>
 
+    <h3>GitHub Repositories (JSON — ready to import)</h3>
+    <div class="card" style="margin-bottom: 24px;">
+      <table>
+        <tr><th>Repository</th><th>Translations</th><th>Languages</th></tr>
+        <tr>
+          <td><a href="https://github.com/thiagobodruk/bible" target="_blank" style="color: var(--accent-primary);">thiagobodruk/bible</a></td>
+          <td>KJV, ASV, RVR (Spanish), AA (Portuguese), APEE (French), TBNT (Thai), Tagalog (AABB), and more</td>
+          <td>EN, ES, PT, FR, TH, TL</td>
+        </tr>
+        <tr>
+          <td><a href="https://github.com/scrollmapper/bible_databases" target="_blank" style="color: var(--accent-primary);">scrollmapper/bible_databases</a></td>
+          <td>KJV, ASV (JSON + SQLite)</td>
+          <td>EN</td>
+        </tr>
+        <tr>
+          <td><a href="https://github.com/aruljohn/Bible-kjv" target="_blank" style="color: var(--accent-primary);">aruljohn/Bible-kjv</a></td>
+          <td>King James Version</td>
+          <td>EN</td>
+        </tr>
+        <tr>
+          <td><a href="https://github.com/seven1m/open-bibles" target="_blank" style="color: var(--accent-primary);">seven1m/open-bibles</a></td>
+          <td>WEB, ASV, KJV, Darby, YLT, multiple other free translations (OSIS XML format — use converter script)</td>
+          <td>EN and others</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Public-Domain Translation Quick Reference</h3>
+    <div class="card" style="margin-bottom: 24px;">
+      <table>
+        <tr><th>Abbreviation</th><th>Full Name</th><th>Language</th><th>Notes</th></tr>
+        <tr><td><code>KJV</code></td><td>King James Version (1769)</td><td>English</td><td>Most widely used public-domain Bible</td></tr>
+        <tr><td><code>ASV</code></td><td>American Standard Version (1901)</td><td>English</td><td>Literal word-for-word translation</td></tr>
+        <tr><td><code>WEB</code></td><td>World English Bible</td><td>English</td><td>Modern public domain; no "thee/thou"</td></tr>
+        <tr><td><code>YLT</code></td><td>Young's Literal Translation (1898)</td><td>English</td><td>Extremely literal; historical</td></tr>
+        <tr><td><code>DBY</code></td><td>Darby Bible (1890)</td><td>English</td><td>Scholar-grade literal translation</td></tr>
+        <tr><td><code>RVR60</code></td><td>Reina-Valera Revisada 1960</td><td>Spanish</td><td>Standard Spanish-speaking church Bible</td></tr>
+        <tr><td><code>AA</code></td><td>Almeida Atualizada</td><td>Portuguese</td><td>Most common Portuguese Bible in Brazil</td></tr>
+        <tr><td><code>ARC</code></td><td>Almeida Revisada e Corrigida</td><td>Portuguese</td><td>Classic Almeida revision</td></tr>
+        <tr><td><code>LS</code></td><td>Louis Segond (1910)</td><td>French</td><td>Classic French Protestant Bible</td></tr>
+        <tr><td><code>NEG</code></td><td>Nouvelle Édition de Genève</td><td>French</td><td>Modern French Segond update</td></tr>
+        <tr><td><code>NBS</code></td><td>Nouvelle Bible Segond</td><td>French</td><td>2002 update; may have license restrictions</td></tr>
+        <tr><td><code>BYO</code></td><td>Bibeli Mimo (Yoruba)</td><td>Yoruba</td><td>Use included <code>convert_yoruba_bible.py</code></td></tr>
+      </table>
+    </div>
+
+    <h3>Download Sites for More Translations</h3>
+    <div class="grid">
+      <div class="card">
+        <h4>🌐 eBible.org</h4>
+        <p style="font-size:0.88em;">Free downloads of hundreds of translations in USFM, USX, and plain-text formats. Includes many African and Asian language Bibles.</p>
+        <p style="font-size:0.88em;"><strong>Languages:</strong> Yoruba, Swahili, Hausa, Igbo, Zulu, Tamil, Korean, and 500+ others.</p>
+        <p style="font-size:0.85em; color: var(--text-muted);">Use <code>scripts/convert_bible_txt.py</code> to convert plain-text downloads to HymnFlow JSON format.</p>
+        <a href="https://ebible.org/find/" target="_blank" class="btn btn-sm">🔗 Visit eBible.org</a>
+      </div>
+      <div class="card">
+        <h4>📖 Crosswire Bible Society</h4>
+        <p style="font-size:0.88em;">Free module downloads for the Sword Bible engine. Wide coverage of minority and indigenous languages.</p>
+        <p style="font-size:0.88em;"><strong>Languages:</strong> 200+ languages including many without other digital sources.</p>
+        <p style="font-size:0.85em; color: var(--text-muted);">Requires extraction from Sword module format. Advanced users.</p>
+        <a href="https://www.crosswire.org/sword/modules/index.jsp" target="_blank" class="btn btn-sm">🔗 Visit Crosswire</a>
+      </div>
+      <div class="card">
+        <h4>📜 Bible Gateway (Public Domain)</h4>
+        <p style="font-size:0.88em;">KJV, ASV, WEB, and other public-domain translations available for copy-paste. Not bulk-downloadable but useful for individual passages.</p>
+        <a href="https://www.biblegateway.com" target="_blank" class="btn btn-sm">🔗 Visit Bible Gateway</a>
+      </div>
+      <div class="card">
+        <h4>🌍 Open.Bible</h4>
+        <p style="font-size:0.88em;">Community-sourced open-license Bible translations. Good source for African and Pacific languages.</p>
+        <a href="https://open.bible" target="_blank" class="btn btn-sm">🔗 Visit Open.Bible</a>
+      </div>
+    </div>
+
+    <div class="success" style="margin-top: 24px;">
+      <strong>💡 Converting text Bibles to HymnFlow format:</strong><br>
+      If you have a Bible in plain-text format (verse per line, or other common layouts), use the included converter:
+      <pre style="margin: 10px 0 0; font-size: 0.88em;">python scripts/convert_bible_txt.py "path/to/bible.txt" --name KJV
+python scripts/convert_yoruba_bible.py "path/to/yoruba.txt"    # Yoruba-specific</pre>
+      The script auto-detects 4 common plain-text formats and outputs a HymnFlow-compatible JSON file ready to import.
+    </div>
+
+    <!-- ===== SERVICE PLANNING WORKFLOW ===== -->
+    <h2>📅 Service Planning Workflow <span class="tag tag-new">New in 2.5</span></h2>
     <div class="steps">
-      <h3>Live Streaming Workflow:</h3>
       <ol>
-        <li><strong>Before Stream:</strong> Import your hymn library</li>
-        <li><strong>During Service:</strong> Keep dock open in OBS</li>
-        <li><strong>When Hymn Starts:</strong> Click hymn from list</li>
-        <li><strong>Show First Verse:</strong> Press <code>Show</code> or <code>Space</code></li>
-        <li><strong>Navigate:</strong> Use arrow keys to move through verses/lines</li>
-        <li><strong>When Done:</strong> Press <code>Hide</code></li>
+        <li><strong>Create a service:</strong> Service tab → <code>+ New Service</code> → give it a name (e.g., "Sunday Morning 22 Jun")</li>
+        <li><strong>Add items:</strong> Click <code>+ Hymn</code>, <code>+ Scripture</code>, <code>+ Announcement</code>, or <code>+ Divider</code> to build the order</li>
+        <li><strong>Reorder:</strong> Drag items up and down to arrange. Inline ↑/↓ buttons also available.</li>
+        <li><strong>Add notes:</strong> Each item has an optional internal notes/cue field (not shown on screen)</li>
+        <li><strong>Save</strong> the service. You can duplicate it as a template for next week.</li>
+        <li><strong>Load &amp; run:</strong> Click <strong>Load</strong> on a service — the banner appears at the top of the dock showing the current item + "Next: …". Use <code>]</code> or the banner → arrows to advance.</li>
       </ol>
     </div>
 
-    <h2>📁 Import Formats</h2>
+    <!-- ===== USAGE EXAMPLE ===== -->
+    <h2>📖 Live Streaming Workflow</h2>
+    <div class="steps">
+      <ol>
+        <li><strong>Before Stream:</strong> Build your service order in the Service tab and import your hymn library</li>
+        <li><strong>Load Service:</strong> Click <strong>Load</strong> on your service — items appear in order in the banner</li>
+        <li><strong>When Hymn Starts:</strong> The dock auto-selects the hymn; press <code>Space</code> to display verse 1</li>
+        <li><strong>Navigate:</strong> <code>→</code> / <code>←</code> between verses, <code>↓</code> / <code>↑</code> for line windows within long verses</li>
+        <li><strong>Next Item:</strong> Press <code>]</code> (or the banner arrow) — or let the last verse auto-advance</li>
+        <li><strong>Scripture:</strong> Activating a scripture item switches to Live tab and loads the verse ready to display</li>
+        <li><strong>Done:</strong> Press <code>Space</code> to hide the overlay</li>
+      </ol>
+    </div>
 
+    <!-- ===== IMPORT FORMATS ===== -->
+    <h2>📁 Hymn Import Formats</h2>
     <div class="grid">
       <div class="card">
         <h3>TXT Format</h3>
         <pre>Title: Amazing Grace
 Author: John Newton
 
-Verse 1 text here
-Multiple lines allowed
+Amazing grace! How sweet the sound
+That saved a wretch like me!
 
-Verse 2 text here</pre>
+'Twas grace that taught my heart to fear,
+And grace my fears relieved;</pre>
       </div>
-
       <div class="card">
-        <h3 data-i18n="setup.importFormats.csv">CSV Format</h3>
-        <pre>Title,Author,Verse Number,Verse Text,Chorus,Source Abbr,Source,Hymn Number
-"Amazing Grace","John Newton",1,"Verse 1 text","","CH","Church Hymnal",123
-"Amazing Grace","John Newton",2,"Verse 2 text","","CH","Church Hymnal",123</pre>
+        <h3>CSV Format</h3>
+        <pre>Title,Author,Verse Number,Verse Text,Chorus
+"Amazing Grace","John Newton",1,"Verse 1 text",""
+"Amazing Grace","John Newton",2,"Verse 2 text",""</pre>
       </div>
-
       <div class="card">
         <h3>JSON Format</h3>
-        <pre>[
-  {
-    "title": "Amazing Grace",
-    "author": "John Newton",
-    "verses": [
-      "Verse 1 text",
-      "Verse 2 text"
-    ]
-  }
-]</pre>
+        <pre>[{
+  "title": "Amazing Grace",
+  "author": "John Newton",
+  "verses": [
+    "Verse 1 text",
+    "Verse 2 text"
+  ]
+}]</pre>
       </div>
     </div>
 
-    <div class="warning">
-      <strong>⚠️ Important:</strong> Both dock and overlay must be from the same origin (same file:// directory or same
-      http:// server) for localStorage communication to work.
-    </div>
-
-    <h2>🔗 Quick Links</h2>
-
-    <a href="obs-dock/index.html" class="btn" target="_blank">🎛️ Open Dock (Test)</a>
-    <a href="obs-overlay/index.html" class="btn" target="_blank">📺 Open Overlay (Test)</a>
-    <a href="../OBS_DOCK_README.md" class="btn" target="_blank">📚 Full Documentation</a>
-
+    <!-- ===== TIPS ===== -->
     <h2>💡 Tips</h2>
-
     <div class="card">
       <ul>
-        <li><strong>Lines per display:</strong> Adjust slider (1-6) to control how many lines show at once</li>
-        <li><strong>Preview:</strong> Watch the preview box to see what will display before clicking Show</li>
-        <li><strong>Position:</strong> Choose bottom-third (default), middle, or top placement</li>
-        <li><strong>Backup:</strong> Export your hymns regularly to avoid data loss</li>
-        <li><strong>Performance:</strong> Use transparent background for best overlay quality</li>
-        <li><strong>Language:</strong> Change interface language in the <strong>Style</strong> tab (9 languages available)</li>
+        <li><strong>Lines per display:</strong> Adjust slider (1–6) to control how many lines show at once — great for long verse text</li>
+        <li><strong>Preview:</strong> Watch the preview box in the Live tab to see exactly what will display before pressing Show</li>
+        <li><strong>Backup:</strong> Export your hymns regularly (Library → Export) to avoid data loss</li>
+        <li><strong>Performance:</strong> Use transparent background for the cleanest overlay quality on any scene</li>
+        <li><strong>Language:</strong> Change interface language in the <strong>Style</strong> tab → Settings (9 languages)</li>
+        <li><strong>Global hotkeys:</strong> Bind <code>F5</code>/<code>F6</code> to Next/Prev Verse in OBS Settings → Hotkeys for hands-free control</li>
+        <li><strong>Multiple Bibles:</strong> Load KJV + your local language translation — switch between them mid-service with the Live tab selector</li>
+        <li><strong>Service templates:</strong> Use the <strong>Dup</strong> button to copy last week's service as a template for this week</li>
       </ul>
     </div>
 
-    <h2>🌍 Changing Interface Language</h2>
-
+    <!-- ===== LANGUAGE ===== -->
+    <h2>🌍 Interface Language</h2>
     <div class="steps">
       <p>HymnFlow supports <strong>9 languages</strong> for the user interface:</p>
-      <ul style="list-style: none; padding-left: 0;">
-        <li>🇬🇧 <strong>English</strong> (en) - Default</li>
-        <li>🇪🇸 <strong>Spanish</strong> (es - Español)</li>
-        <li>🇫🇷 <strong>French</strong> (fr - Français)</li>
-        <li>🇵🇹 <strong>Portuguese</strong> (pt - Português)</li>
-        <li>🇹🇿 <strong>Swahili</strong> (sw - Kiswahili)</li>
+      <ul style="list-style: none; padding-left: 0; columns: 2;">
+        <li>🇬🇧 <strong>English</strong> (en) — Default</li>
+        <li>🇪🇸 <strong>Spanish</strong> (es — Español)</li>
+        <li>🇫🇷 <strong>French</strong> (fr — Français)</li>
+        <li>🇵🇹 <strong>Portuguese</strong> (pt — Português)</li>
+        <li>🇹🇿 <strong>Swahili</strong> (sw — Kiswahili)</li>
         <li>🇵🇭 <strong>Tagalog</strong> (tl)</li>
-        <li>🇳🇬 <strong>Yoruba</strong> (yo - Yorùbá)</li>
-        <li>🇨🇳 <strong>Mandarin Chinese</strong> (zh - 中文)</li>
-        <li>🇰🇷 <strong>Korean</strong> (ko - 한국어)</li>
+        <li>🇳🇬 <strong>Yoruba</strong> (yo — Yorùbá)</li>
+        <li>🇨🇳 <strong>Mandarin</strong> (zh — 中文)</li>
+        <li>🇰🇷 <strong>Korean</strong> (ko — 한국어)</li>
       </ul>
-      <p><strong>To change language:</strong></p>
-      <ol>
-        <li>Open the HymnFlow Dock in OBS</li>
-        <li>Click the <strong>Style</strong> tab</li>
-        <li>Find the <strong>Interface Language</strong> dropdown</li>
-        <li>Select your preferred language</li>
-        <li>The UI updates immediately - all labels, buttons, and tooltips will be in your selected language</li>
-        <li>Your preference is automatically saved in browser localStorage</li>
-      </ol>
+      <p><strong>To change:</strong> HymnFlow dock → <strong>Style</strong> tab → <strong>Settings</strong> → Interface Language dropdown. Changes take effect immediately and are remembered across OBS restarts.</p>
     </div>
 
-    <div class="success">
-      <strong>🎉 You're all set!</strong> Start by clicking "Open Dock (Test)" above to try the interface.
+    <!-- ===== TROUBLESHOOTING ===== -->
+    <h2>❓ Troubleshooting</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Dock doesn't appear</h3>
+        <ul>
+          <li>URL must use forward slashes: <code>file:///C:/HymnFlow/…</code></li>
+          <li>Confirm the path is correct</li>
+          <li>Restart OBS after adding the dock</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Overlay doesn't update</h3>
+        <ul>
+          <li>Both dock and overlay must use the same origin (same <code>file://</code> folder or same HTTP server)</li>
+          <li>Right-click the Browser Source → <strong>Refresh</strong></li>
+          <li>Check the source is in an active scene</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Bible lost after OBS restart</h3>
+        <ul>
+          <li>v2.5 stores Bibles in IndexedDB — should persist reliably</li>
+          <li>If upgrading from v2.4.x, re-import your Bible once — it will migrate automatically</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Global hotkeys not firing</h3>
+        <ul>
+          <li>Confirm obs-websocket is enabled: OBS → <code>Tools → obs-websocket Settings</code></li>
+          <li>Confirm the script is loaded: OBS → <code>Tools → Scripts</code></li>
+          <li>The dock badge should show green ● when connected</li>
+          <li>Keys must be bound in OBS Settings → Hotkeys (search "HymnFlow")</li>
+        </ul>
+      </div>
     </div>
+
+    <!-- ===== QUICK LINKS ===== -->
+    <h2>🔗 Quick Links</h2>
+    <a href="obs-dock/index.html" class="btn" target="_blank">🎛️ Open Dock (Test)</a>
+    <a href="obs-overlay/index.html" class="btn" target="_blank">📺 Open Overlay (Test)</a>
+    <a href="../doc/SETUP.md" class="btn" target="_blank">📋 SETUP.md</a>
+    <a href="../doc/OBS_DOCK_README.md" class="btn" target="_blank">📚 Full Documentation</a>
+
+    <div class="success" style="margin-top: 32px;">
+      <strong>🎉 You're all set!</strong> Click "Open Dock (Test)" above to try the interface, then add it as a Custom Browser Dock in OBS.
+    </div>
+
+    <p style="text-align:center; margin-top: 40px; font-size: 0.85em; color: var(--text-muted);">
+      HymnFlow v2.5.0 · Built with ❤️ for worship teams · By <strong>Gloryland Baptist Church, Owode-Ede</strong> @gbcowode
+    </p>
+
   </div>
 
   <script>
-    // Update URLs based on current location
-    const baseUrl = window.location.href.replace('obs-setup.html', '');
+    // Auto-populate URLs based on current file location
     const protocol = window.location.protocol;
-
     if (protocol === 'file:') {
       const dir = window.location.pathname.split('/').slice(0, -1).join('/');
-      document.getElementById('dockUrl').textContent = 'file://' + dir + '/obs-dock/index.html';
+      document.getElementById('dockUrl').textContent    = 'file://' + dir + '/obs-dock/index.html';
       document.getElementById('overlayUrl').textContent = 'file://' + dir + '/obs-overlay/index.html';
     } else {
-      document.getElementById('dockUrl').textContent = baseUrl + 'obs-dock/';
-      document.getElementById('overlayUrl').textContent = baseUrl + 'obs-overlay/';
+      const base = window.location.href.replace('obs-setup.html', '');
+      document.getElementById('dockUrl').textContent    = base + 'obs-dock/';
+      document.getElementById('overlayUrl').textContent = base + 'obs-overlay/';
     }
   </script>
 </body>
-
 </html>

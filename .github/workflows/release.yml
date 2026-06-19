@@ -22,18 +22,33 @@ jobs:
 
       - name: Create plugin package
         run: |
-          mkdir -p hymnflow-${{ steps.tag_name.outputs.VERSION }}
-          cp -r public/obs-dock hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp -r public/obs-overlay hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp -r public/data hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp -r public/parsers hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp -r public/i18n hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp public/obs-setup.html hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp public/validation.js hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp README.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp doc/SETUP.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp doc/TROUBLESHOOTING.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
-          cp doc/SECURITY.md hymnflow-${{ steps.tag_name.outputs.VERSION }}/
+          VER=${{ steps.tag_name.outputs.VERSION }}
+          DIR=hymnflow-$VER
+          mkdir -p $DIR
+
+          # Core application files
+          cp -r public/obs-dock    $DIR/
+          cp -r public/obs-overlay $DIR/
+          cp -r public/data        $DIR/
+          cp -r public/parsers     $DIR/
+          cp -r public/i18n        $DIR/
+          cp public/obs-setup.html $DIR/
+          cp public/validation.js  $DIR/
+
+          # Scripts: OBS hotkey bridge + Bible converters
+          mkdir -p $DIR/scripts
+          cp scripts/hymnflow-obs-hotkeys.py  $DIR/scripts/
+          cp scripts/convert_bible_txt.py     $DIR/scripts/
+          cp scripts/convert_yoruba_bible.py  $DIR/scripts/
+          cp scripts/bundle_bible_kjv.py      $DIR/scripts/
+
+          # Documentation
+          cp README.md              $DIR/
+          cp doc/SETUP.md           $DIR/
+          cp doc/TROUBLESHOOTING.md $DIR/
+          cp doc/SECURITY.md        $DIR/
+          # Include version-specific release notes if they exist
+          [ -f "doc/RELEASE_NOTES_v$VER.md" ] && cp "doc/RELEASE_NOTES_v$VER.md" $DIR/ || true
 
       - name: Create ZIP archive
         run: |
