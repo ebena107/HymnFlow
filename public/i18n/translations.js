@@ -171,6 +171,8 @@ window.HymnFlowTranslations = {
       "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",
       "lastVerse": " · Last verse",
       "lastChorus": " · Last chorus",
+      "chorusNext": " · Chorus next",
+      "shrinksToFit": " · ⚠ shrinks to fit",
       "buttons": {
         "prevVerse": "⟵ Previous",
         "nextVerse": "Next ⟶",
@@ -190,6 +192,8 @@ window.HymnFlowTranslations = {
     },
     "display": {
       "title": "Display Controls",
+      "hotkeysReconnecting": "OBS hotkeys disconnected — reconnecting…",
+      "offHint": "Display is OFF — flip the Display switch to show this hymn",
       "displayLabel": "Display",
       "liveIndicator": "LIVE",
       "resetButton": "Reset",
@@ -240,7 +244,15 @@ window.HymnFlowTranslations = {
       "addHymn": "Add Hymn",
       "buttons": {
         "cancel": "Cancel",
-        "save": "Save Changes"
+        "save": "Save Changes",
+        "delete": "Delete",
+        "discard": "Discard",
+        "addAnyway": "Add anyway",
+        "ok": "OK"
+      },
+      "confirmations": {
+        "discard": "Discard unsaved changes?",
+        "badReference": "\"{ref}\" doesn't look like a valid Bible reference.\nAdd it anyway?"
       }
     },
     "settings": {

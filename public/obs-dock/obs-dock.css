@@ -1662,3 +1662,79 @@ body {
     justify-content: space-between;
   }
 }
+
+/* ── Toasts & confirm dialog (replace native alert/confirm) ── */
+.toast-host {
+  position: fixed;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--danger);
+  background: var(--card);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: pre-line;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  animation: toast-in 0.18s ease-out;
+}
+
+.toast-warn { border-left-color: var(--warning); }
+.toast-info { border-left-color: var(--primary); }
+.toast-out { opacity: 0; transition: opacity 0.2s; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.confirm-box {
+  width: 100%;
+  max-width: 340px;
+  padding: 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.confirm-text {
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast { animation: none; }
+  .toast-out { transition: none; }
+}

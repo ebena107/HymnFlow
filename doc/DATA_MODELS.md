@@ -219,21 +219,8 @@ chorus: "Chorus Line 1\nChorus Line 2\nChorus Line 3"
 chorus: ""  // Empty if no chorus
 ```
 
-**Future Usage:**
-```javascript
-// Currently: jump to chorus shows alert
-function jumpToChorus() {
-  if (!currentHymn || !currentHymn.chorus) {
-    alert('No chorus available');
-    return;
-  }
-  // TODO: Implement chorus display
-  alert('Chorus: ' + currentHymn.chorus);
-}
-
-// Future: Display chorus as separate "verse"
-// Could implement as verses[-1] or special chorus mode
-```
+**Usage:**
+The operator's "Chorus" button (and the Next action) displays the chorus as its own slide: after each verse, "Next" shows the chorus, then the following verse. The dock tracks this with an `isShowingChorus` flag; `chorus` is only the text source.
 
 ---
 

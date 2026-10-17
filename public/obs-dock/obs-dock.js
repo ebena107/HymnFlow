@@ -17,6 +17,81 @@
     jumpChorus: null,
   };
 
+
+  // ── In-dock notifications & confirmations (replace blocking alert/confirm) ──
+  const t = (key, fallback, params = {}) => {
+    const v = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation(key, params) : key;
+    return v === key ? fallback : v;
+  };
+
+  function notify(message, type = 'error') {
+    let host = document.getElementById('toastHost');
+    if (!host) {
+      host = document.createElement('div');
+      host.id = 'toastHost';
+      host.className = 'toast-host';
+      host.setAttribute('role', 'status');
+      host.setAttribute('aria-live', 'polite');
+      document.body.appendChild(host);
+    }
+    const el = document.createElement('div');
+    el.className = `toast toast-${type}`;
+    el.textContent = message;
+    const dismiss = () => { el.classList.add('toast-out'); setTimeout(() => el.remove(), 200); };
+    el.onclick = dismiss;
+    host.appendChild(el);
+    while (host.children.length > 3) host.firstChild.remove();
+    setTimeout(dismiss, Math.min(12000, 3500 + message.length * 40));
+    statusEl.textContent = message.split('\n')[0];
+  }
+
+  function askConfirm(message, okLabel) {
+    return new Promise(resolve => {
+      const prevFocus = document.activeElement;
+      const overlay = document.createElement('div');
+      overlay.className = 'confirm-overlay';
+      const box = document.createElement('div');
+      box.className = 'confirm-box';
+      box.setAttribute('role', 'alertdialog');
+      box.setAttribute('aria-modal', 'true');
+      const text = document.createElement('p');
+      text.className = 'confirm-text';
+      text.textContent = message;
+      const row = document.createElement('div');
+      row.className = 'confirm-actions';
+      const cancel = document.createElement('button');
+      cancel.className = 'btn btn-secondary';
+      cancel.textContent = t('modal.buttons.cancel', 'Cancel');
+      const ok = document.createElement('button');
+      ok.className = 'btn btn-add';
+      ok.textContent = okLabel || t('modal.buttons.ok', 'OK');
+      row.append(cancel, ok);
+      box.append(text, row);
+      overlay.appendChild(box);
+      document.body.appendChild(overlay);
+      const done = result => {
+        document.removeEventListener('keydown', onKey, true);
+        overlay.remove();
+        if (prevFocus && prevFocus.focus) prevFocus.focus();
+        resolve(result);
+      };
+      const onKey = e => {
+        if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(false); }
+        else if (e.key === 'Tab') {
+          e.preventDefault();
+          (document.activeElement === ok ? cancel : ok).focus();
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          e.stopPropagation();
+        }
+      };
+      document.addEventListener('keydown', onKey, true);
+      cancel.onclick = () => done(false);
+      ok.onclick = () => done(true);
+      overlay.onclick = e => { if (e.target === overlay) done(false); };
+      cancel.focus();
+    });
+  }
+
   let hymns = [];
   let filtered = [];
   let currentHymn = null;
@@ -436,7 +511,7 @@
         // Announce the drop in the status bar (once), so the operator learns
         // their global hotkeys died before pressing a dead key mid-service.
         if (obsWsWasConnected && obsWsRetryCount === 0) {
-          statusEl.textContent = 'OBS hotkeys disconnected — reconnecting…';
+          statusEl.textContent = t('display.hotkeysReconnecting', 'OBS hotkeys disconnected — reconnecting…');
         }
         obsWsRetryCount++;
         const badge = document.getElementById('obsWsBadge');
@@ -557,7 +632,7 @@
       // Most common "why is the screen blank" moment: hymn selected, Display off
       statusEl.textContent = window.HymnFlowI18n
         ? window.HymnFlowI18n.getTranslation('display.displayOffHint')
-        : 'Display is OFF — flip the Display switch to show this hymn';
+        : t('display.offHint', 'Display is OFF — flip the Display switch to show this hymn');
     }
   }
 
@@ -677,11 +752,11 @@
       const i18nKey = (isShowingChorus && currentHymn.chorus) ? 'navigation.chorusInfo' : 'navigation.verseInfo';
       // Sequence hint: with a chorus, "Next" inserts it after every verse —
       // surface that so the flow isn't a surprise mid-song.
-      const chorusNext = (currentHymn.chorus && !isShowingChorus) ? ' · Chorus next' : '';
+      const chorusNext = (currentHymn.chorus && !isShowingChorus) ? t('navigation.chorusNext', ' · Chorus next') : '';
       // The overlay auto-shrinks over-long text to fit; warn the operator that
       // the projector render will be smaller than the configured size.
       const windowedChars = windowed.join(' ').length;
-      const fitHint = windowedChars > slideCharBudget() ? ' · ⚠ shrinks to fit' : '';
+      const fitHint = windowedChars > slideCharBudget() ? t('navigation.shrinksToFit', ' · ⚠ shrinks to fit') : '';
       verseInfoEl.textContent = window.HymnFlowI18n.getTranslation(i18nKey, {
         current: currentVerse + 1,
         total: currentHymn.verses.length,
@@ -1088,7 +1163,7 @@
   function jumpToChorus() {
     if (!currentHymn || !currentHymn.chorus) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noChorus') : 'No chorus available for this hymn';
-      alert(msg);
+      notify(msg);
       return;
     }
     isShowingChorus = true;
@@ -1125,7 +1200,7 @@
   function removeSelectedHymn() {
     if (!currentHymn) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noHymnSelected') : 'No hymn selected';
-      alert(msg);
+      notify(msg);
       return;
     }
     const affected = services.filter(s =>
@@ -1138,9 +1213,9 @@
       const names = affected.map(s => `• ${s.name}`).join('\n');
       confirmMsg += `\n\nThis hymn is used in ${affected.length} service(s):\n${names}\nIt will be removed from those services.`;
     }
-    if (confirm(confirmMsg)) {
-      deleteHymn(currentHymn.id);
-    }
+    askConfirm(confirmMsg, t('modal.buttons.delete', 'Delete')).then(ok => {
+      if (ok) deleteHymn(currentHymn.id);
+    });
   }
 
   function trapFocus(modal) {
@@ -1218,13 +1293,13 @@
 
     if (!title) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.titleRequired') : 'Title is required';
-      alert(msg);
+      notify(msg);
       return;
     }
 
     if (!versesText) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.versesRequired') : 'At least one verse is required';
-      alert(msg);
+      notify(msg);
       return;
     }
 
@@ -1269,7 +1344,7 @@
         const { valid, errors } = window.HymnValidator.validateHymn(hymn);
         if (!valid) {
           const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.validationFailed', { errors: errors.join('\n') }) : 'Hymn validation failed:\n' + errors.join('\n');
-          alert(msg);
+          notify(msg);
           return;
         }
       }
@@ -1299,7 +1374,7 @@
       const { valid, errors } = window.HymnValidator.validateHymn(newHymn);
       if (!valid) {
         const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.validationFailed', { errors: errors.join('\n') }) : 'Hymn validation failed:\n' + errors.join('\n');
-        alert(msg);
+        notify(msg);
         return;
       }
 
@@ -1534,9 +1609,9 @@
     }, 0);
   }
 
-  function closeServiceEditor(force = false) {
+  async function closeServiceEditor(force = false) {
     if (!force && serviceEditorDirty) {
-      if (!confirm('Discard unsaved changes?')) return;
+      if (!(await askConfirm(t('modal.confirmations.discard', 'Discard unsaved changes?'), t('modal.buttons.discard', 'Discard')))) return;
     }
     document.getElementById('serviceEditor').style.display = 'none';
     document.getElementById('hymnPicker').hidden = true;
@@ -1673,12 +1748,12 @@
 
     if (!name) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.nameRequired') : 'Service name is required';
-      alert(msg);
+      notify(msg);
       return;
     }
 
     if (editingService.items.length === 0) {
-      alert(window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.itemRequired') : 'Add at least one item to the service');
+      notify(window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.itemRequired') : 'Add at least one item to the service');
       return;
     }
 
@@ -1687,7 +1762,7 @@
     const { valid, errors } = window.HymnValidator.validateService(editingService, hymns);
     if (!valid) {
       const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.alerts.validationFailed', { errors: errors.join('\n') }) : 'Service validation failed:\n' + errors.join('\n');
-      alert(msg);
+      notify(msg);
       return;
     }
 
@@ -1834,7 +1909,8 @@
 
   function deleteService(serviceId) {
     const confirmMsg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.confirmations.delete') : 'Delete this service?';
-    if (confirm(confirmMsg)) {
+    askConfirm(confirmMsg, t('modal.buttons.delete', 'Delete')).then(ok => {
+      if (!ok) return;
       const serviceToDelete = services.find(s => s.id === serviceId);
       if (serviceToDelete) {
         services = services.filter(s => s.id !== serviceId);
@@ -1850,7 +1926,7 @@
           statusEl.textContent = 'Service deleted';
         }
       }
-    }
+    });
   }
 
   function duplicateService(serviceId) {
@@ -2073,7 +2149,7 @@
       statusEl.textContent = `Imported "${name}" — ${items.length} item${items.length !== 1 ? 's' : ''}${warnings.length ? `, ${warnings.length} warning${warnings.length !== 1 ? 's' : ''}` : ''}`;
       if (warnings.length) {
         console.warn('[Service Import]', warnings);
-        alert('Service imported with warnings:\n\n' + warnings.join('\n'));
+        notify('Service imported with warnings:\n\n' + warnings.join('\n'));
       }
     };
     reader.onerror = () => { statusEl.textContent = 'Could not read file'; };
@@ -2151,7 +2227,7 @@
     document.getElementById('btnEdit').onclick = () => {
       if (!currentHymn) {
         const msg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('hymns.alerts.noHymnToEdit') : 'No hymn selected to edit';
-        alert(msg);
+        notify(msg);
         return;
       }
       openEditModal(currentHymn);
@@ -2465,7 +2541,7 @@
       if (!editingService) return;
       showItemForm('divider');
     };
-    document.getElementById('btnItemFormAdd').onclick = () => {
+    document.getElementById('btnItemFormAdd').onclick = async () => {
       if (!editingService) return;
       const ref = document.getElementById('itemFormRef').value.trim();
       const text = document.getElementById('itemFormText').value.trim();
@@ -2474,8 +2550,8 @@
         if (!ref) { document.getElementById('itemFormRef').focus(); return; }
         // Validate against loaded Bible — warn but allow saving if unrecognised
         if (window.HymnFlowBibleLookup?.isLoaded() && !window.HymnFlowBibleLookup.canParse(ref)) {
-          const warn = `"${ref}" doesn't look like a valid Bible reference.\nAdd it anyway?`;
-          if (!confirm(warn)) { document.getElementById('itemFormRef').focus(); return; }
+          const warn = t('modal.confirmations.badReference', `"${ref}" doesn't look like a valid Bible reference.\nAdd it anyway?`, { ref });
+          if (!(await askConfirm(warn, t('modal.buttons.addAnyway', 'Add anyway')))) { document.getElementById('itemFormRef').focus(); return; }
         }
         newItem = { type: 'scripture', label: ref };
       } else if (currentItemFormType === 'announce') {
