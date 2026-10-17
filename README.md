@@ -10,7 +10,7 @@ HymnFlow is a browser-based OBS Studio plugin for displaying hymns and scripture
 - 📅 **Full Service Planning** — Build and save service orders with Hymns, Scripture, Announcements, and Dividers; drag-and-drop reorder, duplicate services, notes/cues per item
 - 📖 **Multi-Translation Bible Lookup** — Plug-and-play: KJV auto-loads on first run; import any public-domain Bible; Quick Scripture panel for live verse lookup (flexible references: `John 3:16`, `Rom 8:28-30`, `Rom 8 28 30`, `Juan 3:16`); persistent via IndexedDB
 - 📜 **Scripture Display Styling** — Dedicated serif look for scripture with reference header + translation badge, all customizable: font, italics, header/badge visibility, independent size
-- ⌨️ **Keyboard Navigation** — Arrow keys for verse/line navigation; `[` / `]` for service items; configurable global hotkeys via OBS
+- ⌨️ **Keyboard Navigation** — Arrow keys for verse/line navigation; `[` / `]` for service items; configurable global hotkeys via OBS (11 actions incl. Blank, Clear, Chorus, Restore)
 - 🎛️ **Global OBS Hotkeys** — Control HymnFlow from any OBS window via obs-websocket + included Python script; hotkeys registered natively in OBS Settings → Hotkeys
 - 🎨 **Customizable Styling** — Fonts, colors, text effects, backgrounds, animations, position
 - 📥 **Import / Export** — Support for .txt, .csv, and .json hymn files; built-in Bible text converter script
@@ -68,6 +68,14 @@ See [obs-setup.html](public/obs-setup.html) for the full interactive guide.
 | `Space` | Toggle display on/off |
 | `]` or `PageDown` | Next service item |
 | `[` or `PageUp` | Previous service item |
+| `1`–`9` | Jump straight to that verse |
+| `C` | Show the chorus |
+| `B` | Blank the screen (keeps your place) |
+| `X` | Emergency Clear |
+| `Z` | Restore what was on screen before Blank / Clear |
+| `?` | Show the shortcut cheat sheet |
+
+On the last verse, the first `→` only arms the advance; a second press moves to the next service item (turn off in Style → Settings).
 
 > Shortcuts work when the dock panel has keyboard focus. For global hotkeys (any window), use the obs-websocket integration above.
 

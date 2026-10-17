@@ -72,6 +72,14 @@ The dock will appear in OBS (may take a moment to load).
 | `Space` | Toggle display on/off |
 | `]` or `PageDown` | Next service item |
 | `[` or `PageUp` | Previous service item |
+| `1`–`9` | Jump straight to that verse |
+| `C` | Show the chorus |
+| `B` | Blank the screen (keeps your place) |
+| `X` | Emergency Clear |
+| `Z` | Restore what was on screen before Blank / Clear |
+| `?` | Show the shortcut cheat sheet |
+
+On the last verse, the first `→` only arms the advance; a second press moves to the next service item (turn off in Style → Settings).
 
 > These shortcuts work when the **dock panel has keyboard focus**. For global hotkeys that work from any OBS window, see the next section.
 
@@ -96,11 +104,13 @@ Global hotkeys work even when the dock doesn't have focus — essential when you
 
 **Step 3: Bind keys in OBS**
 1. OBS → **Settings → Hotkeys**
-2. Search **"HymnFlow"** — 7 actions appear:
+2. Search **"HymnFlow"** — 11 actions appear:
    - HymnFlow: Next Verse / Previous Verse
    - HymnFlow: Next Line / Previous Line
    - HymnFlow: Next Service Item / Previous Service Item
    - HymnFlow: Toggle Display
+   - HymnFlow: Blank Screen / Emergency Clear
+   - HymnFlow: Show Chorus / Restore Last Slide
 3. Click the field next to each and press your desired key (e.g., `F5`, `F6`)
 4. Click **OK**
 

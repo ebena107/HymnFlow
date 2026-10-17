@@ -140,6 +140,9 @@ The overlay now updates **automatically** as you navigate! No need to press Disp
 | `↓` (Down Arrow) | Next line window (auto-updates overlay, advances to next verse at end) |
 | `↑` (Up Arrow) | Previous line window (auto-updates overlay, retreats to previous verse at start) |
 | `Space` | Toggle display (show/hide overlay) |
+| `1`–`9` / `C` | Jump to verse / show chorus |
+| `B` / `X` / `Z` | Blank screen / Emergency Clear / Restore what was on screen |
+| `?` | Shortcut cheat sheet |
 
 **Note:** Arrow keys automatically update the overlay. Line navigation (↓/↑) **seamlessly advances between verses** when reaching boundaries!
 

@@ -1,4 +1,4 @@
-## [Unreleased]
+## [2.9.0] - 2026-10-17
 
 ### Solo-operator workflow & data safety
 
