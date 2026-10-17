@@ -1738,3 +1738,106 @@ body {
   .toast { animation: none; }
   .toast-out { transition: none; }
 }
+
+/* ── Operator workflow additions ── */
+.btn[hidden] { display: none; }
+
+.emergency-bar .btn-restore {
+  flex: 1;
+  padding: 11px 10px;
+  font-weight: 600;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.hint-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.hotkey-chip {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+.hotkey-chip:hover { color: var(--text); border-color: var(--text-muted); }
+.hotkey-chip.on { color: var(--success); border-color: var(--success); }
+.hotkey-chip.connecting { color: var(--warning); border-color: var(--warning); }
+
+.verse-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 8px 0;
+}
+
+.verse-chips:empty { display: none; }
+
+.verse-chip {
+  min-width: 30px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.verse-chip:hover { background: var(--card-hover); }
+.verse-chip.active { background: var(--primary); border-color: var(--primary); }
+
+.qs-auto { margin-top: 8px; font-size: 12px; }
+
+.service-item-hint {
+  font-size: 10px;
+  color: var(--warning);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.backup-note {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text-muted);
+  margin: 6px 0;
+}
+
+.toast { display: flex; align-items: center; gap: 10px; }
+.toast > span { flex: 1; }
+
+.toast-action {
+  flex-shrink: 0;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.shortcut-box { max-width: 380px; }
+
+.shortcut-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.shortcut-table td { padding: 4px 6px; vertical-align: top; }
+.shortcut-table td:first-child { white-space: nowrap; width: 1%; }
+.shortcut-table code {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+}

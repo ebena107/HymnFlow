@@ -19,12 +19,22 @@
 
 
   // ── In-dock notifications & confirmations (replace blocking alert/confirm) ──
+  // Looks the key up in the English dictionary first so brand-new strings can
+  // ship with an inline English fallback without console warning floods.
   const t = (key, fallback, params = {}) => {
-    const v = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation(key, params) : key;
-    return v === key ? fallback : v;
+    const fill = (str) => {
+      Object.keys(params).forEach(k => { str = str.split('{' + k + '}').join(String(params[k])); });
+      return str;
+    };
+    const en = window.HymnFlowTranslations && window.HymnFlowTranslations.en;
+    const known = en && key.split('.').reduce((o, k) => (o && typeof o === 'object' && k in o) ? o[k] : undefined, en);
+    if (typeof known !== 'string' || !window.HymnFlowI18n) return fill(fallback);
+    return window.HymnFlowI18n.getTranslation(key, params);
   };
 
-  function notify(message, type = 'error') {
+  // action: optional { label, fn } rendered as a button inside the toast
+  // (used for Undo / Restore).
+  function notify(message, type = 'error', action = null) {
     let host = document.getElementById('toastHost');
     if (!host) {
       host = document.createElement('div');
@@ -36,12 +46,21 @@
     }
     const el = document.createElement('div');
     el.className = `toast toast-${type}`;
-    el.textContent = message;
+    const text = document.createElement('span');
+    text.textContent = message;
+    el.appendChild(text);
     const dismiss = () => { el.classList.add('toast-out'); setTimeout(() => el.remove(), 200); };
+    if (action) {
+      const btn = document.createElement('button');
+      btn.className = 'toast-action';
+      btn.textContent = action.label;
+      btn.onclick = (e) => { e.stopPropagation(); dismiss(); action.fn(); };
+      el.appendChild(btn);
+    }
     el.onclick = dismiss;
     host.appendChild(el);
     while (host.children.length > 3) host.firstChild.remove();
-    setTimeout(dismiss, Math.min(12000, 3500 + message.length * 40));
+    setTimeout(dismiss, action ? 9000 : Math.min(12000, 3500 + message.length * 40));
     statusEl.textContent = message.split('\n')[0];
   }
 
@@ -99,6 +118,8 @@
   let currentLineOffset = 0;
   let isDisplaying = false;
   let isShowingChorus = false;
+  let advanceArmedUntil = 0;   // end-of-item guard: second Next within window advances
+  let lastLive = null;         // what was on screen before Blank / Emergency Clear
   let services = [];
   let currentService = null;
   let currentServiceItemIndex = -1;
@@ -139,6 +160,7 @@
     scriptureCustomSize: false,
     scriptureFontSize: 44,
     scriptureAutoDisplay: false,  // planned scripture items go live on activation
+    confirmItemAdvance: true,     // last verse + Next asks for a second press before changing item
     // Collapsible panel states
     scripturePanelOpen: false,
     obsPanelOpen: false,
@@ -295,12 +317,387 @@
     });
   }
 
+  // ── Data safety ───────────────────────────────────────────────────────────
+  // Hymns, services and settings live in localStorage. Three layers protect
+  // them: unreadable data is quarantined (never silently overwritten), one
+  // snapshot is taken each time the dock opens, and destructive actions can be
+  // undone for a few seconds. A full backup file can also be exported/restored.
+  const BACKUP_SLOTS = ['hymnflow-backup-1', 'hymnflow-backup-2'];
+  const PRE_RESTORE_KEY = 'hymnflow-backup-pre-restore';
+  const BACKUP_HYMN_LIMIT = 400000;   // chars; bigger libraries rely on file backups
+
+  function quarantineCorrupt(name, raw) {
+    if (!raw) return;
+    try {
+      localStorage.setItem(`hymnflow-corrupt-${name}-${Date.now()}`, raw);
+      const kept = Object.keys(localStorage).filter(k => k.startsWith(`hymnflow-corrupt-${name}-`)).sort();
+      while (kept.length > 2) localStorage.removeItem(kept.shift());
+    } catch (e) { /* storage full — nothing more can be done */ }
+    notify(t('operator.corruptKept',
+      'Saved {name} data could not be read. A copy was kept in browser storage (hymnflow-corrupt-{name}-*) so it can be recovered.',
+      { name }), 'warn');
+  }
+
+  function readSlot(key) {
+    try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; }
+  }
+
+  function currentRawData() {
+    return {
+      ts: Date.now(),
+      hymns: localStorage.getItem(storageKeys.hymns),
+      services: localStorage.getItem(storageKeys.services),
+      prefs: localStorage.getItem(storageKeys.prefs)
+    };
+  }
+
+  // Once per dock open, before anything migrates or normalises stored data.
+  function snapshotData() {
+    try {
+      const cur = currentRawData();
+      if (!cur.services && !cur.hymns) return;
+      // Never rotate unreadable data over a good snapshot; quarantine handles it on load.
+      const readable = (raw) => { if (!raw) return true; try { JSON.parse(raw); return true; } catch (e) { return false; } };
+      if (!readable(cur.hymns) || !readable(cur.services) || !readable(cur.prefs)) return;
+      const snap = {
+        ts: cur.ts,
+        services: cur.services,
+        prefs: cur.prefs,
+        hymns: cur.hymns && cur.hymns.length <= BACKUP_HYMN_LIMIT ? cur.hymns : null
+      };
+      const last = readSlot(BACKUP_SLOTS[0]);
+      if (last && last.services === snap.services && last.prefs === snap.prefs && last.hymns === snap.hymns) return;
+      const prev = localStorage.getItem(BACKUP_SLOTS[0]);
+      if (prev) {
+        try { localStorage.setItem(BACKUP_SLOTS[1], prev); }
+        catch (e) { localStorage.removeItem(BACKUP_SLOTS[1]); }
+      }
+      localStorage.setItem(BACKUP_SLOTS[0], JSON.stringify(snap));
+    } catch (e) {
+      console.warn('[Backup] snapshot skipped:', e);
+    }
+  }
+
+  function snapshotLabel(snap) {
+    let h = null, sv = 0;
+    try { h = snap.hymns ? JSON.parse(snap.hymns).length : null; } catch (e) { /* ignore */ }
+    try { sv = snap.services ? JSON.parse(snap.services).length : 0; } catch (e) { /* ignore */ }
+    return `${new Date(snap.ts).toLocaleString()} — ${h === null ? 'hymns not stored' : h + ' hymn(s)'}, ${sv} service(s)`;
+  }
+
+  function refreshBackupSlots() {
+    const sel = document.getElementById('backupSlot');
+    const btn = document.getElementById('btnBackupRestoreAuto');
+    if (!sel) return;
+    sel.innerHTML = '';
+    const names = { [BACKUP_SLOTS[0]]: 'Latest', [BACKUP_SLOTS[1]]: 'Previous', [PRE_RESTORE_KEY]: 'Before last restore' };
+    [BACKUP_SLOTS[0], BACKUP_SLOTS[1], PRE_RESTORE_KEY].forEach(key => {
+      const snap = readSlot(key);
+      if (!snap) return;
+      const opt = document.createElement('option');
+      opt.value = key;
+      opt.textContent = `${names[key]}: ${snapshotLabel(snap)}`;
+      sel.appendChild(opt);
+    });
+    if (!sel.children.length) {
+      const opt = document.createElement('option');
+      opt.textContent = 'No snapshots yet';
+      sel.appendChild(opt);
+    }
+    if (btn) btn.disabled = !readSlot(sel.value);
+  }
+
+  // Keeps the OBS connection details of this machine when restoring settings.
+  function mergedPrefsRaw(prefsObj) {
+    const keep = {};
+    ['obsWsHost', 'obsWsPort', 'obsWsPassword', 'obsWsEnabled'].forEach(k => { keep[k] = settings[k]; });
+    return JSON.stringify(Object.assign({}, prefsObj || {}, keep));
+  }
+
+  // Stores today's data so a restore can itself be undone. Returns false when
+  // the library is too large to keep a second copy in browser storage.
+  function storePreRestore() {
+    try {
+      localStorage.setItem(PRE_RESTORE_KEY, JSON.stringify(currentRawData()));
+      return true;
+    } catch (e) {
+      try { localStorage.removeItem(PRE_RESTORE_KEY); } catch (e2) { /* ignore */ }
+      return false;
+    }
+  }
+
+  async function confirmAndRestore(summary, apply, hasSafetyCopy) {
+    let msg = summary;
+    if (!hasSafetyCopy) {
+      msg += `\n\nYour library is too large to keep an automatic safety copy — export a backup file first if you may want today's data back.`;
+    }
+    if (!(await askConfirm(msg, t('operator.restore', 'Restore')))) return false;
+    apply();
+    location.reload();
+    return true;
+  }
+
+  async function restoreSnapshot(key) {
+    const snap = readSlot(key);
+    if (!snap) { notify(t('operator.noSnapshot', 'That snapshot is no longer available.')); return; }
+    const hasSafety = storePreRestore();
+    // Writing the safety copy may have replaced the snapshot we are restoring.
+    const source = key === PRE_RESTORE_KEY ? snap : (readSlot(key) || snap);
+    let summary = `Replace the current hymns, services and settings with the snapshot from ${snapshotLabel(source)}?`;
+    if (!source.hymns) summary += `\n\nHymns were too large to store in this snapshot and will be left as they are.`;
+    await confirmAndRestore(summary, () => {
+      if (source.hymns) localStorage.setItem(storageKeys.hymns, source.hymns);
+      if (source.services !== null && source.services !== undefined) localStorage.setItem(storageKeys.services, source.services);
+      if (source.prefs) {
+        let parsed = null;
+        try { parsed = JSON.parse(source.prefs); } catch (e) { /* ignore */ }
+        if (parsed) localStorage.setItem(storageKeys.prefs, mergedPrefsRaw(parsed));
+      }
+    }, hasSafety);
+  }
+
+  async function exportBackup() {
+    const prefs = Object.assign({}, settings);
+    ['obsWsHost', 'obsWsPort', 'obsWsPassword', 'obsWsEnabled'].forEach(k => { delete prefs[k]; });
+    const data = {
+      format: 'hymnflow-backup',
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      hymns,
+      services,
+      settings: prefs
+    };
+    const stamp = new Date().toISOString().slice(0, 10);
+    const result = await saveTextFile(`hymnflow-backup-${stamp}.json`, JSON.stringify(data, null, 2), 'application/json', '.json');
+    notify(exportStatusMessage(result), result.cancelled ? 'warn' : 'info');
+  }
+
+  async function restoreFromFile(file) {
+    let obj = null;
+    try { obj = JSON.parse(await file.text()); } catch (e) { /* handled below */ }
+    if (!obj || obj.format !== 'hymnflow-backup' || !Array.isArray(obj.hymns) || !Array.isArray(obj.services)) {
+      notify(t('operator.notBackup', 'That file is not a HymnFlow backup.'));
+      return;
+    }
+    const checked = window.HymnValidator ? window.HymnValidator.batchValidate(obj.hymns) : { valid: obj.hymns, invalid: [] };
+    const svc = obj.services.filter(x => x && typeof x.id === 'string' && typeof x.name === 'string' && Array.isArray(x.items));
+    const skipped = checked.invalid.length + (obj.services.length - svc.length);
+    if (!checked.valid.length) { notify(t('operator.emptyBackup', 'The backup contains no usable hymns.')); return; }
+    const hasSafety = storePreRestore();
+    let summary = `Replace ALL current hymns, services and settings with this backup (${checked.valid.length} hymn(s), ${svc.length} service(s))?`;
+    if (skipped) summary += `\n\n${skipped} unusable entr${skipped === 1 ? 'y' : 'ies'} in the file will be skipped.`;
+    await confirmAndRestore(summary, () => {
+      localStorage.setItem(storageKeys.hymns, JSON.stringify(checked.valid));
+      localStorage.setItem(storageKeys.services, JSON.stringify(svc));
+      localStorage.setItem(storageKeys.prefs, mergedPrefsRaw(obj.settings));
+    }, hasSafety);
+  }
+
+  // Undo for destructive actions: toast with an Undo button for a few seconds.
+  function captureState() {
+    return {
+      hymns: JSON.stringify(hymns),
+      services: JSON.stringify(services),
+      serviceId: currentService ? currentService.id : null,
+      hymnId: currentHymn ? currentHymn.id : null
+    };
+  }
+
+  function offerUndo(message, before) {
+    notify(message, 'info', {
+      label: t('operator.undo', 'Undo'),
+      fn: () => {
+        hymns = JSON.parse(before.hymns);
+        services = JSON.parse(before.services);
+        saveHymns();
+        saveServices();
+        filtered = hymns;
+        currentService = before.serviceId ? (services.find(x => x.id === before.serviceId) || null) : null;
+        currentHymn = before.hymnId ? (hymns.find(h => h.id === before.hymnId) || null) : null;
+        renderSourceFilters();
+        renderList();
+        renderServicesList();
+        updateServiceBanner();
+        updatePreview();
+        statusEl.textContent = t('operator.undone', 'Restored');
+      }
+    });
+  }
+
+  // ── Live-state restore (after Blank / Emergency Clear) ────────────────────
+  function updateRestoreButton() {
+    const btn = document.getElementById('btnRestore');
+    if (btn) btn.hidden = !lastLive;
+  }
+
+  function captureLive() {
+    if (!currentHymn && !qsChunks.length) return;
+    if (!isDisplaying && lastLive) return;   // don't overwrite a good capture with "nothing live"
+    const refEl = document.getElementById('qsRef');
+    lastLive = {
+      hymnId: currentHymn ? currentHymn.id : null,
+      verse: currentVerse,
+      chorus: isShowingChorus,
+      offset: currentLineOffset,
+      displaying: isDisplaying,
+      serviceIdx: currentServiceItemIndex,
+      qs: qsChunks.length ? { chunks: qsChunks.slice(), idx: qsChunkIdx, ref: refEl ? refEl.value.trim() : '' } : null
+    };
+    updateRestoreButton();
+  }
+
+  function offerRestore(message) {
+    if (!lastLive) return;
+    notify(message, 'info', { label: t('operator.restore', 'Restore'), fn: restoreLive });
+  }
+
+  function restoreLive() {
+    if (!lastLive) { notify(t('operator.nothingToRestore', 'Nothing to restore'), 'info'); return; }
+    const snap = lastLive;
+    lastLive = null;
+    updateRestoreButton();
+    if (snap.hymnId) {
+      const h = hymns.find(x => x.id === snap.hymnId);
+      if (h) {
+        currentHymn = h;
+        currentVerse = Math.min(snap.verse, h.verses.length - 1);
+        isShowingChorus = snap.chorus && !!h.chorus;
+        currentLineOffset = snap.offset;
+        if (currentService && snap.serviceIdx >= 0) currentServiceItemIndex = snap.serviceIdx;
+        updatePreview();
+        updateServiceBanner();
+        renderList();
+        renderServicesList();
+        if (snap.displaying) sendCommand('show');
+      }
+    }
+    if (snap.qs) {
+      qsChunks = snap.qs.chunks;
+      qsChunkIdx = snap.qs.idx;
+      sendScriptureToOverlay(snap.qs.ref, qsChunks[qsChunkIdx]);
+      previewScripture(snap.qs.ref, qsChunks[qsChunkIdx]);
+      updateQsControls();
+    }
+    statusEl.textContent = t('operator.restored', 'Restored what was on screen');
+  }
+
+  // ── Verse jump chips ──────────────────────────────────────────────────────
+  function renderVerseChips() {
+    const box = document.getElementById('verseChips');
+    if (!box) return;
+    box.innerHTML = '';
+    if (!currentHymn) return;
+    const mk = (label, verse, active, title) => {
+      const b = document.createElement('button');
+      b.className = 'verse-chip' + (active ? ' active' : '');
+      b.dataset.verse = verse;
+      b.textContent = label;
+      b.title = title;
+      b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      return b;
+    };
+    currentHymn.verses.forEach((_, i) => {
+      box.appendChild(mk(String(i + 1), String(i), i === currentVerse && !isShowingChorus, `Show verse ${i + 1}`));
+    });
+    if (currentHymn.chorus) box.appendChild(mk('C', 'chorus', isShowingChorus, 'Show chorus'));
+  }
+
+  function jumpToVerse(index) {
+    if (!currentHymn || index < 0 || index >= currentHymn.verses.length) return;
+    currentVerse = index;
+    isShowingChorus = false;
+    currentLineOffset = 0;
+    advanceArmedUntil = 0;
+    updatePreview();
+    sendCommand('show');
+  }
+
+  // ── Shortcut cheat sheet ──────────────────────────────────────────────────
+  function showShortcuts() {
+    if (document.querySelector('.confirm-overlay')) return;
+    const rows = [
+      ['→  ←', 'Next / previous verse (chorus is inserted after each verse)'],
+      ['↓  ↑', 'Next / previous line window'],
+      ['1 – 9', 'Jump straight to that verse'],
+      ['C', 'Show the chorus'],
+      [']  PgDn', 'Next service item'],
+      ['[  PgUp', 'Previous service item'],
+      ['Space', 'Display on / off'],
+      ['B', 'Blank the screen (keeps your place)'],
+      ['X', 'Emergency Clear'],
+      ['Z', 'Restore what was on screen before Blank / Clear'],
+      ['Esc', 'Close dialogs and editors'],
+      ['?', 'Show this list']
+    ];
+    const prevFocus = document.activeElement;
+    const overlay = document.createElement('div');
+    overlay.className = 'confirm-overlay';
+    const box = document.createElement('div');
+    box.className = 'confirm-box shortcut-box';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-label', 'Keyboard shortcuts');
+    const table = document.createElement('table');
+    table.className = 'shortcut-table';
+    rows.forEach(([k, d]) => {
+      const tr = document.createElement('tr');
+      const td1 = document.createElement('td');
+      const kbd = document.createElement('code');
+      kbd.textContent = k;
+      td1.appendChild(kbd);
+      const td2 = document.createElement('td');
+      td2.textContent = d;
+      tr.append(td1, td2);
+      table.appendChild(tr);
+    });
+    const note = document.createElement('p');
+    note.className = 'backup-note';
+    note.textContent = 'Shortcuts work while the dock has focus. For keys that work from any window, connect OBS hotkeys in Style → OBS Connection.';
+    const close = document.createElement('button');
+    close.className = 'btn btn-add';
+    close.textContent = 'Close';
+    const row = document.createElement('div');
+    row.className = 'confirm-actions';
+    row.appendChild(close);
+    box.append(table, note, row);
+    overlay.appendChild(box);
+    document.body.appendChild(overlay);
+    const done = () => {
+      document.removeEventListener('keydown', onKey, true);
+      overlay.remove();
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape' || e.key === '?') { e.preventDefault(); e.stopPropagation(); done(); }
+      else if (e.key === 'Tab') { e.preventDefault(); close.focus(); }
+      else { e.stopPropagation(); }
+    };
+    document.addEventListener('keydown', onKey, true);
+    close.onclick = done;
+    overlay.onclick = (e) => { if (e.target === overlay) done(); };
+    close.focus();
+  }
+
+  function setHotkeyChip(state) {
+    const chip = document.getElementById('hotkeyChip');
+    if (!chip) return;
+    const label = state === 'connected' ? 'Global hotkeys: on'
+      : state === 'connecting' ? 'Global hotkeys: connecting…'
+      : 'Global hotkeys: off';
+    chip.textContent = '⌨ ' + label;
+    chip.className = 'hotkey-chip' + (state === 'connected' ? ' on' : state === 'connecting' ? ' connecting' : '');
+    chip.title = state === 'connected'
+      ? 'OBS hotkeys are connected'
+      : 'Click to set up global hotkeys (Style → OBS Connection)';
+  }
+
   function loadHymns() {
     const stored = localStorage.getItem(storageKeys.hymns);
     if (stored) {
       try {
         hymns = JSON.parse(stored);
       } catch (err) {
+        quarantineCorrupt('hymns', stored);
         console.error('[Hymns Load Error] Corrupted data, reverting to defaults:', err);
         hymns = DEFAULT_HYMNS || [];
         localStorage.setItem(storageKeys.hymns, JSON.stringify(hymns));
@@ -386,6 +783,7 @@
       try {
         Object.assign(settings, JSON.parse(stored));
       } catch (err) {
+        quarantineCorrupt('settings', stored);
         console.error('[Settings Load Error] Corrupted settings, using defaults:', err);
       }
     }
@@ -440,6 +838,7 @@
       badge.className = `obs-ws-badge obs-ws-${state}`;
       badge.title = { connecting:'Connecting…', connected:'Connected', disconnected:'Disconnected', error:'Error' }[state] || state;
     }
+    setHotkeyChip(state);
     if (btnConn) btnConn.disabled = (state === 'connecting' || state === 'connected');
     if (btnDisc) btnDisc.disabled = (state === 'disconnected');
   }
@@ -453,6 +852,10 @@
       case 'next_item':      nextServiceItem();  break;
       case 'prev_item':      prevServiceItem();  break;
       case 'toggle_display': toggleDisplay();    break;
+      case 'blank':          blankScreen();      break;
+      case 'clear':          emergencyClear();   break;
+      case 'jump_chorus':    jumpToChorus();     break;
+      case 'restore':        restoreLive();      break;
     }
   }
 
@@ -606,6 +1009,7 @@
 
   function selectHymn(id) {
     currentHymn = hymns.find(h => h.id === id);
+    advanceArmedUntil = 0;
     currentVerse = 0;
     currentLineOffset = 0;
     isShowingChorus = false;
@@ -730,6 +1134,7 @@
       }
       verseInfoEl.textContent = '-';
       previewEl.textContent = '';
+      renderVerseChips();
       updateNavButtonStates();
       return;
     }
@@ -766,6 +1171,7 @@
       }) + isLastVerseLabel + chorusNext + fitHint;
     }
 
+    renderVerseChips();
     updateNavButtonStates();
   }
 
@@ -829,6 +1235,8 @@
       };
       localStorage.setItem(storageKeys.cmd, JSON.stringify(payload));
       isDisplaying = true;
+      lastLive = null;
+      updateRestoreButton();
       updateDisplayButton();
     } catch (err) {
       console.error('[Send Command Error]', err);
@@ -892,15 +1300,26 @@
       return;
     }
 
-    // At last content — advance to next service item if one exists
+    // At last content — advance to next service item if one exists. By default
+    // the first press only arms the advance, so a stray extra tap during the
+    // final verse can't swap the hymn on screen.
     if (currentService && currentServiceItemIndex >= 0 &&
         currentServiceItemIndex < currentService.items.length - 1) {
+      if (settings.confirmItemAdvance !== false && Date.now() > advanceArmedUntil) {
+        advanceArmedUntil = Date.now() + 4000;
+        const nxt = currentService.items[currentServiceItemIndex + 1];
+        notify(t('operator.pressAgain', 'Last verse — press Next again for {item}',
+          { item: itemTypeBadge(nxt.type) + ' ' + itemDisplayLabel(nxt) }), 'info');
+        return;
+      }
+      advanceArmedUntil = 0;
       nextServiceItem();
     }
   }
 
   function prevVerse() {
     if (!currentHymn) return;
+    advanceArmedUntil = 0;
 
     if (currentHymn.chorus) {
       // If showing chorus, go back to its verse
@@ -1036,6 +1455,8 @@
   }
 
   function sendScriptureToOverlay(rawRef, text) {
+    lastLive = null;
+    updateRestoreButton();
     const { reference, translation } = splitReferenceTranslation(rawRef);
     sendOverlayTextSlide(text, { reference, translation, scripture: true });
   }
@@ -1176,14 +1597,17 @@
   // current hymn, service position, and scripture pages so the operator can
   // resume instantly. Emergency Clear below is the full reset.
   function blankScreen() {
+    captureLive();
     sendCommand('hide');
     _clearTextSlideOnly();
     statusEl.textContent = window.HymnFlowI18n
       ? window.HymnFlowI18n.getTranslation('display.blanked')
       : 'Screen blanked — Display or Quick Scripture will bring it back';
+    offerRestore(t('operator.blanked', 'Screen blanked'));
   }
 
   function emergencyClear() {
+    captureLive();
     sendCommand('hide');
     localStorage.setItem(storageKeys.textslide, JSON.stringify({ type: 'hide', timestamp: Date.now() }));
     qsChunks = [];
@@ -1195,6 +1619,7 @@
     isShowingChorus = false;
     updatePreview();
     renderList();
+    offerRestore(t('operator.cleared', 'Screen cleared'));
   }
 
   function removeSelectedHymn() {
@@ -1214,7 +1639,11 @@
       confirmMsg += `\n\nThis hymn is used in ${affected.length} service(s):\n${names}\nIt will be removed from those services.`;
     }
     askConfirm(confirmMsg, t('modal.buttons.delete', 'Delete')).then(ok => {
-      if (ok) deleteHymn(currentHymn.id);
+      if (!ok || !currentHymn) return;
+      const before = captureState();
+      const title = currentHymn.title;
+      deleteHymn(currentHymn.id);
+      offerUndo(t('operator.hymnDeleted', 'Deleted "{title}"', { title }), before);
     });
   }
 
@@ -1442,6 +1871,7 @@
       });
       if (migrated) saveServices();
     } catch (err) {
+      quarantineCorrupt('services', stored);
       console.error('[Services Load Error] Corrupted data:', err);
       services = [];
     }
@@ -1479,6 +1909,7 @@
             <span class="service-hymn-order">${isPast ? '✓' : (index + 1) + '.'}</span>
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
             <span class="service-hymn-title">${escapeHtml(label)}</span>
+            ${item.type === 'divider' ? '<span class="service-item-hint">screen goes dark</span>' : ''}
           </div>
         `;
       }).join('') : '';
@@ -1642,6 +2073,7 @@
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
             <div class="service-hymn-title-wrap">
               <div class="service-hymn-title">${escapeHtml(label)}</div>
+              ${item.type === 'divider' ? '<div class="service-item-hint">screen goes dark here</div>' : ''}
               ${notesHtml}
             </div>
           </div>
@@ -1824,7 +2256,8 @@
     if (bannerNext) {
       const nextItem = (idx + 1 < total) ? currentService.items[idx + 1] : null;
       if (nextItem) {
-        bannerNext.textContent = `Next: ${itemTypeBadge(nextItem.type)} ${itemDisplayLabel(nextItem)}`;
+        bannerNext.textContent = `Next: ${itemTypeBadge(nextItem.type)} ${itemDisplayLabel(nextItem)}` +
+          (nextItem.type === 'divider' ? ' — screen goes dark' : '');
         bannerNext.hidden = false;
       } else {
         bannerNext.hidden = true;
@@ -1911,6 +2344,7 @@
     const confirmMsg = window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.confirmations.delete') : 'Delete this service?';
     askConfirm(confirmMsg, t('modal.buttons.delete', 'Delete')).then(ok => {
       if (!ok) return;
+      const before = captureState();
       const serviceToDelete = services.find(s => s.id === serviceId);
       if (serviceToDelete) {
         services = services.filter(s => s.id !== serviceId);
@@ -1925,6 +2359,7 @@
         } else {
           statusEl.textContent = 'Service deleted';
         }
+        offerUndo(t('operator.serviceDeleted', 'Deleted service "{name}"', { name: serviceToDelete.name }), before);
       }
     });
   }
@@ -2240,6 +2675,33 @@
     document.getElementById('btnJumpChorus').onclick = jumpToChorus;
     document.getElementById('btnClear').onclick = emergencyClear;
     document.getElementById('btnBlank').onclick = blankScreen;
+    document.getElementById('btnRestore').onclick = restoreLive;
+    document.getElementById('btnShortcuts').onclick = showShortcuts;
+    document.getElementById('hotkeyChip').onclick = () => {
+      switchTab('style');
+      const panel = document.getElementById('obsConnPanel');
+      panel.open = true;
+      panel.scrollIntoView({ block: 'center' });
+    };
+    document.getElementById('verseChips').onclick = (e) => {
+      const chip = e.target.closest('.verse-chip');
+      if (!chip) return;
+      if (chip.dataset.verse === 'chorus') jumpToChorus();
+      else jumpToVerse(parseInt(chip.dataset.verse, 10));
+    };
+    document.getElementById('btnBackupExport').onclick = exportBackup;
+    document.getElementById('btnBackupImport').onclick = () => document.getElementById('backupFile').click();
+    document.getElementById('backupFile').onchange = (e) => {
+      const file = e.target.files[0];
+      e.target.value = '';
+      if (file) restoreFromFile(file);
+    };
+    document.getElementById('backupSlot').onchange = (e) => {
+      document.getElementById('btnBackupRestoreAuto').disabled = !readSlot(e.target.value);
+    };
+    document.getElementById('btnBackupRestoreAuto').onclick = () => {
+      restoreSnapshot(document.getElementById('backupSlot').value);
+    };
 
     // Pulse the status bar whenever its message changes, so rapid successive
     // messages don't silently overwrite each other unnoticed.
@@ -2396,8 +2858,17 @@
       saveSettings();
       refreshScriptureDisplay();
     };
-    document.getElementById('scriptureAutoDisplay').onchange = (e) => {
-      settings.scriptureAutoDisplay = e.target.checked;
+    // The same setting is exposed in Style (full list) and Live (next to Display)
+    ['scriptureAutoDisplay', 'qsAutoDisplay'].forEach(id => {
+      document.getElementById(id).onchange = (e) => {
+        settings.scriptureAutoDisplay = e.target.checked;
+        document.getElementById('scriptureAutoDisplay').checked = e.target.checked;
+        document.getElementById('qsAutoDisplay').checked = e.target.checked;
+        saveSettings();
+      };
+    });
+    document.getElementById('confirmItemAdvance').onchange = (e) => {
+      settings.confirmItemAdvance = e.target.checked;
       saveSettings();
     };
 
@@ -2665,11 +3136,14 @@
           return;
         }
       }
-      // Don't intercept navigation keys when typing in input/textarea
+      // Don't intercept navigation keys when typing in input/textarea/select,
+      // while a dialog is open, or when a browser shortcut (Ctrl/Cmd/Alt) is used.
       const target = e.target;
-      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.isContentEditable) {
         return;
       }
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (document.querySelector('.confirm-overlay')) return;
       // Verse navigation
       if (e.key === 'ArrowRight') { e.preventDefault(); nextVerse(); }
       if (e.key === 'ArrowLeft')  { e.preventDefault(); prevVerse(); }
@@ -2681,6 +3155,14 @@
       if (e.key === '[' || e.key === 'PageUp')   { e.preventDefault(); prevServiceItem(); }
       // Toggle display
       if (e.key === ' ') { e.preventDefault(); toggleDisplay(); }
+      // Blank / chorus / clear / restore / verse jump / help
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if (k === 'b') { e.preventDefault(); blankScreen(); }
+      if (k === 'c') { e.preventDefault(); jumpToChorus(); }
+      if (k === 'x') { e.preventDefault(); emergencyClear(); }
+      if (k === 'z') { e.preventDefault(); restoreLive(); }
+      if (k.length === 1 && k >= '1' && k <= '9') { e.preventDefault(); jumpToVerse(parseInt(k, 10) - 1); }
+      if (e.key === '?') { e.preventDefault(); showShortcuts(); }
     });
   }
 
@@ -2949,6 +3431,8 @@
     document.getElementById('scriptureShowBadge').checked = settings.scriptureShowBadge !== false;
     document.getElementById('scriptureCustomSize').checked = !!settings.scriptureCustomSize;
     document.getElementById('scriptureAutoDisplay').checked = !!settings.scriptureAutoDisplay;
+    document.getElementById('qsAutoDisplay').checked = !!settings.scriptureAutoDisplay;
+    document.getElementById('confirmItemAdvance').checked = settings.confirmItemAdvance !== false;
     const qsSize = typeof settings.scriptureFontSize === 'number' ? settings.scriptureFontSize : 44;
     settings.scriptureFontSize = Math.max(24, Math.min(96, qsSize));
     document.getElementById('scriptureFontSize').value = settings.scriptureFontSize;
@@ -3002,10 +3486,13 @@
   }
 
   // Initialize
+  snapshotData();   // before anything migrates or normalises stored data
   loadHymns();
   loadSettings();
   if (settings.obsWsEnabled) obsWsConnect();
   loadServices();
+  refreshBackupSlots();
+  updateRestoreButton();
   if (window.HymnFlowBibleLookup) {
     window.HymnFlowBibleLookup.restoreFromStorage()
       .then(() => seedDefaultBibleIfEmpty())

@@ -37,10 +37,16 @@
     <!-- Blank + Emergency Clear: always accessible regardless of active tab -->
     <div class="emergency-bar">
       <button id="btnBlank" class="btn btn-secondary btn-blank"
-        title="Take the screen down without losing your place">Blank Screen</button>
+        title="Take the screen down without losing your place (B)">Blank Screen</button>
       <button id="btnClear" class="btn btn-emergency" data-i18n="navigation.buttons.emergencyClear"
         data-i18n-aria="navigation.buttons.emergencyClear"
         data-i18n-title="navigation.tooltips.emergencyClear">&#9940; Emergency Clear</button>
+      <button id="btnRestore" class="btn btn-secondary btn-restore" hidden
+        title="Bring back what was on screen before Blank / Clear (Z)">&#8617; Restore</button>
+    </div>
+    <div class="hint-row">
+      <button id="hotkeyChip" class="hotkey-chip" title="Click to set up global hotkeys (Style → OBS Connection)">&#9000; Global hotkeys: off</button>
+      <button id="btnShortcuts" class="hotkey-chip" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)">? Shortcuts</button>
     </div>
 
     <!-- Active Service Banner (always visible when a service is loaded) -->
@@ -175,6 +181,8 @@
           <div class="verse-info" id="verseInfo" aria-live="polite" aria-atomic="true">Verse 1/4 · Lines 1-2 of 4</div>
         </div>
 
+        <div id="verseChips" class="verse-chips" role="group" aria-label="Jump to verse"></div>
+
         <div class="navigation-controls">
           <button id="btnPrevVerse" class="btn btn-nav" data-i18n="navigation.buttons.prevVerse"
             data-i18n-aria="navigation.buttons.prevVerse" data-i18n-title="navigation.tooltips.prevVerse">⟵
@@ -254,6 +262,9 @@
           <button id="btnQsDisplay" class="btn btn-add" data-i18n="quickScripture.displayButton">Display</button>
           <button id="btnQsClear" class="btn btn-secondary" data-i18n="quickScripture.clearButton">Clear</button>
         </div>
+        <label class="checkbox-label qs-auto" title="Skip the confidence preview: planned scripture items go straight to the overlay when activated">
+          <input type="checkbox" id="qsAutoDisplay"> <span>Auto-display planned scripture</span>
+        </label>
       </section>
 
       <details class="section collapsible-section" id="textSlidePanel">
@@ -445,14 +456,40 @@
             <code>↓</code> Next Line &nbsp;&nbsp; <code>↑</code> Prev Line<br>
             <code>]</code> / <code>PgDn</code> Next Item &nbsp; <code>[</code> / <code>PgUp</code> Prev Item<br>
             <code>Space</code> Toggle Display<br>
+            <code>B</code> Blank &nbsp; <code>C</code> Chorus &nbsp; <code>X</code> Emergency Clear &nbsp; <code>Z</code> Restore<br>
+            <code>1</code>–<code>9</code> Jump to verse &nbsp; <code>?</code> All shortcuts<br>
             <span style="color: var(--text-muted);">Global hotkeys (any window): load <code>scripts/hymnflow-obs-hotkeys.py</code> in OBS → Tools → Scripts, then bind keys in Settings → Hotkeys.</span>
           </div>
+        </div>
+      </details>
+
+      <!-- Data & Backup -->
+      <details class="section collapsible-section" id="backupPanel">
+        <summary>
+          <h3>Data &amp; Backup</h3>
+        </summary>
+        <div class="styles-form">
+          <p class="backup-note">Hymns, services and settings are stored in this browser. A snapshot is taken automatically each time the dock opens, and deleted hymns or services can be undone for a few seconds.</p>
+          <div style="display: flex; gap: 6px;">
+            <button id="btnBackupExport" class="btn btn-add" style="flex: 1;">Export backup…</button>
+            <button id="btnBackupImport" class="btn btn-secondary" style="flex: 1;">Restore from file…</button>
+          </div>
+          <input type="file" id="backupFile" accept=".json,application/json" hidden>
+          <label class="form-label">
+            <span>Automatic snapshots</span>
+            <select id="backupSlot" class="form-select"></select>
+          </label>
+          <button id="btnBackupRestoreAuto" class="btn btn-secondary" style="width: 100%;" disabled>Restore selected snapshot</button>
+          <p class="backup-note">Bibles are stored separately and are not touched by backup or restore. OBS connection details and password are never written to a backup file.</p>
         </div>
       </details>
 
       <section class="section">
         <h3 data-i18n="settings.title" style="margin-bottom: 12px;">Settings</h3>
         <div class="styles-form">
+          <label class="checkbox-label" title="On the last verse, the first Next only arms the advance; a second press within a few seconds moves to the next service item">
+            <input type="checkbox" id="confirmItemAdvance" checked> <span>Ask for a second press before moving to the next service item</span>
+          </label>
           <label class="form-label">
             <span data-i18n="settings.languageLabel">Interface Language</span>
             <select id="languageSelect" class="form-select">

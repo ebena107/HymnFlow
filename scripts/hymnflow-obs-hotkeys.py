@@ -7,7 +7,7 @@ Then bind keys: OBS Settings → Hotkeys → search "HymnFlow"
 Requires OBS 28+ with obs-websocket enabled
 (Tools → obs-websocket Settings → Enable WebSocket server).
 
-This script registers 7 hotkeys in OBS's hotkey system and fires each
+This script registers 11 hotkeys in OBS's hotkey system and fires each
 one by broadcasting a BroadcastCustomEvent to obs-websocket, which
 the HymnFlow browser dock receives and acts on.
 """
@@ -33,6 +33,10 @@ HOTKEYS = [
     ('hymnflow.next_item',      'HymnFlow: Next Service Item',    'next_item'),
     ('hymnflow.prev_item',      'HymnFlow: Previous Service Item','prev_item'),
     ('hymnflow.toggle_display', 'HymnFlow: Toggle Display',       'toggle_display'),
+    ('hymnflow.blank',          'HymnFlow: Blank Screen',         'blank'),
+    ('hymnflow.clear',          'HymnFlow: Emergency Clear',      'clear'),
+    ('hymnflow.jump_chorus',    'HymnFlow: Show Chorus',          'jump_chorus'),
+    ('hymnflow.restore',        'HymnFlow: Restore Last Slide',   'restore'),
 ]
 
 _hotkey_ids = {}

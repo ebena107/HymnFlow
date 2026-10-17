@@ -1,3 +1,19 @@
+## [Unreleased]
+
+### Solo-operator workflow & data safety
+
+### Added
+- ⌨️ **One-key live control** — `B` blank, `C` chorus, `X` Emergency Clear, `Z` restore, `1`–`9` jump to verse, `?` cheat sheet; four new OBS global hotkeys (Blank, Emergency Clear, Show Chorus, Restore Last Slide — existing bindings are untouched)
+- ↩ **Restore after Blank / Clear** — toast and button bring back the hymn position and scripture page that were on screen
+- 🛡️ **End-of-item guard** — on the last verse the first Next arms the advance, the second moves to the next service item (setting: Style → Settings)
+- 🔢 **Verse chips** under the verse info for direct jumps; 🔌 **hotkey status chip**; "screen goes dark" markers on dividers; Auto-display scripture toggle on the Live tab
+- 🛡️ **Data safety** — unreadable stored data is quarantined instead of overwritten; a snapshot of hymns/services/settings is taken each time the dock opens; Undo for deleting a hymn or service; Style → Data & Backup exports/restores a full backup file or an automatic snapshot (OBS password never exported; a restore keeps a "before last restore" copy)
+
+### Changed
+- Native `alert()` / `confirm()` replaced by in-dock toasts and a keyboard-accessible confirm dialog
+
+---
+
 ## [2.8.0] - 2026-07-05
 
 ### Live-Operation Reliability, Service Workflow Overhaul & Schedule Files
