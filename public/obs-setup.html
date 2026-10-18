@@ -224,36 +224,23 @@
       <strong>✅ Production Ready!</strong> Fully tested for live church services. Follow the setup below to get started in under 5 minutes.
     </div>
 
-    <!-- ===== WHAT'S NEW ===== -->
-    <h2>🆕 What's New in v2.5.0</h2>
-    <div class="new-feature">
-      <strong>Service Planning Overhaul</strong> — Build full service orders with hymns, scripture, announcements, and dividers. Drag-and-drop reorder, duplicate services, notes/cues per item, live coming-next preview in the service banner, past-item checkmarks, and auto-advance between items.
-    </div>
-    <div class="new-feature">
-      <strong>Global OBS Hotkeys</strong> — Control HymnFlow from any OBS window. Load <code>scripts/hymnflow-obs-hotkeys.py</code> in OBS → Tools → Scripts; hotkeys appear in OBS Settings → Hotkeys. Works via obs-websocket (OBS 28+, built-in). New keys: Next/Previous Service Item (<code>]</code>/<code>[</code>), Next/Previous Line.
-    </div>
-    <div class="new-feature">
-      <strong>Persistent Bible Storage</strong> — Bible translations now stored in IndexedDB (no 5 MB limit). Survives OBS restarts reliably. Auto-migrates from any prior localStorage format.
-    </div>
-
     <!-- ===== QUICK SETUP ===== -->
     <h2>📦 Quick Setup (3 Steps)</h2>
 
     <div class="steps">
       <ol>
         <li>
-          <strong>1. Add Custom Dock to OBS</strong>
+          <strong>Add Custom Dock to OBS</strong>
           <ul>
             <li>Open OBS Studio</li>
-            <li>Go to <code>View → Docks → Custom Browser Docks</code></li>
-            <li>Dock Name: <code>HymnFlow Control</code></li>
-            <li>URL: <code id="dockUrl">file:///C:/HymnFlow/public/obs-dock/index.html</code></li>
+            <li>Go to <code>Docks → Custom Browser Docks</code></li>
+            <li>[Dock Name: <code>HymnFlow Control</code>] [URL: <code id="dockUrl">file:///C:/HymnFlow/public/obs-dock/index.html</code>]</li>
             <li>Click <strong>Apply</strong></li>
           </ul>
         </li>
 
         <li>
-          <strong>2. Import Your Hymn Data</strong>
+          <strong>Import Your Hymn Data</strong>
           <div class="warning" style="margin: 15px 0;">
             <strong>⚠️ Important:</strong> Hymn files are <strong>NOT included</strong> in the main plugin download. Download them individually below.
           </div>
@@ -328,7 +315,7 @@
         </li>
 
         <li>
-          <strong>3. Add Browser Source for Overlay</strong>
+          <strong>Add Browser Source for Overlay</strong>
           <ul>
             <li>In OBS, add a new <strong>Browser Source</strong></li>
             <li>Name: <code>Hymn Lower-Third</code></li>
@@ -770,6 +757,18 @@ And grace my fears relieved;</pre>
           <li>Keys must be bound in OBS Settings → Hotkeys (search "HymnFlow")</li>
         </ul>
       </div>
+    </div>
+
+    <!-- ===== WHAT'S NEW ===== -->
+    <h2>🆕 What's New in v2.5.0</h2>
+    <div class="new-feature">
+      <strong>Service Planning Overhaul</strong> — Build full service orders with hymns, scripture, announcements, and dividers. Drag-and-drop reorder, duplicate services, notes/cues per item, live coming-next preview in the service banner, past-item checkmarks, and auto-advance between items.
+    </div>
+    <div class="new-feature">
+      <strong>Global OBS Hotkeys</strong> — Control HymnFlow from any OBS window. Load <code>scripts/hymnflow-obs-hotkeys.py</code> in OBS → Tools → Scripts; hotkeys appear in OBS Settings → Hotkeys. Works via obs-websocket (OBS 28+, built-in). New keys: Next/Previous Service Item (<code>]</code>/<code>[</code>), Next/Previous Line.
+    </div>
+    <div class="new-feature">
+      <strong>Persistent Bible Storage</strong> — Bible translations now stored in IndexedDB (no 5 MB limit). Survives OBS restarts reliably. Auto-migrates from any prior localStorage format.
     </div>
 
     <!-- ===== QUICK LINKS ===== -->
