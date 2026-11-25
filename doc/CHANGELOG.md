@@ -1,4 +1,6 @@
-## [Unreleased]
+## [2.10.0] - 2026-11-26
+
+### Licensing clarity, safer imports & hardened dock
 
 ### Security
 - Strict Content Security Policy on dock and overlay (no inline script, no `eval`); inline `onclick` handlers replaced by delegated `data-act` events. Tests now guard this.
