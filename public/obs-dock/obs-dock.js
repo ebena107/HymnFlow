@@ -3336,7 +3336,7 @@
       if (!window.HymnFlowBibleLookup || window.HymnFlowBibleLookup.isLoaded()) return resolve(false);
       if (localStorage.getItem('hymnflow-bible-seeded')) return resolve(false);
       const script = document.createElement('script');
-      script.src = '../data/bible-kjv.js?v=2.9.0';
+      script.src = '../data/bible-kjv.js?v=2.10.0';
       script.onload = () => {
         const seed = window.HymnFlowBible;
         if (!seed) return resolve(false);
