@@ -11,7 +11,7 @@ This release makes it easier to use HymnFlow legally and safely: copyright and C
 - **Copyright and CCLI # fields** on every hymn, shown under the title on the Live tab.
 - **Usage report** — each hymn put on screen is logged on your device (nothing is sent anywhere). **Style → Data & Backup → Export usage report (CSV)** gives you a report for CCLI reporting.
 - **Licensing & credits panel** (Style tab) with the livestream-licensing note and the credit lines for loaded BibliaTodo (NTBT, BTNT, NTB-BR) and LSV translations.
-- New [`CONTENT_LICENSING.md`](CONTENT_LICENSING.md) explains what is public domain, what is openly licensed and what needs permission.
+- New [`CONTENT_LICENSING.md`](https://github.com/ebena107/HymnFlow/blob/master/doc/CONTENT_LICENSING.md) explains what is public domain, what is openly licensed and what needs permission.
 
 ## 📖 More ways to bring content in
 
@@ -37,4 +37,4 @@ This release makes it easier to use HymnFlow legally and safely: copyright and C
 
 ---
 
-**Upgrade**: replace the plugin files. Your hymns, services, settings and Bibles live in the browser's storage and are not touched. Full details: [CHANGELOG](CHANGELOG.md).
+**Upgrade**: replace the plugin files. Your hymns, services, settings and Bibles live in the browser's storage and are not touched. Full details: [CHANGELOG](https://github.com/ebena107/HymnFlow/blob/master/doc/CHANGELOG.md).
