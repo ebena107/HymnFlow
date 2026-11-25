@@ -47,6 +47,7 @@ jobs:
           cp doc/SETUP.md           $DIR/
           cp doc/TROUBLESHOOTING.md $DIR/
           cp doc/SECURITY.md        $DIR/
+          cp doc/CONTENT_LICENSING.md $DIR/
           # Include version-specific release notes if they exist
           [ -f "doc/RELEASE_NOTES_v$VER.md" ] && cp "doc/RELEASE_NOTES_v$VER.md" $DIR/ || true
 

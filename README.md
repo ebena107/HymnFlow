@@ -184,7 +184,7 @@ Vanilla JavaScript project, no build step required.
 
 ## 📄 License
 
-GPL-2.0 — Same as OBS Studio. Free to use and modify.
+GPL-2.0 — Same as OBS Studio. Free to use and modify. Hymn lyrics and Bible text have their own copyright — see [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md).
 
 ## 🙏 Acknowledgments
 

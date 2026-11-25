@@ -57,3 +57,6 @@ public/data/*.json
 
 # Claude Code local settings (machine-specific permissions)
 .claude/settings.local.json
+
+# Third-party hymnal source dumps (copyright status unclear; keep local only)
+hymn-bundle/raw/

@@ -187,7 +187,7 @@ python scripts/bundle_bible_kjv.py
 | Crosswire Bible Society | https://www.crosswire.org/sword/modules/ | 200+ languages — Sword module format |
 | Open.Bible | https://open.bible | Community open-license translations |
 
-**Public-domain translations quick reference:**
+**Translations quick reference** — only the first group is public domain. Others are listed for convenience; copyright status varies, so confirm you have permission before using them in a service or livestream.
 
 | Code | Full Name | Language |
 |---|---|---|
@@ -196,10 +196,10 @@ python scripts/bundle_bible_kjv.py
 | WEB | World English Bible | English |
 | YLT | Young's Literal Translation | English |
 | DBY | Darby Bible (1890) | English |
-| RVR60 | Reina-Valera Revisada 1960 | Spanish |
-| AA | Almeida Atualizada | Portuguese |
+| RVR60 | Reina-Valera Revisada 1960 | Spanish — **copyrighted, permission required** |
+| AA | Almeida Atualizada | Portuguese — **copyrighted, verify permission** |
 | LS | Louis Segond 1910 | French |
-| BYO | Bibeli Mimo (Yoruba) | Yoruba |
+| BYO | Bibeli Mimo (Yoruba) | Yoruba — **verify license of your source text** |
 
 ### Using Quick Scripture
 

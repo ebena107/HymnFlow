@@ -16,7 +16,7 @@
     "browser-source"
   ],
   "author": "",
-  "license": "MIT",
+  "license": "GPL-2.0-only",
   "dependencies": {},
   "devDependencies": {}
 }
