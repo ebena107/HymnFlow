@@ -141,7 +141,7 @@ Download a pre-formatted Bible JSON from one of these repositories:
 **Spanish (NTBT — Nueva Traducción BibliaTodo, modern translation from the original languages):**
 - Download [NTBT-json.zip](https://downloads.bibliatodo.org/texto/NTBT-json.zip), unzip it, and import `NTBT.json` directly (no conversion needed). Name it `NTBT`.
 - English BTNT and Portuguese NTB-BR are available from the same publisher: [BTNT materials](https://www.bibliatodo.org/en/btnt/materials), [NTB-BR materials](https://www.bibliatodo.org/pt/ntb-br/materials).
-- Free to use and distribute under the [BibliaTodo license](https://www.bibliatodo.org/en/license); keep the Scripture wording unchanged and credit it once where your church lists credits, e.g. *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society.* Not bundled with HymnFlow.
+- Free to use and distribute under the [BibliaTodo license](https://www.bibliatodo.org/en/license); keep the Scripture wording unchanged and credit it once where your church lists credits (no need beside every verse on the overlay), e.g. *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. Uso, reproducción y distribución autorizados gratuitamente conforme a la Licencia NTBT.* Link “BibliaTodo Bible Society” to <https://www.bibliatodo.org/es/ntbt/> (English BTNT: <https://www.bibliatodo.org/en/btnt/>) and keep a link to the license (version 1.9). Not bundled with HymnFlow.
 
 **Portuguese (Almeida):**
 - [thiagobodruk/bible → pt_aa.json](https://github.com/thiagobodruk/bible/blob/master/json/pt_aa.json) → Save As `pt_aa.json`

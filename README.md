@@ -87,7 +87,7 @@ On the last verse, the first `→` only arms the advance; a second press moves t
 
 ¹ *Douay-Rheims uses Vulgate Psalm numbering (Psalm N ≈ Hebrew Psalm N+1).*
 
-**BibliaTodo translations (free license, import the official JSON directly):** [NTBT](https://www.bibliatodo.org/es/ntbt/materials) (Spanish), [BTNT](https://www.bibliatodo.org/en/btnt/materials) (English) and NTB-BR (Portuguese) from BibliaTodo Bible Society. Download the `*-json.zip`, unzip, and use Library → Bible → **Import JSON** on `NTBT.json`. Not bundled with HymnFlow; see the [license](https://www.bibliatodo.org/en/license). Credit when displayed: *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society.*
+**BibliaTodo translations (free license, import the official JSON directly):** [NTBT](https://www.bibliatodo.org/es/ntbt/materials) (Spanish), [BTNT](https://www.bibliatodo.org/en/btnt/materials) (English) and NTB-BR (Portuguese) from BibliaTodo Bible Society. Download the `*-json.zip`, unzip, and use Library → Bible → **Import JSON** on `NTBT.json`. Not bundled with HymnFlow; see the [license](https://www.bibliatodo.org/en/license). Credit once in your documentation or app info (not beside every verse): *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. Uso, reproducción y distribución autorizados gratuitamente conforme a la Licencia NTBT.* — link “BibliaTodo Bible Society” to <https://www.bibliatodo.org/es/ntbt/> and keep a link to the license (version 1.9).
 
 **Other translations available at:**
 

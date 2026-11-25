@@ -3446,8 +3446,8 @@
   }
 
   const TRANSLATION_CREDITS = [
-    [/^NTBT$/i, 'Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. https://www.bibliatodo.org/es/ntbt/'],
-    [/^BTNT$/i, 'Holy Bible, BibliaTodo New Translation (BTNT). Published by BibliaTodo Bible Society. https://www.bibliatodo.org/en/btnt/'],
+    [/^NTBT$/i, 'Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. Uso, reproducción y distribución autorizados gratuitamente conforme a la Licencia NTBT. https://www.bibliatodo.org/es/ntbt/ · Licencia: https://www.bibliatodo.org/en/license'],
+    [/^BTNT$/i, 'Holy Bible, BibliaTodo New Translation (BTNT). Published by BibliaTodo Bible Society. Use, reproduction, and distribution are permitted free of charge under the BTNT License. https://www.bibliatodo.org/en/btnt/ · License: https://www.bibliatodo.org/en/license'],
     [/^NTB-?BR$/i, 'Nova Tradução BibliaTodo (NTB-BR). Publicada pela BibliaTodo Bible Society. https://www.bibliatodo.org/pt/ntb-br/'],
     [/^LSV$/i, 'Literal Standard Version (LSV), © Covenant Press. Used under its open license. https://www.lsvbible.com/'],
   ];

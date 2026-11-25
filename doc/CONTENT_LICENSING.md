@@ -32,11 +32,20 @@ summarizes what that means in practice. It is guidance, not legal advice.
   keep the text unaltered and keep its attribution.
 - **Freely licensed with conditions**: BibliaTodo (NTBT, BTNT, NTB-BR) is free
   to use and distribute under the
-  [BibliaTodo license](https://www.bibliatodo.org/en/license). Keep the wording
-  unchanged and credit it once where your church lists credits:
-  *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo
-  Bible Society.* The terms can change, so record the license version and date
-  you rely on.
+  [BibliaTodo license](https://www.bibliatodo.org/en/license) (the publisher
+  confirmed in November 2026 that **version 1.9** is the governing agreement; the
+  1.7 notice inside older download packages is superseded, and both keep the
+  digital permissions). Keep the wording unchanged and give one accessible
+  general credit in your documentation or app information — not beside every
+  verse:
+  *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. Uso, reproducción y distribución autorizados gratuitamente conforme a la Licencia NTBT.*
+  Link "BibliaTodo Bible Society" to <https://www.bibliatodo.org/es/ntbt/> (English
+  BTNT: <https://www.bibliatodo.org/en/btnt/>) and keep a link to the license.
+  Use is free for nonprofit and commercial purposes, including paid apps,
+  subscriptions and advertising, with no royalties or fees. Printing a complete
+  Bible or Testament for sale, donation or distribution needs free registration
+  and written approval; that does not apply to importing or displaying Scripture
+  in HymnFlow. The terms can change, so keep the version and date you rely on.
 - HymnFlow does not bundle translations with restrictive licenses. What is
   bundled, and its status, is listed in the table below.
 
