@@ -1,4 +1,6 @@
-## [Unreleased]
+## [2.10.1] - 2026-11-26
+
+### BibliaTodo attribution update
 
 ### Changed
 - BibliaTodo attribution updated to the publisher's current wording and addresses (`bibliatodo.org`); license version 1.9 is cited. Applies to the in-app credits panel, README, SETUP, CONTENT_LICENSING and the setup page.
