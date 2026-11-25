@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Security
+- Hymn and service ids are sanitized on load (a crafted backup could previously inject script through inline handlers); `SECURITY.md` rewritten to match the code.
+- Default hymn "How Great Thou Art" (likely still copyrighted) replaced with the public-domain "Rock of Ages" for new installs.
+
 ### Changed
 - Stopped bundling modern hymnals (Baptist Hymnal, United Methodist Hymnal, Faith We Sing): removed from the repo bundle, release packages and download cards; the setup page now links to where to obtain hymns. Third-party `hymn-bundle/raw` dumps are no longer tracked. License field aligned to GPL-2.0; Bible copyright labels corrected; added `doc/CONTENT_LICENSING.md`.
 

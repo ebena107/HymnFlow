@@ -1,135 +1,78 @@
 # Security Policy
 
-## Reporting Security Issues
+## Reporting a vulnerability
 
-**Do not** open a public GitHub issue for security vulnerabilities.
+Please **do not** open a public issue with exploit details.
 
-Instead, please email security concerns to: [security@yourdomain.com]
+Use the repository's **Security → Report a vulnerability** (GitHub private
+advisory) at <https://github.com/ebena107/HymnFlow/security/advisories>. If that
+is unavailable, open an issue that only says you have a security report and ask
+for a private contact — include no details.
 
-Please include:
-- Description of the vulnerability
-- Steps to reproduce
-- Potential impact
-- Suggested fix (if any)
+Include: what you found, steps to reproduce, impact, and a suggested fix if you
+have one. We aim to acknowledge reports within a few days and to publish a fix
+before public disclosure.
 
-## Security Considerations
+## How HymnFlow is built (what this means for security)
 
-### Browser-Based Architecture
+- **Runs locally in the browser.** The dock (`obs-dock`) and overlay
+  (`obs-overlay`) are static pages. There is no HymnFlow server, account, or
+  analytics.
+- **No third-party runtime code.** No npm packages, CDN scripts, or remote
+  fonts. The release package contains only HymnFlow's own files.
+- **Network use.** The only connection HymnFlow makes is the optional
+  **obs-websocket** link from the dock to OBS (default `127.0.0.1:4455`), used
+  for global hotkeys. Everything else works offline.
+- **Dock ↔ overlay messaging** uses browser `localStorage` events, so both
+  pages must be loaded from the same origin in the same OBS browser profile.
+- **Rendering.** The overlay writes lyrics with `textContent`. The dock builds
+  some lists with `innerHTML`; user-supplied text is passed through
+  `escapeHtml()` first, and ids are restricted to `[A-Za-z0-9_-]` on load,
+  because they are placed in inline event handlers.
+- **Content Security Policy.** Both pages currently set only
+  `object-src 'none'; base-uri 'none'`. A strict `script-src` is planned; it
+  requires removing the remaining inline event handlers.
 
-HymnFlow runs entirely in the browser with no backend server:
+## Data stored
 
-- **No network requests** - All data stored locally in localStorage
-- **No user data collection** - No analytics, no tracking
-- **No credentials** - No login, no authentication
-- **No external dependencies** - Pure vanilla JavaScript
-- **No eval() or innerHTML** - No code injection risks
-- **localStorage isolation** - Data isolated to file:// origin
+| Data | Where | Notes |
+|---|---|---|
+| Hymns, services, settings | `localStorage` | Plain JSON, not encrypted |
+| Bible translations | IndexedDB | Imported by the user |
+| OBS WebSocket password (optional) | `localStorage` (settings) | **Plain text**; excluded from exported backups |
+| Automatic snapshots | `localStorage` | Taken when the dock opens |
 
-### localStorage Limits
+Anyone with access to the OBS user profile on the machine can read this data.
+Use a **dedicated** obs-websocket password (never one you use elsewhere), or on
+shared machines run obs-websocket without a password bound to localhost.
 
-- **Size limit**: ~5-10MB per browser
-- **No encryption**: Data stored as plain JSON
-- **Browser isolation**: Inaccessible from other origins
-- **User responsibility**: Users can clear browser data anytime
+## Imported files
 
-### OBS WebSocket Password
+Imports (hymn files, backups, schedules, Bible files) are validated, but they
+are **data from outside the app** — only import files you trust.
 
-The optional global-hotkeys integration stores the obs-websocket password in
-localStorage **as plain text** (there is no server to keep a secret on). This
-is acceptable for the typical setup — a password for a WebSocket server on
-`127.0.0.1` of the same machine — but:
+- Backups and stored data have their hymn and service ids sanitized on load.
+- Parsers accept `.txt`, `.csv`, `.json`, ChordPro and `.usr`; they never
+  evaluate content as code.
+- Bible JSON is checked for structure (66 books) but not for correctness of the
+  text.
 
-- Use a **dedicated password** for obs-websocket, never one shared with other accounts
-- On shared/kiosk machines, prefer running obs-websocket **without authentication**
-  bound to localhost only, rather than storing a reused password
+## Known limitations
 
-### File Access
+- No access control: anyone who can use the dock can change hymns and settings.
+- `localStorage` is limited (about 5–10 MB); very large hymn libraries may not
+  fit. Back up regularly (Style → Data & Backup).
+- No automated security scanning in CI yet.
 
-- **Same-origin policy**: Both dock and overlay must be from same origin
-- **file:// protocol**: Subject to browser sandbox restrictions
-- **No file write access**: Can only read via import, write to localStorage
+## Planned improvements
 
-### Recommended Practices for Users
+- [ ] Remove inline event handlers and add a strict `script-src` CSP
+- [ ] Automated tests and CI on every push
+- [ ] Pin GitHub Actions to commit SHAs
+- [ ] Optional encryption of exported backups
 
-1. **Run locally**: Use file:// URLs or localhost server for maximum security
-2. **Keep OBS updated**: Use latest OBS Studio version
-3. **Trust sources**: Only import hymn files from trusted sources
-4. **Regular backups**: Export your hymn library periodically
-5. **Browser updates**: Keep your browser updated
+## Supported versions
 
-## Known Limitations
+Only the latest release receives fixes.
 
-- **No HTTPS**: file:// URLs don't support encryption
-- **No validation**: Parsers accept any file content (use trusted sources)
-- **No access control**: Anyone with browser access can edit hymns
-- **Data export**: Can export hymns to unsecured files
-- **localStorage**: Limited to 5-10MB (not suitable for very large libraries)
-
-## Accepted Risks
-
-HymnFlow accepts the following trade-offs for simplicity and reliability:
-
-- **No server** - Avoids infrastructure security issues but means no authentication
-- **No database** - Avoids SQL injection but means no backup service
-- **No API** - Avoids API abuse but means no remote features
-- **Vanilla JS** - Avoids framework vulnerabilities but means less abstraction
-
-## Dependencies
-
-HymnFlow has **zero runtime dependencies**:
-
-- No npm packages
-- No external libraries
-- No CDN resources
-- No remote scripts
-
-This eliminates supply chain attacks and vulnerability propagation.
-
-## Supported Versions
-
-| Version | Status | Support Until |
-|---------|--------|---------------|
-| v2.0.x | Current | ----|
-| v1.x | Legacy | Dec 2024 |
-| < v1.0 | Unsupported | - |
-
-## Disclosure Policy
-
-When a security vulnerability is reported:
-
-1. **Acknowledgment** (within 24 hours)
-2. **Investigation** (within 1 week)
-3. **Fix development** (varies by severity)
-4. **Release** (public after patch available)
-5. **Notification** (users informed of update)
-
-## Security Checklist
-
-Our security practices include:
-
-- [ ] Regular code review
-- [ ] No external dependencies
-- [ ] Input validation in parsers
-- [ ] localStorage usage follows browser standards
-- [ ] No sensitive data in code/documentation
-- [ ] Regular testing in OBS
-- [ ] Cross-platform testing (Windows, macOS, Linux)
-- [ ] Documentation of security considerations
-
-## Future Improvements
-
-Planned security enhancements:
-
-- [ ] Content Security Policy (CSP) headers
-- [ ] Input sanitization in parsers
-- [ ] HTTPS/localhost setup wizard
-- [ ] Export encryption option
-- [ ] Audit logging (local only)
-
-## Questions?
-
-Security questions (non-vulnerability): security@yourdomain.com
-
----
-
-**Last Updated**: January 2026
+**Last reviewed**: November 2026

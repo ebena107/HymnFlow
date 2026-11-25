@@ -200,6 +200,36 @@
     return `hymn_${now}_${sameTimeHymnCounter}_${randomPart}`;
   }
 
+  // Ids end up inside inline onclick="…('id')" handlers, so anything outside this
+  // set (e.g. from a crafted backup file) is replaced with a freshly generated id.
+  const SAFE_ID_RE = /^[A-Za-z0-9_-]{1,100}$/;
+  let hymnIdRemap = {}; // old unsafe hymn id -> new id (applied to service items)
+
+  function sanitizeHymnIds(list) {
+    let changed = false;
+    hymnIdRemap = {};
+    list.forEach(h => {
+      if (!h || typeof h.id === 'string' && SAFE_ID_RE.test(h.id)) return;
+      const old = h && h.id;
+      h.id = generateUniqueHymnId();
+      if (typeof old === 'string') hymnIdRemap[old] = h.id;
+      changed = true;
+    });
+    return changed;
+  }
+
+  function sanitizeServiceIds(list) {
+    let changed = false;
+    list.forEach(sv => {
+      if (!sv) return;
+      if (typeof sv.id !== 'string' || !SAFE_ID_RE.test(sv.id)) { sv.id = generateUniqueServiceId(); changed = true; }
+      (sv.items || []).forEach(it => {
+        if (it && typeof it.hymnId === 'string' && hymnIdRemap[it.hymnId]) { it.hymnId = hymnIdRemap[it.hymnId]; changed = true; }
+      });
+    });
+    return changed;
+  }
+
   function generateUniqueServiceId() {
     const now = Date.now();
     if (now === lastServiceTimestamp) {
@@ -708,7 +738,8 @@
     }
     const numChanged = normalizeHymnNumbers(hymns);
     const strChanged = normalizeHymnStrings(hymns);
-    if (numChanged || strChanged) saveHymns();
+    const idChanged = sanitizeHymnIds(hymns);
+    if (numChanged || strChanged || idChanged) saveHymns();
     filtered = hymns;
   }
 
@@ -1869,6 +1900,7 @@
         if (!s.items) s.items = [];
         return s;
       });
+      if (sanitizeServiceIds(services)) migrated = true;
       if (migrated) saveServices();
     } catch (err) {
       quarantineCorrupt('services', stored);

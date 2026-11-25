@@ -20,19 +20,19 @@ const DEFAULT_HYMNS = [
   },
   {
     "id": "hymn_002",
-    "title": "How Great Thou Art",
-    "author": "Carl Boberg",
+    "title": "Rock of Ages",
+    "author": "Augustus Toplady",
     "verses": [
-      "O Lord my God, when I in awesome wonder\nConsider all the worlds Thy hands have made,\nI see the stars, I hear the rolling thunder,\nThy power throughout the universe displayed.",
-      "When through the woods and forest glades I wander\nAnd hear the birds sing sweetly in the trees,\nWhen I look down from lofty mountain grandeur\nAnd hear the brook and feel the gentle breeze.",
-      "And when I think that God, His Son not sparing,\nSent Him to die, I scarce can take it in,\nThat on the cross, my burden gladly bearing,\nHe bled and died to take away my sin.",
-      "When Christ shall come with shout of acclamation\nAnd take me home, what joy shall fill my heart!\nThen I shall bow in humble adoration\nAnd there proclaim, 'My God, how great Thou art!'"
+      "Rock of Ages, cleft for me,\nLet me hide myself in Thee;\nLet the water and the blood,\nFrom Thy wounded side which flowed,\nBe of sin the double cure;\nSave from wrath and make me pure.",
+      "Not the labor of my hands\nCan fulfill Thy law's demands;\nCould my zeal no respite know,\nCould my tears forever flow,\nAll for sin could not atone;\nThou must save, and Thou alone.",
+      "Nothing in my hand I bring,\nSimply to Thy cross I cling;\nNaked, come to Thee for dress;\nHelpless, look to Thee for grace;\nFoul, I to the fountain fly;\nWash me, Savior, or I die.",
+      "While I draw this fleeting breath,\nWhen mine eyes shall close in death,\nWhen I rise to worlds unknown,\nAnd behold Thee on Thy throne,\nRock of Ages, cleft for me,\nLet me hide myself in Thee."
     ],
-    "chorus": "Then sings my soul, my Savior God, to Thee:\nHow great Thou art! How great Thou art!\nThen sings my soul, my Savior God, to Thee:\nHow great Thou art! How great Thou art!",
+    "chorus": "",
     "metadata": {
-      "category": "Praise",
-      "key": "Bb",
-      "tempo": "Moderate"
+      "category": "Hymn",
+      "key": "Eb",
+      "tempo": "Slow"
     },
     "createdAt": "2026-01-04T00:00:00.000Z"
   },
