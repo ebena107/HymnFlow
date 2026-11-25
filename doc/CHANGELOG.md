@@ -1,3 +1,10 @@
+## [Unreleased]
+
+### Added
+- 📖 **BibliaTodo JSON import** — Library → Bible → Import JSON now accepts the official BibliaTodo "schema 3" JSON (NTBT Spanish, BTNT English, NTB-BR Portuguese) directly; verse text only, wording untouched. Documented as an optional, user-downloaded source (not bundled) with the required attribution.
+
+---
+
 ## [2.9.0] - 2026-10-17
 
 ### Solo-operator workflow & data safety

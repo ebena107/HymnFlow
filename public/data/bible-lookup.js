@@ -224,6 +224,34 @@
     return result;
   }
 
+  // Converts the BibliaTodo "schema 3" JSON (libros > capitulos > versiculos,
+  // USFM book codes — NTBT/BTNT/NTB-BR). Verse text only; headings, notes and
+  // formatting metadata are ignored so the translation wording stays untouched.
+  function convertBibliaTodo(data) {
+    const result = {};
+    data.libros.forEach(book => {
+      let code = String(book.codigo || '').toUpperCase();
+      // Standard USFM codes that differ from HymnFlow's internal ones.
+      const USFM_ALIAS = { NAM: 'NAH', JOE: 'JOL', EZE: 'EZK', SOS: 'SNG', SON: 'SNG', PHI: 'PHP', JAM: 'JAS', JHN: 'JHN' };
+      if (USFM_ALIAS[code]) code = USFM_ALIAS[code];
+      const idx = BOOK_CODES.indexOf(code);
+      if (idx < 0) return; // unknown/deuterocanonical book: skip
+      const chapters = [null];
+      (book.capitulos || []).forEach(ch => {
+        const verses = [null];
+        (ch.versiculos || []).forEach(v => { verses[v.numero] = String(v.texto || ''); });
+        for (let i = 1; i < verses.length; i++) if (verses[i] === undefined) verses[i] = '';
+        chapters[ch.numero] = verses;
+      });
+      for (let i = 1; i < chapters.length; i++) if (!chapters[i]) chapters[i] = [null];
+      result[code] = { name: book.nombre || BOOK_NAMES[idx] || code, chapters };
+    });
+    if (Object.keys(result).length < 66) {
+      throw new Error(`Only ${Object.keys(result).length} books found — expected 66`);
+    }
+    return result;
+  }
+
   // Detects and parses Bible file content (JSON array or HymnFlow JS/JSON).
   // Returns the HymnFlow-format object or throws on invalid content.
   function parseBibleFile(text) {
@@ -241,6 +269,9 @@
     }
     if (data && typeof data === 'object' && data.GEN) {
       return data;
+    }
+    if (data && typeof data === 'object' && Array.isArray(data.libros)) {
+      return convertBibliaTodo(data);
     }
     throw new Error('Unrecognised Bible JSON format');
   }
