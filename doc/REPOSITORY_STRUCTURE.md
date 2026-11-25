@@ -41,18 +41,18 @@ HymnFlow/
 │   └── release.bat             ← Release script (Windows)
 │
 ├── doc/
-│   └── IMPLEMENTATION.md        ← Technical documentation
+│   └── archive/IMPLEMENTATION.md        ← Technical documentation
 │
 ├── README.md                    ← Main user documentation
-├── README-GITHUB.md             ← GitHub README (badges, GH-specific)
+├── archive/README-GITHUB.md             ← GitHub README (badges, GH-specific)
 ├── SETUP.md                     ← Quick setup guide (2-5 min)
 ├── RELEASE.md                   ← Release information & migration
 ├── SECURITY.md                  ← Security policy
 ├── TROUBLESHOOTING.md           ← Common issues & solutions
 ├── CHANGELOG.md                 ← Version history
 ├── OBS_DOCK_README.md           ← Detailed dock documentation
-├── OBS_IMPLEMENTATION.md        ← Implementation details
-├── STREAMLINE_SUMMARY.md        ← Architecture summary
+├── archive/OBS_IMPLEMENTATION.md        ← Implementation details
+├── archive/STREAMLINE_SUMMARY.md        ← Architecture summary
 │
 ├── .github/
 │   ├── .markdownlint.json      ← Markdown linting rules
@@ -82,8 +82,8 @@ HymnFlow/
 |------|---------|----------|
 | `doc/IMPLEMENTATION.md` | Technical deep-dive | Developers, contributors |
 | `.github/copilot-instructions.md` | AI agent guidance | GitHub Copilot, Claude |
-| `OBS_IMPLEMENTATION.md` | Feature implementation | Feature developers |
-| `STREAMLINE_SUMMARY.md` | Architecture summary | New developers |
+| `archive/OBS_IMPLEMENTATION.md` | Feature implementation | Feature developers |
+| `archive/STREAMLINE_SUMMARY.md` | Architecture summary | New developers |
 
 ### Community & Repository
 

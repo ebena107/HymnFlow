@@ -54,6 +54,10 @@ open an issue so we can update this table.
 
 ## Livestreaming
 
+The dock has a **Licensing & credits** panel (Style tab) with this note, and a
+usage log you can export as CSV (Style → Data & Backup) to help with CCLI
+reporting. Record each hymn's copyright and CCLI number in its edit form.
+
 Showing copyrighted lyrics on a livestream usually needs a streaming license
 in addition to a standard church copyright license (for example CCLI or
 OneLicense). Requirements differ by country and platform, so check with your

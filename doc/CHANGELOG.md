@@ -7,10 +7,14 @@
 - Default hymn "How Great Thou Art" (likely still copyrighted) replaced with the public-domain "Rock of Ages" for new installs.
 
 ### Changed
+- The release workflow now runs `npm test` before packaging.
+- The service "More" menu expands in place (it was clipped by the scrolling list in a narrow dock).
+- Historical planning and announcement docs moved to `doc/archive/`.
 - No longer distributing the CAC hymn books, the Yoruba Baptist Hymnal or the Yoruba Bible until their provenance is verified: untracked (history unchanged), git-ignored, removed from release packages and the setup page. Copy them back locally to keep using them; import via Library → Import / Bible → Import JSON.
 - Stopped bundling modern hymnals (Baptist Hymnal, United Methodist Hymnal, Faith We Sing): removed from the repo bundle, release packages and download cards; the setup page now links to where to obtain hymns. Third-party `hymn-bundle/raw` dumps are no longer tracked. License field aligned to GPL-2.0; Bible copyright labels corrected; added `doc/CONTENT_LICENSING.md`.
 
 ### Added
+- ©️ **Copyright & CCLI in the dock** — hymn edit form has Copyright and CCLI # fields (also filled by the new importers); the Live tab shows them under the title. Every hymn put on screen is logged on the device (one row per hymn per 30 minutes) and **Style → Data & Backup → Export usage report (CSV)** produces a CCLI-style report (spreadsheet-formula safe). New **Licensing & credits** panel with the livestream-licensing note and the credit lines for loaded NTBT/BTNT/NTB-BR/LSV translations.
 - 🎼 **Hymn importers for downloaded sources** — plain lyrics `.txt` (SongSelect / Hymnary copy-paste, with CCLI number and copyright captured), ChordPro (`.cho`, `.chordpro`, `.chopro`, `.pro`, `.crd`; chords stripped) and CCLI `.usr`. `npm test` runs parser tests.
 - 📖 **BibliaTodo JSON import** — Library → Bible → Import JSON now accepts the official BibliaTodo "schema 3" JSON (NTBT Spanish, BTNT English, NTB-BR Portuguese) directly; verse text only, wording untouched. Documented as an optional, user-downloaded source (not bundled) with the required attribution.
 

@@ -101,7 +101,7 @@
         </div>
         <p class="bible-description" data-i18n="bible.description">Import a Bible JSON file (any translation) to enable verse lookup. Each translation is stored separately — switch between them anytime.</p>
         <div class="bible-import-row">
-          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name (e.g. KJV, NIV)" maxlength="20" aria-label="Translation abbreviation">
+          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name" maxlength="20" aria-label="Translation abbreviation">
           <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import JSON</button>
           <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select Bible JSON file">
         </div>
@@ -179,6 +179,7 @@
         <div class="section-header-single">
           <h3 id="currentTitle" data-i18n="hymns.selectedTitle">Selected Hymn Title</h3>
           <div class="verse-info" id="verseInfo" aria-live="polite" aria-atomic="true">Verse 1/4 · Lines 1-2 of 4</div>
+          <div class="verse-info" id="hymnCopyright"></div>
         </div>
 
         <div id="verseChips" class="verse-chips" role="group" aria-label="Jump to verse"></div>
@@ -475,12 +476,29 @@
             <button id="btnBackupImport" class="btn btn-secondary" style="flex: 1;">Restore from file…</button>
           </div>
           <input type="file" id="backupFile" accept=".json,application/json" hidden>
+          <p class="backup-note">Usage report: each hymn put on screen is logged on this device (date, title, CCLI number) so you can report to CCLI. Nothing is sent anywhere.</p>
+          <div style="display: flex; gap: 6px;">
+            <button id="btnUsageExport" class="btn btn-secondary" style="flex: 1;">Export usage report (CSV)…</button>
+            <button id="btnUsageClear" class="btn btn-secondary" style="flex: 1;">Clear usage log</button>
+          </div>
           <label class="form-label">
             <span>Automatic snapshots</span>
             <select id="backupSlot" class="form-select"></select>
           </label>
           <button id="btnBackupRestoreAuto" class="btn btn-secondary" style="width: 100%;" disabled>Restore selected snapshot</button>
           <p class="backup-note">Bibles are stored separately and are not touched by backup or restore. OBS connection details and password are never written to a backup file.</p>
+        </div>
+      </details>
+
+      <!-- Licensing & credits -->
+      <details class="section collapsible-section" id="licensingPanel">
+        <summary>
+          <h3>Licensing &amp; credits</h3>
+        </summary>
+        <div class="styles-form">
+          <p class="backup-note"><strong>Livestreaming:</strong> showing copyrighted lyrics on a livestream usually needs a streaming license in addition to a standard church copyright license (for example CCLI or OneLicense). Requirements differ by country and platform &mdash; check with your licensing provider. Public-domain hymns need none. Record each hymn&rsquo;s copyright and CCLI number in its edit form.</p>
+          <p class="backup-note"><strong>Bible translations:</strong> you are responsible for having the right to use the translations you import. Public-domain and openly licensed texts are fine; others need permission from the publisher.</p>
+          <div id="licensingCredits"></div>
         </div>
       </details>
 
@@ -557,6 +575,18 @@
           <input type="text" id="editSource" class="form-input" data-i18n-placeholder="hymns.placeholders.sourceName"
             placeholder="e.g., Church Hymnal, Public Domain">
         </label>
+        <div class="modal-metadata-row">
+          <label class="form-label">
+            <span>Copyright</span>
+            <input type="text" id="editCopyright" class="form-input" maxlength="200"
+              placeholder="e.g., Public domain, or &copy; 1990 Publisher">
+          </label>
+          <label class="form-label">
+            <span>CCLI #</span>
+            <input type="text" id="editCcli" class="form-input" inputmode="numeric" maxlength="10"
+              placeholder="e.g., 22025">
+          </label>
+        </div>
       </div>
       <div class="modal-footer">
         <button id="btnCancelEdit" class="btn btn-secondary" data-i18n="modal.buttons.cancel">Cancel</button>

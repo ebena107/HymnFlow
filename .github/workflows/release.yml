@@ -15,6 +15,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run tests (must pass before packaging)
+        run: npm test
+
       - name: Get version from tag
         id: tag_name
         run: |

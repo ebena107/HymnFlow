@@ -1170,6 +1170,7 @@
       return;
     }
     currentTitleEl.textContent = currentHymn.title;
+    renderHymnCopyright(currentHymn);
 
     const lines = getCurrentLines();
     const windowed = lines.slice(currentLineOffset, currentLineOffset + settings.linesPerPage);
@@ -1265,6 +1266,7 @@
         timestamp: Date.now()
       };
       localStorage.setItem(storageKeys.cmd, JSON.stringify(payload));
+      logHymnUsage(currentHymn);
       isDisplaying = true;
       lastLive = null;
       updateRestoreButton();
@@ -1709,6 +1711,8 @@
       document.getElementById('editNumber').value = hymn.metadata?.number || '';
       document.getElementById('editSourceAbbr').value = hymn.metadata?.sourceAbbr || '';
       document.getElementById('editSource').value = hymn.metadata?.source || '';
+      document.getElementById('editCopyright').value = hymn.metadata?.copyright || '';
+      document.getElementById('editCcli').value = hymn.metadata?.ccli || '';
       document.getElementById('editTitle').value = hymn.title;
       document.getElementById('editAuthor').value = hymn.author || '';
       document.getElementById('editVerses').value = hymn.verses.join('\n\n');
@@ -1720,6 +1724,8 @@
       document.getElementById('editNumber').value = '';
       document.getElementById('editSourceAbbr').value = '';
       document.getElementById('editSource').value = '';
+      document.getElementById('editCopyright').value = '';
+      document.getElementById('editCcli').value = '';
       document.getElementById('editTitle').value = '';
       document.getElementById('editAuthor').value = '';
       document.getElementById('editVerses').value = '';
@@ -1746,6 +1752,8 @@
     const number = document.getElementById('editNumber').value.trim();
     const sourceAbbr = document.getElementById('editSourceAbbr').value.trim().toUpperCase();
     const source = document.getElementById('editSource').value.trim();
+    const copyright = document.getElementById('editCopyright').value.trim().slice(0, 200);
+    const ccli = document.getElementById('editCcli').value.replace(/[^0-9]/g, '').slice(0, 10);
     const title = document.getElementById('editTitle').value.trim();
     const author = document.getElementById('editAuthor').value.trim();
     const versesText = document.getElementById('editVerses').value.trim();
@@ -1799,6 +1807,8 @@
         } else {
           delete hymn.metadata.source;
         }
+        if (copyright) hymn.metadata.copyright = copyright; else delete hymn.metadata.copyright;
+        if (ccli) hymn.metadata.ccli = ccli; else delete hymn.metadata.ccli;
 
         // Validate before saving
         const { valid, errors } = window.HymnValidator.validateHymn(hymn);
@@ -1819,6 +1829,8 @@
       }
       if (sourceAbbr) metadata.sourceAbbr = sourceAbbr;
       if (source) metadata.source = source;
+      if (copyright) metadata.copyright = copyright;
+      if (ccli) metadata.ccli = ccli;
 
       const newHymn = {
         id: generateUniqueHymnId(),
@@ -2746,6 +2758,8 @@
       else jumpToVerse(parseInt(chip.dataset.verse, 10));
     };
     document.getElementById('btnBackupExport').onclick = exportBackup;
+    document.getElementById('btnUsageExport').onclick = exportUsageReport;
+    document.getElementById('btnUsageClear').onclick = clearUsageLog;
     document.getElementById('btnBackupImport').onclick = () => document.getElementById('backupFile').click();
     document.getElementById('backupFile').onchange = (e) => {
       const file = e.target.files[0];
@@ -3360,7 +3374,106 @@
     });
   }
 
+  // ========================================
+  // Copyright line, usage log (CCLI reporting) and credits
+  // ========================================
+  function renderHymnCopyright(hymn) {
+    const el = document.getElementById('hymnCopyright');
+    if (!el) return;
+    const m = (hymn && hymn.metadata) || {};
+    const parts = [];
+    if (m.copyright) parts.push(String(m.copyright));
+    if (m.ccli) parts.push('CCLI #' + String(m.ccli));
+    el.textContent = parts.join(' · ');
+  }
+
+  const USAGE_KEY = 'hymnflow-usage';
+  const USAGE_CAP = 5000;
+  let lastUsage = { id: '', t: 0 };
+
+  function readUsage() {
+    try {
+      const a = JSON.parse(localStorage.getItem(USAGE_KEY) || '[]');
+      return Array.isArray(a) ? a : [];
+    } catch (e) { return []; }
+  }
+
+  // One entry per hymn per showing: skipped if the same hymn was logged in the
+  // last 30 minutes, so paging through verses doesn't create many rows.
+  function logHymnUsage(hymn) {
+    if (!hymn) return;
+    const now = Date.now();
+    if (lastUsage.id === hymn.id && now - lastUsage.t < 30 * 60 * 1000) return;
+    lastUsage = { id: hymn.id, t: now };
+    const m = hymn.metadata || {};
+    const log = readUsage();
+    log.push({
+      t: new Date(now).toISOString(),
+      title: String(hymn.title || ''),
+      author: String(hymn.author || ''),
+      number: m.number != null ? String(m.number) : '',
+      source: String(m.sourceAbbr || m.source || ''),
+      ccli: String(m.ccli || ''),
+      copyright: String(m.copyright || ''),
+    });
+    try { localStorage.setItem(USAGE_KEY, JSON.stringify(log.slice(-USAGE_CAP))); } catch (e) { /* storage full: skip */ }
+  }
+
+  // Neutralise spreadsheet formula injection and quote CSV cells.
+  function csvCell(v) {
+    let s = String(v == null ? '' : v);
+    if (/^[=+@\t\r-]/.test(s)) s = "'" + s;
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+
+  async function exportUsageReport() {
+    const log = readUsage();
+    if (!log.length) { notify('No hymns have been displayed yet.', 'info'); return; }
+    const head = ['Date (UTC)', 'Title', 'Author', 'Hymn #', 'Source', 'CCLI #', 'Copyright'];
+    const rows = log.map(r => [r.t, r.title, r.author, r.number, r.source, r.ccli, r.copyright].map(csvCell).join(','));
+    const csv = [head.map(csvCell).join(',')].concat(rows).join('\r\n');
+    const stamp = new Date().toISOString().slice(0, 10);
+    const result = await saveTextFile('hymnflow-usage-' + stamp + '.csv', csv, 'text/csv', '.csv');
+    statusEl.textContent = exportStatusMessage(result);
+  }
+
+  async function clearUsageLog() {
+    if (!readUsage().length) return;
+    if (!(await askConfirm('Clear the usage log on this device? Export it first if you need it for reporting.', 'Clear'))) return;
+    try { localStorage.removeItem(USAGE_KEY); } catch (e) { /* ignore */ }
+    lastUsage = { id: '', t: 0 };
+    statusEl.textContent = 'Usage log cleared';
+  }
+
+  const TRANSLATION_CREDITS = [
+    [/^NTBT$/i, 'Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. https://www.bibliatodo.org/es/ntbt/'],
+    [/^BTNT$/i, 'Holy Bible, BibliaTodo New Translation (BTNT). Published by BibliaTodo Bible Society. https://www.bibliatodo.org/en/btnt/'],
+    [/^NTB-?BR$/i, 'Nova Tradução BibliaTodo (NTB-BR). Publicada pela BibliaTodo Bible Society. https://www.bibliatodo.org/pt/ntb-br/'],
+    [/^LSV$/i, 'Literal Standard Version (LSV), © Covenant Press. Used under its open license. https://www.lsvbible.com/'],
+  ];
+
+  function renderCredits() {
+    const el = document.getElementById('licensingCredits');
+    if (!el || !window.HymnFlowBibleLookup) return;
+    const names = window.HymnFlowBibleLookup.listTranslations();
+    const lines = [];
+    names.forEach(n => TRANSLATION_CREDITS.forEach(([re, text]) => { if (re.test(n)) lines.push(text); }));
+    el.textContent = '';
+    if (!lines.length) return;
+    const h = document.createElement('p');
+    h.className = 'backup-note';
+    h.textContent = 'Credits for the translations you have loaded (list these in your church credits):';
+    el.appendChild(h);
+    lines.forEach(t => {
+      const p = document.createElement('p');
+      p.className = 'backup-note';
+      p.textContent = t;
+      el.appendChild(p);
+    });
+  }
+
   function renderBibleList() {
+    renderCredits();
     const list = document.getElementById('bibleTranslationList');
     if (!list || !window.HymnFlowBibleLookup) return;
     const names = window.HymnFlowBibleLookup.listTranslations();
