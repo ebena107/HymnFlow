@@ -1401,20 +1401,18 @@ body {
   display: none;
 }
 
+/* Expands in place (not a floating popup): #servicesList scrolls and clips
+   absolutely positioned children, which hid these actions in a narrow dock. */
 .service-more-menu {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 4px);
-  z-index: 30;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-top: 4px;
   padding: 6px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 6px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
-  min-width: 130px;
+  min-width: 120px;
 }
 
 .service-more-menu .btn {
