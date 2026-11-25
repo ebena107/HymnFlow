@@ -62,6 +62,7 @@ for book in hymn_books:
             "size": size_str,
             "sizeBytes": file_size,
             "hymnCount": hymn_count,
+            "licenseStatus": book.get("licenseStatus", "unverified"),  # set to "public-domain" or "licensed" once documented
             "githubUrl": f"https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/{book['filename']}"
         })
         

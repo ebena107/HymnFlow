@@ -8,7 +8,8 @@
     "size": "1.18 MB",
     "sizeBytes": 1241813,
     "hymnCount": 1001,
-    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_ghb.json"
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_ghb.json",
+    "licenseStatus": "unverified"
   },
   {
     "filename": "cac_yhb.json",
@@ -19,7 +20,8 @@
     "size": "969 KB",
     "sizeBytes": 992482,
     "hymnCount": 997,
-    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_yhb.json"
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_yhb.json",
+    "licenseStatus": "unverified"
   },
   {
     "filename": "ybh.json",
@@ -30,6 +32,7 @@
     "size": "582 KB",
     "sizeBytes": 596154,
     "hymnCount": 6,
-    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/ybh.json"
+    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/ybh.json",
+    "licenseStatus": "unverified"
   }
 ]

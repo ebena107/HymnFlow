@@ -83,7 +83,7 @@ On the last verse, the first `→` only arms the advance; a second press moves t
 
 **Works out of the box** — on first launch the dock auto-loads the bundled KJV, so scripture lookup needs no setup.
 
-**Curated translations (included in the `-full` and `-data` release bundles):** six public-domain translations that passed a systematic accuracy audit — clean **KJV 1769**, **Revised Version 1885**, **Literal Standard Version**, **Geneva Bible 1599**, **Douay-Rheims**¹, and **JPS 1917 Tanakh** (OT only). Import via Library → Bible → **Import JSON**.
+**Curated translations (included in the `-full` and `-data` release bundles):** six translations that passed a systematic accuracy audit — five public domain (**KJV 1769**, **Revised Version 1885**, **Geneva Bible 1599**, **Douay-Rheims**¹, **JPS 1917 Tanakh** (OT only)) and the **Literal Standard Version**, which is copyrighted by Covenant Press and released under an open license (keep its attribution; see [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md)). Import via Library → Bible → **Import JSON**.
 
 ¹ *Douay-Rheims uses Vulgate Psalm numbering (Psalm N ≈ Hebrew Psalm N+1).*
 
