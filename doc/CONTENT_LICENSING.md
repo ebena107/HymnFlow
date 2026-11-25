@@ -8,8 +8,8 @@ summarizes what that means in practice. It is guidance, not legal advice.
 
 - Only **public-domain** hymns should ship in HymnFlow's bundled data. Many
   older hymn texts are public domain; many modern songs and translations are not.
-- The optional `hymn-bundle/` collections are provided as a convenience. Their
-  copyright status varies by hymn. Modern hymnals (for example recent Baptist or
+- No hymn collections are distributed. `hymn-bundle/*.json` is git-ignored, so
+  collections you keep there stay local. Copyright status varies by hymn. Modern hymnals (for example recent Baptist or
   Methodist hymnals and contemporary supplements) can contain copyrighted
   songs or copyrighted arrangements/translations.
   **You are responsible for confirming that you may display a given hymn.**
@@ -46,8 +46,8 @@ summarizes what that means in practice. It is guidance, not legal advice.
 |---|---|
 | KJV 1769, RV 1885, Geneva 1599, Douay-Rheims, JPS 1917 | Public domain |
 | Literal Standard Version | Open license (Covenant Press) — attribution required |
-| Yoruba Bible (`bible-yor.js`) | **Provenance not verified.** The wording matches the classic (Crowther-era) Yoruba Bible, whose original text is old, but later revisions (1959/1960, UBS 1969) may carry their own rights. Treat as unverified until the source edition is confirmed. |
-| CAC Gospel Hymn Book, CAC Yoruba Hymn Book, Yoruba Baptist Hymnal | **Provenance not verified.** Community hymnals; individual hymns, translations and the compilations may be under copyright. |
+| Yoruba Bible (`bible-yor.js`) | **Not distributed** (untracked and excluded from releases) until its source edition is verified. **Provenance not verified.** The wording matches the classic (Crowther-era) Yoruba Bible, whose original text is old, but later revisions (1959/1960, UBS 1969) may carry their own rights. Treat as unverified until the source edition is confirmed. |
+| CAC Gospel Hymn Book, CAC Yoruba Hymn Book, Yoruba Baptist Hymnal | **Not distributed** (untracked, excluded from releases) until verified. **Provenance not verified.** Community hymnals; individual hymns, translations and the compilations may be under copyright. |
 
 If you hold rights to any of this content, or can document its source, please
 open an issue so we can update this table.

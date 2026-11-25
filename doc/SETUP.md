@@ -16,7 +16,7 @@ C:\HymnFlow\
 │   └── obs-overlay/
 ├── scripts/                 ← Converter & OBS hotkey scripts
 │   └── hymnflow-obs-hotkeys.py
-└── hymn-bundle/             ← SEPARATE DOWNLOAD (see Step 3)
+└── (hymn files: import your own via Library → Import)
 ```
 
 **Note your full path** — you'll need it below. Use forward slashes in URLs: `C:/HymnFlow/`

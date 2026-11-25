@@ -59,7 +59,6 @@ PLUGIN_DOCS = ["README.md", "doc/SETUP.md", "doc/TROUBLESHOOTING.md", "doc/SECUR
 BIBLES = [
     "public/data/bible-kjv.js",
     "public/data/en_bbe.json",
-    "public/data/bible-yor.js",
     "public/data/bible-en-kjv.js",
     "public/data/bible-en-rv.js",
     "public/data/bible-en-lsv.js",
@@ -67,12 +66,9 @@ BIBLES = [
     "public/data/bible-en-dra.js",
     "public/data/bible-en-ojps.js",
 ]
-HYMNS = [
-    "hymn-bundle/cac_ghb.json",
-    "hymn-bundle/cac_yhb.json",
-    "hymn-bundle/ybh.json",
-    "hymn-bundle/metadata.json",
-]
+# No hymn collections are bundled: provenance of the community hymnals is unverified
+# (see doc/CONTENT_LICENSING.md). Users import their own hymns.
+HYMNS = []
 LITE_EXTRAS = ["public/data/bible-kjv.js"]
 
 # Files that carry the version string

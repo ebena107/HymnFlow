@@ -70,7 +70,7 @@ Import: Library tab → Bible section → enter name → **Import JSON**
 
 ### 📦 Hymn Bundle
 
-Hymn collections are a **separate download** (keeps plugin at ~150 KB). Download from the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle).
+No hymn collections are bundled (many hymnals are copyrighted). See *Where to get more hymns* on the setup page and [CONTENT_LICENSING.md](https://github.com/ebena107/HymnFlow/blob/master/doc/CONTENT_LICENSING.md); import your own files via Library → Import.
 
 ---
 

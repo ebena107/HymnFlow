@@ -46,7 +46,7 @@ Width  : 1920   Height : 1080
 
 ### Step 3: Import Hymns
 
-HymnFlow bundles only the CAC and Yoruba Baptist collections in the `-full` and `-data` bundles. Modern hymnals (Baptist Hymnal, United Methodist Hymnal, Faith We Sing and similar) are **not** bundled because many of their songs are copyrighted — get them from the sources listed under *Where to get more hymns* in the setup page and import them via Library → Import. See [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md).
+HymnFlow ships with a few public-domain sample hymns and **no hymn collections** (many hymnals contain copyrighted songs, and the provenance of community hymnals could not be verified). Get hymns from the sources listed under *Where to get more hymns* in the setup page and import them via Library → Import. See [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md).
 
 ### Step 4 (Optional): Enable Global Hotkeys
 
@@ -152,7 +152,7 @@ scripts/
 ├── bundle_bible_kjv.py       # KJV downloader / converter
 └── scrape_bible_api.py       # Multi-translation scraper (audited, curated output)
 
-hymn-bundle/            # SEPARATE DOWNLOAD — hymn collection JSON files
+hymn-bundle/            # local-only hymn collections (git-ignored; not distributed)
 ```
 
 ## 🔧 How It Works

@@ -60,3 +60,8 @@ public/data/*.json
 
 # Third-party hymnal source dumps (copyright status unclear; keep local only)
 hymn-bundle/raw/
+
+# Community hymnals / Yoruba Bible: provenance not verified, so not distributed.
+# Keep local copies for your own use; add with `git add -f` once documented.
+hymn-bundle/*.json
+public/data/bible-yor.js

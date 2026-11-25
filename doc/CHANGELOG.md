@@ -7,6 +7,7 @@
 - Default hymn "How Great Thou Art" (likely still copyrighted) replaced with the public-domain "Rock of Ages" for new installs.
 
 ### Changed
+- No longer distributing the CAC hymn books, the Yoruba Baptist Hymnal or the Yoruba Bible until their provenance is verified: untracked (history unchanged), git-ignored, removed from release packages and the setup page. Copy them back locally to keep using them; import via Library → Import / Bible → Import JSON.
 - Stopped bundling modern hymnals (Baptist Hymnal, United Methodist Hymnal, Faith We Sing): removed from the repo bundle, release packages and download cards; the setup page now links to where to obtain hymns. Third-party `hymn-bundle/raw` dumps are no longer tracked. License field aligned to GPL-2.0; Bible copyright labels corrected; added `doc/CONTENT_LICENSING.md`.
 
 ### Added
