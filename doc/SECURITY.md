@@ -29,9 +29,12 @@ before public disclosure.
   some lists with `innerHTML`; user-supplied text is passed through
   `escapeHtml()` first, and ids are restricted to `[A-Za-z0-9_-]` on load,
   because they are placed in inline event handlers.
-- **Content Security Policy.** Both pages currently set only
-  `object-src 'none'; base-uri 'none'`. A strict `script-src` is planned; it
-  requires removing the remaining inline event handlers.
+- **Content Security Policy.** Both pages forbid inline script and `eval`
+  (`script-src 'self' file:`), plus `object-src 'none'`, `base-uri 'none'`
+  and `form-action 'none'`. The dock may open WebSocket connections
+  (`connect-src ws: wss:`, for obs-websocket); the overlay may not connect
+  anywhere. Inline `style` attributes are still allowed. Dynamic lists use
+  delegated `data-act` click handlers instead of inline `onclick`.
 
 ## Data stored
 
@@ -62,12 +65,12 @@ are **data from outside the app** — only import files you trust.
 - No access control: anyone who can use the dock can change hymns and settings.
 - `localStorage` is limited (about 5–10 MB); very large hymn libraries may not
   fit. Back up regularly (Style → Data & Backup).
-- No automated security scanning in CI yet.
+- CI runs unit and static checks only; there is no dependency or code scanning (there are no dependencies).
 
 ## Planned improvements
 
-- [ ] Remove inline event handlers and add a strict `script-src` CSP
-- [ ] Automated tests and CI on every push
+- [x] Strict `script-src` CSP, no inline event handlers
+- [x] Automated tests and CI on every push (`npm test`, `.github/workflows/test.yml`)
 - [ ] Pin GitHub Actions to commit SHAs
 - [ ] Optional encryption of exported backups
 

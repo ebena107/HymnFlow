@@ -200,7 +200,7 @@
     return `hymn_${now}_${sameTimeHymnCounter}_${randomPart}`;
   }
 
-  // Ids end up inside inline onclick="…('id')" handlers, so anything outside this
+  // Ids are also used in selectors and attributes, so anything outside this
   // set (e.g. from a crafted backup file) is replaced with a freshly generated id.
   const SAFE_ID_RE = /^[A-Za-z0-9_-]{1,100}$/;
   let hymnIdRemap = {}; // old unsafe hymn id -> new id (applied to service items)
@@ -1937,7 +1937,7 @@
         const isCurrentItem = index === currentServiceItemIndex;
         const isPast = currentServiceItemIndex >= 0 && index < currentServiceItemIndex;
         return `
-          <div class="service-hymn-list-item${isCurrentItem ? ' active' : ''}${isPast ? ' past' : ''}" role="listitem" aria-current="${isCurrentItem ? 'true' : 'false'}" onclick="window.hymnflowSelectItemFromService(${index})">
+          <div class="service-hymn-list-item${isCurrentItem ? ' active' : ''}${isPast ? ' past' : ''}" role="listitem" aria-current="${isCurrentItem ? 'true' : 'false'}" data-act="selectItem" data-arg="${index}">
             <span class="service-hymn-order">${isPast ? '✓' : (index + 1) + '.'}</span>
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
             <span class="service-hymn-title">${escapeHtml(label)}</span>
@@ -1950,20 +1950,20 @@
       const count = service.items.length;
       const countLabel = `${count} item${count !== 1 ? 's' : ''}`;
       return `
-        <div class="service-item${isActive ? ' active' : ''}" role="listitem" data-service-id="${service.id}">
-          <div class="service-item-info" onclick="window.hymnflowSelectService('${service.id}')">
+        <div class="service-item${isActive ? ' active' : ''}" role="listitem" data-service-id="${escapeHtml(service.id)}">
+          <div class="service-item-info" data-act="selectService" data-arg="${escapeHtml(service.id)}">
             <div class="service-item-name">${safeServiceName}</div>
             <div class="service-item-count">${escapeHtml(countLabel)}</div>
           </div>
           <div class="service-item-actions">
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowSelectService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.load') : 'Load'}</button>
-            <button class="btn btn-secondary" onclick="event.stopPropagation(); window.hymnflowEditService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.edit') : 'Edit'}</button>
-            <details class="service-more" onclick="event.stopPropagation()">
+            <button class="btn btn-secondary" data-act="selectService" data-arg="${escapeHtml(service.id)}">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.load') : 'Load'}</button>
+            <button class="btn btn-secondary" data-act="editService" data-arg="${escapeHtml(service.id)}">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.edit') : 'Edit'}</button>
+            <details class="service-more" data-act="noop">
               <summary class="btn btn-secondary" title="More actions" aria-label="More actions for ${safeServiceName}">⋯</summary>
               <div class="service-more-menu">
-                <button class="btn btn-secondary" onclick="this.closest('details').open = false; window.hymnflowDuplicateService('${service.id}')">Duplicate</button>
-                <button class="btn btn-secondary" onclick="this.closest('details').open = false; window.hymnflowExportService('${service.id}')">Export .txt</button>
-                <button class="btn btn-remove" onclick="this.closest('details').open = false; window.hymnflowDeleteService('${service.id}')">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.delete') : 'Delete'}</button>
+                <button class="btn btn-secondary" data-act="duplicateService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">Duplicate</button>
+                <button class="btn btn-secondary" data-act="exportService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">Export .txt</button>
+                <button class="btn btn-remove" data-act="deleteService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.delete') : 'Delete'}</button>
               </div>
             </details>
           </div>
@@ -2110,10 +2110,10 @@
             </div>
           </div>
           <div class="service-hymn-controls">
-            <button class="btn btn-secondary" onclick="window.hymnflowEditServiceItem(${index})" title="${item.type === 'hymn' ? 'Edit cue notes' : 'Edit'}">✎</button>
-            <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceItem(${index}, -1)" ${index === 0 ? 'disabled' : ''} aria-label="Move up">↑</button>
-            <button class="btn btn-secondary" onclick="window.hymnflowMoveServiceItem(${index}, 1)" ${index === editingService.items.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button>
-            <button class="btn btn-remove" onclick="window.hymnflowRemoveServiceItem(${index})" aria-label="Remove">×</button>
+            <button class="btn btn-secondary" data-act="editItem" data-arg="${index}" title="${item.type === 'hymn' ? 'Edit cue notes' : 'Edit'}">✎</button>
+            <button class="btn btn-secondary" data-act="moveItem" data-arg="${index}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="Move up">↑</button>
+            <button class="btn btn-secondary" data-act="moveItem" data-arg="${index}" data-dir="1" ${index === editingService.items.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button>
+            <button class="btn btn-remove" data-act="removeItem" data-arg="${index}" aria-label="Remove">×</button>
           </div>
         </div>
       `;
@@ -2142,7 +2142,7 @@
     list.innerHTML = results.slice(0, 40).map(h => {
       const num = h.metadata?.number ? `${h.metadata.number} · ` : '';
       const title = escapeHtml(typeof h.title === 'string' ? h.title : String(h.title ?? ''));
-      return `<div class="hymn-picker-item" onclick="window.hymnflowPickHymn('${escapeHtml(h.id)}')">${escapeHtml(num)}${title}</div>`;
+      return `<div class="hymn-picker-item" data-act="pickHymn" data-arg="${escapeHtml(h.id)}">${escapeHtml(num)}${title}</div>`;
     }).join('') + (capped ? `<div class="hymn-picker-cap">Showing 40 of ${results.length} — refine your search</div>` : '');
   }
 
@@ -2623,7 +2623,31 @@
     reader.readAsText(file);
   }
 
-  // Global functions for onclick handlers
+  // Delegated click handling for dynamically rendered lists. Replaces inline
+  // click attributes so the CSP can forbid inline script. The nearest
+  // [data-act] ancestor wins, so nested buttons don't also trigger their row.
+  const UI_ACTIONS = {
+    noop: () => {},
+    selectItem: (el) => window.hymnflowSelectItemFromService(Number(el.dataset.arg)),
+    selectService: (el) => window.hymnflowSelectService(el.dataset.arg),
+    editService: (el) => window.hymnflowEditService(el.dataset.arg),
+    duplicateService: (el) => window.hymnflowDuplicateService(el.dataset.arg),
+    exportService: (el) => window.hymnflowExportService(el.dataset.arg),
+    deleteService: (el) => window.hymnflowDeleteService(el.dataset.arg),
+    editItem: (el) => window.hymnflowEditServiceItem(Number(el.dataset.arg)),
+    moveItem: (el) => window.hymnflowMoveServiceItem(Number(el.dataset.arg), Number(el.dataset.dir)),
+    removeItem: (el) => window.hymnflowRemoveServiceItem(Number(el.dataset.arg)),
+    pickHymn: (el) => window.hymnflowPickHymn(el.dataset.arg),
+  };
+  document.addEventListener('click', (e) => {
+    const el = e.target.closest && e.target.closest('[data-act]');
+    if (!el) return;
+    const fn = Object.prototype.hasOwnProperty.call(UI_ACTIONS, el.dataset.act) ? UI_ACTIONS[el.dataset.act] : null;
+    if (!fn) return;
+    if (el.dataset.closeMenu) { const d = el.closest('details'); if (d) d.open = false; }
+    fn(el);
+  });
+
   window.hymnflowSelectService = selectService;
   window.hymnflowSelectItemFromService = selectItemFromService;
   window.hymnflowEditService = openServiceEditor;

@@ -1,6 +1,8 @@
 ## [Unreleased]
 
 ### Security
+- Strict Content Security Policy on dock and overlay (no inline script, no `eval`); inline `onclick` handlers replaced by delegated `data-act` events. Tests now guard this.
+- CI: `.github/workflows/test.yml` runs `npm test` (parsers, validation, Bible import, static security checks) on push and pull requests.
 - Hymn and service ids are sanitized on load (a crafted backup could previously inject script through inline handlers); `SECURITY.md` rewritten to match the code.
 - Default hymn "How Great Thou Art" (likely still copyrighted) replaced with the public-domain "Rock of Ages" for new installs.
 

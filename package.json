@@ -3,7 +3,7 @@
   "version": "2.9.0",
   "description": "HymnFlow - OBS Studio plugin for displaying hymns - browser-based dock and overlay",
   "scripts": {
-    "test": "node tests/songParsers.test.js",
+    "test": "node tests/run.js",
     "serve": "python -m http.server 8000 --directory public",
     "setup": "start public/obs-setup.html"
   },
