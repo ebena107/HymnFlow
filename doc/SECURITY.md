@@ -27,8 +27,8 @@ before public disclosure.
   pages must be loaded from the same origin in the same OBS browser profile.
 - **Rendering.** The overlay writes lyrics with `textContent`. The dock builds
   some lists with `innerHTML`; user-supplied text is passed through
-  `escapeHtml()` first, and ids are restricted to `[A-Za-z0-9_-]` on load,
-  because they are placed in inline event handlers.
+  `escapeHtml()` first, and ids are restricted to `[A-Za-z0-9_-]` on load
+  as defence in depth.
 - **Content Security Policy.** Both pages forbid inline script and `eval`
   (`script-src 'self' file:`), plus `object-src 'none'`, `base-uri 'none'`
   and `form-action 'none'`. The dock may open WebSocket connections
