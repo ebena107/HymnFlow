@@ -1,6 +1,10 @@
 ## [Unreleased]
 
+### Changed
+- Stopped bundling modern hymnals (Baptist Hymnal, United Methodist Hymnal, Faith We Sing): removed from the repo bundle, release packages and download cards; the setup page now links to where to obtain hymns. Third-party `hymn-bundle/raw` dumps are no longer tracked. License field aligned to GPL-2.0; Bible copyright labels corrected; added `doc/CONTENT_LICENSING.md`.
+
 ### Added
+- 🎼 **Hymn importers for downloaded sources** — plain lyrics `.txt` (SongSelect / Hymnary copy-paste, with CCLI number and copyright captured), ChordPro (`.cho`, `.chordpro`, `.chopro`, `.pro`, `.crd`; chords stripped) and CCLI `.usr`. `npm test` runs parser tests.
 - 📖 **BibliaTodo JSON import** — Library → Bible → Import JSON now accepts the official BibliaTodo "schema 3" JSON (NTBT Spanish, BTNT English, NTB-BR Portuguese) directly; verse text only, wording untouched. Documented as an optional, user-downloaded source (not bundled) with the required attribution.
 
 ---

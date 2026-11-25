@@ -70,13 +70,10 @@ BIBLES = [
 HYMNS = [
     "hymn-bundle/cac_ghb.json",
     "hymn-bundle/cac_yhb.json",
-    "hymn-bundle/fws.json",
-    "hymn-bundle/nnbh.json",
-    "hymn-bundle/umh.json",
     "hymn-bundle/ybh.json",
     "hymn-bundle/metadata.json",
 ]
-LITE_EXTRAS = ["public/data/bible-kjv.js", "hymn-bundle/nnbh.json"]
+LITE_EXTRAS = ["public/data/bible-kjv.js"]
 
 # Files that carry the version string
 VERSIONED_FILES = [

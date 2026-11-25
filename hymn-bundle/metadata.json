@@ -22,39 +22,6 @@
     "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/cac_yhb.json"
   },
   {
-    "filename": "fws.json",
-    "name": "Faith We Sing",
-    "fullName": "The Faith We Sing Hymnal",
-    "abbr": "FWS",
-    "description": "Contemporary worship supplement hymnal",
-    "size": "44 KB",
-    "sizeBytes": 45478,
-    "hymnCount": 7,
-    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/fws.json"
-  },
-  {
-    "filename": "nnbh.json",
-    "name": "Baptist Hymnal",
-    "fullName": "The Baptist Hymnal (2008)",
-    "abbr": "NNBH",
-    "description": "Baptist hymnal published by LifeWay Christian Resources",
-    "size": "352 KB",
-    "sizeBytes": 360534,
-    "hymnCount": 7,
-    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/nnbh.json"
-  },
-  {
-    "filename": "umh.json",
-    "name": "United Methodist Hymnal",
-    "fullName": "The United Methodist Hymnal",
-    "abbr": "UMH",
-    "description": "Official hymnal of the United Methodist Church",
-    "size": "337 KB",
-    "sizeBytes": 345521,
-    "hymnCount": 7,
-    "githubUrl": "https://raw.githubusercontent.com/ebena107/HymnFlow/master/hymn-bundle/umh.json"
-  },
-  {
     "filename": "ybh.json",
     "name": "Yoruba Baptist Hymnal",
     "fullName": "Yoruba Baptist Hymnal",

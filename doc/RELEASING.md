@@ -59,7 +59,7 @@ and verifies no stale references remain before committing
 
 | Zip | Contents |
 |---|---|
-| `hymnflow-vX-lite.zip` | plugin + default KJV + default hymnal (nnbh) |
+| `hymnflow-vX-lite.zip` | plugin + default KJV |
 | `hymnflow-vX-full.zip` | plugin + all Bibles (incl. the six curated translations) + all hymn collections |
 | `hymnflow-vX-data.zip` | importable Bibles + hymn collections only |
 

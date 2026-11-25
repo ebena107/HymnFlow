@@ -46,7 +46,7 @@ Width  : 1920   Height : 1080
 
 ### Step 3: Import Hymns
 
-The `-lite` release bundle ships one default hymnal (nnbh); the `-full` and `-data` bundles include all collections. Additional collections can be downloaded from the [hymn-bundle folder](https://github.com/ebena107/HymnFlow/tree/master/hymn-bundle) and imported via Library → Import.
+HymnFlow bundles only the CAC and Yoruba Baptist collections in the `-full` and `-data` bundles. Modern hymnals (Baptist Hymnal, United Methodist Hymnal, Faith We Sing and similar) are **not** bundled because many of their songs are copyrighted — get them from the sources listed under *Where to get more hymns* in the setup page and import them via Library → Import. See [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md).
 
 ### Step 4 (Optional): Enable Global Hotkeys
 

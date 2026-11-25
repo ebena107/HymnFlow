@@ -3178,10 +3178,17 @@
     try {
       const ext = file.name.split('.').pop().toLowerCase();
       let parsed = [];
-      if (ext === 'txt') parsed = await parseTxt(file);
+      const SP = window.HymnFlowSongParsers;
+      if (ext === 'txt') {
+        // HymnFlow "Title:" format, otherwise plain lyrics (SongSelect / Hymnary copy)
+        const head = await file.slice(0, 4096).text();
+        parsed = /^\s*Title\s*:/mi.test(head) ? await parseTxt(file) : await SP.parsePlainSong(file);
+      }
       else if (ext === 'csv') parsed = await parseCsv(file);
       else if (ext === 'json') parsed = await parseJson(file);
-      else throw new Error('Use .txt, .csv, or .json');
+      else if (['cho', 'chordpro', 'chopro', 'pro', 'crd'].includes(ext)) parsed = await SP.parseChordPro(file);
+      else if (ext === 'usr') parsed = await SP.parseUsr(file);
+      else throw new Error('Use .txt, .csv, .json, .cho/.chordpro or .usr');
 
       const SAFE_ID = /^hymn_[\w-]{1,80}$/;
       parsed.forEach((h) => {

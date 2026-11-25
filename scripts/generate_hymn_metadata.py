@@ -22,27 +22,6 @@ hymn_books = [
         "description": "Yoruba hymns from the Christ Apostolic Church (Iwe Orin CAC)"
     },
     {
-        "filename": "fws.json",
-        "name": "Faith We Sing",
-        "fullName": "The Faith We Sing Hymnal",
-        "abbr": "FWS",
-        "description": "Contemporary worship supplement hymnal"
-    },
-    {
-        "filename": "nnbh.json",
-        "name": "Baptist Hymnal",
-        "fullName": "The Baptist Hymnal (2008)",
-        "abbr": "NNBH",
-        "description": "Baptist hymnal published by LifeWay Christian Resources"
-    },
-    {
-        "filename": "umh.json",
-        "name": "United Methodist Hymnal",
-        "fullName": "The United Methodist Hymnal",
-        "abbr": "UMH",
-        "description": "Official hymnal of the United Methodist Church"
-    },
-    {
         "filename": "ybh.json",
         "name": "Yoruba Baptist Hymnal",
         "fullName": "Yoruba Baptist Hymnal",
