@@ -50,4 +50,10 @@ for (const m of js.matchAll(/getTranslation\(\s*'([\w.]+)'/g)) {
   assert.ok(m[1] in en, `obs-dock.js uses unknown translation key "${m[1]}"`);
 }
 
+// 5. keys used by the standalone modules (tr('key', ...)) exist too
+for (const f of ['data/bible-lookup.js', 'parsers/bibleFormats.js']) {
+  const m = fs.readFileSync(path.join(pub, f), 'utf8');
+  for (const k of m.matchAll(/tr\(\s*'([\w.]+)'/g)) assert.ok(k[1] in en, `${f} uses unknown translation key "${k[1]}"`);
+}
+
 console.log(`i18n tests passed (${Object.keys(T).length} languages, ${Object.keys(en).length} keys each)`);

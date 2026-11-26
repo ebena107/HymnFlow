@@ -102,6 +102,20 @@ const USFM_JHN = `\\id JHN Yoruba test
   res = await L.importFile(fileOf('bad.zip', new ArrayBuffer(10)), '');
   assert.ok(!res.ok && /valid .zip/.test(res.message), JSON.stringify(res));
 
+  // 7. several per-book USFM files dropped together become ONE translation
+  assert.equal(F.commonName(['41-MATyor.usfm', '42-MRKyor.usfm', '44-JHNyor.usfm']), 'YOR');
+  assert.equal(F.commonName(['a.usfm']), 'BIBLE'); // too short to be a name
+  assert.equal(F.commonName([]), 'BIBLE');
+  const usfmOf = (code, name, v) => ['\\id ' + code + ' x', '\\h ' + name, '\\c 1', '\\p', '\\v 1 ' + v, ''].join('\n');
+  res = await L.importUsfmFiles([
+    fileOf('41-MATyor.usfm', usfmOf('MAT', 'Matteu', 'Matteu one')),
+    fileOf('42-MRKyor.usfm', usfmOf('MRK', 'Marku', 'Marku one')),
+  ], '');
+  assert.ok(res.ok && res.name === 'YOR' && /2 books/.test(res.message), JSON.stringify(res));
+  L.setActiveTranslation('YOR');
+  assert.equal(L.lookup('Mark 1:1').text, 'Marku one');
+  assert.ok(!L.lookup('Matthew 1:1').error, 'Matthew missing after merge');
+
   console.warn = realWarn; console.error = realErr;
   console.log('bible-formats tests passed');
 })().catch(e => { console.warn = realWarn; console.error = realErr; console.error(e); process.exit(1); });

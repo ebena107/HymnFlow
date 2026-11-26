@@ -21,6 +21,19 @@
   ];
   const ALIAS = { NAM: 'NAH', JOE: 'JOL', EZE: 'EZK', SOS: 'SNG', SON: 'SNG', PHI: 'PHP', JAM: 'JAS' };
 
+  // Translated text with an English fallback (works before/without the i18n module, e.g. in tests).
+  function tr(key, fallback, params) {
+    try {
+      const I = window.HymnFlowI18n;
+      const en = window.HymnFlowTranslations && window.HymnFlowTranslations.en;
+      const known = en && key.split('.').reduce((o, k) => (o && typeof o === 'object') ? o[k] : undefined, en);
+      if (I && typeof known === 'string') return I.getTranslation(key, params || {});
+    } catch (e) { /* fall through to English */ }
+    let out = fallback;
+    Object.keys(params || {}).forEach(k => { out = out.split('{' + k + '}').join(String(params[k])); });
+    return out;
+  }
+
   // ── Zip ──────────────────────────────────────────────────────────────────
   async function unzip(buffer) {
     const bytes = new Uint8Array(buffer);
@@ -29,16 +42,16 @@
     for (let i = bytes.length - 22; i >= Math.max(0, bytes.length - 22 - 65535); i--) {
       if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
     }
-    if (eocd < 0) throw new Error('This does not look like a valid .zip file');
+    if (eocd < 0) throw new Error(tr('zip.invalid', 'This does not look like a valid .zip file'));
     const count = dv.getUint16(eocd + 10, true);
     let p = dv.getUint32(eocd + 16, true);
-    if (count === 0xffff || p === 0xffffffff) throw new Error('Very large .zip files (zip64) are not supported');
-    if (count > MAX_ENTRIES) throw new Error('The .zip has too many files');
+    if (count === 0xffff || p === 0xffffffff) throw new Error(tr('zip.zip64', 'Very large .zip files (zip64) are not supported'));
+    if (count > MAX_ENTRIES) throw new Error(tr('zip.tooMany', 'The .zip has too many files'));
     const dec = new TextDecoder('utf-8');
     const entries = [];
     let encrypted = false;
     for (let n = 0; n < count; n++) {
-      if (p + 46 > bytes.length || dv.getUint32(p, true) !== 0x02014b50) throw new Error('The .zip file is damaged');
+      if (p + 46 > bytes.length || dv.getUint32(p, true) !== 0x02014b50) throw new Error(tr('zip.damaged', 'The .zip file is damaged'));
       const flags = dv.getUint16(p + 8, true);
       const method = dv.getUint16(p + 10, true);
       const compSize = dv.getUint32(p + 20, true);
@@ -54,22 +67,22 @@
       entries.push({
         name, size,
         async bytes() {
-          if (size > MAX_ENTRY_BYTES) throw new Error('A file inside the .zip is too large');
-          if (dv.getUint32(local, true) !== 0x04034b50) throw new Error('The .zip file is damaged');
+          if (size > MAX_ENTRY_BYTES) throw new Error(tr('zip.tooLarge', 'A file inside the .zip is too large'));
+          if (dv.getUint32(local, true) !== 0x04034b50) throw new Error(tr('zip.damaged', 'The .zip file is damaged'));
           const start = local + 30 + dv.getUint16(local + 26, true) + dv.getUint16(local + 28, true);
           const raw = bytes.subarray(start, start + compSize);
           if (method === 0) return raw;
-          if (method !== 8) throw new Error('This .zip uses an unsupported compression method');
-          if (typeof DecompressionStream !== 'function') throw new Error('This browser cannot unzip files; unzip it first and drop the inner file');
+          if (method !== 8) throw new Error(tr('zip.method', 'This .zip uses an unsupported compression method'));
+          if (typeof DecompressionStream !== 'function') throw new Error(tr('zip.noUnzip', 'This browser cannot unzip files; unzip it first and drop the inner file'));
           const stream = new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
           const out = new Uint8Array(await new Response(stream).arrayBuffer());
-          if (out.length > MAX_ENTRY_BYTES) throw new Error('A file inside the .zip is too large');
+          if (out.length > MAX_ENTRY_BYTES) throw new Error(tr('zip.tooLarge', 'A file inside the .zip is too large'));
           return out;
         },
         async text() { return new TextDecoder('utf-8').decode(await this.bytes()).replace(/^﻿/, ''); },
       });
     }
-    if (!entries.length && encrypted) throw new Error('This .zip is password-protected');
+    if (!entries.length && encrypted) throw new Error(tr('zip.password', 'This .zip is password-protected'));
     return entries;
   }
 
@@ -138,7 +151,21 @@
     return n.toUpperCase().slice(0, 20);
   }
 
-  const api = { unzip, parseUsfm, nameFromFileName, BOOK_CODES };
+  // One name for a set of per-book files, e.g. 41-MATyor.usfm + 42-MRKyor.usfm -> YOR.
+  function commonName(fileNames) {
+    const bases = (fileNames || []).map(n => String(n).replace(/^.*[\\/]/, '').replace(/\.[^.]+$/, ''));
+    if (!bases.length) return 'BIBLE';
+    let suf = bases[0];
+    for (const b of bases.slice(1)) {
+      let i = 0;
+      while (i < suf.length && i < b.length && suf[suf.length - 1 - i] === b[b.length - 1 - i]) i++;
+      suf = suf.slice(suf.length - i);
+    }
+    suf = suf.replace(/^[^A-Za-z]+/, '').replace(/[^A-Za-z0-9]+$/, '');
+    return (suf.length >= 2 ? suf : 'BIBLE').toUpperCase().slice(0, 20);
+  }
+
+  const api = { unzip, parseUsfm, nameFromFileName, commonName, BOOK_CODES };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.HymnFlowBibleFormats = api;
 })(typeof window !== 'undefined' ? window : globalThis);

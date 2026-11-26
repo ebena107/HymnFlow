@@ -689,7 +689,7 @@
     note.textContent = t('msg.shortcutsNote', 'Shortcuts work while the dock has focus. For keys that work from any window, connect OBS hotkeys in Style → OBS Connection.');
     const close = document.createElement('button');
     close.className = 'btn btn-add';
-    close.textContent = 'Close';
+    close.textContent = t('list.close', 'Close');
     const row = document.createElement('div');
     row.className = 'confirm-actions';
     row.appendChild(close);
@@ -1025,7 +1025,7 @@
         <div class="meta">${safeAuthor} • ${versesLabel}</div>
       </div>`;
     }).join('') + (capped
-      ? `<div class="list-cap-notice">Showing ${LIST_CAP} of ${total} — refine your search</div>`
+      ? `<div class="list-cap-notice">${escapeHtml(t('list.showingOf', 'Showing {shown} of {total} — refine your search', { shown: LIST_CAP, total }))}</div>`
       : '');
   }
 
@@ -1961,7 +1961,7 @@
             <span class="service-hymn-order">${isPast ? '✓' : (index + 1) + '.'}</span>
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
             <span class="service-hymn-title">${escapeHtml(label)}</span>
-            ${item.type === 'divider' ? '<span class="service-item-hint">screen goes dark</span>' : ''}
+            ${item.type === 'divider' ? `<span class="service-item-hint">${escapeHtml(t('list.screenGoesDark', 'screen goes dark'))}</span>` : ''}
           </div>
         `;
       }).join('') : '';
@@ -1979,10 +1979,10 @@
             <button class="btn btn-secondary" data-act="selectService" data-arg="${escapeHtml(service.id)}">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.load') : 'Load'}</button>
             <button class="btn btn-secondary" data-act="editService" data-arg="${escapeHtml(service.id)}">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.edit') : 'Edit'}</button>
             <details class="service-more" data-act="noop">
-              <summary class="btn btn-secondary" title="More actions" aria-label="More actions for ${safeServiceName}">⋯</summary>
+              <summary class="btn btn-secondary" title="${escapeHtml(t('list.moreActions', 'More actions'))}" aria-label="${escapeHtml(t('list.moreActionsFor', 'More actions for {name}', { name: service.name }))}">⋯</summary>
               <div class="service-more-menu">
-                <button class="btn btn-secondary" data-act="duplicateService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">Duplicate</button>
-                <button class="btn btn-secondary" data-act="exportService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">Export .txt</button>
+                <button class="btn btn-secondary" data-act="duplicateService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">${escapeHtml(t('list.duplicate', 'Duplicate'))}</button>
+                <button class="btn btn-secondary" data-act="exportService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">${escapeHtml(t('list.exportTxt', 'Export .txt'))}</button>
                 <button class="btn btn-remove" data-act="deleteService" data-arg="${escapeHtml(service.id)}" data-close-menu="1">${window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation('services.buttons.delete') : 'Delete'}</button>
               </div>
             </details>
@@ -2109,7 +2109,7 @@
   function renderServiceItems() {
     const container = document.getElementById('serviceHymns');
     if (!editingService || editingService.items.length === 0) {
-      container.innerHTML = `<div style="padding: 12px; text-align: center; color: var(--text-muted); font-size: 12px;">No items added yet</div>`;
+      container.innerHTML = `<div style="padding: 12px; text-align: center; color: var(--text-muted); font-size: 12px;">${escapeHtml(t('list.noItems', 'No items added yet'))}</div>`;
       return;
     }
     container.innerHTML = editingService.items.map((item, index) => {
@@ -2125,15 +2125,15 @@
             <span class="service-item-badge badge-${escapeHtml(item.type)}">${escapeHtml(badge)}</span>
             <div class="service-hymn-title-wrap">
               <div class="service-hymn-title">${escapeHtml(label)}</div>
-              ${item.type === 'divider' ? '<div class="service-item-hint">screen goes dark here</div>' : ''}
+              ${item.type === 'divider' ? `<div class="service-item-hint">${escapeHtml(t('list.screenGoesDarkHere', 'screen goes dark here'))}</div>` : ''}
               ${notesHtml}
             </div>
           </div>
           <div class="service-hymn-controls">
-            <button class="btn btn-secondary" data-act="editItem" data-arg="${index}" title="${item.type === 'hymn' ? 'Edit cue notes' : 'Edit'}">✎</button>
-            <button class="btn btn-secondary" data-act="moveItem" data-arg="${index}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="Move up">↑</button>
-            <button class="btn btn-secondary" data-act="moveItem" data-arg="${index}" data-dir="1" ${index === editingService.items.length - 1 ? 'disabled' : ''} aria-label="Move down">↓</button>
-            <button class="btn btn-remove" data-act="removeItem" data-arg="${index}" aria-label="Remove">×</button>
+            <button class="btn btn-secondary" data-act="editItem" data-arg="${index}" title="${escapeHtml(item.type === 'hymn' ? t('list.editCueNotes', 'Edit cue notes') : t('list.edit', 'Edit'))}">✎</button>
+            <button class="btn btn-secondary" data-act="moveItem" data-arg="${index}" data-dir="-1" ${index === 0 ? 'disabled' : ''} aria-label="${escapeHtml(t('list.moveUp', 'Move up'))}">↑</button>
+            <button class="btn btn-secondary" data-act="moveItem" data-arg="${index}" data-dir="1" ${index === editingService.items.length - 1 ? 'disabled' : ''} aria-label="${escapeHtml(t('list.moveDown', 'Move down'))}">↓</button>
+            <button class="btn btn-remove" data-act="removeItem" data-arg="${index}" aria-label="${escapeHtml(t('list.remove', 'Remove'))}">×</button>
           </div>
         </div>
       `;
@@ -2155,7 +2155,7 @@
         )
       : hymns;
     if (results.length === 0) {
-      list.innerHTML = `<div class="hymn-picker-empty">No hymns found</div>`;
+      list.innerHTML = `<div class="hymn-picker-empty">${escapeHtml(t('list.noHymnsFound', 'No hymns found'))}</div>`;
       return;
     }
     const capped = results.length > 40;
@@ -2163,7 +2163,7 @@
       const num = h.metadata?.number ? `${h.metadata.number} · ` : '';
       const title = escapeHtml(typeof h.title === 'string' ? h.title : String(h.title ?? ''));
       return `<div class="hymn-picker-item" data-act="pickHymn" data-arg="${escapeHtml(h.id)}">${escapeHtml(num)}${title}</div>`;
-    }).join('') + (capped ? `<div class="hymn-picker-cap">Showing 40 of ${results.length} — refine your search</div>` : '');
+    }).join('') + (capped ? `<div class="hymn-picker-cap">${escapeHtml(t('list.showingOf', 'Showing {shown} of {total} — refine your search', { shown: 40, total: results.length }))}</div>` : '');
   }
 
   function updateAnnounceHint(text) {
@@ -2309,7 +2309,7 @@
       const nextItem = (idx + 1 < total) ? currentService.items[idx + 1] : null;
       if (nextItem) {
         bannerNext.textContent = `Next: ${itemTypeBadge(nextItem.type)} ${itemDisplayLabel(nextItem)}` +
-          (nextItem.type === 'divider' ? ' — screen goes dark' : '');
+          (nextItem.type === 'divider' ? ' — ' + t('list.screenGoesDark', 'screen goes dark') : '');
         bannerNext.hidden = false;
       } else {
         bannerNext.hidden = true;
@@ -3547,6 +3547,10 @@
       sel.addEventListener('change', renderBibleGet);
     }
     out.textContent = '';
+    const hint = document.createElement('p');
+    hint.className = 'backup-note';
+    hint.textContent = t('bibleGet.openHint', 'If Open does nothing inside OBS, use Copy link and paste it into your web browser.');
+    out.appendChild(hint);
     BIBLE_SOURCES.filter(s => s.lang === sel.value).forEach(s => {
       const card = document.createElement('div');
       card.className = 'bible-get-item';
@@ -3591,7 +3595,7 @@
     const names = window.HymnFlowBibleLookup.listTranslations();
     const active = window.HymnFlowBibleLookup.getActiveTranslation();
     if (!names.length) {
-      list.innerHTML = '<p class="bible-empty-state">No translations loaded</p>';
+      list.innerHTML = `<p class="bible-empty-state">${escapeHtml(t('list.noTranslations', 'No translations loaded'))}</p>`;
       return;
     }
     list.innerHTML = names.map(name => {
@@ -3600,7 +3604,7 @@
       <div class="bible-translation-item${name === active ? ' active' : ''}" data-name="${n}">
         <span class="bible-translation-name">${n}${name === active ? ' ✓' : ''}</span>
         <div class="bible-translation-actions">
-          ${name !== active ? `<button class="btn btn-secondary bible-set-active-btn" data-name="${n}">Set active</button>` : ''}
+          ${name !== active ? `<button class="btn btn-secondary bible-set-active-btn" data-name="${n}">${escapeHtml(t('list.setActive', 'Set active'))}</button>` : ''}
           <button class="btn bible-remove-btn" data-name="${n}" title="Remove ${n}">✕</button>
         </div>
       </div>`;
@@ -3692,8 +3696,14 @@
       if (!hasFiles(ev)) return;
       ev.preventDefault();
       depth = 0; show(false);
-      const files = Array.from(ev.dataTransfer.files).slice(0, 10);
-      for (const f of files) {
+      let files = Array.from(ev.dataTransfer.files).slice(0, 66);
+      // Several USFM book files dropped together are one Bible, not many one-book translations.
+      const usfm = files.filter(f => /\.(usfm|sfm|ptx)$/i.test(f.name));
+      if (usfm.length >= 2) {
+        files = files.filter(f => !usfm.includes(f));
+        try { await importBibleFiles(usfm); } catch (err) { notify(String(err && err.message || err), 'error'); }
+      }
+      for (const f of files.slice(0, 10)) {
         try { await routeDroppedFile(f); } catch (err) { notify(String(err && err.message || err), 'error'); }
       }
     });
@@ -3703,6 +3713,21 @@
     const file = e.target.files[0];
     e.target.value = '';
     await importBibleFile(file);
+  }
+
+  // Several USFM book files -> one translation (name from the box, else the files' common ending).
+  async function importBibleFiles(files) {
+    if (!files.length || !window.HymnFlowBibleLookup) return;
+    const nameInput = document.getElementById('bibleTranslationName');
+    const name = (nameInput?.value || '').trim();
+    if (nameInput) nameInput.value = '';
+    statusEl.textContent = window.HymnFlowI18n?.getTranslation('bible.loading') || 'Loading Bible…';
+    const result = await window.HymnFlowBibleLookup.importUsfmFiles(files, name);
+    statusEl.textContent = result.message;
+    updateBibleStatusBadge();
+    renderBibleList();
+    updateQsTranslationSelect();
+    updateQsControls();
   }
 
   async function importBibleFile(file) {

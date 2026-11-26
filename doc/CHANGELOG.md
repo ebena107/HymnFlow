@@ -2,6 +2,13 @@
 
 ### Drop anything, in your language
 
+### Fixed
+- The service **Delete** button read "Del" in English (and "Suppr"/"I-del" in French/Tagalog); all now use the full word.
+- About 20 more labels built by the dock script — the service "More" menu (Duplicate, Export), item move/remove/edit buttons and tooltips, "screen goes dark" hints, empty-list messages, "Set active", "Showing X of Y", Close — now follow the interface language.
+- Bible lookup errors, import results (e.g. "NTBT loaded — 66 books…") and zip errors are translated instead of always English.
+- Dropping several per-book USFM files together now creates **one** translation (named from the files' common ending) instead of one per file.
+- The Bible guide notes that if "Open" does nothing inside OBS, "Copy link" works.
+
 ### Security
 - GitHub Actions are pinned to full commit SHAs and a test enforces it; `SECURITY.md` documents the new import paths (drop anywhere, zip reader limits, USFM, usage restore).
 

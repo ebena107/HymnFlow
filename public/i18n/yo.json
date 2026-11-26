@@ -412,7 +412,8 @@
       "ntbt": "Sọ ZIP tí o gbà sílẹ̀ sórí káàdì Bíbélì lókè (kò sí ìdí láti ṣí i).",
       "yoruba": "Lórí ojú ìwé náà, gba ẹ̀yà USFM (.zip) sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè — HymnFlow yóò yí i padà fún ọ.",
       "ebible": "Ọgọ́rọ̀ọ̀rún ìtumọ̀. Gba ẹ̀yà USFM (.zip) sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè."
-    }
+    },
+    "openHint": "Bí Ṣí kò bá ṣe nǹkan kan nínú OBS, lo Ṣe ẹ̀dà ìjápọ̀ kí o sì lẹ̀ ẹ́ mọ́ aṣàwákiri rẹ."
   },
   "operator": {
     "corruptKept": "A kò lè ka dátà {name} tí a fi pamọ́. A fi ẹ̀dà kan sílẹ̀ sí ibi ìpamọ́ aṣàwákiri (hymnflow-corrupt-{name}-*) kí a lè gbà á padà.",
@@ -429,5 +430,51 @@
     "cleared": "A ti pa ojú-ìbòjú rẹ́",
     "hymnDeleted": "A ti pa \"{title}\" rẹ́",
     "serviceDeleted": "A ti pa ètò ìsìn \"{name}\" rẹ́"
+  },
+  "list": {
+    "moreActions": "Àwọn ìṣe míìrán",
+    "moreActionsFor": "Àwọn ìṣe míìrán fún {name}",
+    "duplicate": "Ṣe ẹ̀dà",
+    "exportTxt": "Gbé .txt jáde",
+    "moveUp": "Gbé sókè",
+    "moveDown": "Gbé sísàlẹ̀",
+    "remove": "Yọ kúrò",
+    "edit": "Ṣàtúnṣe",
+    "editCueNotes": "Ṣàtúnṣe àkọsílẹ̀ ìtọ́kasí",
+    "noItems": "A kò tíì fi ohunkóhun kún un",
+    "screenGoesDark": "ojú-ìbòjú yóò ṣókùnkùn",
+    "screenGoesDarkHere": "níbí ni ojú-ìbòjú yóò ti ṣókùnkùn",
+    "noHymnsFound": "A kò rí orin ìyìn kankan",
+    "noTranslations": "Kò sí ìtumọ̀ tí a gbé wọlé",
+    "setActive": "Ṣe é ní èyí tí ń lò",
+    "showingOf": "Ń fi {shown} lára {total} hàn — ṣàtúnṣe ìwádìí rẹ",
+    "close": "Pa á"
+  },
+  "lookup": {
+    "notLoaded": "Kò tíì gbé Bíbélì wọlé — gbé ìtumọ̀ kan wọlé ní táàbù Ibi ìkówèé",
+    "noActive": "Kò sí ìtumọ̀ tí ń lò — yan ọ̀kan ní táàbù Ibi ìkówèé",
+    "format": "Ìlànà: \"Ìwé Orí:Ẹsẹ\" — fún àpẹẹrẹ Jòhánù 3:16  tàbí  Sm 23  tàbí  Jn 3 16  tàbí  1Kọr 13:4",
+    "bookNotRecognised": "A kò mọ ìwé náà: \"{ref}\"",
+    "noChapter": "{book} kò ní orí {chapter}",
+    "noVerse": "{book} {chapter} kò ní ẹsẹ {verse}"
+  },
+  "bibleImport": {
+    "loaded": "{name} ti wọlé — ìwé {books}, ẹsẹ {verses}{note}",
+    "sessionOnly": " (fún ìgbà yìí nìkan — ibi ìpamọ́ kò sí)",
+    "failed": "Ìgbéwọlé kùnà: {error}",
+    "noText": "Ìgbéwọlé kùnà: kò sí ọ̀rọ̀ Bíbélì nínú fáìlì yìí",
+    "onlyBooks": "Ìwé {count} nìkan ni a rí — a retí 66",
+    "noExtract": "Kò lè yọ JSON jáde láti inú fáìlì .js",
+    "unrecognised": "A kò mọ ìlànà JSON Bíbélì yìí"
+  },
+  "zip": {
+    "invalid": "Èyí kò jọ fáìlì .zip tó tọ́",
+    "zip64": "A kò gbà àwọn fáìlì .zip tó tóbi jù (zip64)",
+    "tooMany": "Fáìlì púpọ̀ jù wà nínú .zip náà",
+    "damaged": "Fáìlì .zip náà ti bàjẹ́",
+    "method": ".zip yìí lo ọ̀nà ìfúnpọ̀ tí a kò gbà",
+    "noUnzip": "Aṣàwákiri yìí kò lè ṣí fáìlì zip; ṣí i ná, lẹ́yìn náà sọ fáìlì inú rẹ̀",
+    "tooLarge": "Fáìlì kan nínú .zip náà tóbi jù",
+    "password": ".zip yìí ní ọ̀rọ̀ ìgbaniwọlé"
   }
 }

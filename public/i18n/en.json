@@ -79,7 +79,7 @@
       "cancel": "Cancel",
       "load": "Load",
       "edit": "Edit",
-      "delete": "Del"
+      "delete": "Delete"
     },
     "addButtons": {
       "hymn": "+ Hymn",
@@ -412,7 +412,8 @@
       "ntbt": "Drop the downloaded ZIP onto the Bible card above (no unzipping needed).",
       "yoruba": "On the page, download the USFM (.zip) version and drop it onto the Bible card above — HymnFlow converts it for you.",
       "ebible": "Hundreds of translations. Download the USFM (.zip) version and drop it onto the Bible card above."
-    }
+    },
+    "openHint": "If Open does nothing inside OBS, use Copy link and paste it into your web browser."
   },
   "operator": {
     "corruptKept": "Saved {name} data could not be read. A copy was kept in browser storage (hymnflow-corrupt-{name}-*) so it can be recovered.",
@@ -429,5 +430,51 @@
     "cleared": "Screen cleared",
     "hymnDeleted": "Deleted \"{title}\"",
     "serviceDeleted": "Deleted service \"{name}\""
+  },
+  "list": {
+    "moreActions": "More actions",
+    "moreActionsFor": "More actions for {name}",
+    "duplicate": "Duplicate",
+    "exportTxt": "Export .txt",
+    "moveUp": "Move up",
+    "moveDown": "Move down",
+    "remove": "Remove",
+    "edit": "Edit",
+    "editCueNotes": "Edit cue notes",
+    "noItems": "No items added yet",
+    "screenGoesDark": "screen goes dark",
+    "screenGoesDarkHere": "screen goes dark here",
+    "noHymnsFound": "No hymns found",
+    "noTranslations": "No translations loaded",
+    "setActive": "Set active",
+    "showingOf": "Showing {shown} of {total} — refine your search",
+    "close": "Close"
+  },
+  "lookup": {
+    "notLoaded": "Bible not loaded — import a translation in the Library tab",
+    "noActive": "No active translation — select one in the Library tab",
+    "format": "Format: \"Book Chapter:Verse\" — e.g. John 3:16  or  Ps 23  or  Jn 3 16  or  1Cor 13:4",
+    "bookNotRecognised": "Book not recognised: \"{ref}\"",
+    "noChapter": "{book} does not have chapter {chapter}",
+    "noVerse": "{book} {chapter} does not have verse {verse}"
+  },
+  "bibleImport": {
+    "loaded": "{name} loaded — {books} books, {verses} verses{note}",
+    "sessionOnly": " (session only — storage unavailable)",
+    "failed": "Import failed: {error}",
+    "noText": "Import failed: no Bible text was found in this file",
+    "onlyBooks": "Only {count} books found — expected 66",
+    "noExtract": "Could not extract JSON from .js file",
+    "unrecognised": "Unrecognised Bible JSON format"
+  },
+  "zip": {
+    "invalid": "This does not look like a valid .zip file",
+    "zip64": "Very large .zip files (zip64) are not supported",
+    "tooMany": "The .zip has too many files",
+    "damaged": "The .zip file is damaged",
+    "method": "This .zip uses an unsupported compression method",
+    "noUnzip": "This browser cannot unzip files; unzip it first and drop the inner file",
+    "tooLarge": "A file inside the .zip is too large",
+    "password": "This .zip is password-protected"
   }
 }

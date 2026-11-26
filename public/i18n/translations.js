@@ -83,7 +83,7 @@ window.HymnFlowTranslations = {
         "cancel": "Cancel",
         "load": "Load",
         "edit": "Edit",
-        "delete": "Del"
+        "delete": "Delete"
       },
       "addButtons": {
         "hymn": "+ Hymn",
@@ -416,7 +416,8 @@ window.HymnFlowTranslations = {
         "ntbt": "Drop the downloaded ZIP onto the Bible card above (no unzipping needed).",
         "yoruba": "On the page, download the USFM (.zip) version and drop it onto the Bible card above — HymnFlow converts it for you.",
         "ebible": "Hundreds of translations. Download the USFM (.zip) version and drop it onto the Bible card above."
-      }
+      },
+      "openHint": "If Open does nothing inside OBS, use Copy link and paste it into your web browser."
     },
     "operator": {
       "corruptKept": "Saved {name} data could not be read. A copy was kept in browser storage (hymnflow-corrupt-{name}-*) so it can be recovered.",
@@ -433,6 +434,52 @@ window.HymnFlowTranslations = {
       "cleared": "Screen cleared",
       "hymnDeleted": "Deleted \"{title}\"",
       "serviceDeleted": "Deleted service \"{name}\""
+    },
+    "list": {
+      "moreActions": "More actions",
+      "moreActionsFor": "More actions for {name}",
+      "duplicate": "Duplicate",
+      "exportTxt": "Export .txt",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "remove": "Remove",
+      "edit": "Edit",
+      "editCueNotes": "Edit cue notes",
+      "noItems": "No items added yet",
+      "screenGoesDark": "screen goes dark",
+      "screenGoesDarkHere": "screen goes dark here",
+      "noHymnsFound": "No hymns found",
+      "noTranslations": "No translations loaded",
+      "setActive": "Set active",
+      "showingOf": "Showing {shown} of {total} — refine your search",
+      "close": "Close"
+    },
+    "lookup": {
+      "notLoaded": "Bible not loaded — import a translation in the Library tab",
+      "noActive": "No active translation — select one in the Library tab",
+      "format": "Format: \"Book Chapter:Verse\" — e.g. John 3:16  or  Ps 23  or  Jn 3 16  or  1Cor 13:4",
+      "bookNotRecognised": "Book not recognised: \"{ref}\"",
+      "noChapter": "{book} does not have chapter {chapter}",
+      "noVerse": "{book} {chapter} does not have verse {verse}"
+    },
+    "bibleImport": {
+      "loaded": "{name} loaded — {books} books, {verses} verses{note}",
+      "sessionOnly": " (session only — storage unavailable)",
+      "failed": "Import failed: {error}",
+      "noText": "Import failed: no Bible text was found in this file",
+      "onlyBooks": "Only {count} books found — expected 66",
+      "noExtract": "Could not extract JSON from .js file",
+      "unrecognised": "Unrecognised Bible JSON format"
+    },
+    "zip": {
+      "invalid": "This does not look like a valid .zip file",
+      "zip64": "Very large .zip files (zip64) are not supported",
+      "tooMany": "The .zip has too many files",
+      "damaged": "The .zip file is damaged",
+      "method": "This .zip uses an unsupported compression method",
+      "noUnzip": "This browser cannot unzip files; unzip it first and drop the inner file",
+      "tooLarge": "A file inside the .zip is too large",
+      "password": "This .zip is password-protected"
     }
   },
   "es": {
@@ -849,7 +896,8 @@ window.HymnFlowTranslations = {
         "ntbt": "Suelta el ZIP descargado sobre la tarjeta de la Biblia de arriba (no hace falta descomprimir).",
         "yoruba": "En la página, descarga la versión USFM (.zip) y suéltala sobre la tarjeta de la Biblia de arriba: HymnFlow la convierte por ti.",
         "ebible": "Cientos de traducciones. Descarga la versión USFM (.zip) y suéltala sobre la tarjeta de la Biblia de arriba."
-      }
+      },
+      "openHint": "Si Abrir no hace nada dentro de OBS, usa Copiar enlace y pégalo en tu navegador web."
     },
     "operator": {
       "corruptKept": "No se pudieron leer los datos guardados de {name}. Se conservó una copia en el almacenamiento del navegador (hymnflow-corrupt-{name}-*) para poder recuperarla.",
@@ -866,6 +914,52 @@ window.HymnFlowTranslations = {
       "cleared": "Pantalla borrada",
       "hymnDeleted": "Eliminado \"{title}\"",
       "serviceDeleted": "Servicio eliminado \"{name}\""
+    },
+    "list": {
+      "moreActions": "Más acciones",
+      "moreActionsFor": "Más acciones para {name}",
+      "duplicate": "Duplicar",
+      "exportTxt": "Exportar .txt",
+      "moveUp": "Subir",
+      "moveDown": "Bajar",
+      "remove": "Quitar",
+      "edit": "Editar",
+      "editCueNotes": "Editar notas de entrada",
+      "noItems": "Aún no se ha añadido ningún elemento",
+      "screenGoesDark": "la pantalla se oscurece",
+      "screenGoesDarkHere": "aquí la pantalla se oscurece",
+      "noHymnsFound": "No se encontraron himnos",
+      "noTranslations": "No hay traducciones cargadas",
+      "setActive": "Activar",
+      "showingOf": "Mostrando {shown} de {total}: afina tu búsqueda",
+      "close": "Cerrar"
+    },
+    "lookup": {
+      "notLoaded": "Biblia no cargada: importa una traducción en la pestaña Biblioteca",
+      "noActive": "No hay traducción activa: elige una en la pestaña Biblioteca",
+      "format": "Formato: \"Libro Capítulo:Versículo\", p. ej. Juan 3:16  o  Sal 23  o  Jn 3 16  o  1Co 13:4",
+      "bookNotRecognised": "Libro no reconocido: \"{ref}\"",
+      "noChapter": "{book} no tiene el capítulo {chapter}",
+      "noVerse": "{book} {chapter} no tiene el versículo {verse}"
+    },
+    "bibleImport": {
+      "loaded": "{name} cargada: {books} libros, {verses} versículos{note}",
+      "sessionOnly": " (solo esta sesión: almacenamiento no disponible)",
+      "failed": "Error al importar: {error}",
+      "noText": "Error al importar: no se encontró texto bíblico en este archivo",
+      "onlyBooks": "Solo se encontraron {count} libros; se esperaban 66",
+      "noExtract": "No se pudo extraer el JSON del archivo .js",
+      "unrecognised": "Formato JSON de Biblia no reconocido"
+    },
+    "zip": {
+      "invalid": "Esto no parece un archivo .zip válido",
+      "zip64": "No se admiten archivos .zip muy grandes (zip64)",
+      "tooMany": "El .zip contiene demasiados archivos",
+      "damaged": "El archivo .zip está dañado",
+      "method": "Este .zip usa un método de compresión no admitido",
+      "noUnzip": "Este navegador no puede descomprimir archivos; descomprímelo antes y suelta el archivo interior",
+      "tooLarge": "Un archivo dentro del .zip es demasiado grande",
+      "password": "Este .zip está protegido con contraseña"
     }
   },
   "fr": {
@@ -949,7 +1043,7 @@ window.HymnFlowTranslations = {
         "cancel": "Annuler",
         "load": "Charger",
         "edit": "Modifier",
-        "delete": "Suppr"
+        "delete": "Supprimer"
       },
       "alerts": {
         "nameRequired": "Le nom du service est obligatoire",
@@ -1282,7 +1376,8 @@ window.HymnFlowTranslations = {
         "ntbt": "Déposez le ZIP téléchargé sur la carte Bible ci-dessus (inutile de le décompresser).",
         "yoruba": "Sur la page, téléchargez la version USFM (.zip) et déposez-la sur la carte Bible ci-dessus — HymnFlow la convertit pour vous.",
         "ebible": "Des centaines de traductions. Téléchargez la version USFM (.zip) et déposez-la sur la carte Bible ci-dessus."
-      }
+      },
+      "openHint": "Si Ouvrir ne fait rien dans OBS, utilisez Copier le lien et collez-le dans votre navigateur."
     },
     "operator": {
       "corruptKept": "Les données enregistrées de {name} sont illisibles. Une copie a été conservée dans le stockage du navigateur (hymnflow-corrupt-{name}-*) pour pouvoir la récupérer.",
@@ -1299,6 +1394,52 @@ window.HymnFlowTranslations = {
       "cleared": "Écran effacé",
       "hymnDeleted": "« {title} » supprimé",
       "serviceDeleted": "Programme « {name} » supprimé"
+    },
+    "list": {
+      "moreActions": "Plus d’actions",
+      "moreActionsFor": "Plus d’actions pour {name}",
+      "duplicate": "Dupliquer",
+      "exportTxt": "Exporter en .txt",
+      "moveUp": "Monter",
+      "moveDown": "Descendre",
+      "remove": "Retirer",
+      "edit": "Modifier",
+      "editCueNotes": "Modifier les notes de repère",
+      "noItems": "Aucun élément ajouté pour l’instant",
+      "screenGoesDark": "l’écran devient noir",
+      "screenGoesDarkHere": "l’écran devient noir ici",
+      "noHymnsFound": "Aucun cantique trouvé",
+      "noTranslations": "Aucune traduction chargée",
+      "setActive": "Activer",
+      "showingOf": "Affichage de {shown} sur {total} — affinez votre recherche",
+      "close": "Fermer"
+    },
+    "lookup": {
+      "notLoaded": "Bible non chargée — importez une traduction dans l’onglet Bibliothèque",
+      "noActive": "Aucune traduction active — choisissez-en une dans l’onglet Bibliothèque",
+      "format": "Format : « Livre Chapitre:Verset » — p. ex. Jean 3:16  ou  Ps 23  ou  Jn 3 16  ou  1Co 13:4",
+      "bookNotRecognised": "Livre non reconnu : « {ref} »",
+      "noChapter": "{book} n’a pas de chapitre {chapter}",
+      "noVerse": "{book} {chapter} n’a pas de verset {verse}"
+    },
+    "bibleImport": {
+      "loaded": "{name} chargée — {books} livres, {verses} versets{note}",
+      "sessionOnly": " (session uniquement — stockage indisponible)",
+      "failed": "Échec de l’importation : {error}",
+      "noText": "Échec de l’importation : aucun texte biblique trouvé dans ce fichier",
+      "onlyBooks": "Seulement {count} livres trouvés — 66 attendus",
+      "noExtract": "Impossible d’extraire le JSON du fichier .js",
+      "unrecognised": "Format JSON de Bible non reconnu"
+    },
+    "zip": {
+      "invalid": "Ceci ne ressemble pas à un fichier .zip valide",
+      "zip64": "Les très gros fichiers .zip (zip64) ne sont pas pris en charge",
+      "tooMany": "Le .zip contient trop de fichiers",
+      "damaged": "Le fichier .zip est endommagé",
+      "method": "Ce .zip utilise une méthode de compression non prise en charge",
+      "noUnzip": "Ce navigateur ne peut pas décompresser les fichiers ; décompressez-le d’abord et déposez le fichier contenu",
+      "tooLarge": "Un fichier contenu dans le .zip est trop volumineux",
+      "password": "Ce .zip est protégé par mot de passe"
     }
   },
   "ko": {
@@ -1715,7 +1856,8 @@ window.HymnFlowTranslations = {
         "ntbt": "내려받은 ZIP을 위의 성경 카드에 놓으세요(압축 해제 불필요).",
         "yoruba": "해당 페이지에서 USFM(.zip) 버전을 내려받아 위의 성경 카드에 놓으세요. HymnFlow가 변환해 줍니다.",
         "ebible": "수백 개의 번역본. USFM(.zip) 버전을 내려받아 위의 성경 카드에 놓으세요."
-      }
+      },
+      "openHint": "OBS 안에서 열기가 작동하지 않으면 링크 복사를 눌러 웹 브라우저에 붙여넣으세요."
     },
     "operator": {
       "corruptKept": "저장된 {name} 데이터를 읽을 수 없습니다. 복구할 수 있도록 브라우저 저장소에 사본(hymnflow-corrupt-{name}-*)을 보관했습니다.",
@@ -1732,6 +1874,52 @@ window.HymnFlowTranslations = {
       "cleared": "화면을 지웠습니다",
       "hymnDeleted": "\"{title}\" 삭제됨",
       "serviceDeleted": "예배 순서 \"{name}\" 삭제됨"
+    },
+    "list": {
+      "moreActions": "더 보기",
+      "moreActionsFor": "{name} 더 보기",
+      "duplicate": "복제",
+      "exportTxt": ".txt로 내보내기",
+      "moveUp": "위로 이동",
+      "moveDown": "아래로 이동",
+      "remove": "제거",
+      "edit": "편집",
+      "editCueNotes": "큐 노트 편집",
+      "noItems": "아직 추가된 항목이 없습니다",
+      "screenGoesDark": "화면이 어두워짐",
+      "screenGoesDarkHere": "여기서 화면이 어두워짐",
+      "noHymnsFound": "찬송가를 찾을 수 없습니다",
+      "noTranslations": "불러온 번역본이 없습니다",
+      "setActive": "사용하기",
+      "showingOf": "{total}개 중 {shown}개 표시 — 검색을 좁혀 보세요",
+      "close": "닫기"
+    },
+    "lookup": {
+      "notLoaded": "성경이 로드되지 않았습니다 — 라이브러리 탭에서 번역본을 가져오세요",
+      "noActive": "사용 중인 번역본이 없습니다 — 라이브러리 탭에서 선택하세요",
+      "format": "형식: \"책 장:절\" — 예: 요 3:16  또는  시 23  또는  요 3 16  또는  고전 13:4",
+      "bookNotRecognised": "알 수 없는 책: \"{ref}\"",
+      "noChapter": "{book}에는 {chapter}장이 없습니다",
+      "noVerse": "{book} {chapter}장에는 {verse}절이 없습니다"
+    },
+    "bibleImport": {
+      "loaded": "{name} 로드됨 — {books}권, {verses}절{note}",
+      "sessionOnly": " (이번 세션만 — 저장소를 사용할 수 없음)",
+      "failed": "가져오기 실패: {error}",
+      "noText": "가져오기 실패: 이 파일에서 성경 본문을 찾을 수 없습니다",
+      "onlyBooks": "{count}권만 발견됨 — 66권이 필요합니다",
+      "noExtract": ".js 파일에서 JSON을 추출할 수 없습니다",
+      "unrecognised": "알 수 없는 성경 JSON 형식"
+    },
+    "zip": {
+      "invalid": "올바른 .zip 파일이 아닌 것 같습니다",
+      "zip64": "매우 큰 .zip 파일(zip64)은 지원되지 않습니다",
+      "tooMany": ".zip에 파일이 너무 많습니다",
+      "damaged": ".zip 파일이 손상되었습니다",
+      "method": "이 .zip은 지원되지 않는 압축 방식을 사용합니다",
+      "noUnzip": "이 브라우저는 압축을 풀 수 없습니다. 먼저 압축을 풀고 안의 파일을 놓으세요",
+      "tooLarge": ".zip 안의 파일이 너무 큽니다",
+      "password": "이 .zip은 암호로 보호되어 있습니다"
     }
   },
   "pt": {
@@ -2148,7 +2336,8 @@ window.HymnFlowTranslations = {
         "ntbt": "Solte o ZIP baixado sobre o cartão da Bíblia acima (não precisa descompactar).",
         "yoruba": "Na página, baixe a versão USFM (.zip) e solte-a sobre o cartão da Bíblia acima — o HymnFlow converte para você.",
         "ebible": "Centenas de traduções. Baixe a versão USFM (.zip) e solte-a sobre o cartão da Bíblia acima."
-      }
+      },
+      "openHint": "Se Abrir não fizer nada dentro do OBS, use Copiar link e cole no seu navegador."
     },
     "operator": {
       "corruptKept": "Os dados salvos de {name} não puderam ser lidos. Uma cópia foi mantida no armazenamento do navegador (hymnflow-corrupt-{name}-*) para recuperação.",
@@ -2165,6 +2354,52 @@ window.HymnFlowTranslations = {
       "cleared": "Tela limpa",
       "hymnDeleted": "\"{title}\" excluído",
       "serviceDeleted": "Programação \"{name}\" excluída"
+    },
+    "list": {
+      "moreActions": "Mais ações",
+      "moreActionsFor": "Mais ações para {name}",
+      "duplicate": "Duplicar",
+      "exportTxt": "Exportar .txt",
+      "moveUp": "Mover para cima",
+      "moveDown": "Mover para baixo",
+      "remove": "Remover",
+      "edit": "Editar",
+      "editCueNotes": "Editar notas de deixa",
+      "noItems": "Nenhum item adicionado ainda",
+      "screenGoesDark": "a tela escurece",
+      "screenGoesDarkHere": "aqui a tela escurece",
+      "noHymnsFound": "Nenhum hino encontrado",
+      "noTranslations": "Nenhuma tradução carregada",
+      "setActive": "Ativar",
+      "showingOf": "Mostrando {shown} de {total} — refine a busca",
+      "close": "Fechar"
+    },
+    "lookup": {
+      "notLoaded": "Bíblia não carregada — importe uma tradução na aba Biblioteca",
+      "noActive": "Nenhuma tradução ativa — escolha uma na aba Biblioteca",
+      "format": "Formato: \"Livro Capítulo:Versículo\" — ex.: João 3:16  ou  Sl 23  ou  Jo 3 16  ou  1Co 13:4",
+      "bookNotRecognised": "Livro não reconhecido: \"{ref}\"",
+      "noChapter": "{book} não tem o capítulo {chapter}",
+      "noVerse": "{book} {chapter} não tem o versículo {verse}"
+    },
+    "bibleImport": {
+      "loaded": "{name} carregada — {books} livros, {verses} versículos{note}",
+      "sessionOnly": " (somente nesta sessão — armazenamento indisponível)",
+      "failed": "Falha na importação: {error}",
+      "noText": "Falha na importação: nenhum texto bíblico encontrado neste arquivo",
+      "onlyBooks": "Apenas {count} livros encontrados — esperados 66",
+      "noExtract": "Não foi possível extrair o JSON do arquivo .js",
+      "unrecognised": "Formato JSON de Bíblia não reconhecido"
+    },
+    "zip": {
+      "invalid": "Isto não parece um arquivo .zip válido",
+      "zip64": "Arquivos .zip muito grandes (zip64) não são suportados",
+      "tooMany": "O .zip tem arquivos demais",
+      "damaged": "O arquivo .zip está danificado",
+      "method": "Este .zip usa um método de compressão não suportado",
+      "noUnzip": "Este navegador não consegue descompactar arquivos; descompacte antes e solte o arquivo interno",
+      "tooLarge": "Um arquivo dentro do .zip é grande demais",
+      "password": "Este .zip é protegido por senha"
     }
   },
   "sw": {
@@ -2581,7 +2816,8 @@ window.HymnFlowTranslations = {
         "ntbt": "Liburute ZIP uliyopakua juu ya kadi ya Biblia hapo juu (hakuna haja ya kufungua).",
         "yoruba": "Kwenye ukurasa, pakua toleo la USFM (.zip) na uliburute juu ya kadi ya Biblia hapo juu — HymnFlow hulibadilisha kwa ajili yako.",
         "ebible": "Mamia ya tafsiri. Pakua toleo la USFM (.zip) na uliburute juu ya kadi ya Biblia hapo juu."
-      }
+      },
+      "openHint": "Ikiwa Fungua haifanyi kitu ndani ya OBS, tumia Nakili kiungo na ukibandike kwenye kivinjari chako."
     },
     "operator": {
       "corruptKept": "Data iliyohifadhiwa ya {name} haikuweza kusomwa. Nakala imehifadhiwa kwenye hifadhi ya kivinjari (hymnflow-corrupt-{name}-*) ili iweze kurejeshwa.",
@@ -2598,6 +2834,52 @@ window.HymnFlowTranslations = {
       "cleared": "Skrini imefutwa",
       "hymnDeleted": "Imefutwa \"{title}\"",
       "serviceDeleted": "Ibada \"{name}\" imefutwa"
+    },
+    "list": {
+      "moreActions": "Vitendo zaidi",
+      "moreActionsFor": "Vitendo zaidi kwa {name}",
+      "duplicate": "Nakili",
+      "exportTxt": "Hamisha .txt",
+      "moveUp": "Sogeza juu",
+      "moveDown": "Sogeza chini",
+      "remove": "Ondoa",
+      "edit": "Hariri",
+      "editCueNotes": "Hariri vidokezo vya ishara",
+      "noItems": "Bado hakuna kipengee kilichoongezwa",
+      "screenGoesDark": "skrini inakuwa giza",
+      "screenGoesDarkHere": "hapa skrini inakuwa giza",
+      "noHymnsFound": "Hakuna nyimbo zilizopatikana",
+      "noTranslations": "Hakuna tafsiri zilizopakiwa",
+      "setActive": "Weka kuwa inayotumika",
+      "showingOf": "Inaonyesha {shown} kati ya {total} — boresha utafutaji wako",
+      "close": "Funga"
+    },
+    "lookup": {
+      "notLoaded": "Biblia haijapakiwa — ingiza tafsiri kwenye kichupo cha Maktaba",
+      "noActive": "Hakuna tafsiri inayotumika — chagua moja kwenye kichupo cha Maktaba",
+      "format": "Muundo: \"Kitabu Sura:Mstari\" — mf. Yohana 3:16  au  Zab 23  au  Yn 3 16  au  1Kor 13:4",
+      "bookNotRecognised": "Kitabu hakitambuliki: \"{ref}\"",
+      "noChapter": "{book} haina sura ya {chapter}",
+      "noVerse": "{book} {chapter} haina mstari wa {verse}"
+    },
+    "bibleImport": {
+      "loaded": "{name} imepakiwa — vitabu {books}, mistari {verses}{note}",
+      "sessionOnly": " (kipindi hiki tu — hifadhi haipatikani)",
+      "failed": "Kuingiza kumeshindwa: {error}",
+      "noText": "Kuingiza kumeshindwa: hakuna maandishi ya Biblia kwenye faili hii",
+      "onlyBooks": "Vitabu {count} tu vimepatikana — vilitarajiwa 66",
+      "noExtract": "Imeshindwa kutoa JSON kutoka kwenye faili ya .js",
+      "unrecognised": "Muundo wa JSON wa Biblia haujatambuliwa"
+    },
+    "zip": {
+      "invalid": "Hii haionekani kuwa faili sahihi ya .zip",
+      "zip64": "Faili kubwa sana za .zip (zip64) hazitumiki",
+      "tooMany": "Faili ya .zip ina faili nyingi mno",
+      "damaged": "Faili ya .zip imeharibika",
+      "method": "Faili hii ya .zip inatumia njia ya ukandamizaji isiyotumika",
+      "noUnzip": "Kivinjari hiki hakiwezi kufungua faili za zip; zifungue kwanza kisha liburute faili ya ndani",
+      "tooLarge": "Faili ndani ya .zip ni kubwa mno",
+      "password": "Faili hii ya .zip ina nenosiri"
     }
   },
   "tl": {
@@ -2681,7 +2963,7 @@ window.HymnFlowTranslations = {
         "cancel": "Kanselahin",
         "load": "I-load",
         "edit": "I-edit",
-        "delete": "I-del"
+        "delete": "Tanggalin"
       },
       "alerts": {
         "nameRequired": "Kinakailangan ang pangalan ng serbisyo",
@@ -3014,7 +3296,8 @@ window.HymnFlowTranslations = {
         "ntbt": "I-drop ang na-download na ZIP sa Bible card sa itaas (hindi na kailangang i-unzip).",
         "yoruba": "Sa pahina, i-download ang USFM (.zip) na bersyon at i-drop sa Bible card sa itaas — kino-convert ito ng HymnFlow para sa iyo.",
         "ebible": "Daan-daang salin. I-download ang USFM (.zip) na bersyon at i-drop sa Bible card sa itaas."
-      }
+      },
+      "openHint": "Kung walang nangyari sa Buksan sa loob ng OBS, gamitin ang Kopyahin ang link at i-paste sa iyong web browser."
     },
     "operator": {
       "corruptKept": "Hindi mabasa ang naka-save na data ng {name}. May kopyang itinabi sa storage ng browser (hymnflow-corrupt-{name}-*) para mabawi.",
@@ -3031,6 +3314,52 @@ window.HymnFlowTranslations = {
       "cleared": "Na-clear ang screen",
       "hymnDeleted": "Tinanggal ang \"{title}\"",
       "serviceDeleted": "Tinanggal ang serbisyong \"{name}\""
+    },
+    "list": {
+      "moreActions": "Higit pang aksyon",
+      "moreActionsFor": "Higit pang aksyon para sa {name}",
+      "duplicate": "I-duplicate",
+      "exportTxt": "I-export bilang .txt",
+      "moveUp": "Ilipat pataas",
+      "moveDown": "Ilipat pababa",
+      "remove": "Alisin",
+      "edit": "I-edit",
+      "editCueNotes": "I-edit ang mga cue note",
+      "noItems": "Wala pang naidaragdag na bahagi",
+      "screenGoesDark": "dumidilim ang screen",
+      "screenGoesDarkHere": "dito dumidilim ang screen",
+      "noHymnsFound": "Walang nakitang himno",
+      "noTranslations": "Walang naka-load na salin",
+      "setActive": "Gawing aktibo",
+      "showingOf": "Ipinapakita ang {shown} sa {total} — paliitin ang paghahanap",
+      "close": "Isara"
+    },
+    "lookup": {
+      "notLoaded": "Hindi pa naka-load ang Bibliya — mag-import ng salin sa tab na Library",
+      "noActive": "Walang aktibong salin — pumili ng isa sa tab na Library",
+      "format": "Format: \"Aklat Kabanata:Talata\" — hal. Juan 3:16  o  Awit 23  o  Jn 3 16  o  1Cor 13:4",
+      "bookNotRecognised": "Hindi kilala ang aklat: \"{ref}\"",
+      "noChapter": "Walang kabanata {chapter} ang {book}",
+      "noVerse": "Walang talata {verse} ang {book} {chapter}"
+    },
+    "bibleImport": {
+      "loaded": "Na-load ang {name} — {books} aklat, {verses} talata{note}",
+      "sessionOnly": " (para sa session lang — hindi available ang storage)",
+      "failed": "Nabigo ang pag-import: {error}",
+      "noText": "Nabigo ang pag-import: walang nakitang teksto ng Bibliya sa file na ito",
+      "onlyBooks": "{count} aklat lang ang nakita — inaasahan ang 66",
+      "noExtract": "Hindi makuha ang JSON mula sa .js file",
+      "unrecognised": "Hindi kilalang format ng Bible JSON"
+    },
+    "zip": {
+      "invalid": "Mukhang hindi wastong .zip file ito",
+      "zip64": "Hindi suportado ang napakalalaking .zip file (zip64)",
+      "tooMany": "Masyadong maraming file sa .zip",
+      "damaged": "Sira ang .zip file",
+      "method": "Gumagamit ang .zip na ito ng hindi suportadong paraan ng compression",
+      "noUnzip": "Hindi kayang i-unzip ng browser na ito ang mga file; i-unzip muna at i-drop ang loob na file",
+      "tooLarge": "Masyadong malaki ang isang file sa loob ng .zip",
+      "password": "May password ang .zip na ito"
     }
   },
   "yo": {
@@ -3447,7 +3776,8 @@ window.HymnFlowTranslations = {
         "ntbt": "Sọ ZIP tí o gbà sílẹ̀ sórí káàdì Bíbélì lókè (kò sí ìdí láti ṣí i).",
         "yoruba": "Lórí ojú ìwé náà, gba ẹ̀yà USFM (.zip) sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè — HymnFlow yóò yí i padà fún ọ.",
         "ebible": "Ọgọ́rọ̀ọ̀rún ìtumọ̀. Gba ẹ̀yà USFM (.zip) sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè."
-      }
+      },
+      "openHint": "Bí Ṣí kò bá ṣe nǹkan kan nínú OBS, lo Ṣe ẹ̀dà ìjápọ̀ kí o sì lẹ̀ ẹ́ mọ́ aṣàwákiri rẹ."
     },
     "operator": {
       "corruptKept": "A kò lè ka dátà {name} tí a fi pamọ́. A fi ẹ̀dà kan sílẹ̀ sí ibi ìpamọ́ aṣàwákiri (hymnflow-corrupt-{name}-*) kí a lè gbà á padà.",
@@ -3464,6 +3794,52 @@ window.HymnFlowTranslations = {
       "cleared": "A ti pa ojú-ìbòjú rẹ́",
       "hymnDeleted": "A ti pa \"{title}\" rẹ́",
       "serviceDeleted": "A ti pa ètò ìsìn \"{name}\" rẹ́"
+    },
+    "list": {
+      "moreActions": "Àwọn ìṣe míìrán",
+      "moreActionsFor": "Àwọn ìṣe míìrán fún {name}",
+      "duplicate": "Ṣe ẹ̀dà",
+      "exportTxt": "Gbé .txt jáde",
+      "moveUp": "Gbé sókè",
+      "moveDown": "Gbé sísàlẹ̀",
+      "remove": "Yọ kúrò",
+      "edit": "Ṣàtúnṣe",
+      "editCueNotes": "Ṣàtúnṣe àkọsílẹ̀ ìtọ́kasí",
+      "noItems": "A kò tíì fi ohunkóhun kún un",
+      "screenGoesDark": "ojú-ìbòjú yóò ṣókùnkùn",
+      "screenGoesDarkHere": "níbí ni ojú-ìbòjú yóò ti ṣókùnkùn",
+      "noHymnsFound": "A kò rí orin ìyìn kankan",
+      "noTranslations": "Kò sí ìtumọ̀ tí a gbé wọlé",
+      "setActive": "Ṣe é ní èyí tí ń lò",
+      "showingOf": "Ń fi {shown} lára {total} hàn — ṣàtúnṣe ìwádìí rẹ",
+      "close": "Pa á"
+    },
+    "lookup": {
+      "notLoaded": "Kò tíì gbé Bíbélì wọlé — gbé ìtumọ̀ kan wọlé ní táàbù Ibi ìkówèé",
+      "noActive": "Kò sí ìtumọ̀ tí ń lò — yan ọ̀kan ní táàbù Ibi ìkówèé",
+      "format": "Ìlànà: \"Ìwé Orí:Ẹsẹ\" — fún àpẹẹrẹ Jòhánù 3:16  tàbí  Sm 23  tàbí  Jn 3 16  tàbí  1Kọr 13:4",
+      "bookNotRecognised": "A kò mọ ìwé náà: \"{ref}\"",
+      "noChapter": "{book} kò ní orí {chapter}",
+      "noVerse": "{book} {chapter} kò ní ẹsẹ {verse}"
+    },
+    "bibleImport": {
+      "loaded": "{name} ti wọlé — ìwé {books}, ẹsẹ {verses}{note}",
+      "sessionOnly": " (fún ìgbà yìí nìkan — ibi ìpamọ́ kò sí)",
+      "failed": "Ìgbéwọlé kùnà: {error}",
+      "noText": "Ìgbéwọlé kùnà: kò sí ọ̀rọ̀ Bíbélì nínú fáìlì yìí",
+      "onlyBooks": "Ìwé {count} nìkan ni a rí — a retí 66",
+      "noExtract": "Kò lè yọ JSON jáde láti inú fáìlì .js",
+      "unrecognised": "A kò mọ ìlànà JSON Bíbélì yìí"
+    },
+    "zip": {
+      "invalid": "Èyí kò jọ fáìlì .zip tó tọ́",
+      "zip64": "A kò gbà àwọn fáìlì .zip tó tóbi jù (zip64)",
+      "tooMany": "Fáìlì púpọ̀ jù wà nínú .zip náà",
+      "damaged": "Fáìlì .zip náà ti bàjẹ́",
+      "method": ".zip yìí lo ọ̀nà ìfúnpọ̀ tí a kò gbà",
+      "noUnzip": "Aṣàwákiri yìí kò lè ṣí fáìlì zip; ṣí i ná, lẹ́yìn náà sọ fáìlì inú rẹ̀",
+      "tooLarge": "Fáìlì kan nínú .zip náà tóbi jù",
+      "password": ".zip yìí ní ọ̀rọ̀ ìgbaniwọlé"
     }
   },
   "zh": {
@@ -3880,7 +4256,8 @@ window.HymnFlowTranslations = {
         "ntbt": "把下载的 ZIP 拖放到上方的圣经卡片上（无需解压）。",
         "yoruba": "在该页面下载 USFM（.zip）版本，并拖放到上方的圣经卡片上——HymnFlow 会为你转换。",
         "ebible": "数百种译本。下载 USFM（.zip）版本并拖放到上方的圣经卡片上。"
-      }
+      },
+      "openHint": "如果在 OBS 中点“打开”没有反应，请用“复制链接”并粘贴到浏览器中。"
     },
     "operator": {
       "corruptKept": "无法读取已保存的 {name} 数据。已在浏览器存储中保留了一份副本（hymnflow-corrupt-{name}-*），可用于恢复。",
@@ -3897,6 +4274,52 @@ window.HymnFlowTranslations = {
       "cleared": "已清屏",
       "hymnDeleted": "已删除“{title}”",
       "serviceDeleted": "已删除流程“{name}”"
+    },
+    "list": {
+      "moreActions": "更多操作",
+      "moreActionsFor": "{name} 的更多操作",
+      "duplicate": "复制",
+      "exportTxt": "导出 .txt",
+      "moveUp": "上移",
+      "moveDown": "下移",
+      "remove": "移除",
+      "edit": "编辑",
+      "editCueNotes": "编辑提示备注",
+      "noItems": "尚未添加项目",
+      "screenGoesDark": "画面变黑",
+      "screenGoesDarkHere": "此处画面变黑",
+      "noHymnsFound": "未找到诗歌",
+      "noTranslations": "尚未载入译本",
+      "setActive": "设为当前",
+      "showingOf": "显示 {total} 项中的 {shown} 项——请缩小搜索范围",
+      "close": "关闭"
+    },
+    "lookup": {
+      "notLoaded": "尚未载入圣经——请在“库”标签页导入译本",
+      "noActive": "没有当前译本——请在“库”标签页选择一个",
+      "format": "格式：“书卷 章:节”——例如 约 3:16  或  诗 23  或  约 3 16  或  林前 13:4",
+      "bookNotRecognised": "无法识别的书卷：“{ref}”",
+      "noChapter": "{book} 没有第 {chapter} 章",
+      "noVerse": "{book} 第 {chapter} 章没有第 {verse} 节"
+    },
+    "bibleImport": {
+      "loaded": "已载入 {name}——{books} 卷，{verses} 节{note}",
+      "sessionOnly": "（仅本次会话——存储不可用）",
+      "failed": "导入失败：{error}",
+      "noText": "导入失败：此文件中没有圣经文本",
+      "onlyBooks": "只找到 {count} 卷——应为 66 卷",
+      "noExtract": "无法从 .js 文件中提取 JSON",
+      "unrecognised": "无法识别的圣经 JSON 格式"
+    },
+    "zip": {
+      "invalid": "这看起来不是有效的 .zip 文件",
+      "zip64": "不支持超大的 .zip 文件（zip64）",
+      "tooMany": "该 .zip 中文件过多",
+      "damaged": ".zip 文件已损坏",
+      "method": "此 .zip 使用了不支持的压缩方式",
+      "noUnzip": "此浏览器无法解压文件；请先解压，再拖入其中的文件",
+      "tooLarge": ".zip 中有文件过大",
+      "password": "此 .zip 受密码保护"
     }
   }
 };

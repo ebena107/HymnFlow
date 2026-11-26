@@ -79,7 +79,7 @@
       "cancel": "Annuler",
       "load": "Charger",
       "edit": "Modifier",
-      "delete": "Suppr"
+      "delete": "Supprimer"
     },
     "alerts": {
       "nameRequired": "Le nom du service est obligatoire",
@@ -412,7 +412,8 @@
       "ntbt": "Déposez le ZIP téléchargé sur la carte Bible ci-dessus (inutile de le décompresser).",
       "yoruba": "Sur la page, téléchargez la version USFM (.zip) et déposez-la sur la carte Bible ci-dessus — HymnFlow la convertit pour vous.",
       "ebible": "Des centaines de traductions. Téléchargez la version USFM (.zip) et déposez-la sur la carte Bible ci-dessus."
-    }
+    },
+    "openHint": "Si Ouvrir ne fait rien dans OBS, utilisez Copier le lien et collez-le dans votre navigateur."
   },
   "operator": {
     "corruptKept": "Les données enregistrées de {name} sont illisibles. Une copie a été conservée dans le stockage du navigateur (hymnflow-corrupt-{name}-*) pour pouvoir la récupérer.",
@@ -429,5 +430,51 @@
     "cleared": "Écran effacé",
     "hymnDeleted": "« {title} » supprimé",
     "serviceDeleted": "Programme « {name} » supprimé"
+  },
+  "list": {
+    "moreActions": "Plus d’actions",
+    "moreActionsFor": "Plus d’actions pour {name}",
+    "duplicate": "Dupliquer",
+    "exportTxt": "Exporter en .txt",
+    "moveUp": "Monter",
+    "moveDown": "Descendre",
+    "remove": "Retirer",
+    "edit": "Modifier",
+    "editCueNotes": "Modifier les notes de repère",
+    "noItems": "Aucun élément ajouté pour l’instant",
+    "screenGoesDark": "l’écran devient noir",
+    "screenGoesDarkHere": "l’écran devient noir ici",
+    "noHymnsFound": "Aucun cantique trouvé",
+    "noTranslations": "Aucune traduction chargée",
+    "setActive": "Activer",
+    "showingOf": "Affichage de {shown} sur {total} — affinez votre recherche",
+    "close": "Fermer"
+  },
+  "lookup": {
+    "notLoaded": "Bible non chargée — importez une traduction dans l’onglet Bibliothèque",
+    "noActive": "Aucune traduction active — choisissez-en une dans l’onglet Bibliothèque",
+    "format": "Format : « Livre Chapitre:Verset » — p. ex. Jean 3:16  ou  Ps 23  ou  Jn 3 16  ou  1Co 13:4",
+    "bookNotRecognised": "Livre non reconnu : « {ref} »",
+    "noChapter": "{book} n’a pas de chapitre {chapter}",
+    "noVerse": "{book} {chapter} n’a pas de verset {verse}"
+  },
+  "bibleImport": {
+    "loaded": "{name} chargée — {books} livres, {verses} versets{note}",
+    "sessionOnly": " (session uniquement — stockage indisponible)",
+    "failed": "Échec de l’importation : {error}",
+    "noText": "Échec de l’importation : aucun texte biblique trouvé dans ce fichier",
+    "onlyBooks": "Seulement {count} livres trouvés — 66 attendus",
+    "noExtract": "Impossible d’extraire le JSON du fichier .js",
+    "unrecognised": "Format JSON de Bible non reconnu"
+  },
+  "zip": {
+    "invalid": "Ceci ne ressemble pas à un fichier .zip valide",
+    "zip64": "Les très gros fichiers .zip (zip64) ne sont pas pris en charge",
+    "tooMany": "Le .zip contient trop de fichiers",
+    "damaged": "Le fichier .zip est endommagé",
+    "method": "Ce .zip utilise une méthode de compression non prise en charge",
+    "noUnzip": "Ce navigateur ne peut pas décompresser les fichiers ; décompressez-le d’abord et déposez le fichier contenu",
+    "tooLarge": "Un fichier contenu dans le .zip est trop volumineux",
+    "password": "Ce .zip est protégé par mot de passe"
   }
 }

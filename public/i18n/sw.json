@@ -412,7 +412,8 @@
       "ntbt": "Liburute ZIP uliyopakua juu ya kadi ya Biblia hapo juu (hakuna haja ya kufungua).",
       "yoruba": "Kwenye ukurasa, pakua toleo la USFM (.zip) na uliburute juu ya kadi ya Biblia hapo juu — HymnFlow hulibadilisha kwa ajili yako.",
       "ebible": "Mamia ya tafsiri. Pakua toleo la USFM (.zip) na uliburute juu ya kadi ya Biblia hapo juu."
-    }
+    },
+    "openHint": "Ikiwa Fungua haifanyi kitu ndani ya OBS, tumia Nakili kiungo na ukibandike kwenye kivinjari chako."
   },
   "operator": {
     "corruptKept": "Data iliyohifadhiwa ya {name} haikuweza kusomwa. Nakala imehifadhiwa kwenye hifadhi ya kivinjari (hymnflow-corrupt-{name}-*) ili iweze kurejeshwa.",
@@ -429,5 +430,51 @@
     "cleared": "Skrini imefutwa",
     "hymnDeleted": "Imefutwa \"{title}\"",
     "serviceDeleted": "Ibada \"{name}\" imefutwa"
+  },
+  "list": {
+    "moreActions": "Vitendo zaidi",
+    "moreActionsFor": "Vitendo zaidi kwa {name}",
+    "duplicate": "Nakili",
+    "exportTxt": "Hamisha .txt",
+    "moveUp": "Sogeza juu",
+    "moveDown": "Sogeza chini",
+    "remove": "Ondoa",
+    "edit": "Hariri",
+    "editCueNotes": "Hariri vidokezo vya ishara",
+    "noItems": "Bado hakuna kipengee kilichoongezwa",
+    "screenGoesDark": "skrini inakuwa giza",
+    "screenGoesDarkHere": "hapa skrini inakuwa giza",
+    "noHymnsFound": "Hakuna nyimbo zilizopatikana",
+    "noTranslations": "Hakuna tafsiri zilizopakiwa",
+    "setActive": "Weka kuwa inayotumika",
+    "showingOf": "Inaonyesha {shown} kati ya {total} — boresha utafutaji wako",
+    "close": "Funga"
+  },
+  "lookup": {
+    "notLoaded": "Biblia haijapakiwa — ingiza tafsiri kwenye kichupo cha Maktaba",
+    "noActive": "Hakuna tafsiri inayotumika — chagua moja kwenye kichupo cha Maktaba",
+    "format": "Muundo: \"Kitabu Sura:Mstari\" — mf. Yohana 3:16  au  Zab 23  au  Yn 3 16  au  1Kor 13:4",
+    "bookNotRecognised": "Kitabu hakitambuliki: \"{ref}\"",
+    "noChapter": "{book} haina sura ya {chapter}",
+    "noVerse": "{book} {chapter} haina mstari wa {verse}"
+  },
+  "bibleImport": {
+    "loaded": "{name} imepakiwa — vitabu {books}, mistari {verses}{note}",
+    "sessionOnly": " (kipindi hiki tu — hifadhi haipatikani)",
+    "failed": "Kuingiza kumeshindwa: {error}",
+    "noText": "Kuingiza kumeshindwa: hakuna maandishi ya Biblia kwenye faili hii",
+    "onlyBooks": "Vitabu {count} tu vimepatikana — vilitarajiwa 66",
+    "noExtract": "Imeshindwa kutoa JSON kutoka kwenye faili ya .js",
+    "unrecognised": "Muundo wa JSON wa Biblia haujatambuliwa"
+  },
+  "zip": {
+    "invalid": "Hii haionekani kuwa faili sahihi ya .zip",
+    "zip64": "Faili kubwa sana za .zip (zip64) hazitumiki",
+    "tooMany": "Faili ya .zip ina faili nyingi mno",
+    "damaged": "Faili ya .zip imeharibika",
+    "method": "Faili hii ya .zip inatumia njia ya ukandamizaji isiyotumika",
+    "noUnzip": "Kivinjari hiki hakiwezi kufungua faili za zip; zifungue kwanza kisha liburute faili ya ndani",
+    "tooLarge": "Faili ndani ya .zip ni kubwa mno",
+    "password": "Faili hii ya .zip ina nenosiri"
   }
 }

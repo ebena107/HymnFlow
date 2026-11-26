@@ -227,6 +227,19 @@
   // Converts the BibliaTodo "schema 3" JSON (libros > capitulos > versiculos,
   // USFM book codes — NTBT/BTNT/NTB-BR). Verse text only; headings, notes and
   // formatting metadata are ignored so the translation wording stays untouched.
+  // Translated text with an English fallback (works before/without the i18n module, e.g. in tests).
+  function tr(key, fallback, params) {
+    try {
+      const I = window.HymnFlowI18n;
+      const en = window.HymnFlowTranslations && window.HymnFlowTranslations.en;
+      const known = en && key.split('.').reduce((o, k) => (o && typeof o === 'object') ? o[k] : undefined, en);
+      if (I && typeof known === 'string') return I.getTranslation(key, params || {});
+    } catch (e) { /* fall through to English */ }
+    let out = fallback;
+    Object.keys(params || {}).forEach(k => { out = out.split('{' + k + '}').join(String(params[k])); });
+    return out;
+  }
+
   function convertBibliaTodo(data) {
     const result = {};
     data.libros.forEach(book => {
@@ -247,7 +260,7 @@
       result[code] = { name: book.nombre || BOOK_NAMES[idx] || code, chapters };
     });
     if (Object.keys(result).length < 66) {
-      throw new Error(`Only ${Object.keys(result).length} books found — expected 66`);
+      throw new Error(tr('bibleImport.onlyBooks', 'Only {count} books found — expected 66', { count: Object.keys(result).length }));
     }
     Object.defineProperty(result, '__label', { value: String(data.version || ''), enumerable: false });
     return result;
@@ -260,12 +273,12 @@
     // Strip JS assignment wrapper if present (bible-kjv.js format)
     if (json.startsWith('//') || json.includes('window.HymnFlowBible')) {
       const m = json.match(/window\.HymnFlowBible\s*=\s*([\s\S]+?);\s*$/);
-      if (!m) throw new Error('Could not extract JSON from .js file');
+      if (!m) throw new Error(tr('bibleImport.noExtract', 'Could not extract JSON from .js file'));
       json = m[1];
     }
     const data = JSON.parse(json);
     if (Array.isArray(data)) {
-      if (data.length < 66) throw new Error(`Only ${data.length} books found — expected 66`);
+      if (data.length < 66) throw new Error(tr('bibleImport.onlyBooks', 'Only {count} books found — expected 66', { count: data.length }));
       return convertRawArray(data);
     }
     if (data && typeof data === 'object' && data.GEN) {
@@ -274,7 +287,7 @@
     if (data && typeof data === 'object' && Array.isArray(data.libros)) {
       return convertBibliaTodo(data);
     }
-    throw new Error('Unrecognised Bible JSON format');
+    throw new Error(tr('bibleImport.unrecognised', 'Unrecognised Bible JSON format'));
   }
 
   // ── Storage — IndexedDB (large Bible data) + localStorage (tiny metadata) ──
@@ -282,6 +295,29 @@
   const DB_NAME    = 'HymnFlowBibles';
   const DB_VERSION = 1;
   const STORE      = 'translations';
+
+  // Stores a parsed Bible under a name, persists it and returns the result message.
+  function storeBible(bibleData, nm) {
+    const bookCount = Object.keys(bibleData).length;
+    const verseCount = Object.values(bibleData).reduce((n, b) =>
+      n + b.chapters.slice(1).reduce((c, ch) => c + (ch ? ch.length - 1 : 0), 0), 0);
+    window.HymnFlowBibles[nm] = bibleData;
+    if (!activeTranslation) activeTranslation = nm;
+    return persistOne(nm, bibleData).then(persisted => {
+      if (persisted) {
+        try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e2) { /* ignore */ }
+      }
+      return {
+        ok: true,
+        name: nm,
+        message: tr('bibleImport.loaded', '{name} loaded \u2014 {books} books, {verses} verses{note}', {
+          name: nm, books: bookCount, verses: verseCount.toLocaleString(),
+          note: persisted ? '' : tr('bibleImport.sessionOnly', ' (session only \u2014 storage unavailable)'),
+        }),
+        persisted,
+      };
+    });
+  }
 
   window.HymnFlowBibles = {};
   let activeTranslation = '';
@@ -434,31 +470,12 @@
       const F = window.HymnFlowBibleFormats;
       const derive = () => (F ? F.nameFromFileName(fname) : (fname.replace(/\.[^.]+$/, '').toUpperCase() || 'BIBLE'));
 
-      // Stores a parsed Bible under a name and reports the result.
-      const finish = (bibleData, nm) => {
-        nm = nm || derive();
-        const bookCount = Object.keys(bibleData).length;
-        const verseCount = Object.values(bibleData).reduce((n, b) =>
-          n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
-        window.HymnFlowBibles[nm] = bibleData;
-        if (!activeTranslation) activeTranslation = nm;
-        return persistOne(nm, bibleData).then(persisted => {
-          if (persisted) {
-            try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e2) { /* ignore */ }
-          }
-          return {
-            ok: true,
-            name: nm,
-            message: `${nm} loaded \u2014 ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only \u2014 storage unavailable)'}`,
-            persisted,
-          };
-        });
-      };
+      const finish = (bibleData, nm) => storeBible(bibleData, nm || derive());
 
       // .zip / USFM: unzip and convert in the browser, no tools needed.
       if (ext === 'zip' || ext === 'usfm' || ext === 'sfm' || ext === 'ptx') {
         return (async () => {
-          if (!F) return { ok: false, message: 'Import failed: file reader is not loaded' };
+          if (!F) return { ok: false, message: tr('bibleImport.readerMissing', 'Import failed: file reader is not loaded') };
           try {
             const buf = await file.arrayBuffer();
             const texts = [];
@@ -478,10 +495,10 @@
               texts.push({ name: fname, text: new TextDecoder('utf-8').decode(new Uint8Array(buf)) });
             }
             const r = F.parseUsfm(texts);
-            if (!r.books) return { ok: false, message: 'Import failed: no Bible text was found in this file' };
+            if (!r.books) return { ok: false, message: tr('bibleImport.noText', 'Import failed: no Bible text was found in this file') };
             return await finish(r.data, name);
           } catch (err) {
-            return { ok: false, message: `Import failed: ${err.message}` };
+            return { ok: false, message: tr('bibleImport.failed', 'Import failed: {error}', { error: err.message }) };
           }
         })();
       }
@@ -493,14 +510,33 @@
           try {
             bibleData = parseBibleFile(e.target.result);
           } catch (err) {
-            resolve({ ok: false, message: `Import failed: ${err.message}` });
+            resolve({ ok: false, message: tr('bibleImport.failed', 'Import failed: {error}', { error: err.message }) });
             return;
           }
           resolve(finish(bibleData, name || bibleData.__label));
         };
-        reader.onerror = () => resolve({ ok: false, message: 'Could not read file' });
+        reader.onerror = () => resolve({ ok: false, message: tr('msg.couldNotRead', 'Could not read file') });
         reader.readAsText(file);
       });
+    },
+
+    // Several USFM book files dropped together become ONE translation.
+    importUsfmFiles(files, name) {
+      return (async () => {
+        const F = window.HymnFlowBibleFormats;
+        if (!F) return { ok: false, message: tr('bibleImport.readerMissing', 'Import failed: file reader is not loaded') };
+        try {
+          const texts = [];
+          for (const f of files) {
+            texts.push({ name: f.name || '', text: new TextDecoder('utf-8').decode(new Uint8Array(await f.arrayBuffer())) });
+          }
+          const r = F.parseUsfm(texts);
+          if (!r.books) return { ok: false, message: tr('bibleImport.noText', 'Import failed: no Bible text was found in this file') };
+          return await storeBible(r.data, name || F.commonName(files.map(f => f.name)));
+        } catch (err) {
+          return { ok: false, message: tr('bibleImport.failed', 'Import failed: {error}', { error: err.message }) };
+        }
+      })();
     },
 
     // Imports already-loaded data (a parsed object/array, not a File) under the
@@ -542,25 +578,25 @@
     // text uses blank-line separation between verses so QS chunk nav works.
     lookup(refStr) {
       if (!this.isLoaded()) {
-        return { found: false, error: 'Bible not loaded — import a translation in the Library tab' };
+        return { found: false, error: tr('lookup.notLoaded', 'Bible not loaded — import a translation in the Library tab') };
       }
       const bible = window.HymnFlowBibles[activeTranslation];
       if (!bible) {
-        return { found: false, error: 'No active translation — select one in the Library tab' };
+        return { found: false, error: tr('lookup.noActive', 'No active translation — select one in the Library tab') };
       }
       const parsed = parseRef(refStr);
       if (!parsed) {
-        return { found: false, error: 'Format: "Book Chapter:Verse" — e.g. John 3:16  or  Ps 23  or  Jn 3 16  or  1Cor 13:4' };
+        return { found: false, error: tr('lookup.format', 'Format: "Book Chapter:Verse" — e.g. John 3:16  or  Ps 23  or  Jn 3 16  or  1Cor 13:4') };
       }
 
       const { bookCode, chapter, verseStart, verseEnd } = parsed;
       const bookData = bible[bookCode];
       if (!bookData) {
-        return { found: false, error: `Book not recognised: "${refStr}"` };
+        return { found: false, error: tr('lookup.bookNotRecognised', 'Book not recognised: "{ref}"', { ref: refStr }) };
       }
       const chapterArr = bookData.chapters[chapter];
       if (!chapterArr) {
-        return { found: false, error: `${bookData.name} does not have chapter ${chapter}` };
+        return { found: false, error: tr('lookup.noChapter', '{book} does not have chapter {chapter}', { book: bookData.name, chapter }) };
       }
 
       if (verseStart === null) {
@@ -574,7 +610,7 @@
       for (let v = verseStart; v <= verseEnd; v++) {
         const vText = chapterArr[v];
         if (vText == null) {
-          return { found: false, error: `${bookData.name} ${chapter} does not have verse ${v}` };
+          return { found: false, error: tr('lookup.noVerse', '{book} {chapter} does not have verse {verse}', { book: bookData.name, chapter, verse: v }) };
         }
         verses.push(vText);
       }

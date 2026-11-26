@@ -412,7 +412,8 @@
       "ntbt": "Solte o ZIP baixado sobre o cartão da Bíblia acima (não precisa descompactar).",
       "yoruba": "Na página, baixe a versão USFM (.zip) e solte-a sobre o cartão da Bíblia acima — o HymnFlow converte para você.",
       "ebible": "Centenas de traduções. Baixe a versão USFM (.zip) e solte-a sobre o cartão da Bíblia acima."
-    }
+    },
+    "openHint": "Se Abrir não fizer nada dentro do OBS, use Copiar link e cole no seu navegador."
   },
   "operator": {
     "corruptKept": "Os dados salvos de {name} não puderam ser lidos. Uma cópia foi mantida no armazenamento do navegador (hymnflow-corrupt-{name}-*) para recuperação.",
@@ -429,5 +430,51 @@
     "cleared": "Tela limpa",
     "hymnDeleted": "\"{title}\" excluído",
     "serviceDeleted": "Programação \"{name}\" excluída"
+  },
+  "list": {
+    "moreActions": "Mais ações",
+    "moreActionsFor": "Mais ações para {name}",
+    "duplicate": "Duplicar",
+    "exportTxt": "Exportar .txt",
+    "moveUp": "Mover para cima",
+    "moveDown": "Mover para baixo",
+    "remove": "Remover",
+    "edit": "Editar",
+    "editCueNotes": "Editar notas de deixa",
+    "noItems": "Nenhum item adicionado ainda",
+    "screenGoesDark": "a tela escurece",
+    "screenGoesDarkHere": "aqui a tela escurece",
+    "noHymnsFound": "Nenhum hino encontrado",
+    "noTranslations": "Nenhuma tradução carregada",
+    "setActive": "Ativar",
+    "showingOf": "Mostrando {shown} de {total} — refine a busca",
+    "close": "Fechar"
+  },
+  "lookup": {
+    "notLoaded": "Bíblia não carregada — importe uma tradução na aba Biblioteca",
+    "noActive": "Nenhuma tradução ativa — escolha uma na aba Biblioteca",
+    "format": "Formato: \"Livro Capítulo:Versículo\" — ex.: João 3:16  ou  Sl 23  ou  Jo 3 16  ou  1Co 13:4",
+    "bookNotRecognised": "Livro não reconhecido: \"{ref}\"",
+    "noChapter": "{book} não tem o capítulo {chapter}",
+    "noVerse": "{book} {chapter} não tem o versículo {verse}"
+  },
+  "bibleImport": {
+    "loaded": "{name} carregada — {books} livros, {verses} versículos{note}",
+    "sessionOnly": " (somente nesta sessão — armazenamento indisponível)",
+    "failed": "Falha na importação: {error}",
+    "noText": "Falha na importação: nenhum texto bíblico encontrado neste arquivo",
+    "onlyBooks": "Apenas {count} livros encontrados — esperados 66",
+    "noExtract": "Não foi possível extrair o JSON do arquivo .js",
+    "unrecognised": "Formato JSON de Bíblia não reconhecido"
+  },
+  "zip": {
+    "invalid": "Isto não parece um arquivo .zip válido",
+    "zip64": "Arquivos .zip muito grandes (zip64) não são suportados",
+    "tooMany": "O .zip tem arquivos demais",
+    "damaged": "O arquivo .zip está danificado",
+    "method": "Este .zip usa um método de compressão não suportado",
+    "noUnzip": "Este navegador não consegue descompactar arquivos; descompacte antes e solte o arquivo interno",
+    "tooLarge": "Um arquivo dentro do .zip é grande demais",
+    "password": "Este .zip é protegido por senha"
   }
 }

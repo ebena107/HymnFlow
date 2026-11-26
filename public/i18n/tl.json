@@ -79,7 +79,7 @@
       "cancel": "Kanselahin",
       "load": "I-load",
       "edit": "I-edit",
-      "delete": "I-del"
+      "delete": "Tanggalin"
     },
     "alerts": {
       "nameRequired": "Kinakailangan ang pangalan ng serbisyo",
@@ -412,7 +412,8 @@
       "ntbt": "I-drop ang na-download na ZIP sa Bible card sa itaas (hindi na kailangang i-unzip).",
       "yoruba": "Sa pahina, i-download ang USFM (.zip) na bersyon at i-drop sa Bible card sa itaas — kino-convert ito ng HymnFlow para sa iyo.",
       "ebible": "Daan-daang salin. I-download ang USFM (.zip) na bersyon at i-drop sa Bible card sa itaas."
-    }
+    },
+    "openHint": "Kung walang nangyari sa Buksan sa loob ng OBS, gamitin ang Kopyahin ang link at i-paste sa iyong web browser."
   },
   "operator": {
     "corruptKept": "Hindi mabasa ang naka-save na data ng {name}. May kopyang itinabi sa storage ng browser (hymnflow-corrupt-{name}-*) para mabawi.",
@@ -429,5 +430,51 @@
     "cleared": "Na-clear ang screen",
     "hymnDeleted": "Tinanggal ang \"{title}\"",
     "serviceDeleted": "Tinanggal ang serbisyong \"{name}\""
+  },
+  "list": {
+    "moreActions": "Higit pang aksyon",
+    "moreActionsFor": "Higit pang aksyon para sa {name}",
+    "duplicate": "I-duplicate",
+    "exportTxt": "I-export bilang .txt",
+    "moveUp": "Ilipat pataas",
+    "moveDown": "Ilipat pababa",
+    "remove": "Alisin",
+    "edit": "I-edit",
+    "editCueNotes": "I-edit ang mga cue note",
+    "noItems": "Wala pang naidaragdag na bahagi",
+    "screenGoesDark": "dumidilim ang screen",
+    "screenGoesDarkHere": "dito dumidilim ang screen",
+    "noHymnsFound": "Walang nakitang himno",
+    "noTranslations": "Walang naka-load na salin",
+    "setActive": "Gawing aktibo",
+    "showingOf": "Ipinapakita ang {shown} sa {total} — paliitin ang paghahanap",
+    "close": "Isara"
+  },
+  "lookup": {
+    "notLoaded": "Hindi pa naka-load ang Bibliya — mag-import ng salin sa tab na Library",
+    "noActive": "Walang aktibong salin — pumili ng isa sa tab na Library",
+    "format": "Format: \"Aklat Kabanata:Talata\" — hal. Juan 3:16  o  Awit 23  o  Jn 3 16  o  1Cor 13:4",
+    "bookNotRecognised": "Hindi kilala ang aklat: \"{ref}\"",
+    "noChapter": "Walang kabanata {chapter} ang {book}",
+    "noVerse": "Walang talata {verse} ang {book} {chapter}"
+  },
+  "bibleImport": {
+    "loaded": "Na-load ang {name} — {books} aklat, {verses} talata{note}",
+    "sessionOnly": " (para sa session lang — hindi available ang storage)",
+    "failed": "Nabigo ang pag-import: {error}",
+    "noText": "Nabigo ang pag-import: walang nakitang teksto ng Bibliya sa file na ito",
+    "onlyBooks": "{count} aklat lang ang nakita — inaasahan ang 66",
+    "noExtract": "Hindi makuha ang JSON mula sa .js file",
+    "unrecognised": "Hindi kilalang format ng Bible JSON"
+  },
+  "zip": {
+    "invalid": "Mukhang hindi wastong .zip file ito",
+    "zip64": "Hindi suportado ang napakalalaking .zip file (zip64)",
+    "tooMany": "Masyadong maraming file sa .zip",
+    "damaged": "Sira ang .zip file",
+    "method": "Gumagamit ang .zip na ito ng hindi suportadong paraan ng compression",
+    "noUnzip": "Hindi kayang i-unzip ng browser na ito ang mga file; i-unzip muna at i-drop ang loob na file",
+    "tooLarge": "Masyadong malaki ang isang file sa loob ng .zip",
+    "password": "May password ang .zip na ito"
   }
 }
