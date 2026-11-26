@@ -1,6 +1,6 @@
 {
   "name": "hymnflow",
-  "version": "2.10.1",
+  "version": "2.11.0",
   "description": "HymnFlow - OBS Studio plugin for displaying hymns - browser-based dock and overlay",
   "scripts": {
     "test": "node tests/run.js",
