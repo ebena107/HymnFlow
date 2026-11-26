@@ -94,21 +94,22 @@
 
       </section>
 
-      <section class="section">
+      <section class="section" id="bibleSection">
         <div class="section-header">
           <h3 data-i18n="bible.title">Bible</h3>
           <span id="bibleStatusBadge" class="bible-status-badge not-loaded" aria-live="polite" data-i18n="bible.notLoaded">Not loaded</span>
         </div>
         <p class="bible-description" data-i18n="bible.description">Import a Bible JSON file (any translation) to enable verse lookup. Each translation is stored separately — switch between them anytime.</p>
+        <p class="bible-drop-hint" id="bibleDropHint">Tip: drop a downloaded Bible file anywhere on this card &mdash; a .zip, .json or USFM file. HymnFlow unzips, converts and names it for you.</p>
         <div class="bible-import-row">
-          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name" maxlength="20" aria-label="Translation abbreviation">
+          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name (optional)" maxlength="20" aria-label="Translation name (optional, filled in automatically)">
           <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import JSON</button>
-          <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select Bible JSON file">
+          <input type="file" id="bibleFileInput" accept=".json,.js,.zip,.usfm,.sfm" hidden aria-label="Select a Bible file">
         </div>
         <div id="bibleTranslationList"></div>
         <details class="bible-get" id="bibleGet">
           <summary>Get another translation</summary>
-          <p class="backup-note">HymnFlow never downloads anything itself. Pick a language, open or copy the link, save the file, then use Import JSON above. Check each translation&rsquo;s license.</p>
+          <p class="backup-note">HymnFlow never downloads anything itself. Pick a language, open the link, save the file, then drop it onto the Bible card above &mdash; no unzipping or converting needed. Check each translation&rsquo;s license.</p>
           <label class="form-label">
             <span>Language</span>
             <select id="bibleGetLang" class="form-select" aria-label="Language"></select>
@@ -610,6 +611,7 @@
   <script src="../parsers/txtParser.js?v=2.10.1"></script>
   <script src="../parsers/jsonParser.js?v=2.10.1"></script>
   <script src="../parsers/songParsers.js?v=2.10.1"></script>
+  <script src="../parsers/bibleFormats.js?v=2.10.1"></script>
   <script src="obs-dock.js?v=2.10.1"></script>
 </body>
 

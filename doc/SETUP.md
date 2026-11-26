@@ -139,7 +139,7 @@ Download a pre-formatted Bible JSON from one of these repositories:
 - [thiagobodruk/bible → es_rvr.json](https://github.com/thiagobodruk/bible/blob/master/json/es_rvr.json) → Save As `rvr.json`
 
 **Spanish (NTBT — Nueva Traducción BibliaTodo, modern translation from the original languages):**
-- Download [NTBT-json.zip](https://downloads.bibliatodo.org/texto/NTBT-json.zip), unzip it, and import `NTBT.json` directly (no conversion needed). Name it `NTBT`.
+- Download [NTBT-json.zip](https://downloads.bibliatodo.org/texto/NTBT-json.zip) and drop it onto the Bible card in the dock (Library tab) — no unzipping, converting or naming needed.
 - English BTNT and Portuguese NTB-BR are available from the same publisher: [BTNT materials](https://www.bibliatodo.org/en/btnt/materials), [NTB-BR materials](https://www.bibliatodo.org/pt/ntb-br/materials).
 - Free to use and distribute under the [BibliaTodo license](https://www.bibliatodo.org/en/license); keep the Scripture wording unchanged and credit it once where your church lists credits (no need beside every verse on the overlay), e.g. *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. Uso, reproducción y distribución autorizados gratuitamente conforme a la Licencia NTBT.* Link “BibliaTodo Bible Society” to <https://www.bibliatodo.org/es/ntbt/> (English BTNT: <https://www.bibliatodo.org/en/btnt/>) and keep a link to the license (version 1.9). Not bundled with HymnFlow.
 
@@ -149,7 +149,7 @@ Download a pre-formatted Bible JSON from one of these repositories:
 **French (Segond):**
 - [thiagobodruk/bible → fr_apee.json](https://github.com/thiagobodruk/bible/blob/master/json/fr_apee.json) → Save As `fr.json`
 
-In the dock, **Library → Bible → Get another translation** lists recommended sources by language with their licenses and import steps.
+In the dock, **Library → Bible → Get another translation** lists recommended sources by language with their licenses and steps. Whatever you download — a `.zip`, a `.json` or USFM text — **drop it onto the Bible card**: HymnFlow unzips it, converts it and names it automatically (type a name first if you want a different one).
 
 Then import it:
 1. Open HymnFlow Dock → **Library** tab → **Bible** section

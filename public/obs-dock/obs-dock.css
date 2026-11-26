@@ -585,6 +585,19 @@ body {
   border-color: #e44;
 }
 
+.bible-drop-hint {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+#bibleSection.bible-drop-active {
+  outline: 2px dashed var(--primary);
+  outline-offset: -4px;
+  background: rgba(74, 158, 255, 0.08);
+}
+
 .bible-get {
   margin-top: 10px;
   border-top: 1px solid var(--border);

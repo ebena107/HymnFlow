@@ -1,6 +1,7 @@
 ## [Unreleased]
 
 ### Added
+- 📥 **Drop-in Bible files** — drop a downloaded Bible onto the Bible card in Library: `.zip` (unzipped for you), `.json` (BibliaTodo or HymnFlow format) or USFM text (footnotes and markup removed) is converted and named automatically. No scripts, unzipping or typing a name needed.
 - 📖 **Get another translation** — a guide in Library → Bible: pick a language, see the recommended source with its license and plain import steps, open or copy the link. HymnFlow itself downloads nothing.
 
 ---

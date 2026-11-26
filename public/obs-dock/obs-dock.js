@@ -2972,6 +2972,18 @@
     document.getElementById('fileInput').onchange = handleImport;
     document.getElementById('btnExport').onclick = handleExport;
     document.getElementById('btnImportBible').onclick = () => document.getElementById('bibleFileInput').click();
+    const bibleSection = document.getElementById('bibleSection');
+    if (bibleSection) {
+      const hasFiles = (ev) => ev.dataTransfer && Array.from(ev.dataTransfer.types || []).includes('Files');
+      bibleSection.addEventListener('dragover', (ev) => { if (!hasFiles(ev)) return; ev.preventDefault(); bibleSection.classList.add('bible-drop-active'); });
+      bibleSection.addEventListener('dragleave', (ev) => { if (!bibleSection.contains(ev.relatedTarget)) bibleSection.classList.remove('bible-drop-active'); });
+      bibleSection.addEventListener('drop', (ev) => {
+        if (!hasFiles(ev)) return;
+        ev.preventDefault();
+        bibleSection.classList.remove('bible-drop-active');
+        importBibleFile(ev.dataTransfer.files[0]);
+      });
+    }
     document.getElementById('bibleFileInput').onchange = handleBibleImport;
 
     // Modal controls
@@ -3478,22 +3490,22 @@
   const BIBLE_SOURCES = [
     { lang: 'English', name: 'ASV (1901)', license: 'Public domain',
       url: 'https://raw.githubusercontent.com/thiagobodruk/bible/master/json/en_asv.json',
-      steps: 'Save the file as asv.json, then press Import JSON above.' },
+      steps: 'Save the file, then drop it onto the Bible card above.' },
     { lang: 'English', name: 'BTNT — BibliaTodo New Translation', license: 'Free license (BibliaTodo v1.9) — credit required',
-      url: 'https://www.bibliatodo.org/en/btnt/materials',
-      steps: 'Download the JSON ZIP, unzip it, then import BTNT.json.' },
+      url: 'https://downloads.bibliatodo.org/en/texto/BTNT-json.zip',
+      steps: 'Download the JSON ZIP and drop it onto the Bible card above (no unzipping needed).' },
     { lang: 'Español', name: 'NTBT — Nueva Traducción BibliaTodo', license: 'Free license (BibliaTodo v1.9) — credit required',
       url: 'https://downloads.bibliatodo.org/texto/NTBT-json.zip',
-      steps: 'Unzip the download, then import NTBT.json (name it NTBT).' },
+      steps: 'Drop the downloaded ZIP onto the Bible card above (no unzipping needed).' },
     { lang: 'Português', name: 'NTB-BR — Nova Tradução BibliaTodo', license: 'Free license (BibliaTodo v1.9) — credit required',
-      url: 'https://www.bibliatodo.org/pt/ntb-br/materials',
-      steps: 'Download the JSON ZIP, unzip it, then import the .json file.' },
+      url: 'https://downloads.bibliatodo.org/pt/texto/NTB-BR-json.zip',
+      steps: 'Download the JSON ZIP and drop it onto the Bible card above (no unzipping needed).' },
     { lang: 'Yorùbá', name: 'Yoruba Contemporary Bible (Biblica)', license: 'CC BY-SA 4.0 — credit Biblica',
       url: 'https://ebible.org/Scriptures/details.php?id=yor',
-      steps: 'Not in HymnFlow format: download the text/USFM and convert it with scripts/convert_bible_txt.py, then import.' },
+      steps: 'On the page, download the USFM (.zip) version and drop it onto the Bible card above \u2014 HymnFlow converts it for you.' },
     { lang: 'Other languages', name: 'eBible.org', license: 'Varies — check each translation',
       url: 'https://ebible.org/find/',
-      steps: 'Hundreds of translations. Convert with scripts/convert_bible_txt.py, then import.' },
+      steps: 'Hundreds of translations. Download the USFM (.zip) version and drop it onto the Bible card above.' },
   ];
 
   function renderBibleGet() {
@@ -3599,15 +3611,18 @@
     }
   }
 
+  // Handles a Bible file from the file picker or a drag-and-drop. The importer
+  // unzips/converts as needed and picks a name when the box is left blank.
   async function handleBibleImport(e) {
     const file = e.target.files[0];
     e.target.value = '';
+    await importBibleFile(file);
+  }
+
+  async function importBibleFile(file) {
     if (!file || !window.HymnFlowBibleLookup) return;
     const nameInput = document.getElementById('bibleTranslationName');
-    const rawName = (nameInput?.value || '').trim();
-    // Derive name from filename if input is blank: "en_kjv.json" → "KJV"
-    const derived = file.name.replace(/\.(json|js)$/i, '').split(/[\W_]+/).pop().toUpperCase() || 'BIBLE';
-    const name = rawName || derived;
+    const name = (nameInput?.value || '').trim();
     if (nameInput) nameInput.value = '';
     if (statusEl) statusEl.textContent = window.HymnFlowI18n?.getTranslation('bible.loading') || 'Loading Bible…';
     const result = await window.HymnFlowBibleLookup.importFile(file, name);

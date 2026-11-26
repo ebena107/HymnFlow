@@ -249,6 +249,7 @@
     if (Object.keys(result).length < 66) {
       throw new Error(`Only ${Object.keys(result).length} books found — expected 66`);
     }
+    Object.defineProperty(result, '__label', { value: String(data.version || ''), enumerable: false });
     return result;
   }
 
@@ -428,6 +429,63 @@
     // Imports a Bible JSON file under the given translation name.
     // Returns a Promise resolving to { ok, name, message, persisted }.
     importFile(file, name) {
+      const fname = String((file && file.name) || '');
+      const ext = fname.toLowerCase().split('.').pop();
+      const F = window.HymnFlowBibleFormats;
+      const derive = () => (F ? F.nameFromFileName(fname) : (fname.replace(/\.[^.]+$/, '').toUpperCase() || 'BIBLE'));
+
+      // Stores a parsed Bible under a name and reports the result.
+      const finish = (bibleData, nm) => {
+        nm = nm || derive();
+        const bookCount = Object.keys(bibleData).length;
+        const verseCount = Object.values(bibleData).reduce((n, b) =>
+          n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
+        window.HymnFlowBibles[nm] = bibleData;
+        if (!activeTranslation) activeTranslation = nm;
+        return persistOne(nm, bibleData).then(persisted => {
+          if (persisted) {
+            try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e2) { /* ignore */ }
+          }
+          return {
+            ok: true,
+            name: nm,
+            message: `${nm} loaded \u2014 ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only \u2014 storage unavailable)'}`,
+            persisted,
+          };
+        });
+      };
+
+      // .zip / USFM: unzip and convert in the browser, no tools needed.
+      if (ext === 'zip' || ext === 'usfm' || ext === 'sfm' || ext === 'ptx') {
+        return (async () => {
+          if (!F) return { ok: false, message: 'Import failed: file reader is not loaded' };
+          try {
+            const buf = await file.arrayBuffer();
+            const texts = [];
+            if (ext === 'zip') {
+              const entries = await F.unzip(buf);
+              const jsons = entries.filter(e => /\.(json|js)$/i.test(e.name)).sort((a, b) => b.size - a.size);
+              for (const e of jsons) {
+                try {
+                  const d = parseBibleFile(await e.text());
+                  return await finish(d, name || d.__label);
+                } catch (err) { /* not a Bible file; try the next one */ }
+              }
+              for (const e of entries.filter(e => /\.(usfm|sfm|ptx|txt)$/i.test(e.name))) {
+                texts.push({ name: e.name, text: await e.text() });
+              }
+            } else {
+              texts.push({ name: fname, text: new TextDecoder('utf-8').decode(new Uint8Array(buf)) });
+            }
+            const r = F.parseUsfm(texts);
+            if (!r.books) return { ok: false, message: 'Import failed: no Bible text was found in this file' };
+            return await finish(r.data, name);
+          } catch (err) {
+            return { ok: false, message: `Import failed: ${err.message}` };
+          }
+        })();
+      }
+
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -438,22 +496,7 @@
             resolve({ ok: false, message: `Import failed: ${err.message}` });
             return;
           }
-          const bookCount = Object.keys(bibleData).length;
-          const verseCount = Object.values(bibleData).reduce((n, b) =>
-            n + b.chapters.slice(1).reduce((s, ch) => s + (ch ? ch.length - 1 : 0), 0), 0);
-          window.HymnFlowBibles[name] = bibleData;
-          if (!activeTranslation) activeTranslation = name;
-          persistOne(name, bibleData).then(persisted => {
-            if (persisted) {
-              try { localStorage.setItem(ACTIVE_KEY, activeTranslation); } catch (e2) { /* ignore */ }
-            }
-            resolve({
-              ok: true,
-              name,
-              message: `${name} loaded — ${bookCount} books, ${verseCount.toLocaleString()} verses${persisted ? '' : ' (session only — storage unavailable)'}`,
-              persisted,
-            });
-          });
+          resolve(finish(bibleData, name || bibleData.__label));
         };
         reader.onerror = () => resolve({ ok: false, message: 'Could not read file' });
         reader.readAsText(file);
