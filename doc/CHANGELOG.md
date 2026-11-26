@@ -1,3 +1,22 @@
+## [2.11.1] - 2026-11-26
+
+### Clearer setup page
+
+### Changed
+- **Quick Setup is easier to follow.** Thanks to @CiteClimb (PR #6) for the suggestions:
+  - the OBS dock menu path is now `Docks → Custom Browser Docks…` (OBS 28–29: `View → Docks → Custom Browser Docks…`), in the setup page, README, setup guide, user guide, troubleshooting guide and release template;
+  - each OBS entry field is explained and shown in a small table (Dock Name, URL, Width, Height, and the two Browser Source checkboxes), with **Copy** buttons for the dock and overlay URLs;
+  - the duplicated step numbering ("1. 1. …") is gone;
+  - **What's New** now sits below Troubleshooting, so people mid-setup do not have to scroll past it.
+- The import steps on the setup page say "drop the file anywhere on the dock" instead of pointing at buttons that no longer exist.
+- The websocket menu is named `Tools → WebSocket Server Settings` (older OBS: *obs-websocket Settings*) throughout.
+
+### Fixed
+- Tables on the setup page no longer push the page wider than a narrow screen.
+- The setup page's troubleshooting cards no longer mention a `public/` folder or a v2.4 migration.
+
+---
+
 ## [2.11.0] - 2026-11-26
 
 ### Drop anything, in your language
