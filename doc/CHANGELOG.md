@@ -1,3 +1,10 @@
+## [Unreleased]
+
+### Added
+- 📖 **Get another translation** — a guide in Library → Bible: pick a language, see the recommended source with its license and plain import steps, open or copy the link. HymnFlow itself downloads nothing.
+
+---
+
 ## [2.10.1] - 2026-11-26
 
 ### BibliaTodo attribution update

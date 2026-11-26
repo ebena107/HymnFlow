@@ -149,6 +149,8 @@ Download a pre-formatted Bible JSON from one of these repositories:
 **French (Segond):**
 - [thiagobodruk/bible → fr_apee.json](https://github.com/thiagobodruk/bible/blob/master/json/fr_apee.json) → Save As `fr.json`
 
+In the dock, **Library → Bible → Get another translation** lists recommended sources by language with their licenses and import steps.
+
 Then import it:
 1. Open HymnFlow Dock → **Library** tab → **Bible** section
 2. Type a name (e.g., `KJV`) in the name field

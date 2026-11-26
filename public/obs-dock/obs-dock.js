@@ -3472,8 +3472,78 @@
     });
   }
 
+  // ========================================
+  // "Get a translation" guide (links only; nothing is downloaded by the app)
+  // ========================================
+  const BIBLE_SOURCES = [
+    { lang: 'English', name: 'ASV (1901)', license: 'Public domain',
+      url: 'https://raw.githubusercontent.com/thiagobodruk/bible/master/json/en_asv.json',
+      steps: 'Save the file as asv.json, then press Import JSON above.' },
+    { lang: 'English', name: 'BTNT — BibliaTodo New Translation', license: 'Free license (BibliaTodo v1.9) — credit required',
+      url: 'https://www.bibliatodo.org/en/btnt/materials',
+      steps: 'Download the JSON ZIP, unzip it, then import BTNT.json.' },
+    { lang: 'Español', name: 'NTBT — Nueva Traducción BibliaTodo', license: 'Free license (BibliaTodo v1.9) — credit required',
+      url: 'https://downloads.bibliatodo.org/texto/NTBT-json.zip',
+      steps: 'Unzip the download, then import NTBT.json (name it NTBT).' },
+    { lang: 'Português', name: 'NTB-BR — Nova Tradução BibliaTodo', license: 'Free license (BibliaTodo v1.9) — credit required',
+      url: 'https://www.bibliatodo.org/pt/ntb-br/materials',
+      steps: 'Download the JSON ZIP, unzip it, then import the .json file.' },
+    { lang: 'Yorùbá', name: 'Yoruba Contemporary Bible (Biblica)', license: 'CC BY-SA 4.0 — credit Biblica',
+      url: 'https://ebible.org/Scriptures/details.php?id=yor',
+      steps: 'Not in HymnFlow format: download the text/USFM and convert it with scripts/convert_bible_txt.py, then import.' },
+    { lang: 'Other languages', name: 'eBible.org', license: 'Varies — check each translation',
+      url: 'https://ebible.org/find/',
+      steps: 'Hundreds of translations. Convert with scripts/convert_bible_txt.py, then import.' },
+  ];
+
+  function renderBibleGet() {
+    const sel = document.getElementById('bibleGetLang');
+    const out = document.getElementById('bibleGetList');
+    if (!sel || !out) return;
+    const langs = Array.from(new Set(BIBLE_SOURCES.map(s => s.lang)));
+    if (!sel.options.length) {
+      langs.forEach(l => { const o = document.createElement('option'); o.value = l; o.textContent = l; sel.appendChild(o); });
+      sel.addEventListener('change', renderBibleGet);
+    }
+    out.textContent = '';
+    BIBLE_SOURCES.filter(s => s.lang === sel.value).forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'bible-get-item';
+      const h = document.createElement('div');
+      h.className = 'bible-get-name';
+      h.textContent = s.name;
+      const lic = document.createElement('div');
+      lic.className = 'bible-get-license';
+      lic.textContent = s.license;
+      const st = document.createElement('div');
+      st.className = 'bible-get-steps';
+      st.textContent = s.steps;
+      const url = document.createElement('div');
+      url.className = 'bible-get-url';
+      url.textContent = s.url;
+      const row = document.createElement('div');
+      row.className = 'bible-get-actions';
+      const open = document.createElement('a');
+      open.href = s.url; open.target = '_blank'; open.rel = 'noopener noreferrer';
+      open.className = 'btn btn-secondary';
+      open.textContent = 'Open';
+      const copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'btn btn-secondary';
+      copy.textContent = 'Copy link';
+      copy.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(s.url); statusEl.textContent = 'Link copied'; }
+        catch (e) { statusEl.textContent = 'Select the link text above and copy it (Ctrl+C)'; }
+      });
+      row.appendChild(open); row.appendChild(copy);
+      [h, lic, st, url, row].forEach(n => card.appendChild(n));
+      out.appendChild(card);
+    });
+  }
+
   function renderBibleList() {
     renderCredits();
+    renderBibleGet();
     const list = document.getElementById('bibleTranslationList');
     if (!list || !window.HymnFlowBibleLookup) return;
     const names = window.HymnFlowBibleLookup.listTranslations();

@@ -106,6 +106,15 @@
           <input type="file" id="bibleFileInput" accept=".json,.js" hidden aria-label="Select Bible JSON file">
         </div>
         <div id="bibleTranslationList"></div>
+        <details class="bible-get" id="bibleGet">
+          <summary>Get another translation</summary>
+          <p class="backup-note">HymnFlow never downloads anything itself. Pick a language, open or copy the link, save the file, then use Import JSON above. Check each translation&rsquo;s license.</p>
+          <label class="form-label">
+            <span>Language</span>
+            <select id="bibleGetLang" class="form-select" aria-label="Language"></select>
+          </label>
+          <div id="bibleGetList"></div>
+        </details>
       </section>
 
     </div>
