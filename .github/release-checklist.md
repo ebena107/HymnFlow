@@ -161,7 +161,7 @@ Before release, ensure:
 - [Contributors]
 
 ### 📥 Installation
-See [SETUP.md](SETUP.md) for quick setup.
+See [SETUP.md](../doc/SETUP.md) for quick setup.
 
 ### 📦 Download
 - `hymnflow-v{version}-plugin.zip` - Full plugin package

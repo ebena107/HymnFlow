@@ -3,6 +3,12 @@
 ### Drop anything, in your language
 
 ### Fixed
+- **Install instructions matched the wrong folder layout.** The README, `SETUP.md` and `OBS_DOCK_README.md` told people to use `…/HymnFlow/public/obs-dock/index.html`, but release zips keep `obs-dock/` and `obs-overlay/` at the top level. They now show the right paths and point to `obs-setup.html`, which fills in the exact URLs.
+- **Contrast.** Green, blue and red buttons, the active tab and the Live badge now use darker fills so their white text meets the 4.5:1 accessibility minimum (it was 2.5–3.8).
+- **The header message bar** was permanently red and pulsing, so harmless messages ("Ready", "Link copied") looked like errors. It is now neutral, with a one-time highlight when a new message appears.
+- **Search highlighting** could split an HTML entity (searching "amp" in a title containing "&"). It now highlights the raw text.
+- Files over 150 MB dropped on the dock are refused with a clear message instead of being read.
+- Broken links in the issue template, release checklist and several docs; the stale v2.5.0 release template replaced with a version-neutral one; design source files moved from the repo root to `doc/archive/design/`.
 - The service **Delete** button read "Del" in English (and "Suppr"/"I-del" in French/Tagalog); all now use the full word.
 - About 20 more labels built by the dock script — the service "More" menu (Duplicate, Export), item move/remove/edit buttons and tooltips, "screen goes dark" hints, empty-list messages, "Set active", "Showing X of Y", Close — now follow the interface language.
 - Bible lookup errors, import results (e.g. "NTBT loaded — 66 books…") and zip errors are translated instead of always English.

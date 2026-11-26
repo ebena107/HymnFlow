@@ -359,7 +359,8 @@
   },
   "drop": {
     "overlay": "拖放以导入",
-    "unsupported": "无法导入这种文件。请使用诗歌文件（.txt、.csv、.json、.cho、.usr）、圣经文件（.zip、.json、.usfm）、聚会流程（.txt）或 HymnFlow 备份（.json）。"
+    "unsupported": "无法导入这种文件。请使用诗歌文件（.txt、.csv、.json、.cho、.usr）、圣经文件（.zip、.json、.usfm）、聚会流程（.txt）或 HymnFlow 备份（.json）。",
+    "tooLarge": "该文件太大，无法导入（{size} MB）。"
   },
   "msg": {
     "noSnapshots": "暂无快照",

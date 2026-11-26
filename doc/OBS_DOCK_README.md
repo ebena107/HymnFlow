@@ -45,14 +45,14 @@
    - Open OBS Studio
    - Go to **View → Docks → Custom Browser Docks**
    - Dock Name: `HymnFlow Control`
-   - URL: `file:///C:/HymnFlow/public/obs-dock/index.html`
+   - URL: `file:///C:/HymnFlow/obs-dock/index.html`
      - Or use: `http://localhost:8000/obs-dock/` if running a web server
    - Click **Apply**
 
 3. **Add Browser Source for Overlay**
    - In OBS, add a new **Browser Source**
    - Name: `Hymn Lower-Third`
-   - URL: `file:///C:/HymnFlow/public/obs-overlay/index.html`
+   - URL: `file:///C:/HymnFlow/obs-overlay/index.html`
      - Or use: `http://localhost:8000/obs-overlay/`
    - Width: `1920`
    - Height: `1080`
@@ -355,8 +355,8 @@ MIT License - Free to use and modify
 
 For issues or questions:
 
-1. Check [MIGRATION.md](../../MIGRATION.md) for setup help
-2. Review [CLIENT_README.md](../../CLIENT_README.md) for general usage
+1. Check [SETUP.md](SETUP.md) for setup help
+2. Review the [README](../README.md) for general usage
 3. Open browser console (F12) to debug localStorage issues
 
 ---

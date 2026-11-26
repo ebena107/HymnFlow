@@ -29,10 +29,16 @@ HymnFlow is a browser-based OBS Studio plugin for displaying hymns and scripture
 
 ### Step 1: Add Custom Dock in OBS
 
+Extract the release zip to a permanent folder such as `C:\HymnFlow\` (it contains `obs-dock`, `obs-overlay`, `obs-setup.html`, …).
+
+> **Easiest:** open `obs-setup.html` from the extracted folder. It shows the exact dock and overlay URLs for your computer, so you can copy them.
+> (In a source checkout the app folders sit inside `public/`, e.g. `public/obs-dock/index.html`.)
+
+
 ```text
 View → Docks → Custom Browser Docks
 Dock Name : HymnFlow Control
-URL       : file:///C:/HymnFlow/public/obs-dock/index.html
+URL       : file:///C:/HymnFlow/obs-dock/index.html
 ```
 
 ### Step 2: Add Browser Source in OBS
@@ -40,7 +46,7 @@ URL       : file:///C:/HymnFlow/public/obs-dock/index.html
 ```text
 Add Source → Browser Source
 Name   : Hymn Lower-Third
-URL    : file:///C:/HymnFlow/public/obs-overlay/index.html
+URL    : file:///C:/HymnFlow/obs-overlay/index.html
 Width  : 1920   Height : 1080
 ✅ Shutdown source when not visible
 ✅ Refresh browser when scene becomes active

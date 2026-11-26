@@ -359,7 +359,8 @@
   },
   "drop": {
     "overlay": "I-drop para i-import",
-    "unsupported": "Hindi ma-import ang ganitong uri ng file. Gumamit ng file ng himno (.txt, .csv, .json, .cho, .usr), file ng Bibliya (.zip, .json, .usfm), iskedyul ng serbisyo (.txt) o backup ng HymnFlow (.json)."
+    "unsupported": "Hindi ma-import ang ganitong uri ng file. Gumamit ng file ng himno (.txt, .csv, .json, .cho, .usr), file ng Bibliya (.zip, .json, .usfm), iskedyul ng serbisyo (.txt) o backup ng HymnFlow (.json).",
+    "tooLarge": "Masyadong malaki ang file na iyon para i-import ({size} MB)."
   },
   "msg": {
     "noSnapshots": "Wala pang snapshot",

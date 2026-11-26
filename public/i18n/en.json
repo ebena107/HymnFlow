@@ -359,7 +359,8 @@
   },
   "drop": {
     "overlay": "Drop to import",
-    "unsupported": "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json)."
+    "unsupported": "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json).",
+    "tooLarge": "That file is too large to import ({size} MB)."
   },
   "msg": {
     "noSnapshots": "No snapshots yet",

@@ -363,7 +363,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "Drop to import",
-      "unsupported": "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json)."
+      "unsupported": "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json).",
+      "tooLarge": "That file is too large to import ({size} MB)."
     },
     "msg": {
       "noSnapshots": "No snapshots yet",
@@ -843,7 +844,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "Suelta para importar",
-      "unsupported": "Ese tipo de archivo no se puede importar. Usa un archivo de himnos (.txt, .csv, .json, .cho, .usr), de Biblia (.zip, .json, .usfm), un programa de servicio (.txt) o una copia de HymnFlow (.json)."
+      "unsupported": "Ese tipo de archivo no se puede importar. Usa un archivo de himnos (.txt, .csv, .json, .cho, .usr), de Biblia (.zip, .json, .usfm), un programa de servicio (.txt) o una copia de HymnFlow (.json).",
+      "tooLarge": "Ese archivo es demasiado grande para importarlo ({size} MB)."
     },
     "msg": {
       "noSnapshots": "Aún no hay copias",
@@ -1323,7 +1325,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "Déposez pour importer",
-      "unsupported": "Ce type de fichier ne peut pas être importé. Utilisez un fichier de cantiques (.txt, .csv, .json, .cho, .usr), de Bible (.zip, .json, .usfm), un programme de culte (.txt) ou une sauvegarde HymnFlow (.json)."
+      "unsupported": "Ce type de fichier ne peut pas être importé. Utilisez un fichier de cantiques (.txt, .csv, .json, .cho, .usr), de Bible (.zip, .json, .usfm), un programme de culte (.txt) ou une sauvegarde HymnFlow (.json).",
+      "tooLarge": "Ce fichier est trop volumineux pour être importé ({size} Mo)."
     },
     "msg": {
       "noSnapshots": "Aucun instantané pour l’instant",
@@ -1803,7 +1806,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "놓아서 가져오기",
-      "unsupported": "이 형식의 파일은 가져올 수 없습니다. 찬송가 파일(.txt, .csv, .json, .cho, .usr), 성경 파일(.zip, .json, .usfm), 예배 순서(.txt) 또는 HymnFlow 백업(.json)을 사용하세요."
+      "unsupported": "이 형식의 파일은 가져올 수 없습니다. 찬송가 파일(.txt, .csv, .json, .cho, .usr), 성경 파일(.zip, .json, .usfm), 예배 순서(.txt) 또는 HymnFlow 백업(.json)을 사용하세요.",
+      "tooLarge": "파일이 너무 커서 가져올 수 없습니다({size}MB)."
     },
     "msg": {
       "noSnapshots": "아직 스냅샷이 없습니다",
@@ -2283,7 +2287,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "Solte para importar",
-      "unsupported": "Esse tipo de arquivo não pode ser importado. Use um arquivo de hinos (.txt, .csv, .json, .cho, .usr), de Bíblia (.zip, .json, .usfm), uma programação de culto (.txt) ou um backup do HymnFlow (.json)."
+      "unsupported": "Esse tipo de arquivo não pode ser importado. Use um arquivo de hinos (.txt, .csv, .json, .cho, .usr), de Bíblia (.zip, .json, .usfm), uma programação de culto (.txt) ou um backup do HymnFlow (.json).",
+      "tooLarge": "Esse arquivo é grande demais para importar ({size} MB)."
     },
     "msg": {
       "noSnapshots": "Ainda não há cópias",
@@ -2763,7 +2768,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "Dondosha ili kuingiza",
-      "unsupported": "Aina hiyo ya faili haiwezi kuingizwa. Tumia faili ya nyimbo (.txt, .csv, .json, .cho, .usr), faili ya Biblia (.zip, .json, .usfm), ratiba ya ibada (.txt) au nakala ya HymnFlow (.json)."
+      "unsupported": "Aina hiyo ya faili haiwezi kuingizwa. Tumia faili ya nyimbo (.txt, .csv, .json, .cho, .usr), faili ya Biblia (.zip, .json, .usfm), ratiba ya ibada (.txt) au nakala ya HymnFlow (.json).",
+      "tooLarge": "Faili hiyo ni kubwa mno kuingizwa ({size} MB)."
     },
     "msg": {
       "noSnapshots": "Bado hakuna nakala",
@@ -3243,7 +3249,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "I-drop para i-import",
-      "unsupported": "Hindi ma-import ang ganitong uri ng file. Gumamit ng file ng himno (.txt, .csv, .json, .cho, .usr), file ng Bibliya (.zip, .json, .usfm), iskedyul ng serbisyo (.txt) o backup ng HymnFlow (.json)."
+      "unsupported": "Hindi ma-import ang ganitong uri ng file. Gumamit ng file ng himno (.txt, .csv, .json, .cho, .usr), file ng Bibliya (.zip, .json, .usfm), iskedyul ng serbisyo (.txt) o backup ng HymnFlow (.json).",
+      "tooLarge": "Masyadong malaki ang file na iyon para i-import ({size} MB)."
     },
     "msg": {
       "noSnapshots": "Wala pang snapshot",
@@ -3723,7 +3730,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "Sọ sílẹ̀ láti gbé wọlé",
-      "unsupported": "A kò lè gbé irú fáìlì yẹn wọlé. Lo fáìlì orin ìyìn (.txt, .csv, .json, .cho, .usr), fáìlì Bíbélì (.zip, .json, .usfm), ètò ìsìn (.txt) tàbí ẹ̀dà ìpamọ́ HymnFlow (.json)."
+      "unsupported": "A kò lè gbé irú fáìlì yẹn wọlé. Lo fáìlì orin ìyìn (.txt, .csv, .json, .cho, .usr), fáìlì Bíbélì (.zip, .json, .usfm), ètò ìsìn (.txt) tàbí ẹ̀dà ìpamọ́ HymnFlow (.json).",
+      "tooLarge": "Fáìlì yẹn tóbi jù láti gbé wọlé ({size} MB)."
     },
     "msg": {
       "noSnapshots": "Kò tíì sí àwòrán ìpamọ́",
@@ -4203,7 +4211,8 @@ window.HymnFlowTranslations = {
     },
     "drop": {
       "overlay": "拖放以导入",
-      "unsupported": "无法导入这种文件。请使用诗歌文件（.txt、.csv、.json、.cho、.usr）、圣经文件（.zip、.json、.usfm）、聚会流程（.txt）或 HymnFlow 备份（.json）。"
+      "unsupported": "无法导入这种文件。请使用诗歌文件（.txt、.csv、.json、.cho、.usr）、圣经文件（.zip、.json、.usfm）、聚会流程（.txt）或 HymnFlow 备份（.json）。",
+      "tooLarge": "该文件太大，无法导入（{size} MB）。"
     },
     "msg": {
       "noSnapshots": "暂无快照",

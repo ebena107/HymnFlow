@@ -10,6 +10,13 @@
   --text-muted: #999;
   --primary: #4a9eff;
   --primary-hover: #3a8eef;
+  /* Darker fills for buttons/badges that carry white text (WCAG AA >= 4.5:1) */
+  --primary-strong: #1d6fd6;
+  --primary-strong-hover: #1a60b8;
+  --success-strong: #0b7a55;
+  --success-strong-hover: #096846;
+  --danger-strong: #dc2626;
+  --danger-strong-hover: #b91c1c;
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
@@ -105,14 +112,16 @@ body {
   animation: status-pulse 0.7s ease-out 1;
 }
 
+/* Message bar: calm and neutral (red/pulsing read as an error or "live" for harmless
+   messages). The one-time .status-pulse below still draws the eye to a new message. */
 .status-live {
-  background: var(--danger);
-  color: white;
+  background: var(--card-hover);
+  color: var(--text);
+  border: 1px solid var(--border);
   padding: 4px 12px;
   border-radius: 12px;
   font-size: 11px;
-  font-weight: 700;
-  animation: pulse 2s infinite;
+  font-weight: 600;
 }
 
 @keyframes pulse {
@@ -163,7 +172,7 @@ body {
 }
 
 .tab-btn.active {
-  background: var(--primary);
+  background: var(--primary-strong);
   color: #fff;
 }
 
@@ -293,23 +302,23 @@ body {
 }
 
 .btn-add {
-  background: var(--success);
+  background: var(--success-strong);
   color: white;
   border: none;
 }
 
 .btn-add:hover:not(:disabled) {
-  background: #0ea472;
+  background: var(--success-strong-hover);
 }
 
 .btn-remove {
-  background: var(--danger);
+  background: var(--danger-strong);
   color: white;
   border: none;
 }
 
 .btn-remove:hover:not(:disabled) {
-  background: #dc2626;
+  background: var(--danger-strong-hover);
 }
 
 .btn-secondary {
@@ -324,17 +333,17 @@ body {
 }
 
 .btn-chorus {
-  background: var(--primary);
+  background: var(--primary-strong);
   color: white;
   border: none;
 }
 
 .btn-chorus:hover:not(:disabled) {
-  background: var(--primary-hover);
+  background: var(--primary-strong-hover);
 }
 
 .btn-emergency {
-  background: var(--danger);
+  background: var(--danger-strong);
   color: white;
   border: none;
   font-weight: 700;
@@ -343,7 +352,7 @@ body {
 }
 
 .btn-emergency:hover:not(:disabled) {
-  background: #dc2626;
+  background: var(--danger-strong-hover);
   box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
 }
 
@@ -897,7 +906,7 @@ body {
 }
 
 .live-indicator {
-  background: var(--danger);
+  background: var(--danger-strong);
   color: white;
   padding: 4px 10px;
   border-radius: 12px;
@@ -932,7 +941,7 @@ body {
 }
 
 .slider-value {
-  background: var(--primary);
+  background: var(--primary-strong);
   color: white;
   padding: 4px 10px;
   border-radius: 6px;
@@ -1880,7 +1889,7 @@ body {
 
 .toast-action {
   flex-shrink: 0;
-  background: var(--primary);
+  background: var(--primary-strong);
   color: #fff;
   border: none;
   border-radius: 5px;

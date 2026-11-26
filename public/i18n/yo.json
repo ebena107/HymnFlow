@@ -359,7 +359,8 @@
   },
   "drop": {
     "overlay": "Sọ sílẹ̀ láti gbé wọlé",
-    "unsupported": "A kò lè gbé irú fáìlì yẹn wọlé. Lo fáìlì orin ìyìn (.txt, .csv, .json, .cho, .usr), fáìlì Bíbélì (.zip, .json, .usfm), ètò ìsìn (.txt) tàbí ẹ̀dà ìpamọ́ HymnFlow (.json)."
+    "unsupported": "A kò lè gbé irú fáìlì yẹn wọlé. Lo fáìlì orin ìyìn (.txt, .csv, .json, .cho, .usr), fáìlì Bíbélì (.zip, .json, .usfm), ètò ìsìn (.txt) tàbí ẹ̀dà ìpamọ́ HymnFlow (.json).",
+    "tooLarge": "Fáìlì yẹn tóbi jù láti gbé wọlé ({size} MB)."
   },
   "msg": {
     "noSnapshots": "Kò tíì sí àwòrán ìpamọ́",

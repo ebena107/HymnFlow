@@ -30,6 +30,8 @@ Getting content into HymnFlow no longer needs scripts or file juggling, and the 
 - Strict Content Security Policy; hymn and service ids are sanitized on load.
 - GitHub Actions are pinned to exact commits, and releases run the tests before packaging.
 - The service "More" menu is no longer clipped in a narrow dock.
+- Install steps in the README and setup guide now match the folders inside the release zip (`obs-dock/…`, not `public/obs-dock/…`).
+- Buttons and badges meet the accessibility contrast minimum, and the header message bar is neutral instead of permanently red and pulsing.
 - Dropping several per-book USFM files together now makes one Bible instead of one per file.
 - The service Delete button now says "Delete" (it said "Del"), and the menus, item buttons, empty-list messages, Bible lookup errors and import results all follow your language.
 

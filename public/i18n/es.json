@@ -359,7 +359,8 @@
   },
   "drop": {
     "overlay": "Suelta para importar",
-    "unsupported": "Ese tipo de archivo no se puede importar. Usa un archivo de himnos (.txt, .csv, .json, .cho, .usr), de Biblia (.zip, .json, .usfm), un programa de servicio (.txt) o una copia de HymnFlow (.json)."
+    "unsupported": "Ese tipo de archivo no se puede importar. Usa un archivo de himnos (.txt, .csv, .json, .cho, .usr), de Biblia (.zip, .json, .usfm), un programa de servicio (.txt) o una copia de HymnFlow (.json).",
+    "tooLarge": "Ese archivo es demasiado grande para importarlo ({size} MB)."
   },
   "msg": {
     "noSnapshots": "Aún no hay copias",

@@ -11,13 +11,15 @@
 Extract the downloaded release to a permanent location:
 ```
 C:\HymnFlow\
-├── public/                  ← Core application files
-│   ├── obs-dock/
-│   └── obs-overlay/
-├── scripts/                 ← Converter & OBS hotkey scripts
+├── obs-setup.html           ← open this: shows the exact URLs for your computer
+├── obs-dock/                ← the control dock
+├── obs-overlay/             ← the on-screen overlay
+├── scripts/                 ← OBS hotkey script & converters
 │   └── hymnflow-obs-hotkeys.py
-└── (hymn files: import your own via Library → Import)
+└── (hymn files: import your own — just drop them on the dock)
 ```
+
+> If you are working from a source checkout instead of a release zip, the app folders are inside `public/` (for example `public/obs-dock/index.html`).
 
 **Note your full path** — you'll need it below. Use forward slashes in URLs: `C:/HymnFlow/`
 
@@ -29,7 +31,7 @@ C:\HymnFlow\
 2. Go to **View → Docks → Custom Browser Docks**
 3. Set:
    - **Dock Name**: `HymnFlow Control`
-   - **URL**: `file:///C:/HymnFlow/public/obs-dock/index.html`
+   - **URL**: `file:///C:/HymnFlow/obs-dock/index.html`
 4. Click **Apply**
 
 The dock will appear in OBS (may take a moment to load).
@@ -41,7 +43,7 @@ The dock will appear in OBS (may take a moment to load).
 1. In your OBS scene, add a new source → **Browser Source**
 2. Set:
    - **Name**: `Hymn Lower-Third`
-   - **URL**: `file:///C:/HymnFlow/public/obs-overlay/index.html`
+   - **URL**: `file:///C:/HymnFlow/obs-overlay/index.html`
    - **Width**: `1920` · **Height**: `1080`
 3. Enable:
    - ✅ **Shutdown source when not visible**

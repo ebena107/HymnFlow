@@ -16,9 +16,9 @@ assignees: ''
 
 Have you:
 - [ ] Read [README.md](../../README.md)?
-- [ ] Checked [TROUBLESHOOTING.md](../../TROUBLESHOOTING.md)?
+- [ ] Checked [TROUBLESHOOTING.md](../../doc/TROUBLESHOOTING.md)?
 - [ ] Searched [existing issues](../issues)?
-- [ ] Reviewed [SETUP.md](../../SETUP.md)?
+- [ ] Reviewed [SETUP.md](../../doc/SETUP.md)?
 
 ## 📋 Additional Context
 

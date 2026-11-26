@@ -359,7 +359,8 @@
   },
   "drop": {
     "overlay": "Dondosha ili kuingiza",
-    "unsupported": "Aina hiyo ya faili haiwezi kuingizwa. Tumia faili ya nyimbo (.txt, .csv, .json, .cho, .usr), faili ya Biblia (.zip, .json, .usfm), ratiba ya ibada (.txt) au nakala ya HymnFlow (.json)."
+    "unsupported": "Aina hiyo ya faili haiwezi kuingizwa. Tumia faili ya nyimbo (.txt, .csv, .json, .cho, .usr), faili ya Biblia (.zip, .json, .usfm), ratiba ya ibada (.txt) au nakala ya HymnFlow (.json).",
+    "tooLarge": "Faili hiyo ni kubwa mno kuingizwa ({size} MB)."
   },
   "msg": {
     "noSnapshots": "Bado hakuna nakala",

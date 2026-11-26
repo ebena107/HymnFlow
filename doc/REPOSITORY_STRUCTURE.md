@@ -202,6 +202,6 @@ Examples:
 ## 🚀 Getting Started
 
 1. **For Users:** Read [SETUP.md](SETUP.md)
-2. **For Developers:** See [doc/IMPLEMENTATION.md](doc/IMPLEMENTATION.md)
-3. **For Contributors:** See [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+2. **For Developers:** See [doc/archive/IMPLEMENTATION.md](archive/IMPLEMENTATION.md)
+3. **For Contributors:** See [.github/CONTRIBUTING.md](../.github/CONTRIBUTING.md)
 4. **For Security:** See [SECURITY.md](SECURITY.md)

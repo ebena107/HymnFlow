@@ -975,15 +975,26 @@
   // Builds the highlight regex once per render (renderList calls this once,
   // not per row) — pass the result to highlightMatch.
   function buildHighlightRegex(query) {
-    const escapedQuery = escapeHtml(query || '');
-    if (!escapedQuery) return null;
-    return new RegExp(escapedQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    const q = String(query || '');
+    if (!q) return null;
+    return new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
   }
 
+  // Highlights matches in the RAW text and escapes each piece, so searching for "amp" or "lt"
+  // can never split an HTML entity such as "&amp;".
   function highlightMatch(text, regex) {
-    const escaped = escapeHtml(text || '');
-    if (!regex || !escaped) return escaped;
-    return escaped.replace(regex, m => `<mark>${m}</mark>`);
+    const raw = String(text || '');
+    if (!regex || !raw) return escapeHtml(raw);
+    const re = new RegExp(regex.source, regex.flags.includes('g') ? regex.flags : regex.flags + 'g');
+    let out = '';
+    let last = 0;
+    let m;
+    while ((m = re.exec(raw)) !== null) {
+      if (m[0] === '') { re.lastIndex++; continue; }
+      out += escapeHtml(raw.slice(last, m.index)) + '<mark>' + escapeHtml(m[0]) + '</mark>';
+      last = m.index + m[0].length;
+    }
+    return out + escapeHtml(raw.slice(last));
   }
 
   const LIST_CAP = 200;
@@ -3649,8 +3660,14 @@
   // unzips/converts as needed and picks a name when the box is left blank.
 
   // ── Drop anywhere: decide what a dropped file is and send it to the right importer ──
+  const MAX_DROP_BYTES = 150 * 1024 * 1024; // study-edition Bible zips are ~25 MB; this only stops runaway files
+
   async function routeDroppedFile(file) {
     const ext = (file.name.split('.').pop() || '').toLowerCase();
+    if (file.size > MAX_DROP_BYTES) {
+      notify(t('drop.tooLarge', 'That file is too large to import ({size} MB).', { size: Math.round(file.size / 1048576) }), 'error');
+      return;
+    }
     const head = ['txt', 'json', 'js', 'csv'].includes(ext) ? await file.slice(0, 65536).text() : '';
     if (['zip', 'usfm', 'sfm', 'ptx'].includes(ext)) return importBibleFile(file);
     if (ext === 'json' || ext === 'js') {
