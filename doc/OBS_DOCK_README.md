@@ -46,7 +46,7 @@
 
 2. **Add Custom Dock to OBS**
    - Open OBS Studio
-   - Go to **View → Docks → Custom Browser Docks**
+   - Go to **Docks → Custom Browser Docks…** (OBS 28–29: *View → Docks → Custom Browser Docks…*)
    - Dock Name: `HymnFlow Control`
    - URL: `file:///C:/HymnFlow/obs-dock/index.html`
      - Or use: `http://localhost:8000/obs-dock/` if running a web server

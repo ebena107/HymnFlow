@@ -9,7 +9,7 @@ Most problems fall into one of the groups below. Your version is shown in the do
   (There is no `public/` folder in a release zip; that folder only exists in a source checkout.)
 - Easiest fix: open `obs-setup.html` from your extracted folder. It shows the exact URLs for your computer.
 - Use forward slashes and three slashes after `file:`. A space in the folder name works but is shown as `%20`.
-- After changing a dock URL, press **Apply** in *View → Docks → Custom Browser Docks*.
+- After changing a dock URL, press **Apply** in *Docks → Custom Browser Docks…* (OBS 28–29: *View → Docks → Custom Browser Docks…*).
 
 ## Nothing appears on the stream
 

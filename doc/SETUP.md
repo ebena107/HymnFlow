@@ -28,7 +28,7 @@ C:\HymnFlow\
 ### Step 2: Add Custom Dock to OBS
 
 1. Open **OBS Studio**
-2. Go to **View → Docks → Custom Browser Docks**
+2. Go to **Docks → Custom Browser Docks…** (OBS 28–29: *View → Docks → Custom Browser Docks…*)
 3. Set:
    - **Dock Name**: `HymnFlow Control`
    - **URL**: `file:///C:/HymnFlow/obs-dock/index.html`
@@ -94,7 +94,7 @@ Global hotkeys work even when the dock doesn't have focus — essential when you
 ### Setup
 
 **Step 1: Enable obs-websocket**
-1. OBS → **Tools → obs-websocket Settings**
+1. OBS → **Tools → WebSocket Server Settings** (older OBS: *obs-websocket Settings*)
 2. Check **Enable WebSocket server**
 3. Set a password if desired; note the port (default: `4455`)
 4. Click **OK**
@@ -292,7 +292,7 @@ Changes apply instantly to the overlay.
 - If migrating from v2.4.x, re-import your Bible once; it will migrate automatically
 
 **Global hotkeys not working:**
-- Confirm obs-websocket is enabled: OBS → Tools → obs-websocket Settings
+- Confirm obs-websocket is enabled: OBS → Tools → WebSocket Server Settings (older OBS: obs-websocket Settings)
 - Confirm the script loaded: OBS → Tools → Scripts
 - Check the green ● badge in the dock's OBS Connection panel
 - Keys must be bound in OBS Settings → Hotkeys (search "HymnFlow")

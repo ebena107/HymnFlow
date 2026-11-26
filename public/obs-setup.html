@@ -201,6 +201,13 @@
       vertical-align: middle;
       margin-left: 6px;
     }
+    table { max-width: 100%; }
+    td, th { overflow-wrap: anywhere; }
+    .field-table { margin: 8px 0; border-collapse: collapse; width: 100%; font-size: 0.92em; }
+    .field-table th, .field-table td { border: 1px solid rgba(255,255,255,.15); padding: 6px 10px; text-align: left; vertical-align: top; }
+    .field-table th { background: rgba(255,255,255,.06); font-weight: 600; }
+    .copy-btn { margin-left: 8px; padding: 2px 10px; font-size: 0.85em; border-radius: 4px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: inherit; cursor: pointer; }
+    .copy-btn:hover { background: rgba(255,255,255,.12); }
     .tag-new { background: rgba(129,140,248,.25); color: #a5b4fc; }
     .tag-opt { background: rgba(56,189,248,.15); color: #7dd3fc; }
     @media (max-width: 768px) {
@@ -224,36 +231,28 @@
       <strong>✅ Production Ready!</strong> Fully tested for live church services. Follow the setup below to get started in under 5 minutes.
     </div>
 
-    <!-- ===== WHAT'S NEW ===== -->
-    <h2>🆕 What's New</h2>
-    <div class="new-feature">
-      <strong>Drop anything onto the dock</strong> &mdash; hymn files, Bibles (<code>.zip</code>, <code>.json</code>, USFM), service schedules and backups. HymnFlow works out what each file is, unzips and converts it, and names it for you. No scripts needed.
-    </div>
-    <div class="new-feature">
-      <strong>Starts in your language</strong> &mdash; the dock follows your browser's language (English, Spanish, French, Portuguese, Swahili, Tagalog, Yoruba, Chinese, Korean). Every label and message is translated.
-    </div>
-    <div class="new-feature">
-      <strong>Copyright &amp; CCLI</strong> &mdash; record copyright and CCLI numbers per hymn, keep a usage log, and export a CCLI-style CSV report. A Licensing &amp; credits panel covers livestream licensing and translation credits.
-    </div>
-
     <!-- ===== QUICK SETUP ===== -->
     <h2>📦 Quick Setup (3 Steps)</h2>
 
     <div class="steps">
       <ol>
         <li>
-          <strong>1. Add Custom Dock to OBS</strong>
+          <strong>Add the dock to OBS</strong>
           <ul>
-            <li>Open OBS Studio</li>
-            <li>Go to <code>View → Docks → Custom Browser Docks</code></li>
-            <li>Dock Name: <code>HymnFlow Control</code></li>
-            <li>URL: <code id="dockUrl">file:///C:/HymnFlow/obs-dock/index.html</code></li>
-            <li>Click <strong>Apply</strong></li>
+            <li>In OBS's menu bar choose <code>Docks → Custom Browser Docks…</code> <span style="opacity:.7">(OBS 28–29: <code>View → Docks → Custom Browser Docks…</code>)</span></li>
+            <li>In the <strong>empty row at the bottom</strong> of the table, double-click under <strong>Dock Name</strong> and type a name, then double-click under <strong>URL</strong> and paste the address:
+              <table class="field-table">
+                <tr><th>OBS field</th><th>What to enter</th></tr>
+                <tr><td>Dock Name</td><td><code>HymnFlow Control</code> <span style="opacity:.7">(any name you like)</span></td></tr>
+                <tr><td>URL</td><td><code id="dockUrl">file:///C:/HymnFlow/obs-dock/index.html</code> <button type="button" class="copy-btn" data-copy="dockUrl">Copy</button></td></tr>
+              </table>
+            </li>
+            <li>Click <strong>Apply</strong>, then <strong>Close</strong>. The dock appears in OBS &mdash; drag its title bar to place it where you like.</li>
           </ul>
         </li>
 
         <li>
-          <strong>2. Import Your Hymn Data</strong>
+          <strong>Import your hymns</strong>
           <div class="warning" style="margin: 15px 0;">
             <strong>⚠️ Important:</strong> No hymn collections are included with HymnFlow. Import your own files (or ones you are licensed to use) below.
           </div>
@@ -273,24 +272,29 @@
           </div>
 
           <div class="warning">
-            <strong>💡 How to Import:</strong>
+            <strong>💡 How to import:</strong>
             <ol style="margin: 10px 0 0 20px;">
-              <li><strong>Download:</strong> Click the button above (if the browser opens JSON instead of downloading, right-click → Save link as…)</li>
-              <li>Open HymnFlow Dock in OBS → <strong>Library</strong> tab → <strong>Hymns</strong> section</li>
-              <li>Click <strong>Import</strong> and select the downloaded <code>.json</code> file</li>
-              <li>Hymns appear instantly — click any to select, then go to <strong>Live</strong> to display</li>
+              <li>Get your hymn file (<code>.txt</code>, <code>.csv</code>, <code>.json</code>, ChordPro or CCLI <code>.usr</code>)</li>
+              <li><strong>Drop it anywhere on the HymnFlow dock</strong> in OBS &mdash; or use <strong>Library</strong> tab &rarr; <strong>Hymns</strong> &rarr; <strong>Import</strong> and pick the file</li>
+              <li>The hymns appear instantly &mdash; click one to select it, then open the <strong>Live</strong> tab to display it</li>
             </ol>
           </div>
         </li>
 
         <li>
-          <strong>3. Add Browser Source for Overlay</strong>
+          <strong>Add the overlay to your scene</strong>
           <ul>
-            <li>In OBS, add a new <strong>Browser Source</strong></li>
-            <li>Name: <code>Hymn Lower-Third</code></li>
-            <li>URL: <code id="overlayUrl">file:///C:/HymnFlow/obs-overlay/index.html</code></li>
-            <li>Width: <code>1920</code> · Height: <code>1080</code></li>
-            <li>✅ <strong>Shutdown source when not visible</strong></li>
+            <li>In OBS's <strong>Sources</strong> panel click <strong>+</strong> &rarr; <strong>Browser</strong>, name it (for example <code>Hymn Lower-Third</code>) and click <strong>OK</strong></li>
+            <li>In the properties window fill in:
+              <table class="field-table">
+                <tr><th>OBS field</th><th>What to enter</th></tr>
+                <tr><td>URL</td><td><code id="overlayUrl">file:///C:/HymnFlow/obs-overlay/index.html</code> <button type="button" class="copy-btn" data-copy="overlayUrl">Copy</button></td></tr>
+                <tr><td>Width</td><td><code>1920</code></td></tr>
+                <tr><td>Height</td><td><code>1080</code></td></tr>
+                <tr><td>Shutdown source when not visible</td><td>✅ tick</td></tr>
+                <tr><td>Refresh browser when scene becomes active</td><td>✅ tick</td></tr>
+              </table>
+            </li>
             <li>Click <strong>OK</strong></li>
           </ul>
         </li>
@@ -335,7 +339,7 @@
         <li>
           <strong>Enable obs-websocket in OBS</strong>
           <ul>
-            <li>Open OBS → <code>Tools → obs-websocket Settings</code></li>
+            <li>Open OBS → <code>Tools → WebSocket Server Settings</code> <span style="opacity:.7">(older OBS: obs-websocket Settings)</span></li>
             <li>Check <strong>Enable WebSocket server</strong></li>
             <li>Note the port (default: <code>4455</code>) and set a password if desired</li>
             <li>Click <strong>OK</strong></li>
@@ -702,8 +706,8 @@ And grace my fears relieved;</pre>
       <div class="card">
         <h3>Dock doesn't appear</h3>
         <ul>
-          <li>URL must use forward slashes: <code>file:///C:/HymnFlow/…</code></li>
-          <li>Confirm the path is correct</li>
+          <li>The URL must use forward slashes: <code>file:///C:/HymnFlow/obs-dock/index.html</code> (there is no <code>public</code> folder in the download)</li>
+          <li>Use the exact address shown in step 1 &mdash; it is filled in for your computer</li>
           <li>Restart OBS after adding the dock</li>
         </ul>
       </div>
@@ -719,18 +723,29 @@ And grace my fears relieved;</pre>
         <h3>Bible lost after OBS restart</h3>
         <ul>
           <li>Bibles are stored in IndexedDB — should persist reliably</li>
-          <li>If upgrading from v2.4.x, re-import your Bible once — it will migrate automatically</li>
-        </ul>
+                  </ul>
       </div>
       <div class="card">
         <h3>Global hotkeys not firing</h3>
         <ul>
-          <li>Confirm obs-websocket is enabled: OBS → <code>Tools → obs-websocket Settings</code></li>
+          <li>Confirm obs-websocket is enabled: OBS → <code>Tools → WebSocket Server Settings</code> <span style="opacity:.7">(older OBS: obs-websocket Settings)</span></li>
           <li>Confirm the script is loaded: OBS → <code>Tools → Scripts</code></li>
           <li>The dock badge should show green ● when connected</li>
           <li>Keys must be bound in OBS Settings → Hotkeys (search "HymnFlow")</li>
         </ul>
       </div>
+    </div>
+
+    <!-- ===== WHAT'S NEW ===== -->
+    <h2>🆕 What's New</h2>
+    <div class="new-feature">
+      <strong>Drop anything onto the dock</strong> &mdash; hymn files, Bibles (<code>.zip</code>, <code>.json</code>, USFM), service schedules and backups. HymnFlow works out what each file is, unzips and converts it, and names it for you. No scripts needed.
+    </div>
+    <div class="new-feature">
+      <strong>Starts in your language</strong> &mdash; the dock follows your browser's language (English, Spanish, French, Portuguese, Swahili, Tagalog, Yoruba, Chinese, Korean). Every label and message is translated.
+    </div>
+    <div class="new-feature">
+      <strong>Copyright &amp; CCLI</strong> &mdash; record copyright and CCLI numbers per hymn, keep a usage log, and export a CCLI-style CSV report. A Licensing &amp; credits panel covers livestream licensing and translation credits.
     </div>
 
     <!-- ===== QUICK LINKS ===== -->
@@ -761,6 +776,25 @@ And grace my fears relieved;</pre>
       const base = window.location.href.replace('obs-setup.html', '');
       document.getElementById('dockUrl').textContent    = base + 'obs-dock/';
       document.getElementById('overlayUrl').textContent = base + 'obs-overlay/';
+    }
+
+    // "Copy" buttons next to the URLs
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var el = document.getElementById(btn.getAttribute('data-copy'));
+        if (!el) return;
+        var text = el.textContent.trim();
+        var old = btn.textContent;
+        var flash = function (msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = old; }, 2000); };
+        var fallback = function () { selectText(el); flash('Press Ctrl+C'); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { flash('Copied!'); }, fallback);
+        } else { fallback(); }
+      });
+    });
+    function selectText(el) {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
     }
   </script>
 </body>

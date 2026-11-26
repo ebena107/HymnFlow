@@ -36,7 +36,7 @@ Extract the release zip to a permanent folder such as `C:\HymnFlow\` (it contain
 
 
 ```text
-View → Docks → Custom Browser Docks
+Docks → Custom Browser Docks…      (OBS 28–29: View → Docks → Custom Browser Docks…)
 Dock Name : HymnFlow Control
 URL       : file:///C:/HymnFlow/obs-dock/index.html
 ```
@@ -58,7 +58,7 @@ HymnFlow ships with a few public-domain sample hymns and **no hymn collections**
 
 ### Step 4 (Optional): Enable Global Hotkeys
 
-1. OBS → **Tools → obs-websocket Settings** → Enable WebSocket server
+1. OBS → **Tools → WebSocket Server Settings** (older OBS: *obs-websocket Settings*) → Enable WebSocket server
 2. OBS → **Tools → Scripts** → `+` → select `scripts/hymnflow-obs-hotkeys.py`
 3. OBS → **Settings → Hotkeys** → search "HymnFlow" → bind your keys
 4. HymnFlow dock → **Style** tab → **OBS Connection** → Connect

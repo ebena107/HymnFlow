@@ -15,7 +15,7 @@ Free, browser-based hymn and scripture display for OBS Studio. No server, no acc
 
 1. Extract a zip to a permanent folder, for example `C:\HymnFlow\`.
 2. Open `obs-setup.html` from that folder. It shows the exact dock and overlay URLs for your computer.
-3. In OBS: **View → Docks → Custom Browser Docks** for the dock, and add a **Browser Source** (1920×1080) for the overlay.
+3. In OBS: **Docks → Custom Browser Docks…** (OBS 28–29: *View → Docks → …*) for the dock, and add a **Browser Source** (1920×1080) for the overlay.
 
 Then drop your hymn files and Bibles anywhere on the dock. The release notes for this version are above, and the full history is in the [CHANGELOG](https://github.com/ebena107/HymnFlow/blob/master/doc/CHANGELOG.md).
 
