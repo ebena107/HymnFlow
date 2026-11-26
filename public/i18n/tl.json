@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "Lower-third controller para sa OBS HYMN",
+    "subtitle": "Lower-third controller para sa OBS HYMN by @gbcowode",
     "status": {
       "live": "LIVE",
       "storage": "localStorage",
@@ -84,7 +84,8 @@
     "alerts": {
       "nameRequired": "Kinakailangan ang pangalan ng serbisyo",
       "atLeastOneHymn": "Magdagdag ng kahit isang himno sa serbisyo",
-      "validationFailed": "Bigo ang pag-validate sa serbisyo:\n{errors}"
+      "validationFailed": "Bigo ang pag-validate sa serbisyo:\n{errors}",
+      "itemRequired": "Magdagdag ng kahit isang bahagi sa serbisyo"
     },
     "confirmations": {
       "delete": "I-delete ang serbisyong ito?"
@@ -93,11 +94,73 @@
       "validationIssues": "Babala: May mga isyu sa pag-validate ang serbisyo",
       "loaded": "Na-load ang serbisyo: {name} ({count} (na) himno)",
       "deleted": "Na-delete ang serbisyo",
-      "saved": "Na-save ang serbisyo"
+      "saved": "Na-save ang serbisyo",
+      "hymnNotFound": "Hindi mahanap ang himno sa library",
+      "divider": "▸ {label}",
+      "hymnDeleted": "Natanggal ang himno ({count} serbisyo ang na-update)"
     },
     "errors": {
       "saveFailed": "Error sa pag-save ng mga serbisyo: {error}"
+    },
+    "addButtons": {
+      "announce": "+ Anunsyo",
+      "divider": "+ Divider",
+      "hymn": "+ Himno",
+      "scripture": "+ Kasulatan"
+    },
+    "banner": {
+      "nextItem": "Susunod na bahagi ng serbisyo",
+      "prevItem": "Nakaraang bahagi ng serbisyo"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "Idagdag ang anunsyo",
+        "addDivider": "Idagdag ang divider",
+        "addScripture": "Idagdag ang Kasulatan",
+        "save": "I-save"
+      },
+      "placeholders": {
+        "announceText": "Teksto ng anunsyo (hal., Sumama sa aming pagsasama pagkatapos ng serbisyo)",
+        "dividerLabel": "Label ng bahagi (hal., Handog, Sermon, Panalangin)",
+        "scriptureRef": "Reperensya (hal., Juan 3:16)",
+        "scriptureText": "Teksto ng talata (hal., Sapagkat gayon na lamang ang pag-ibig ng Diyos sa sanlibutan…)"
+      },
+      "titles": {
+        "addAnnounce": "Magdagdag ng anunsyo",
+        "addDivider": "Magdagdag ng divider",
+        "addScripture": "Magdagdag ng Kasulatan",
+        "editAnnounce": "I-edit ang anunsyo",
+        "editDivider": "I-edit ang divider",
+        "editScripture": "I-edit ang Kasulatan"
+      }
     }
+  },
+  "textSlide": {
+    "title": "Slide ng Teksto",
+    "hint": "kasulatan, anunsyo, blangkong screen",
+    "sendButton": "Ipadala sa Overlay",
+    "clearButton": "Burahin ang Slide",
+    "sent": "Naipadala ang slide ng teksto",
+    "cleared": "Na-clear ang slide ng teksto"
+  },
+  "bible": {
+    "title": "Biblia",
+    "label": "Biblia",
+    "description": "Mag-import ng JSON file ng anumang salin para i-enable ang paghahanap ng talata. Ang bawat salin ay naka-store nang hiwalay — lumipat sa pagitan nila anumang oras.",
+    "importButton": "I-import ang JSON",
+    "loading": "Naglo-load ng Biblia…",
+    "notLoaded": "Hindi na-load"
+  },
+  "quickScripture": {
+    "title": "Mabilis na Kasulatan",
+    "hint": "live · ad-hoc",
+    "refPlaceholder": "Sanggunian (hal., Juan 3:16)",
+    "textPlaceholder": "Teksto ng talata — blangkong linya ang naghihiwalay ng mga pahina",
+    "lookupButton": "🔍",
+    "displayButton": "Ipakita",
+    "clearButton": "I-clear",
+    "status": "Kasulatan: {ref}",
+    "statusNoRef": "Ipinapakita ang kasulatan"
   },
   "navigation": {
     "verseInfo": "Bersikulo {current}/{total} · Mga Linya {startLine}-{endLine} ng {totalLines}",
@@ -116,7 +179,12 @@
       "nextLine": "Susunod na window ng linya (Down arrow)",
       "jumpChorus": "Ipakita ang koro kung mayroon",
       "emergencyClear": "Agad na itago ang overlay sa stream"
-    }
+    },
+    "chorusNext": " · Susunod ang koro",
+    "lastChorus": " · Huling koro",
+    "lastVerse": " · Huling talata",
+    "shrinksToFit": " · ⚠ lumiliit para magkasya",
+    "chorusInfo": "Koro · Mga linya {startLine}-{endLine} ng {totalLines}"
   },
   "display": {
     "title": "Mga Kontrol sa Display",
@@ -124,7 +192,12 @@
     "liveIndicator": "LIVE",
     "resetButton": "I-reset",
     "resetTooltip": "I-reset sa unang bersikulo, unang linya",
-    "linesPerDisplay": "Mga linya bawat display"
+    "linesPerDisplay": "Mga linya bawat display",
+    "blanked": "Naka-blank ang screen — ibabalik ito ng Display o Quick Scripture",
+    "displayOffHint": "NAKA-OFF ang display — i-on ang Display switch para ipakita ang himnong ito",
+    "hotkeysReconnecting": "Naputol ang OBS hotkeys — muling kumokonekta…",
+    "noHymnSelected": "Walang ipapakita — pumili muna ng himno",
+    "offHint": "NAKA-OFF ang display — i-on ang Display switch para ipakita ang himnong ito"
   },
   "preview": {
     "title": "Mga Preview ng Himno"
@@ -167,13 +240,27 @@
     "addHymn": "Magdagdag ng Himno",
     "buttons": {
       "cancel": "Kanselahin",
-      "save": "I-save ang mga Pagbabago"
+      "save": "I-save ang mga Pagbabago",
+      "addAnyway": "Idagdag pa rin",
+      "delete": "Tanggalin",
+      "discard": "Itapon",
+      "ok": "OK"
+    },
+    "confirmations": {
+      "badReference": "Mukhang hindi wastong reperensya ng Bibliya ang \"{ref}\".\nIdagdag pa rin?",
+      "discard": "Itapon ang mga hindi pa nase-save na pagbabago?"
     }
   },
   "settings": {
     "title": "Mga Setting",
     "language": "Wika",
     "languageLabel": "Wika ng Interface"
+  },
+  "tabs": {
+    "library": "Library",
+    "service": "Serbisyo",
+    "live": "Live",
+    "style": "Estilo"
   },
   "setup": {
     "import": {
@@ -188,5 +275,159 @@
     "importFormats": {
       "csv": "Format ng CSV"
     }
+  },
+  "ui": {
+    "blank_screen": "Blangkong screen",
+    "restore": "↩ Ibalik",
+    "shortcuts": "? Mga shortcut",
+    "tip_drop_any_downloaded_file_anywhere": "Tip: i-drop ang anumang na-download na file kahit saan sa dock — Bibliya (.zip, .json, USFM), mga himno, iskedyul ng serbisyo o backup. Alam ng HymnFlow kung ano ito, ina-unzip at kino-convert para sa iyo.",
+    "get_another_translation": "Kumuha ng ibang salin",
+    "hymnflow_never_downloads_anything_itself_pick": "Hindi kailanman nagda-download ng anuman ang HymnFlow. Pumili ng wika, buksan ang link, i-save ang file, saka i-drop sa Bible card sa itaas — hindi na kailangang i-unzip o i-convert. Suriin ang lisensya ng bawat salin.",
+    "language": "Wika",
+    "import": "I-import",
+    "cancel": "Kanselahin",
+    "auto_display_planned_scripture": "Awtomatikong ipakita ang nakaplanong Kasulatan",
+    "background_opacity": "Opacity ng background",
+    "scripture_display": "Display ng Kasulatan",
+    "scripture_font": "Font ng Kasulatan",
+    "classic_serif_default": "Classic Serif (default)",
+    "same_as_lyrics": "Kapareho ng liriko",
+    "italic_text": "Italic na teksto",
+    "show_reference": "Ipakita ang reperensya",
+    "translation_badge": "Badge ng salin",
+    "custom_size": "Custom na laki",
+    "scripture_font_size": "Laki ng font ng Kasulatan",
+    "obs_connection": "Koneksyon sa OBS",
+    "host": "Host",
+    "port": "Port",
+    "password": "Password",
+    "connect": "Kumonekta",
+    "disconnect": "Idiskonekta",
+    "hotkeys_dock_focus": "Mga hotkey (nakatutok ang dock)",
+    "data_backup": "Data at backup",
+    "hymns_services_and_settings_are_stored": "Ang mga himno, serbisyo at setting ay naka-save sa browser na ito. Awtomatikong kumukuha ng snapshot sa tuwing bubuksan ang dock, at maaaring i-undo ang pagtanggal ng himno o serbisyo sa loob ng ilang segundo.",
+    "export_backup": "I-export ang backup…",
+    "restore_from_file": "Ibalik mula sa file…",
+    "usage_report_each_hymn_put_on": "Ulat ng paggamit: ang bawat himnong ipinapakita sa screen ay itinatala sa device na ito (petsa, pamagat, numero ng CCLI) para makapag-ulat ka sa CCLI. Walang ipinapadala kahit saan.",
+    "export_usage_report_csv": "I-export ang ulat ng paggamit (CSV)…",
+    "clear_usage_log": "I-clear ang log ng paggamit",
+    "automatic_snapshots": "Mga awtomatikong snapshot",
+    "restore_selected_snapshot": "Ibalik ang napiling snapshot",
+    "bibles_are_stored_separately_and_are": "Hiwalay na naka-save ang mga Bibliya at hindi ginagalaw ng backup o restore. Hindi kailanman isinusulat sa backup file ang detalye ng koneksyon sa OBS at password.",
+    "licensing_credits": "Lisensya at credits",
+    "livestreaming": "Livestreaming:",
+    "showing_copyrighted_lyrics_on_a_livestream": "ang pagpapakita ng liriko na may copyright sa livestream ay karaniwang nangangailangan ng streaming license bukod sa karaniwang copyright license ng simbahan (halimbawa CCLI o OneLicense). Magkakaiba ang mga kinakailangan sa bawat bansa at platform — kumonsulta sa iyong provider ng lisensya. Hindi ito kailangan ng mga himnong public domain. Itala ang copyright at numero ng CCLI ng bawat himno sa edit form nito.",
+    "bible_translations": "Mga salin ng Bibliya:",
+    "you_are_responsible_for_having_the": "ikaw ang responsable na may karapatan kang gamitin ang mga salin na ini-import mo. Ayos ang mga tekstong public domain at may bukas na lisensya; ang iba ay nangangailangan ng pahintulot ng publisher.",
+    "ask_for_a_second_press_before": "Humingi ng ikalawang pindot bago lumipat sa susunod na bahagi ng serbisyo",
+    "copyright": "Copyright",
+    "ccli": "Numero ng CCLI",
+    "name_optional": "Pangalan (opsyonal)",
+    "search_by_title_author_or_number": "Maghanap ayon sa pamagat, may-akda o numero…",
+    "reference_or_label": "Reperensya o label",
+    "enter_text": "Maglagay ng teksto…",
+    "type_any_text_to_send_to": "Mag-type ng anumang teksto na ipapadala sa overlay (Kasulatan, anunsyo, blangkong screen...)",
+    "leave_blank_if_none": "(iwanang blangko kung wala)",
+    "e_g_public_domain_or_1990": "hal., Public domain, o © 1990 Publisher",
+    "take_the_screen_down_without_losing": "Alisin ang screen nang hindi nawawala ang puwesto (B)",
+    "bring_back_what_was_on_screen": "Ibalik ang nasa screen bago ang Blank / Clear (Z)",
+    "keyboard_shortcuts": "Mga keyboard shortcut (?)",
+    "previous_item_in_service": "Nakaraang bahagi ng serbisyo",
+    "next_item_in_service": "Susunod na bahagi ng serbisyo",
+    "import_a_service_schedule_from_a": "Mag-import ng iskedyul ng serbisyo mula sa text file",
+    "active_translation": "Aktibong salin",
+    "look_up_verse": "Hanapin ang talata",
+    "skip_the_confidence_preview_planned_scripture": "Laktawan ang confidence preview: dederetso sa overlay ang mga nakaplanong talata kapag na-activate",
+    "on_the_last_verse_the_first": "Sa huling talata, ang unang pindot sa Susunod ay naghahanda lamang; ang ikalawang pindot sa loob ng ilang segundo ay lilipat sa susunod na bahagi ng serbisyo",
+    "storage_type": "Uri ng storage",
+    "main_navigation": "Pangunahing nabigasyon",
+    "keyboard_shortcuts_2": "Mga keyboard shortcut",
+    "filter_by_source": "I-filter ayon sa pinagmulan",
+    "hymns_library": "Aklatan ng mga himno",
+    "select_hymn_file_to_import": "Pumili ng file ng himno na ii-import",
+    "translation_name_optional_filled_in_automaticall": "Pangalan ng salin (opsyonal, awtomatikong pinupunan)",
+    "select_a_bible_file": "Pumili ng file ng Bibliya",
+    "select_service_schedule_text_file": "Pumili ng text file ng iskedyul ng serbisyo",
+    "saved_services": "Mga naka-save na serbisyo",
+    "jump_to_verse": "Lumipat sa talata",
+    "scripture_reference": "Reperensya ng Kasulatan",
+    "bible_translation": "Salin ng Bibliya",
+    "verse_text": "Teksto ng talata",
+    "previous_page": "Nakaraang pahina",
+    "next_page": "Susunod na pahina",
+    "background_opacity_2": "Opacity ng background"
+  },
+  "drop": {
+    "overlay": "I-drop para i-import",
+    "unsupported": "Hindi ma-import ang ganitong uri ng file. Gumamit ng file ng himno (.txt, .csv, .json, .cho, .usr), file ng Bibliya (.zip, .json, .usfm), iskedyul ng serbisyo (.txt) o backup ng HymnFlow (.json)."
+  },
+  "msg": {
+    "noSnapshots": "Wala pang snapshot",
+    "shortcutsNote": "Gumagana ang mga shortcut habang nakatutok ang dock. Para sa mga key na gumagana sa anumang window, ikonekta ang OBS hotkeys sa Style → OBS Connection.",
+    "hotkeysOn": "Mga global hotkey: naka-on",
+    "hotkeysConnecting": "Mga global hotkey: kumokonekta…",
+    "hotkeysOff": "Mga global hotkey: naka-off",
+    "hotkeysConnected": "Nakakonekta ang OBS hotkeys",
+    "storageFullHymns": "Puno na ang storage ({count} himno). I-export ang iyong mga himno saka i-clear ang storage para magpatuloy.",
+    "storageFull": "Puno ang storage — mag-export ng mga himno para magkaroon ng espasyo.",
+    "errorSavingHymns": "Error sa pag-save ng mga himno: {error}",
+    "errorSavingSettings": "Error sa pag-save ng mga setting: {error}",
+    "errorSavingServices": "Error sa pag-save ng mga serbisyo: {error}",
+    "bibleNotLoaded": "Hindi pa naka-load ang Bibliya — mag-import ng salin sa tab na Library",
+    "draftRestored": "Naibalik ang hindi pa nase-save na draft ng serbisyo",
+    "listLabel": "Label sa listahan: \"{label}\"",
+    "cueNotes": "Mga cue note — {item}",
+    "serviceDeletedShort": "Natanggal ang serbisyo",
+    "duplicated": "Na-duplicate: \"{name}\"",
+    "serviceImportEmpty": "Nabigo ang pag-import: walang nakitang bahagi ng serbisyo sa file",
+    "serviceImported": "Na-import ang \"{name}\" — {count} bahagi{warnings}",
+    "warningsCount": "{count} babala",
+    "serviceImportWarnings": "Na-import ang serbisyo na may mga babala:",
+    "couldNotRead": "Hindi mabasa ang file",
+    "importing": "Nag-i-import… ({done}/{total})",
+    "importFailed": "Nabigo ang pag-import: {error}",
+    "kjvLoaded": "Na-load ang KJV — handa na para sa paghahanap ng talata",
+    "noUsage": "Wala pang himnong naipakita.",
+    "clearUsageConfirm": "I-clear ang log ng paggamit sa device na ito? I-export muna ito kung kailangan mo para sa pag-uulat.",
+    "clear": "I-clear",
+    "usageCleared": "Na-clear ang log ng paggamit",
+    "creditsIntro": "Mga credit para sa mga salin na na-load mo (ilista ito sa mga credit ng iyong simbahan):",
+    "open": "Buksan",
+    "copyLink": "Kopyahin ang link",
+    "linkCopied": "Nakopya ang link",
+    "copyManually": "Piliin ang teksto ng link sa itaas at kopyahin ito (Ctrl+C)",
+    "hotkeysSetupTitle": "I-click para i-set up ang mga global hotkey (Style → OBS Connection)"
+  },
+  "bibleGet": {
+    "otherLanguages": "Iba pang wika",
+    "license": {
+      "pd": "Public domain",
+      "bibliatodo": "Libreng lisensya (BibliaTodo v1.9) — kailangan ang credit",
+      "ccbysa": "CC BY-SA 4.0 — i-credit ang Biblica",
+      "varies": "Nag-iiba — suriin ang bawat salin"
+    },
+    "steps": {
+      "save": "I-save ang file, saka i-drop sa Bible card sa itaas.",
+      "zip": "I-download ang JSON ZIP at i-drop sa Bible card sa itaas (hindi na kailangang i-unzip).",
+      "ntbt": "I-drop ang na-download na ZIP sa Bible card sa itaas (hindi na kailangang i-unzip).",
+      "yoruba": "Sa pahina, i-download ang USFM (.zip) na bersyon at i-drop sa Bible card sa itaas — kino-convert ito ng HymnFlow para sa iyo.",
+      "ebible": "Daan-daang salin. I-download ang USFM (.zip) na bersyon at i-drop sa Bible card sa itaas."
+    }
+  },
+  "operator": {
+    "corruptKept": "Hindi mabasa ang naka-save na data ng {name}. May kopyang itinabi sa storage ng browser (hymnflow-corrupt-{name}-*) para mabawi.",
+    "restore": "Ibalik",
+    "noSnapshot": "Hindi na available ang snapshot na iyon.",
+    "notBackup": "Hindi backup ng HymnFlow ang file na iyon.",
+    "emptyBackup": "Walang magagamit na himno sa backup.",
+    "undo": "I-undo",
+    "undone": "Naibalik",
+    "nothingToRestore": "Walang maibabalik",
+    "restored": "Naibalik ang dating nasa screen",
+    "pressAgain": "Huling talata — pindutin muli ang Susunod para sa {item}",
+    "blanked": "Naka-blank ang screen",
+    "cleared": "Na-clear ang screen",
+    "hymnDeleted": "Tinanggal ang \"{title}\"",
+    "serviceDeleted": "Tinanggal ang serbisyong \"{name}\""
   }
 }

@@ -535,8 +535,9 @@ body {
 }
 
 .bible-import-row .search-input {
-  width: 90px;
-  flex: 0 0 90px;
+  width: 130px;
+  flex: 0 1 130px;
+  min-width: 80px;
   margin-bottom: 0;
 }
 
@@ -592,10 +593,27 @@ body {
   line-height: 1.4;
 }
 
-#bibleSection.bible-drop-active {
-  outline: 2px dashed var(--primary);
-  outline-offset: -4px;
-  background: rgba(74, 158, 255, 0.08);
+.drop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 20, 40, 0.72);
+  border: 3px dashed var(--primary);
+  pointer-events: none;
+}
+
+.drop-overlay.visible { display: flex; }
+
+.drop-overlay-box {
+  background: var(--card);
+  color: var(--text);
+  padding: 14px 22px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .bible-get {

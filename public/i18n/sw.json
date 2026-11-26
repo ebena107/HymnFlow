@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN",
+    "subtitle": "Kidhibiti cha sehemu ya chini ya OBS HYMN by @gbcowode",
     "status": {
       "live": "MOJA KWA MOJA",
       "storage": "localStorage",
@@ -84,7 +84,8 @@
     "alerts": {
       "nameRequired": "Jina la huduma linahitajika",
       "atLeastOneHymn": "Ongeza angalau wimbo mmoja kwenye huduma",
-      "validationFailed": "Uthibitishaji wa huduma umeshindwa:\n{errors}"
+      "validationFailed": "Uthibitishaji wa huduma umeshindwa:\n{errors}",
+      "itemRequired": "Ongeza angalau kipengee kimoja kwenye ibada"
     },
     "confirmations": {
       "delete": "Futa huduma hii?"
@@ -93,11 +94,73 @@
       "validationIssues": "Onyo: Huduma ina masuala ya uthibitishaji",
       "loaded": "Huduma iliyopakiwa: {name} ({count} nyimbo)",
       "deleted": "Huduma imefutwa",
-      "saved": "Huduma imehifadhiwa"
+      "saved": "Huduma imehifadhiwa",
+      "hymnNotFound": "Wimbo haujapatikana kwenye maktaba",
+      "divider": "▸ {label}",
+      "hymnDeleted": "Wimbo umefutwa (ibada {count} zimesasishwa)"
     },
     "errors": {
       "saveFailed": "Hitilafu wakati wa kuhifadhi huduma: {error}"
+    },
+    "addButtons": {
+      "announce": "+ Tangazo",
+      "divider": "+ Kigawanyo",
+      "hymn": "+ Wimbo",
+      "scripture": "+ Maandiko"
+    },
+    "banner": {
+      "nextItem": "Kipengee kinachofuata cha ibada",
+      "prevItem": "Kipengee kilichotangulia cha ibada"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "Ongeza tangazo",
+        "addDivider": "Ongeza kigawanyo",
+        "addScripture": "Ongeza Maandiko",
+        "save": "Hifadhi"
+      },
+      "placeholders": {
+        "announceText": "Maandishi ya tangazo (mf., Jiunge nasi kwa ushirika baada ya ibada)",
+        "dividerLabel": "Lebo ya sehemu (mf., Sadaka, Mahubiri, Sala)",
+        "scriptureRef": "Rejeleo (mf., Yohana 3:16)",
+        "scriptureText": "Maandishi ya mstari (mf., Kwa maana jinsi hii Mungu aliupenda ulimwengu…)"
+      },
+      "titles": {
+        "addAnnounce": "Ongeza tangazo",
+        "addDivider": "Ongeza kigawanyo",
+        "addScripture": "Ongeza Maandiko",
+        "editAnnounce": "Hariri tangazo",
+        "editDivider": "Hariri kigawanyo",
+        "editScripture": "Hariri Maandiko"
+      }
     }
+  },
+  "textSlide": {
+    "title": "Slaidi ya Maandishi",
+    "hint": "maandiko, tangazo, skrini tupu",
+    "sendButton": "Tuma kwa Overlay",
+    "clearButton": "Futa Slaidi",
+    "sent": "Slaidi ya maandishi imetumwa",
+    "cleared": "Slaidi ya maandishi imefutwa"
+  },
+  "bible": {
+    "title": "Biblia",
+    "label": "Biblia",
+    "description": "Ingiza faili la JSON la tafsiri yoyote kuwezesha utafutaji wa mistari. Kila tafsiri huhifadhiwa tofauti — badilisha kati yao wakati wowote.",
+    "importButton": "Ingiza JSON",
+    "loading": "Inapakia Biblia…",
+    "notLoaded": "Haijapakiwa"
+  },
+  "quickScripture": {
+    "title": "Maandiko ya Haraka",
+    "hint": "moja kwa moja · ad-hoc",
+    "refPlaceholder": "Rejeo (mf., Yohana 3:16)",
+    "textPlaceholder": "Maandishi ya aya — mstari wazi unatenganisha kurasa",
+    "lookupButton": "🔍",
+    "displayButton": "Onyesha",
+    "clearButton": "Futa",
+    "status": "Maandiko: {ref}",
+    "statusNoRef": "Maandiko yameonyeshwa"
   },
   "navigation": {
     "verseInfo": "Beti {current}/{total} · Mistari {startLine}-{endLine} ya {totalLines}",
@@ -116,7 +179,12 @@
       "nextLine": "Dirisha la mstari ufuatao (Mshale wa chini)",
       "jumpChorus": "Onyesha kiitikio ikiwa inapatikana",
       "emergencyClear": "Ficha mara moja daraja kutoka kwa mtiririko"
-    }
+    },
+    "chorusNext": " · Kiitikio kinafuata",
+    "lastChorus": " · Kiitikio cha mwisho",
+    "lastVerse": " · Mstari wa mwisho",
+    "shrinksToFit": " · ⚠ hupungua ili kutosha",
+    "chorusInfo": "Kiitikio · Mistari {startLine}-{endLine} ya {totalLines}"
   },
   "display": {
     "title": "Vidhibiti vya kuonyesha",
@@ -124,7 +192,12 @@
     "liveIndicator": "MOJA KWA MOJA",
     "resetButton": "Weka upya",
     "resetTooltip": "Weka upya kwa beti ya kwanza, mstari wa kwanza",
-    "linesPerDisplay": "Mistari kwa onyesho"
+    "linesPerDisplay": "Mistari kwa onyesho",
+    "blanked": "Skrini imefifishwa — Onyesha au Maandiko ya Haraka yatairudisha",
+    "displayOffHint": "Onyesho LIMEZIMWA — washa swichi ya Onyesha ili kuonyesha wimbo huu",
+    "hotkeysReconnecting": "Hotkeys za OBS zimekatika — inaunganisha tena…",
+    "noHymnSelected": "Hakuna cha kuonyesha — chagua wimbo kwanza",
+    "offHint": "Onyesho LIMEZIMWA — washa swichi ya Onyesha ili kuonyesha wimbo huu"
   },
   "preview": {
     "title": "Maonyesho ya nyimbo"
@@ -167,13 +240,27 @@
     "addHymn": "Ongeza wimbo",
     "buttons": {
       "cancel": "Ghairi",
-      "save": "Hifadhi mabadiliko"
+      "save": "Hifadhi mabadiliko",
+      "addAnyway": "Ongeza hata hivyo",
+      "delete": "Futa",
+      "discard": "Tupa",
+      "ok": "Sawa"
+    },
+    "confirmations": {
+      "badReference": "\"{ref}\" haionekani kuwa rejeleo sahihi la Biblia.\nIongezwe hata hivyo?",
+      "discard": "Tupa mabadiliko ambayo hayajahifadhiwa?"
     }
   },
   "settings": {
     "title": "Mipangilio",
     "language": "Lugha",
     "languageLabel": "Lugha ya kiolesura"
+  },
+  "tabs": {
+    "library": "Maktaba",
+    "service": "Huduma",
+    "live": "Moja kwa Moja",
+    "style": "Mtindo"
   },
   "setup": {
     "import": {
@@ -188,5 +275,159 @@
     "importFormats": {
       "csv": "Muundo wa CSV"
     }
+  },
+  "ui": {
+    "blank_screen": "Skrini tupu",
+    "restore": "↩ Rejesha",
+    "shortcuts": "? Njia za mkato",
+    "tip_drop_any_downloaded_file_anywhere": "Kidokezo: dondosha faili yoyote uliyopakua popote kwenye dock — Biblia (.zip, .json, USFM), nyimbo, ratiba ya ibada au nakala ya akiba. HymnFlow hutambua ni nini, hufungua na kubadilisha kwa ajili yako.",
+    "get_another_translation": "Pata tafsiri nyingine",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow haipakui chochote yenyewe. Chagua lugha, fungua kiungo, hifadhi faili kisha liburute juu ya kadi ya Biblia hapo juu — hakuna haja ya kufungua wala kubadilisha. Angalia leseni ya kila tafsiri.",
+    "language": "Lugha",
+    "import": "Ingiza",
+    "cancel": "Ghairi",
+    "auto_display_planned_scripture": "Onyesha moja kwa moja Maandiko yaliyopangwa",
+    "background_opacity": "Uwazi wa mandharinyuma",
+    "scripture_display": "Onyesho la Maandiko",
+    "scripture_font": "Fonti ya Maandiko",
+    "classic_serif_default": "Serif ya kawaida (chaguo-msingi)",
+    "same_as_lyrics": "Sawa na maneno ya wimbo",
+    "italic_text": "Maandishi yaliyoinama",
+    "show_reference": "Onyesha rejeleo",
+    "translation_badge": "Alama ya tafsiri",
+    "custom_size": "Ukubwa maalum",
+    "scripture_font_size": "Ukubwa wa fonti ya Maandiko",
+    "obs_connection": "Muunganisho wa OBS",
+    "host": "Mwenyeji",
+    "port": "Mlango",
+    "password": "Nenosiri",
+    "connect": "Unganisha",
+    "disconnect": "Tenganisha",
+    "hotkeys_dock_focus": "Njia za mkato (dock ikiwa hai)",
+    "data_backup": "Data na nakala ya akiba",
+    "hymns_services_and_settings_are_stored": "Nyimbo, ratiba na mipangilio huhifadhiwa kwenye kivinjari hiki. Nakala huchukuliwa kiotomatiki kila dock inapofunguliwa, na unaweza kutengua ufutaji wa wimbo au ratiba kwa sekunde chache.",
+    "export_backup": "Hamisha nakala ya akiba…",
+    "restore_from_file": "Rejesha kutoka kwa faili…",
+    "usage_report_each_hymn_put_on": "Ripoti ya matumizi: kila wimbo unaoonyeshwa skrini huandikwa kwenye kifaa hiki (tarehe, kichwa, nambari ya CCLI) ili uweze kuripoti kwa CCLI. Hakuna kinachotumwa popote.",
+    "export_usage_report_csv": "Hamisha ripoti ya matumizi (CSV)…",
+    "clear_usage_log": "Futa rekodi ya matumizi",
+    "automatic_snapshots": "Nakala za kiotomatiki",
+    "restore_selected_snapshot": "Rejesha nakala iliyochaguliwa",
+    "bibles_are_stored_separately_and_are": "Biblia huhifadhiwa tofauti na haziguswi na nakala ya akiba wala urejeshaji. Maelezo ya muunganisho wa OBS na nenosiri hayaandikwi kamwe kwenye faili ya nakala.",
+    "licensing_credits": "Leseni na shukrani",
+    "livestreaming": "Matangazo wa moja kwa moja:",
+    "showing_copyrighted_lyrics_on_a_livestream": "kuonyesha maneno yenye hakimiliki kwenye matangazo ya moja kwa moja kwa kawaida kunahitaji leseni ya matangazo pamoja na leseni ya kawaida ya hakimiliki ya kanisa (mfano CCLI au OneLicense). Mahitaji hutofautiana kwa nchi na jukwaa — wasiliana na mtoa leseni wako. Nyimbo za umma hazihitaji. Andika hakimiliki na nambari ya CCLI ya kila wimbo kwenye fomu ya kuhariri.",
+    "bible_translations": "Tafsiri za Biblia:",
+    "you_are_responsible_for_having_the": "unawajibika kuwa na haki ya kutumia tafsiri unazoingiza. Maandishi ya umma au yenye leseni huria ni sawa; mengine yanahitaji ruhusa ya mchapishaji.",
+    "ask_for_a_second_press_before": "Omba kubonyeza mara ya pili kabla ya kwenda kipengee kinachofuata cha ibada",
+    "copyright": "Hakimiliki",
+    "ccli": "Nambari ya CCLI",
+    "name_optional": "Jina (si lazima)",
+    "search_by_title_author_or_number": "Tafuta kwa kichwa, mwandishi au nambari…",
+    "reference_or_label": "Rejeleo au lebo",
+    "enter_text": "Andika maandishi…",
+    "type_any_text_to_send_to": "Andika maandishi yoyote ya kutuma kwenye skrini (Maandiko, tangazo, skrini tupu...)",
+    "leave_blank_if_none": "(acha tupu kama hakuna)",
+    "e_g_public_domain_or_1990": "mf., Umma, au © 1990 Mchapishaji",
+    "take_the_screen_down_without_losing": "Ondoa skrini bila kupoteza ulipo (B)",
+    "bring_back_what_was_on_screen": "Rudisha kilichokuwa skrini kabla ya Tupu / Futa (Z)",
+    "keyboard_shortcuts": "Njia za mkato za kibodi (?)",
+    "previous_item_in_service": "Kipengee kilichotangulia cha ibada",
+    "next_item_in_service": "Kipengee kinachofuata cha ibada",
+    "import_a_service_schedule_from_a": "Ingiza ratiba ya ibada kutoka faili ya maandishi",
+    "active_translation": "Tafsiri inayotumika",
+    "look_up_verse": "Tafuta mstari",
+    "skip_the_confidence_preview_planned_scripture": "Ruka onyesho la awali: vifungu vilivyopangwa huenda moja kwa moja kwenye skrini vikiamilishwa",
+    "on_the_last_verse_the_first": "Kwenye mstari wa mwisho, kubonyeza Mbele mara ya kwanza kunaandaa tu kusonga; kubonyeza mara ya pili ndani ya sekunde chache huenda kipengee kinachofuata cha ibada",
+    "storage_type": "Aina ya hifadhi",
+    "main_navigation": "Urambazaji mkuu",
+    "keyboard_shortcuts_2": "Njia za mkato za kibodi",
+    "filter_by_source": "Chuja kwa chanzo",
+    "hymns_library": "Maktaba ya nyimbo",
+    "select_hymn_file_to_import": "Chagua faili ya nyimbo ya kuingiza",
+    "translation_name_optional_filled_in_automaticall": "Jina la tafsiri (si lazima, hujazwa kiotomatiki)",
+    "select_a_bible_file": "Chagua faili ya Biblia",
+    "select_service_schedule_text_file": "Chagua faili ya maandishi ya ratiba ya ibada",
+    "saved_services": "Ibada zilizohifadhiwa",
+    "jump_to_verse": "Ruka hadi mstari",
+    "scripture_reference": "Rejeleo la Maandiko",
+    "bible_translation": "Tafsiri ya Biblia",
+    "verse_text": "Maandishi ya mstari",
+    "previous_page": "Ukurasa uliotangulia",
+    "next_page": "Ukurasa unaofuata",
+    "background_opacity_2": "Uwazi wa mandharinyuma"
+  },
+  "drop": {
+    "overlay": "Dondosha ili kuingiza",
+    "unsupported": "Aina hiyo ya faili haiwezi kuingizwa. Tumia faili ya nyimbo (.txt, .csv, .json, .cho, .usr), faili ya Biblia (.zip, .json, .usfm), ratiba ya ibada (.txt) au nakala ya HymnFlow (.json)."
+  },
+  "msg": {
+    "noSnapshots": "Bado hakuna nakala",
+    "shortcutsNote": "Njia za mkato hufanya kazi dock ikiwa hai. Kwa funguo zinazofanya kazi kutoka dirisha lolote, unganisha hotkeys za OBS katika Mtindo → Muunganisho wa OBS.",
+    "hotkeysOn": "Njia za mkato za jumla: zimewashwa",
+    "hotkeysConnecting": "Njia za mkato za jumla: inaunganisha…",
+    "hotkeysOff": "Njia za mkato za jumla: zimezimwa",
+    "hotkeysConnected": "Hotkeys za OBS zimeunganishwa",
+    "storageFullHymns": "Hifadhi imejaa (nyimbo {count}). Hamisha nyimbo zako kisha futa hifadhi ili kuendelea.",
+    "storageFull": "Hifadhi imejaa — hamisha nyimbo ili kupata nafasi.",
+    "errorSavingHymns": "Hitilafu kuhifadhi nyimbo: {error}",
+    "errorSavingSettings": "Hitilafu kuhifadhi mipangilio: {error}",
+    "errorSavingServices": "Hitilafu kuhifadhi ibada: {error}",
+    "bibleNotLoaded": "Biblia haijapakiwa — ingiza tafsiri kwenye kichupo cha Maktaba",
+    "draftRestored": "Rasimu ya ibada isiyohifadhiwa imerejeshwa",
+    "listLabel": "Lebo ya orodha: \"{label}\"",
+    "cueNotes": "Vidokezo vya ishara — {item}",
+    "serviceDeletedShort": "Ibada imefutwa",
+    "duplicated": "Imenakiliwa: \"{name}\"",
+    "serviceImportEmpty": "Kuingiza kumeshindwa: hakuna vipengee vya ibada kwenye faili",
+    "serviceImported": "Imeingizwa \"{name}\" — vipengee {count}{warnings}",
+    "warningsCount": "maonyo {count}",
+    "serviceImportWarnings": "Ibada imeingizwa ikiwa na maonyo:",
+    "couldNotRead": "Imeshindwa kusoma faili",
+    "importing": "Inaingiza… ({done}/{total})",
+    "importFailed": "Kuingiza kumeshindwa: {error}",
+    "kjvLoaded": "KJV imepakiwa — tayari kutafuta Maandiko",
+    "noUsage": "Bado hakuna wimbo ulioonyeshwa.",
+    "clearUsageConfirm": "Futa rekodi ya matumizi kwenye kifaa hiki? Ihamishe kwanza ukihitaji kuripoti.",
+    "clear": "Futa",
+    "usageCleared": "Rekodi ya matumizi imefutwa",
+    "creditsIntro": "Shukrani za tafsiri ulizopakia (ziorodheshe kwenye shukrani za kanisa lako):",
+    "open": "Fungua",
+    "copyLink": "Nakili kiungo",
+    "linkCopied": "Kiungo kimenakiliwa",
+    "copyManually": "Chagua maandishi ya kiungo hapo juu na uyanakili (Ctrl+C)",
+    "hotkeysSetupTitle": "Bofya ili kuweka njia za mkato za jumla (Mtindo → Muunganisho wa OBS)"
+  },
+  "bibleGet": {
+    "otherLanguages": "Lugha nyingine",
+    "license": {
+      "pd": "Umma (public domain)",
+      "bibliatodo": "Leseni ya bure (BibliaTodo v1.9) — shukrani zinahitajika",
+      "ccbysa": "CC BY-SA 4.0 — toa shukrani kwa Biblica",
+      "varies": "Hutofautiana — angalia kila tafsiri"
+    },
+    "steps": {
+      "save": "Hifadhi faili kisha liburute juu ya kadi ya Biblia hapo juu.",
+      "zip": "Pakua ZIP ya JSON na uliburute juu ya kadi ya Biblia hapo juu (hakuna haja ya kufungua).",
+      "ntbt": "Liburute ZIP uliyopakua juu ya kadi ya Biblia hapo juu (hakuna haja ya kufungua).",
+      "yoruba": "Kwenye ukurasa, pakua toleo la USFM (.zip) na uliburute juu ya kadi ya Biblia hapo juu — HymnFlow hulibadilisha kwa ajili yako.",
+      "ebible": "Mamia ya tafsiri. Pakua toleo la USFM (.zip) na uliburute juu ya kadi ya Biblia hapo juu."
+    }
+  },
+  "operator": {
+    "corruptKept": "Data iliyohifadhiwa ya {name} haikuweza kusomwa. Nakala imehifadhiwa kwenye hifadhi ya kivinjari (hymnflow-corrupt-{name}-*) ili iweze kurejeshwa.",
+    "restore": "Rejesha",
+    "noSnapshot": "Nakala hiyo haipatikani tena.",
+    "notBackup": "Faili hiyo si nakala ya akiba ya HymnFlow.",
+    "emptyBackup": "Nakala ya akiba haina nyimbo zinazoweza kutumika.",
+    "undo": "Tengua",
+    "undone": "Imerejeshwa",
+    "nothingToRestore": "Hakuna cha kurejesha",
+    "restored": "Kilichokuwa skrini kimerejeshwa",
+    "pressAgain": "Mstari wa mwisho — bonyeza Mbele tena kwa {item}",
+    "blanked": "Skrini imefifishwa",
+    "cleared": "Skrini imefutwa",
+    "hymnDeleted": "Imefutwa \"{title}\"",
+    "serviceDeleted": "Ibada \"{name}\" imefutwa"
   }
 }

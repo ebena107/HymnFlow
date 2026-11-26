@@ -81,9 +81,20 @@
       "edit": "Edit",
       "delete": "Del"
     },
+    "addButtons": {
+      "hymn": "+ Hymn",
+      "scripture": "+ Scripture",
+      "announce": "+ Announce",
+      "divider": "+ Divider"
+    },
+    "banner": {
+      "prevItem": "Previous item in service",
+      "nextItem": "Next item in service"
+    },
     "alerts": {
       "nameRequired": "Service name is required",
       "atLeastOneHymn": "Add at least one hymn to the service",
+      "itemRequired": "Add at least one item to the service",
       "validationFailed": "Service validation failed:\n{errors}"
     },
     "confirmations": {
@@ -91,12 +102,37 @@
     },
     "status": {
       "validationIssues": "Warning: Service has validation issues",
-      "loaded": "Loaded service: {name} ({count} hymns)",
+      "loaded": "Loaded: {name} ({count} item(s))",
       "deleted": "Service deleted",
-      "saved": "Service saved"
+      "saved": "Service saved",
+      "hymnNotFound": "Hymn not found in library",
+      "hymnDeleted": "Hymn deleted ({count} service(s) updated)",
+      "divider": "▸ {label}"
     },
     "errors": {
       "saveFailed": "Error saving services: {error}"
+    },
+    "itemForm": {
+      "titles": {
+        "addScripture": "Add Scripture",
+        "editScripture": "Edit Scripture",
+        "addAnnounce": "Add Announcement",
+        "editAnnounce": "Edit Announcement",
+        "addDivider": "Add Divider",
+        "editDivider": "Edit Divider"
+      },
+      "placeholders": {
+        "scriptureRef": "Reference (e.g., John 3:16)",
+        "scriptureText": "Verse text (e.g., For God so loved the world…)",
+        "announceText": "Announcement text (e.g., Join us for fellowship after service)",
+        "dividerLabel": "Section label (e.g., Offering, Sermon, Prayer)"
+      },
+      "buttons": {
+        "addScripture": "Add Scripture",
+        "addAnnounce": "Add Announcement",
+        "addDivider": "Add Divider",
+        "save": "Save"
+      }
     }
   },
   "textSlide": {
@@ -104,13 +140,35 @@
     "hint": "scripture, announcement, blank",
     "sendButton": "Send to Overlay",
     "clearButton": "Clear Slide",
-    "sent": "Text slide sent"
+    "sent": "Text slide sent",
+    "cleared": "Text slide cleared"
+  },
+  "bible": {
+    "title": "Bible",
+    "label": "Bible",
+    "description": "Import a Bible JSON file (any translation) to enable verse lookup. Each translation is stored separately — switch between them anytime.",
+    "importButton": "Import JSON",
+    "loading": "Loading Bible…",
+    "notLoaded": "Not loaded"
+  },
+  "quickScripture": {
+    "title": "Quick Scripture",
+    "hint": "live · ad-hoc",
+    "refPlaceholder": "Reference (e.g., John 3:16)",
+    "textPlaceholder": "Verse text — blank line separates pages",
+    "lookupButton": "🔍",
+    "displayButton": "Display",
+    "clearButton": "Clear",
+    "status": "Scripture: {ref}",
+    "statusNoRef": "Scripture displayed"
   },
   "navigation": {
     "verseInfo": "Verse {current}/{total} · Lines {startLine}-{endLine} of {totalLines}",
     "chorusInfo": "Chorus · Lines {startLine}-{endLine} of {totalLines}",
     "lastVerse": " · Last verse",
     "lastChorus": " · Last chorus",
+    "chorusNext": " · Chorus next",
+    "shrinksToFit": " · ⚠ shrinks to fit",
     "buttons": {
       "prevVerse": "⟵ Previous",
       "nextVerse": "Next ⟶",
@@ -126,19 +184,20 @@
       "nextLine": "Next line window (Down arrow)",
       "jumpChorus": "Display chorus if available",
       "emergencyClear": "Immediately hide overlay from stream"
-    },
-    "chorusNext": " · Chorus next",
-    "shrinksToFit": " · ⚠ shrinks to fit"
+    }
   },
   "display": {
     "title": "Display Controls",
+    "hotkeysReconnecting": "OBS hotkeys disconnected — reconnecting…",
+    "offHint": "Display is OFF — flip the Display switch to show this hymn",
     "displayLabel": "Display",
     "liveIndicator": "LIVE",
     "resetButton": "Reset",
     "resetTooltip": "Reset to first verse, first line",
     "linesPerDisplay": "Lines per display",
-    "hotkeysReconnecting": "OBS hotkeys disconnected — reconnecting…",
-    "offHint": "Display is OFF — flip the Display switch to show this hymn"
+    "noHymnSelected": "Nothing to display — select a hymn first",
+    "displayOffHint": "Display is OFF — flip the Display switch to show this hymn",
+    "blanked": "Screen blanked — Display or Quick Scripture will bring it back"
   },
   "preview": {
     "title": "Hymn Previews"
@@ -197,6 +256,12 @@
     "language": "Language",
     "languageLabel": "Interface Language"
   },
+  "tabs": {
+    "library": "Library",
+    "service": "Service",
+    "live": "Live",
+    "style": "Style"
+  },
   "setup": {
     "import": {
       "selectFile": "Select the downloaded .json, .txt, or .csv file"
@@ -210,5 +275,159 @@
     "importFormats": {
       "csv": "CSV Format"
     }
+  },
+  "ui": {
+    "blank_screen": "Blank Screen",
+    "restore": "↩ Restore",
+    "shortcuts": "? Shortcuts",
+    "tip_drop_any_downloaded_file_anywhere": "Tip: drop any downloaded file anywhere on the dock — a Bible (.zip, .json, USFM), hymns, a service schedule or a backup. HymnFlow works out what it is, unzips and converts it for you.",
+    "get_another_translation": "Get another translation",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow never downloads anything itself. Pick a language, open the link, save the file, then drop it onto the Bible card above — no unzipping or converting needed. Check each translation’s license.",
+    "language": "Language",
+    "import": "Import",
+    "cancel": "Cancel",
+    "auto_display_planned_scripture": "Auto-display planned scripture",
+    "background_opacity": "Background Opacity",
+    "scripture_display": "Scripture Display",
+    "scripture_font": "Scripture font",
+    "classic_serif_default": "Classic Serif (default)",
+    "same_as_lyrics": "Same as lyrics",
+    "italic_text": "Italic text",
+    "show_reference": "Show reference",
+    "translation_badge": "Translation badge",
+    "custom_size": "Custom size",
+    "scripture_font_size": "Scripture font size",
+    "obs_connection": "OBS Connection",
+    "host": "Host",
+    "port": "Port",
+    "password": "Password",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "hotkeys_dock_focus": "Hotkeys (dock focus)",
+    "data_backup": "Data & Backup",
+    "hymns_services_and_settings_are_stored": "Hymns, services and settings are stored in this browser. A snapshot is taken automatically each time the dock opens, and deleted hymns or services can be undone for a few seconds.",
+    "export_backup": "Export backup…",
+    "restore_from_file": "Restore from file…",
+    "usage_report_each_hymn_put_on": "Usage report: each hymn put on screen is logged on this device (date, title, CCLI number) so you can report to CCLI. Nothing is sent anywhere.",
+    "export_usage_report_csv": "Export usage report (CSV)…",
+    "clear_usage_log": "Clear usage log",
+    "automatic_snapshots": "Automatic snapshots",
+    "restore_selected_snapshot": "Restore selected snapshot",
+    "bibles_are_stored_separately_and_are": "Bibles are stored separately and are not touched by backup or restore. OBS connection details and password are never written to a backup file.",
+    "licensing_credits": "Licensing & credits",
+    "livestreaming": "Livestreaming:",
+    "showing_copyrighted_lyrics_on_a_livestream": "showing copyrighted lyrics on a livestream usually needs a streaming license in addition to a standard church copyright license (for example CCLI or OneLicense). Requirements differ by country and platform — check with your licensing provider. Public-domain hymns need none. Record each hymn’s copyright and CCLI number in its edit form.",
+    "bible_translations": "Bible translations:",
+    "you_are_responsible_for_having_the": "you are responsible for having the right to use the translations you import. Public-domain and openly licensed texts are fine; others need permission from the publisher.",
+    "ask_for_a_second_press_before": "Ask for a second press before moving to the next service item",
+    "copyright": "Copyright",
+    "ccli": "CCLI #",
+    "name_optional": "Name (optional)",
+    "search_by_title_author_or_number": "Search by title, author or number…",
+    "reference_or_label": "Reference or label",
+    "enter_text": "Enter text…",
+    "type_any_text_to_send_to": "Type any text to send to overlay (scripture, announcement, blank screen...)",
+    "leave_blank_if_none": "(leave blank if none)",
+    "e_g_public_domain_or_1990": "e.g., Public domain, or © 1990 Publisher",
+    "take_the_screen_down_without_losing": "Take the screen down without losing your place (B)",
+    "bring_back_what_was_on_screen": "Bring back what was on screen before Blank / Clear (Z)",
+    "keyboard_shortcuts": "Keyboard shortcuts (?)",
+    "previous_item_in_service": "Previous item in service",
+    "next_item_in_service": "Next item in service",
+    "import_a_service_schedule_from_a": "Import a service schedule from a text file",
+    "active_translation": "Active translation",
+    "look_up_verse": "Look up verse",
+    "skip_the_confidence_preview_planned_scripture": "Skip the confidence preview: planned scripture items go straight to the overlay when activated",
+    "on_the_last_verse_the_first": "On the last verse, the first Next only arms the advance; a second press within a few seconds moves to the next service item",
+    "storage_type": "Storage type",
+    "main_navigation": "Main navigation",
+    "keyboard_shortcuts_2": "Keyboard shortcuts",
+    "filter_by_source": "Filter by source",
+    "hymns_library": "Hymns library",
+    "select_hymn_file_to_import": "Select hymn file to import",
+    "translation_name_optional_filled_in_automaticall": "Translation name (optional, filled in automatically)",
+    "select_a_bible_file": "Select a Bible file",
+    "select_service_schedule_text_file": "Select service schedule text file",
+    "saved_services": "Saved services",
+    "jump_to_verse": "Jump to verse",
+    "scripture_reference": "Scripture reference",
+    "bible_translation": "Bible translation",
+    "verse_text": "Verse text",
+    "previous_page": "Previous page",
+    "next_page": "Next page",
+    "background_opacity_2": "Background opacity"
+  },
+  "drop": {
+    "overlay": "Drop to import",
+    "unsupported": "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json)."
+  },
+  "msg": {
+    "noSnapshots": "No snapshots yet",
+    "shortcutsNote": "Shortcuts work while the dock has focus. For keys that work from any window, connect OBS hotkeys in Style → OBS Connection.",
+    "hotkeysOn": "Global hotkeys: on",
+    "hotkeysConnecting": "Global hotkeys: connecting…",
+    "hotkeysOff": "Global hotkeys: off",
+    "hotkeysConnected": "OBS hotkeys connected",
+    "storageFullHymns": "Storage full ({count} hymns). Export your hymns then clear storage to continue.",
+    "storageFull": "Storage full — export hymns to free space.",
+    "errorSavingHymns": "Error saving hymns: {error}",
+    "errorSavingSettings": "Error saving settings: {error}",
+    "errorSavingServices": "Error saving services: {error}",
+    "bibleNotLoaded": "Bible not loaded — import a translation in the Library tab",
+    "draftRestored": "Restored unsaved service draft",
+    "listLabel": "List label: \"{label}\"",
+    "cueNotes": "Cue Notes — {item}",
+    "serviceDeletedShort": "Service deleted",
+    "duplicated": "Duplicated: \"{name}\"",
+    "serviceImportEmpty": "Import failed: no service items found in file",
+    "serviceImported": "Imported \"{name}\" — {count} item(s){warnings}",
+    "warningsCount": "{count} warning(s)",
+    "serviceImportWarnings": "Service imported with warnings:",
+    "couldNotRead": "Could not read file",
+    "importing": "Importing… ({done}/{total})",
+    "importFailed": "Import failed: {error}",
+    "kjvLoaded": "KJV loaded — ready for scripture lookup",
+    "noUsage": "No hymns have been displayed yet.",
+    "clearUsageConfirm": "Clear the usage log on this device? Export it first if you need it for reporting.",
+    "clear": "Clear",
+    "usageCleared": "Usage log cleared",
+    "creditsIntro": "Credits for the translations you have loaded (list these in your church credits):",
+    "open": "Open",
+    "copyLink": "Copy link",
+    "linkCopied": "Link copied",
+    "copyManually": "Select the link text above and copy it (Ctrl+C)",
+    "hotkeysSetupTitle": "Click to set up global hotkeys (Style → OBS Connection)"
+  },
+  "bibleGet": {
+    "otherLanguages": "Other languages",
+    "license": {
+      "pd": "Public domain",
+      "bibliatodo": "Free license (BibliaTodo v1.9) — credit required",
+      "ccbysa": "CC BY-SA 4.0 — credit Biblica",
+      "varies": "Varies — check each translation"
+    },
+    "steps": {
+      "save": "Save the file, then drop it onto the Bible card above.",
+      "zip": "Download the JSON ZIP and drop it onto the Bible card above (no unzipping needed).",
+      "ntbt": "Drop the downloaded ZIP onto the Bible card above (no unzipping needed).",
+      "yoruba": "On the page, download the USFM (.zip) version and drop it onto the Bible card above — HymnFlow converts it for you.",
+      "ebible": "Hundreds of translations. Download the USFM (.zip) version and drop it onto the Bible card above."
+    }
+  },
+  "operator": {
+    "corruptKept": "Saved {name} data could not be read. A copy was kept in browser storage (hymnflow-corrupt-{name}-*) so it can be recovered.",
+    "restore": "Restore",
+    "noSnapshot": "That snapshot is no longer available.",
+    "notBackup": "That file is not a HymnFlow backup.",
+    "emptyBackup": "The backup contains no usable hymns.",
+    "undo": "Undo",
+    "undone": "Restored",
+    "nothingToRestore": "Nothing to restore",
+    "restored": "Restored what was on screen",
+    "pressAgain": "Last verse — press Next again for {item}",
+    "blanked": "Screen blanked",
+    "cleared": "Screen cleared",
+    "hymnDeleted": "Deleted \"{title}\"",
+    "serviceDeleted": "Deleted service \"{name}\""
   }
 }

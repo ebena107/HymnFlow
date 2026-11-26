@@ -1,12 +1,13 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "Controlador de tercio inferior para OBS HYMN",
+    "subtitle": "Controlador de tercio inferior para OBS HYMN by @gbcowode",
     "status": {
       "live": "EN VIVO",
       "ready": "Listo ({storage})",
       "hymnUpdated": "Himno actualizado",
-      "hymnAdded": "Himno añadido"
+      "hymnAdded": "Himno añadido",
+      "storage": "localStorage"
     },
     "errors": {
       "sendFailed": "Error al enviar a la superposición: {error}"
@@ -83,7 +84,8 @@
     "alerts": {
       "nameRequired": "El nombre del servicio es obligatorio",
       "atLeastOneHymn": "Agregue al menos un himno al servicio",
-      "validationFailed": "Error de validación del servicio:\n{errors}"
+      "validationFailed": "Error de validación del servicio:\n{errors}",
+      "itemRequired": "Añade al menos un elemento al servicio"
     },
     "confirmations": {
       "delete": "¿Eliminar este servicio?"
@@ -92,11 +94,73 @@
       "validationIssues": "Advertencia: El servicio tiene problemas de validación",
       "loaded": "Servicio cargado: {name} ({count} himnos)",
       "deleted": "Servicio eliminado",
-      "saved": "Servicio guardado"
+      "saved": "Servicio guardado",
+      "hymnNotFound": "Himno no encontrado en la biblioteca",
+      "divider": "▸ {label}",
+      "hymnDeleted": "Himno eliminado ({count} servicio(s) actualizado(s))"
     },
     "errors": {
       "saveFailed": "Error al guardar los servicios: {error}"
+    },
+    "addButtons": {
+      "announce": "+ Anuncio",
+      "divider": "+ Divisor",
+      "hymn": "+ Himno",
+      "scripture": "+ Escritura"
+    },
+    "banner": {
+      "nextItem": "Siguiente elemento del servicio",
+      "prevItem": "Elemento anterior del servicio"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "Añadir anuncio",
+        "addDivider": "Añadir divisor",
+        "addScripture": "Añadir Escritura",
+        "save": "Guardar"
+      },
+      "placeholders": {
+        "announceText": "Texto del anuncio (p. ej., Acompáñanos en la comunión después del servicio)",
+        "dividerLabel": "Etiqueta de sección (p. ej., Ofrenda, Sermón, Oración)",
+        "scriptureRef": "Referencia (p. ej., Juan 3:16)",
+        "scriptureText": "Texto del versículo (p. ej., Porque de tal manera amó Dios al mundo…)"
+      },
+      "titles": {
+        "addAnnounce": "Añadir anuncio",
+        "addDivider": "Añadir divisor",
+        "addScripture": "Añadir Escritura",
+        "editAnnounce": "Editar anuncio",
+        "editDivider": "Editar divisor",
+        "editScripture": "Editar Escritura"
+      }
     }
+  },
+  "textSlide": {
+    "title": "Diapositiva de Texto",
+    "hint": "escritura, anuncio, pantalla en blanco",
+    "sendButton": "Enviar a Overlay",
+    "clearButton": "Borrar Diapositiva",
+    "sent": "Diapositiva de texto enviada",
+    "cleared": "Diapositiva de texto borrada"
+  },
+  "bible": {
+    "title": "Biblia",
+    "label": "Biblia",
+    "description": "Importa un archivo JSON de cualquier traducción para habilitar la búsqueda de versículos. Cada traducción se guarda por separado — cambia entre ellas en cualquier momento.",
+    "importButton": "Importar JSON",
+    "loading": "Cargando Biblia…",
+    "notLoaded": "No cargada"
+  },
+  "quickScripture": {
+    "title": "Escritura Rápida",
+    "hint": "en vivo · ad-hoc",
+    "refPlaceholder": "Referencia (ej., Juan 3:16)",
+    "textPlaceholder": "Texto del versículo — línea en blanco separa páginas",
+    "lookupButton": "🔍",
+    "displayButton": "Mostrar",
+    "clearButton": "Borrar",
+    "status": "Escritura: {ref}",
+    "statusNoRef": "Escritura mostrada"
   },
   "navigation": {
     "verseInfo": "Verso {current}/{total} · Líneas {startLine}-{endLine} de {totalLines}",
@@ -115,7 +179,12 @@
       "nextLine": "Ventana de siguiente línea (Flecha abajo)",
       "jumpChorus": "Mostrar coro si está disponible",
       "emergencyClear": "Ocultar inmediatamente la superposición de la transmisión"
-    }
+    },
+    "chorusNext": " · Sigue el coro",
+    "lastChorus": " · Último coro",
+    "lastVerse": " · Último versículo",
+    "shrinksToFit": " · ⚠ se reduce para ajustarse",
+    "chorusInfo": "Coro · Líneas {startLine}-{endLine} de {totalLines}"
   },
   "display": {
     "title": "Controles de visualización",
@@ -123,7 +192,12 @@
     "liveIndicator": "EN VIVO",
     "resetButton": "Restablecer",
     "resetTooltip": "Restablecer al primer verso, primera línea",
-    "linesPerDisplay": "Líneas por visualización"
+    "linesPerDisplay": "Líneas por visualización",
+    "blanked": "Pantalla en blanco: Mostrar o Escritura rápida la recuperarán",
+    "displayOffHint": "La pantalla está APAGADA: activa el interruptor Mostrar para ver este himno",
+    "hotkeysReconnecting": "Atajos de OBS desconectados: reconectando…",
+    "noHymnSelected": "Nada que mostrar: selecciona primero un himno",
+    "offHint": "La pantalla está APAGADA: activa el interruptor Mostrar para ver este himno"
   },
   "preview": {
     "title": "Vista previa de himnos"
@@ -166,13 +240,27 @@
     "addHymn": "Agregar himno",
     "buttons": {
       "cancel": "Cancelar",
-      "save": "Guardar cambios"
+      "save": "Guardar cambios",
+      "addAnyway": "Añadir de todos modos",
+      "delete": "Eliminar",
+      "discard": "Descartar",
+      "ok": "Aceptar"
+    },
+    "confirmations": {
+      "badReference": "\"{ref}\" no parece una referencia bíblica válida.\n¿Añadirla de todos modos?",
+      "discard": "¿Descartar los cambios sin guardar?"
     }
   },
   "settings": {
     "title": "Configuración",
     "language": "Idioma",
     "languageLabel": "Idioma de la interfaz"
+  },
+  "tabs": {
+    "library": "Biblioteca",
+    "service": "Servicio",
+    "live": "En Vivo",
+    "style": "Estilo"
   },
   "setup": {
     "import": {
@@ -187,5 +275,159 @@
     "importFormats": {
       "csv": "Formato CSV"
     }
+  },
+  "ui": {
+    "blank_screen": "Pantalla en blanco",
+    "restore": "↩ Restaurar",
+    "shortcuts": "? Atajos",
+    "tip_drop_any_downloaded_file_anywhere": "Consejo: suelta cualquier archivo descargado en cualquier parte del panel: una Biblia (.zip, .json, USFM), himnos, un programa de servicio o una copia de seguridad. HymnFlow detecta qué es, lo descomprime y lo convierte por ti.",
+    "get_another_translation": "Obtener otra traducción",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow nunca descarga nada por sí mismo. Elige un idioma, abre el enlace, guarda el archivo y suéltalo sobre la tarjeta de la Biblia de arriba; no hace falta descomprimir ni convertir. Revisa la licencia de cada traducción.",
+    "language": "Idioma",
+    "import": "Importar",
+    "cancel": "Cancelar",
+    "auto_display_planned_scripture": "Mostrar automáticamente la Escritura planificada",
+    "background_opacity": "Opacidad del fondo",
+    "scripture_display": "Visualización de la Escritura",
+    "scripture_font": "Fuente de la Escritura",
+    "classic_serif_default": "Serif clásica (predeterminada)",
+    "same_as_lyrics": "Igual que la letra",
+    "italic_text": "Texto en cursiva",
+    "show_reference": "Mostrar referencia",
+    "translation_badge": "Insignia de traducción",
+    "custom_size": "Tamaño personalizado",
+    "scripture_font_size": "Tamaño de la fuente de la Escritura",
+    "obs_connection": "Conexión con OBS",
+    "host": "Servidor",
+    "port": "Puerto",
+    "password": "Contraseña",
+    "connect": "Conectar",
+    "disconnect": "Desconectar",
+    "hotkeys_dock_focus": "Atajos (con el panel activo)",
+    "data_backup": "Datos y copia de seguridad",
+    "hymns_services_and_settings_are_stored": "Los himnos, servicios y ajustes se guardan en este navegador. Se toma una copia automática cada vez que se abre el panel y puedes deshacer el borrado de un himno o servicio durante unos segundos.",
+    "export_backup": "Exportar copia de seguridad…",
+    "restore_from_file": "Restaurar desde archivo…",
+    "usage_report_each_hymn_put_on": "Informe de uso: cada himno que se muestra en pantalla se registra en este dispositivo (fecha, título, número CCLI) para que puedas informar a CCLI. No se envía nada a ninguna parte.",
+    "export_usage_report_csv": "Exportar informe de uso (CSV)…",
+    "clear_usage_log": "Borrar registro de uso",
+    "automatic_snapshots": "Copias automáticas",
+    "restore_selected_snapshot": "Restaurar la copia seleccionada",
+    "bibles_are_stored_separately_and_are": "Las Biblias se guardan por separado y la copia de seguridad o la restauración no las modifica. Los datos de conexión de OBS y la contraseña nunca se escriben en un archivo de copia.",
+    "licensing_credits": "Licencias y créditos",
+    "livestreaming": "Transmisión en vivo:",
+    "showing_copyrighted_lyrics_on_a_livestream": "mostrar letras con derechos de autor en una transmisión en vivo suele requerir una licencia de transmisión además de la licencia de derechos de autor de iglesia (por ejemplo CCLI u OneLicense). Los requisitos varían según el país y la plataforma: consulta con tu proveedor de licencias. Los himnos de dominio público no la necesitan. Registra los derechos de autor y el número CCLI de cada himno en su formulario de edición.",
+    "bible_translations": "Traducciones de la Biblia:",
+    "you_are_responsible_for_having_the": "eres responsable de tener derecho a usar las traducciones que importes. Los textos de dominio público o con licencia abierta no tienen problema; los demás requieren permiso del editor.",
+    "ask_for_a_second_press_before": "Pedir una segunda pulsación antes de pasar al siguiente elemento del servicio",
+    "copyright": "Derechos de autor",
+    "ccli": "Nº CCLI",
+    "name_optional": "Nombre (opcional)",
+    "search_by_title_author_or_number": "Buscar por título, autor o número…",
+    "reference_or_label": "Referencia o etiqueta",
+    "enter_text": "Escribe el texto…",
+    "type_any_text_to_send_to": "Escribe cualquier texto para enviarlo a la pantalla (Escritura, anuncio, pantalla en blanco...)",
+    "leave_blank_if_none": "(déjalo en blanco si no hay)",
+    "e_g_public_domain_or_1990": "p. ej., Dominio público, o © 1990 Editorial",
+    "take_the_screen_down_without_losing": "Quita la pantalla sin perder tu lugar (B)",
+    "bring_back_what_was_on_screen": "Recupera lo que estaba en pantalla antes de Blanco / Borrar (Z)",
+    "keyboard_shortcuts": "Atajos de teclado (?)",
+    "previous_item_in_service": "Elemento anterior del servicio",
+    "next_item_in_service": "Siguiente elemento del servicio",
+    "import_a_service_schedule_from_a": "Importar un programa de servicio desde un archivo de texto",
+    "active_translation": "Traducción activa",
+    "look_up_verse": "Buscar versículo",
+    "skip_the_confidence_preview_planned_scripture": "Omitir la vista previa de confianza: los pasajes planificados van directamente a la pantalla al activarse",
+    "on_the_last_verse_the_first": "En el último versículo, la primera pulsación de Siguiente solo prepara el avance; una segunda pulsación en pocos segundos pasa al siguiente elemento del servicio",
+    "storage_type": "Tipo de almacenamiento",
+    "main_navigation": "Navegación principal",
+    "keyboard_shortcuts_2": "Atajos de teclado",
+    "filter_by_source": "Filtrar por fuente",
+    "hymns_library": "Biblioteca de himnos",
+    "select_hymn_file_to_import": "Seleccionar archivo de himnos para importar",
+    "translation_name_optional_filled_in_automaticall": "Nombre de la traducción (opcional, se completa automáticamente)",
+    "select_a_bible_file": "Seleccionar un archivo de la Biblia",
+    "select_service_schedule_text_file": "Seleccionar archivo de texto del programa de servicio",
+    "saved_services": "Servicios guardados",
+    "jump_to_verse": "Ir al versículo",
+    "scripture_reference": "Referencia bíblica",
+    "bible_translation": "Traducción de la Biblia",
+    "verse_text": "Texto del versículo",
+    "previous_page": "Página anterior",
+    "next_page": "Página siguiente",
+    "background_opacity_2": "Opacidad del fondo"
+  },
+  "drop": {
+    "overlay": "Suelta para importar",
+    "unsupported": "Ese tipo de archivo no se puede importar. Usa un archivo de himnos (.txt, .csv, .json, .cho, .usr), de Biblia (.zip, .json, .usfm), un programa de servicio (.txt) o una copia de HymnFlow (.json)."
+  },
+  "msg": {
+    "noSnapshots": "Aún no hay copias",
+    "shortcutsNote": "Los atajos funcionan mientras el panel tiene el foco. Para atajos que funcionen desde cualquier ventana, conecta los atajos de OBS en Estilo → Conexión con OBS.",
+    "hotkeysOn": "Atajos globales: activados",
+    "hotkeysConnecting": "Atajos globales: conectando…",
+    "hotkeysOff": "Atajos globales: desactivados",
+    "hotkeysConnected": "Atajos de OBS conectados",
+    "storageFullHymns": "Almacenamiento lleno ({count} himnos). Exporta tus himnos y luego libera espacio para continuar.",
+    "storageFull": "Almacenamiento lleno: exporta himnos para liberar espacio.",
+    "errorSavingHymns": "Error al guardar los himnos: {error}",
+    "errorSavingSettings": "Error al guardar los ajustes: {error}",
+    "errorSavingServices": "Error al guardar los servicios: {error}",
+    "bibleNotLoaded": "Biblia no cargada: importa una traducción en la pestaña Biblioteca",
+    "draftRestored": "Se recuperó el borrador del servicio sin guardar",
+    "listLabel": "Etiqueta de lista: \"{label}\"",
+    "cueNotes": "Notas de entrada — {item}",
+    "serviceDeletedShort": "Servicio eliminado",
+    "duplicated": "Duplicado: \"{name}\"",
+    "serviceImportEmpty": "Error al importar: no se encontraron elementos del servicio en el archivo",
+    "serviceImported": "Importado \"{name}\": {count} elemento(s){warnings}",
+    "warningsCount": "{count} advertencia(s)",
+    "serviceImportWarnings": "Servicio importado con advertencias:",
+    "couldNotRead": "No se pudo leer el archivo",
+    "importing": "Importando… ({done}/{total})",
+    "importFailed": "Error al importar: {error}",
+    "kjvLoaded": "KJV cargada: lista para buscar versículos",
+    "noUsage": "Aún no se ha mostrado ningún himno.",
+    "clearUsageConfirm": "¿Borrar el registro de uso de este dispositivo? Expórtalo antes si lo necesitas para informar.",
+    "clear": "Borrar",
+    "usageCleared": "Registro de uso borrado",
+    "creditsIntro": "Créditos de las traducciones cargadas (inclúyelos en los créditos de tu iglesia):",
+    "open": "Abrir",
+    "copyLink": "Copiar enlace",
+    "linkCopied": "Enlace copiado",
+    "copyManually": "Selecciona el texto del enlace de arriba y cópialo (Ctrl+C)",
+    "hotkeysSetupTitle": "Haz clic para configurar los atajos globales (Estilo → Conexión con OBS)"
+  },
+  "bibleGet": {
+    "otherLanguages": "Otros idiomas",
+    "license": {
+      "pd": "Dominio público",
+      "bibliatodo": "Licencia gratuita (BibliaTodo v1.9): se requiere crédito",
+      "ccbysa": "CC BY-SA 4.0: dar crédito a Biblica",
+      "varies": "Varía: revisa cada traducción"
+    },
+    "steps": {
+      "save": "Guarda el archivo y suéltalo sobre la tarjeta de la Biblia de arriba.",
+      "zip": "Descarga el ZIP JSON y suéltalo sobre la tarjeta de la Biblia de arriba (no hace falta descomprimir).",
+      "ntbt": "Suelta el ZIP descargado sobre la tarjeta de la Biblia de arriba (no hace falta descomprimir).",
+      "yoruba": "En la página, descarga la versión USFM (.zip) y suéltala sobre la tarjeta de la Biblia de arriba: HymnFlow la convierte por ti.",
+      "ebible": "Cientos de traducciones. Descarga la versión USFM (.zip) y suéltala sobre la tarjeta de la Biblia de arriba."
+    }
+  },
+  "operator": {
+    "corruptKept": "No se pudieron leer los datos guardados de {name}. Se conservó una copia en el almacenamiento del navegador (hymnflow-corrupt-{name}-*) para poder recuperarla.",
+    "restore": "Restaurar",
+    "noSnapshot": "Esa copia ya no está disponible.",
+    "notBackup": "Ese archivo no es una copia de HymnFlow.",
+    "emptyBackup": "La copia no contiene himnos utilizables.",
+    "undo": "Deshacer",
+    "undone": "Restaurado",
+    "nothingToRestore": "Nada que restaurar",
+    "restored": "Se restauró lo que había en pantalla",
+    "pressAgain": "Último versículo: pulsa Siguiente otra vez para {item}",
+    "blanked": "Pantalla en blanco",
+    "cleared": "Pantalla borrada",
+    "hymnDeleted": "Eliminado \"{title}\"",
+    "serviceDeleted": "Servicio eliminado \"{name}\""
   }
 }

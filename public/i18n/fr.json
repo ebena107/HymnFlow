@@ -1,12 +1,13 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN",
+    "subtitle": "Contrôleur de tiers inférieur pour OBS HYMN by @gbcowode",
     "status": {
       "live": "EN DIRECT",
       "ready": "Prêt ({storage})",
       "hymnUpdated": "Cantique mis à jour",
-      "hymnAdded": "Cantique ajouté"
+      "hymnAdded": "Cantique ajouté",
+      "storage": "localStorage"
     },
     "errors": {
       "sendFailed": "Erreur d'envoi vers l'incrustation : {error}"
@@ -83,7 +84,8 @@
     "alerts": {
       "nameRequired": "Le nom du service est obligatoire",
       "atLeastOneHymn": "Ajoutez au moins un cantique au service",
-      "validationFailed": "Échec de la validation du service :\n{errors}"
+      "validationFailed": "Échec de la validation du service :\n{errors}",
+      "itemRequired": "Ajoutez au moins un élément au programme"
     },
     "confirmations": {
       "delete": "Supprimer ce service ?"
@@ -92,11 +94,73 @@
       "validationIssues": "Attention : Le service présente des problèmes de validation",
       "loaded": "Service chargé : {name} ({count} cantiques)",
       "deleted": "Service supprimé",
-      "saved": "Service enregistré"
+      "saved": "Service enregistré",
+      "hymnNotFound": "Cantique introuvable dans la bibliothèque",
+      "divider": "▸ {label}",
+      "hymnDeleted": "Cantique supprimé ({count} programme(s) mis à jour)"
     },
     "errors": {
       "saveFailed": "Erreur lors de l'enregistrement des services : {error}"
+    },
+    "addButtons": {
+      "announce": "+ Annonce",
+      "divider": "+ Séparateur",
+      "hymn": "+ Cantique",
+      "scripture": "+ Écriture"
+    },
+    "banner": {
+      "nextItem": "Élément suivant du programme",
+      "prevItem": "Élément précédent du programme"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "Ajouter l’annonce",
+        "addDivider": "Ajouter le séparateur",
+        "addScripture": "Ajouter l’Écriture",
+        "save": "Enregistrer"
+      },
+      "placeholders": {
+        "announceText": "Texte de l’annonce (p. ex. Rejoignez-nous pour la communion fraternelle après le culte)",
+        "dividerLabel": "Libellé de section (p. ex. Offrande, Prédication, Prière)",
+        "scriptureRef": "Référence (p. ex. Jean 3:16)",
+        "scriptureText": "Texte du verset (p. ex. Car Dieu a tant aimé le monde…)"
+      },
+      "titles": {
+        "addAnnounce": "Ajouter une annonce",
+        "addDivider": "Ajouter un séparateur",
+        "addScripture": "Ajouter une Écriture",
+        "editAnnounce": "Modifier l’annonce",
+        "editDivider": "Modifier le séparateur",
+        "editScripture": "Modifier l’Écriture"
+      }
     }
+  },
+  "textSlide": {
+    "title": "Diapositive Texte",
+    "hint": "écriture, annonce, écran vide",
+    "sendButton": "Envoyer à l'Overlay",
+    "clearButton": "Effacer la Diapositive",
+    "sent": "Diapositive texte envoyée",
+    "cleared": "Diapositive texte effacée"
+  },
+  "bible": {
+    "title": "Bible",
+    "label": "Bible",
+    "description": "Importez un fichier JSON de n'importe quelle traduction pour activer la recherche de versets. Chaque traduction est stockée séparément — changez à tout moment.",
+    "importButton": "Importer JSON",
+    "loading": "Chargement de la Bible…",
+    "notLoaded": "Non chargée"
+  },
+  "quickScripture": {
+    "title": "Scripture Express",
+    "hint": "en direct · ad-hoc",
+    "refPlaceholder": "Référence (ex., Jean 3:16)",
+    "textPlaceholder": "Texte du verset — ligne vide sépare les pages",
+    "lookupButton": "🔍",
+    "displayButton": "Afficher",
+    "clearButton": "Effacer",
+    "status": "Écriture : {ref}",
+    "statusNoRef": "Écriture affichée"
   },
   "navigation": {
     "verseInfo": "Verset {current}/{total} · Lignes {startLine}-{endLine} sur {totalLines}",
@@ -115,7 +179,12 @@
       "nextLine": "Fenêtre de ligne suivante (Flèche bas)",
       "jumpChorus": "Afficher le refrain si disponible",
       "emergencyClear": "Masquer immédiatement la superposition du flux"
-    }
+    },
+    "chorusNext": " · Refrain ensuite",
+    "lastChorus": " · Dernier refrain",
+    "lastVerse": " · Dernier verset",
+    "shrinksToFit": " · ⚠ réduit pour tenir",
+    "chorusInfo": "Refrain · Lignes {startLine}-{endLine} sur {totalLines}"
   },
   "display": {
     "title": "Contrôles d'affichage",
@@ -123,7 +192,12 @@
     "liveIndicator": "EN DIRECT",
     "resetButton": "Réinitialiser",
     "resetTooltip": "Réinitialiser au premier verset, première ligne",
-    "linesPerDisplay": "Lignes par affichage"
+    "linesPerDisplay": "Lignes par affichage",
+    "blanked": "Écran noirci — Afficher ou Écriture rapide le rétablira",
+    "displayOffHint": "L’affichage est DÉSACTIVÉ — activez l’interrupteur Afficher pour montrer ce cantique",
+    "hotkeysReconnecting": "Raccourcis OBS déconnectés — reconnexion…",
+    "noHymnSelected": "Rien à afficher — sélectionnez d’abord un cantique",
+    "offHint": "L’affichage est DÉSACTIVÉ — activez l’interrupteur Afficher pour montrer ce cantique"
   },
   "preview": {
     "title": "Aperçu des cantiques"
@@ -166,13 +240,27 @@
     "addHymn": "Ajouter un cantique",
     "buttons": {
       "cancel": "Annuler",
-      "save": "Enregistrer les modifications"
+      "save": "Enregistrer les modifications",
+      "addAnyway": "Ajouter quand même",
+      "delete": "Supprimer",
+      "discard": "Abandonner",
+      "ok": "OK"
+    },
+    "confirmations": {
+      "badReference": "« {ref} » ne ressemble pas à une référence biblique valide.\nL’ajouter quand même ?",
+      "discard": "Abandonner les modifications non enregistrées ?"
     }
   },
   "settings": {
     "title": "Paramètres",
     "language": "Langue",
     "languageLabel": "Langue de l'interface"
+  },
+  "tabs": {
+    "library": "Bibliothèque",
+    "service": "Service",
+    "live": "En Direct",
+    "style": "Style"
   },
   "setup": {
     "import": {
@@ -187,5 +275,159 @@
     "importFormats": {
       "csv": "Format CSV"
     }
+  },
+  "ui": {
+    "blank_screen": "Écran noir",
+    "restore": "↩ Rétablir",
+    "shortcuts": "? Raccourcis",
+    "tip_drop_any_downloaded_file_anywhere": "Astuce : déposez n’importe quel fichier téléchargé n’importe où dans le dock : une Bible (.zip, .json, USFM), des cantiques, un programme de culte ou une sauvegarde. HymnFlow reconnaît le type, le décompresse et le convertit pour vous.",
+    "get_another_translation": "Obtenir une autre traduction",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow ne télécharge jamais rien lui-même. Choisissez une langue, ouvrez le lien, enregistrez le fichier, puis déposez-le sur la carte Bible ci-dessus — pas besoin de décompresser ni de convertir. Vérifiez la licence de chaque traduction.",
+    "language": "Langue",
+    "import": "Importer",
+    "cancel": "Annuler",
+    "auto_display_planned_scripture": "Afficher automatiquement le passage prévu",
+    "background_opacity": "Opacité de l’arrière-plan",
+    "scripture_display": "Affichage des Écritures",
+    "scripture_font": "Police des Écritures",
+    "classic_serif_default": "Serif classique (par défaut)",
+    "same_as_lyrics": "Comme les paroles",
+    "italic_text": "Texte en italique",
+    "show_reference": "Afficher la référence",
+    "translation_badge": "Badge de traduction",
+    "custom_size": "Taille personnalisée",
+    "scripture_font_size": "Taille de la police des Écritures",
+    "obs_connection": "Connexion à OBS",
+    "host": "Hôte",
+    "port": "Port",
+    "password": "Mot de passe",
+    "connect": "Connecter",
+    "disconnect": "Déconnecter",
+    "hotkeys_dock_focus": "Raccourcis (dock actif)",
+    "data_backup": "Données et sauvegarde",
+    "hymns_services_and_settings_are_stored": "Les cantiques, programmes et réglages sont enregistrés dans ce navigateur. Un instantané est pris à chaque ouverture du dock, et la suppression d’un cantique ou d’un programme peut être annulée pendant quelques secondes.",
+    "export_backup": "Exporter la sauvegarde…",
+    "restore_from_file": "Restaurer depuis un fichier…",
+    "usage_report_each_hymn_put_on": "Rapport d’utilisation : chaque cantique affiché à l’écran est enregistré sur cet appareil (date, titre, numéro CCLI) pour vous permettre de déclarer à CCLI. Rien n’est envoyé ailleurs.",
+    "export_usage_report_csv": "Exporter le rapport d’utilisation (CSV)…",
+    "clear_usage_log": "Effacer le journal d’utilisation",
+    "automatic_snapshots": "Instantanés automatiques",
+    "restore_selected_snapshot": "Restaurer l’instantané sélectionné",
+    "bibles_are_stored_separately_and_are": "Les Bibles sont stockées séparément et ne sont pas touchées par la sauvegarde ni la restauration. Les informations de connexion OBS et le mot de passe ne sont jamais écrits dans une sauvegarde.",
+    "licensing_credits": "Licences et crédits",
+    "livestreaming": "Diffusion en direct :",
+    "showing_copyrighted_lyrics_on_a_livestream": "afficher des paroles protégées par le droit d’auteur dans une diffusion en direct nécessite généralement une licence de diffusion en plus de la licence de droits d’auteur de l’église (par exemple CCLI ou OneLicense). Les exigences varient selon le pays et la plateforme — renseignez-vous auprès de votre fournisseur de licence. Les cantiques du domaine public n’en ont pas besoin. Indiquez le droit d’auteur et le numéro CCLI de chaque cantique dans son formulaire de modification.",
+    "bible_translations": "Traductions de la Bible :",
+    "you_are_responsible_for_having_the": "vous êtes responsable de disposer du droit d’utiliser les traductions que vous importez. Les textes du domaine public ou sous licence ouverte sont acceptables ; les autres nécessitent l’autorisation de l’éditeur.",
+    "ask_for_a_second_press_before": "Demander un second appui avant de passer à l’élément suivant du programme",
+    "copyright": "Droit d’auteur",
+    "ccli": "N° CCLI",
+    "name_optional": "Nom (facultatif)",
+    "search_by_title_author_or_number": "Rechercher par titre, auteur ou numéro…",
+    "reference_or_label": "Référence ou libellé",
+    "enter_text": "Saisissez le texte…",
+    "type_any_text_to_send_to": "Saisissez un texte à envoyer à l’affichage (Écriture, annonce, écran noir...)",
+    "leave_blank_if_none": "(laisser vide si aucun)",
+    "e_g_public_domain_or_1990": "p. ex., Domaine public, ou © 1990 Éditeur",
+    "take_the_screen_down_without_losing": "Masquer l’écran sans perdre votre place (B)",
+    "bring_back_what_was_on_screen": "Rétablir ce qui était affiché avant Noir / Effacer (Z)",
+    "keyboard_shortcuts": "Raccourcis clavier (?)",
+    "previous_item_in_service": "Élément précédent du programme",
+    "next_item_in_service": "Élément suivant du programme",
+    "import_a_service_schedule_from_a": "Importer un programme de culte depuis un fichier texte",
+    "active_translation": "Traduction active",
+    "look_up_verse": "Rechercher un verset",
+    "skip_the_confidence_preview_planned_scripture": "Ignorer l’aperçu de contrôle : les passages prévus vont directement à l’affichage lorsqu’ils sont activés",
+    "on_the_last_verse_the_first": "Au dernier verset, le premier appui sur Suivant ne fait que préparer l’avance ; un second appui en quelques secondes passe à l’élément suivant du programme",
+    "storage_type": "Type de stockage",
+    "main_navigation": "Navigation principale",
+    "keyboard_shortcuts_2": "Raccourcis clavier",
+    "filter_by_source": "Filtrer par source",
+    "hymns_library": "Bibliothèque de cantiques",
+    "select_hymn_file_to_import": "Sélectionner un fichier de cantiques à importer",
+    "translation_name_optional_filled_in_automaticall": "Nom de la traduction (facultatif, rempli automatiquement)",
+    "select_a_bible_file": "Sélectionner un fichier de Bible",
+    "select_service_schedule_text_file": "Sélectionner le fichier texte du programme de culte",
+    "saved_services": "Programmes enregistrés",
+    "jump_to_verse": "Aller au verset",
+    "scripture_reference": "Référence biblique",
+    "bible_translation": "Traduction de la Bible",
+    "verse_text": "Texte du verset",
+    "previous_page": "Page précédente",
+    "next_page": "Page suivante",
+    "background_opacity_2": "Opacité de l’arrière-plan"
+  },
+  "drop": {
+    "overlay": "Déposez pour importer",
+    "unsupported": "Ce type de fichier ne peut pas être importé. Utilisez un fichier de cantiques (.txt, .csv, .json, .cho, .usr), de Bible (.zip, .json, .usfm), un programme de culte (.txt) ou une sauvegarde HymnFlow (.json)."
+  },
+  "msg": {
+    "noSnapshots": "Aucun instantané pour l’instant",
+    "shortcutsNote": "Les raccourcis fonctionnent lorsque le dock est actif. Pour des touches valables depuis n’importe quelle fenêtre, connectez les raccourcis OBS dans Style → Connexion à OBS.",
+    "hotkeysOn": "Raccourcis globaux : activés",
+    "hotkeysConnecting": "Raccourcis globaux : connexion…",
+    "hotkeysOff": "Raccourcis globaux : désactivés",
+    "hotkeysConnected": "Raccourcis OBS connectés",
+    "storageFullHymns": "Stockage plein ({count} cantiques). Exportez vos cantiques puis libérez de l’espace pour continuer.",
+    "storageFull": "Stockage plein — exportez des cantiques pour libérer de l’espace.",
+    "errorSavingHymns": "Erreur d’enregistrement des cantiques : {error}",
+    "errorSavingSettings": "Erreur d’enregistrement des réglages : {error}",
+    "errorSavingServices": "Erreur d’enregistrement des programmes : {error}",
+    "bibleNotLoaded": "Bible non chargée — importez une traduction dans l’onglet Bibliothèque",
+    "draftRestored": "Brouillon de programme non enregistré restauré",
+    "listLabel": "Libellé de la liste : « {label} »",
+    "cueNotes": "Notes de repère — {item}",
+    "serviceDeletedShort": "Programme supprimé",
+    "duplicated": "Dupliqué : « {name} »",
+    "serviceImportEmpty": "Échec de l’importation : aucun élément de programme trouvé dans le fichier",
+    "serviceImported": "« {name} » importé — {count} élément(s){warnings}",
+    "warningsCount": "{count} avertissement(s)",
+    "serviceImportWarnings": "Programme importé avec des avertissements :",
+    "couldNotRead": "Impossible de lire le fichier",
+    "importing": "Importation… ({done}/{total})",
+    "importFailed": "Échec de l’importation : {error}",
+    "kjvLoaded": "KJV chargée — prête pour la recherche de versets",
+    "noUsage": "Aucun cantique n’a encore été affiché.",
+    "clearUsageConfirm": "Effacer le journal d’utilisation de cet appareil ? Exportez-le d’abord si vous en avez besoin pour déclarer.",
+    "clear": "Effacer",
+    "usageCleared": "Journal d’utilisation effacé",
+    "creditsIntro": "Crédits des traductions chargées (à indiquer dans les crédits de votre église) :",
+    "open": "Ouvrir",
+    "copyLink": "Copier le lien",
+    "linkCopied": "Lien copié",
+    "copyManually": "Sélectionnez le texte du lien ci-dessus et copiez-le (Ctrl+C)",
+    "hotkeysSetupTitle": "Cliquez pour configurer les raccourcis globaux (Style → Connexion à OBS)"
+  },
+  "bibleGet": {
+    "otherLanguages": "Autres langues",
+    "license": {
+      "pd": "Domaine public",
+      "bibliatodo": "Licence gratuite (BibliaTodo v1.9) — mention obligatoire",
+      "ccbysa": "CC BY-SA 4.0 — mentionner Biblica",
+      "varies": "Variable — vérifiez chaque traduction"
+    },
+    "steps": {
+      "save": "Enregistrez le fichier, puis déposez-le sur la carte Bible ci-dessus.",
+      "zip": "Téléchargez le ZIP JSON et déposez-le sur la carte Bible ci-dessus (inutile de le décompresser).",
+      "ntbt": "Déposez le ZIP téléchargé sur la carte Bible ci-dessus (inutile de le décompresser).",
+      "yoruba": "Sur la page, téléchargez la version USFM (.zip) et déposez-la sur la carte Bible ci-dessus — HymnFlow la convertit pour vous.",
+      "ebible": "Des centaines de traductions. Téléchargez la version USFM (.zip) et déposez-la sur la carte Bible ci-dessus."
+    }
+  },
+  "operator": {
+    "corruptKept": "Les données enregistrées de {name} sont illisibles. Une copie a été conservée dans le stockage du navigateur (hymnflow-corrupt-{name}-*) pour pouvoir la récupérer.",
+    "restore": "Rétablir",
+    "noSnapshot": "Cet instantané n’est plus disponible.",
+    "notBackup": "Ce fichier n’est pas une sauvegarde HymnFlow.",
+    "emptyBackup": "La sauvegarde ne contient aucun cantique utilisable.",
+    "undo": "Annuler",
+    "undone": "Rétabli",
+    "nothingToRestore": "Rien à rétablir",
+    "restored": "Ce qui était à l’écran a été rétabli",
+    "pressAgain": "Dernier verset — appuyez encore sur Suivant pour {item}",
+    "blanked": "Écran noirci",
+    "cleared": "Écran effacé",
+    "hymnDeleted": "« {title} » supprimé",
+    "serviceDeleted": "Programme « {name} » supprimé"
   }
 }

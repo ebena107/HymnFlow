@@ -1,10 +1,10 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "OBS HYMN용 하단 3분위 컨트롤러",
+    "subtitle": "OBS HYMN용 하단 3분위 컨트롤러 by @gbcowode",
     "status": {
       "live": "라이브",
-      "storage": "로컬 저장소",
+      "storage": "localStorage",
       "ready": "준비됨 ({storage})",
       "hymnUpdated": "찬송가가 업데이트되었습니다",
       "hymnAdded": "찬송가가 추가되었습니다"
@@ -84,7 +84,8 @@
     "alerts": {
       "nameRequired": "순서 이름은 필수입니다",
       "atLeastOneHymn": "순서에 최소 한 곡 이상의 찬송가를 추가하세요",
-      "validationFailed": "순서 검증 실패:\n{errors}"
+      "validationFailed": "순서 검증 실패:\n{errors}",
+      "itemRequired": "예배 순서에 항목을 하나 이상 추가하세요"
     },
     "confirmations": {
       "delete": "이 예배 순서를 삭제하시겠습니까?"
@@ -93,11 +94,73 @@
       "validationIssues": "경고: 순서에 검증 문제가 있습니다",
       "loaded": "순서를 불러왔습니다: {name} ({count}곡)",
       "deleted": "순서가 삭제되었습니다",
-      "saved": "순서가 저장되었습니다"
+      "saved": "순서가 저장되었습니다",
+      "hymnNotFound": "라이브러리에서 찬송가를 찾을 수 없음",
+      "divider": "▸ {label}",
+      "hymnDeleted": "찬송가를 삭제했습니다(예배 순서 {count}개 업데이트됨)"
     },
     "errors": {
       "saveFailed": "순서 저장 중 오류 발생: {error}"
+    },
+    "addButtons": {
+      "announce": "+ 공지",
+      "divider": "+ 구분선",
+      "hymn": "+ 찬송가",
+      "scripture": "+ 성구"
+    },
+    "banner": {
+      "nextItem": "다음 예배 항목",
+      "prevItem": "이전 예배 항목"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "공지 추가",
+        "addDivider": "구분선 추가",
+        "addScripture": "성구 추가",
+        "save": "저장"
+      },
+      "placeholders": {
+        "announceText": "공지 내용(예: 예배 후 교제 시간에 함께해 주세요)",
+        "dividerLabel": "구간 이름(예: 헌금, 설교, 기도)",
+        "scriptureRef": "참조(예: 요한복음 3:16)",
+        "scriptureText": "구절 본문(예: 하나님이 세상을 이처럼 사랑하사…)"
+      },
+      "titles": {
+        "addAnnounce": "공지 추가",
+        "addDivider": "구분선 추가",
+        "addScripture": "성구 추가",
+        "editAnnounce": "공지 편집",
+        "editDivider": "구분선 편집",
+        "editScripture": "성구 편집"
+      }
     }
+  },
+  "textSlide": {
+    "title": "텍스트 슬라이드",
+    "hint": "성경 구절, 공지사항, 빈 화면",
+    "sendButton": "오버레이로 전송",
+    "clearButton": "슬라이드 지우기",
+    "sent": "텍스트 슬라이드 전송됨",
+    "cleared": "텍스트 슬라이드 지워짐"
+  },
+  "bible": {
+    "title": "성경",
+    "label": "성경",
+    "description": "어떤 번역본이든 JSON 파일을 가져와 구절 검색을 활성화하세요. 각 번역본은 별도로 저장되며 언제든지 전환할 수 있습니다.",
+    "importButton": "JSON 가져오기",
+    "loading": "성경 로딩 중…",
+    "notLoaded": "로드되지 않음"
+  },
+  "quickScripture": {
+    "title": "빠른 성경",
+    "hint": "라이브 · 즉석",
+    "refPlaceholder": "참조 (예: 요한복음 3:16)",
+    "textPlaceholder": "절 텍스트 — 빈 줄이 페이지를 구분합니다",
+    "lookupButton": "🔍",
+    "displayButton": "표시",
+    "clearButton": "지우기",
+    "status": "성경: {ref}",
+    "statusNoRef": "성경이 표시되었습니다"
   },
   "navigation": {
     "verseInfo": "{current}/{total}절 · {totalLines}행 중 {startLine}-{endLine}행",
@@ -116,7 +179,12 @@
       "nextLine": "다음 행 창 (아래쪽 화살표)",
       "jumpChorus": "사용 가능한 경우 후렴 표시",
       "emergencyClear": "스트림에서 오버레이 즉시 숨기기"
-    }
+    },
+    "chorusNext": " · 다음은 후렴",
+    "lastChorus": " · 마지막 후렴",
+    "lastVerse": " · 마지막 절",
+    "shrinksToFit": " · ⚠ 맞추려고 축소됨",
+    "chorusInfo": "후렴 · {totalLines}줄 중 {startLine}-{endLine}줄"
   },
   "display": {
     "title": "표시 제어",
@@ -124,7 +192,12 @@
     "liveIndicator": "라이브",
     "resetButton": "초기화",
     "resetTooltip": "첫 절, 첫 행으로 초기화",
-    "linesPerDisplay": "화면당 행 수"
+    "linesPerDisplay": "화면당 행 수",
+    "blanked": "화면이 비워졌습니다 — 표시 또는 빠른 성구가 다시 불러옵니다",
+    "displayOffHint": "표시가 꺼져 있습니다 — 이 찬송가를 보이려면 표시 스위치를 켜세요",
+    "hotkeysReconnecting": "OBS 단축키 연결이 끊겼습니다 — 다시 연결 중…",
+    "noHymnSelected": "표시할 내용이 없습니다 — 먼저 찬송가를 선택하세요",
+    "offHint": "표시가 꺼져 있습니다 — 이 찬송가를 보이려면 표시 스위치를 켜세요"
   },
   "preview": {
     "title": "찬송가 미리보기"
@@ -167,13 +240,27 @@
     "addHymn": "찬송가 추가",
     "buttons": {
       "cancel": "취소",
-      "save": "변경 사항 저장"
+      "save": "변경 사항 저장",
+      "addAnyway": "그래도 추가",
+      "delete": "삭제",
+      "discard": "버리기",
+      "ok": "확인"
+    },
+    "confirmations": {
+      "badReference": "\"{ref}\"은(는) 올바른 성경 참조가 아닌 것 같습니다.\n그래도 추가할까요?",
+      "discard": "저장하지 않은 변경 사항을 버릴까요?"
     }
   },
   "settings": {
     "title": "설정",
     "language": "언어",
     "languageLabel": "인터페이스 언어"
+  },
+  "tabs": {
+    "library": "라이브러리",
+    "service": "서비스",
+    "live": "라이브",
+    "style": "스타일"
   },
   "setup": {
     "import": {
@@ -188,5 +275,159 @@
     "importFormats": {
       "csv": "CSV 형식"
     }
+  },
+  "ui": {
+    "blank_screen": "화면 비우기",
+    "restore": "↩ 복원",
+    "shortcuts": "? 단축키",
+    "tip_drop_any_downloaded_file_anywhere": "팁: 다운로드한 파일(성경 .zip/.json/USFM, 찬송가, 예배 순서, 백업)을 독 아무 곳에나 놓으세요. HymnFlow가 종류를 알아내어 압축 해제와 변환까지 해 줍니다.",
+    "get_another_translation": "다른 번역본 받기",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow는 스스로 아무것도 다운로드하지 않습니다. 언어를 고르고 링크를 열어 파일을 저장한 뒤 위의 성경 카드에 놓으세요. 압축 해제나 변환은 필요 없습니다. 각 번역본의 라이선스를 확인하세요.",
+    "language": "언어",
+    "import": "가져오기",
+    "cancel": "취소",
+    "auto_display_planned_scripture": "계획된 성구 자동 표시",
+    "background_opacity": "배경 불투명도",
+    "scripture_display": "성구 표시",
+    "scripture_font": "성구 글꼴",
+    "classic_serif_default": "클래식 세리프(기본)",
+    "same_as_lyrics": "가사와 동일",
+    "italic_text": "기울임꼴",
+    "show_reference": "참조 표시",
+    "translation_badge": "번역본 배지",
+    "custom_size": "사용자 지정 크기",
+    "scripture_font_size": "성구 글꼴 크기",
+    "obs_connection": "OBS 연결",
+    "host": "호스트",
+    "port": "포트",
+    "password": "비밀번호",
+    "connect": "연결",
+    "disconnect": "연결 끊기",
+    "hotkeys_dock_focus": "단축키(독에 포커스가 있을 때)",
+    "data_backup": "데이터 및 백업",
+    "hymns_services_and_settings_are_stored": "찬송가, 예배 순서, 설정은 이 브라우저에 저장됩니다. 독을 열 때마다 자동으로 스냅샷이 만들어지며, 찬송가나 순서를 삭제해도 몇 초 안에 되돌릴 수 있습니다.",
+    "export_backup": "백업 내보내기…",
+    "restore_from_file": "파일에서 복원…",
+    "usage_report_each_hymn_put_on": "사용 보고서: 화면에 표시한 찬송가는 이 기기에 기록되어(날짜, 제목, CCLI 번호) CCLI에 보고할 수 있습니다. 어디로도 전송되지 않습니다.",
+    "export_usage_report_csv": "사용 보고서 내보내기(CSV)…",
+    "clear_usage_log": "사용 기록 지우기",
+    "automatic_snapshots": "자동 스냅샷",
+    "restore_selected_snapshot": "선택한 스냅샷 복원",
+    "bibles_are_stored_separately_and_are": "성경은 별도로 저장되며 백업이나 복원의 영향을 받지 않습니다. OBS 연결 정보와 비밀번호는 백업 파일에 절대 기록되지 않습니다.",
+    "licensing_credits": "라이선스 및 크레딧",
+    "livestreaming": "라이브 스트리밍:",
+    "showing_copyrighted_lyrics_on_a_livestream": "저작권이 있는 가사를 라이브 방송에 표시하려면 일반 교회 저작권 라이선스 외에 스트리밍 라이선스(예: CCLI, OneLicense)가 필요한 경우가 많습니다. 요건은 국가와 플랫폼마다 다르니 라이선스 제공처에 확인하세요. 공공 도메인 찬송가는 필요 없습니다. 각 찬송가의 편집 화면에 저작권과 CCLI 번호를 기록하세요.",
+    "bible_translations": "성경 번역본:",
+    "you_are_responsible_for_having_the": "가져오는 번역본을 사용할 권리가 있는지 확인할 책임은 사용자에게 있습니다. 공공 도메인이나 공개 라이선스 텍스트는 괜찮지만, 그 외에는 출판사의 허락이 필요합니다.",
+    "ask_for_a_second_press_before": "다음 예배 항목으로 넘어가기 전에 한 번 더 누르도록 하기",
+    "copyright": "저작권",
+    "ccli": "CCLI 번호",
+    "name_optional": "이름(선택)",
+    "search_by_title_author_or_number": "제목, 작가 또는 번호로 검색…",
+    "reference_or_label": "참조 또는 라벨",
+    "enter_text": "텍스트 입력…",
+    "type_any_text_to_send_to": "오버레이로 보낼 텍스트를 입력하세요(성구, 공지, 빈 화면…)",
+    "leave_blank_if_none": "(없으면 비워 두세요)",
+    "e_g_public_domain_or_1990": "예: 공공 도메인 또는 © 1990 출판사",
+    "take_the_screen_down_without_losing": "현재 위치를 잃지 않고 화면 내리기(B)",
+    "bring_back_what_was_on_screen": "비우기/지우기 전에 화면에 있던 내용 되돌리기(Z)",
+    "keyboard_shortcuts": "키보드 단축키(?)",
+    "previous_item_in_service": "이전 예배 항목",
+    "next_item_in_service": "다음 예배 항목",
+    "import_a_service_schedule_from_a": "텍스트 파일에서 예배 순서 가져오기",
+    "active_translation": "사용 중인 번역본",
+    "look_up_verse": "구절 찾기",
+    "skip_the_confidence_preview_planned_scripture": "확인용 미리보기 건너뛰기: 계획된 성구는 활성화하면 바로 화면에 표시됩니다",
+    "on_the_last_verse_the_first": "마지막 절에서 '다음'을 처음 누르면 준비만 되고, 몇 초 안에 한 번 더 누르면 다음 예배 항목으로 넘어갑니다",
+    "storage_type": "저장소 유형",
+    "main_navigation": "주 메뉴",
+    "keyboard_shortcuts_2": "키보드 단축키",
+    "filter_by_source": "출처별 필터",
+    "hymns_library": "찬송가 라이브러리",
+    "select_hymn_file_to_import": "가져올 찬송가 파일 선택",
+    "translation_name_optional_filled_in_automaticall": "번역본 이름(선택, 자동 입력)",
+    "select_a_bible_file": "성경 파일 선택",
+    "select_service_schedule_text_file": "예배 순서 텍스트 파일 선택",
+    "saved_services": "저장된 예배 순서",
+    "jump_to_verse": "절로 이동",
+    "scripture_reference": "성구 참조",
+    "bible_translation": "성경 번역본",
+    "verse_text": "구절 본문",
+    "previous_page": "이전 페이지",
+    "next_page": "다음 페이지",
+    "background_opacity_2": "배경 불투명도"
+  },
+  "drop": {
+    "overlay": "놓아서 가져오기",
+    "unsupported": "이 형식의 파일은 가져올 수 없습니다. 찬송가 파일(.txt, .csv, .json, .cho, .usr), 성경 파일(.zip, .json, .usfm), 예배 순서(.txt) 또는 HymnFlow 백업(.json)을 사용하세요."
+  },
+  "msg": {
+    "noSnapshots": "아직 스냅샷이 없습니다",
+    "shortcutsNote": "단축키는 독에 포커스가 있을 때 작동합니다. 어느 창에서나 작동하는 키를 쓰려면 스타일 → OBS 연결에서 OBS 단축키를 연결하세요.",
+    "hotkeysOn": "전역 단축키: 켜짐",
+    "hotkeysConnecting": "전역 단축키: 연결 중…",
+    "hotkeysOff": "전역 단축키: 꺼짐",
+    "hotkeysConnected": "OBS 단축키 연결됨",
+    "storageFullHymns": "저장 공간이 가득 찼습니다(찬송가 {count}곡). 찬송가를 내보낸 뒤 저장 공간을 비우고 계속하세요.",
+    "storageFull": "저장 공간이 가득 찼습니다 — 찬송가를 내보내 공간을 확보하세요.",
+    "errorSavingHymns": "찬송가 저장 오류: {error}",
+    "errorSavingSettings": "설정 저장 오류: {error}",
+    "errorSavingServices": "예배 순서 저장 오류: {error}",
+    "bibleNotLoaded": "성경이 로드되지 않았습니다 — 라이브러리 탭에서 번역본을 가져오세요",
+    "draftRestored": "저장하지 않은 예배 순서 초안을 복원했습니다",
+    "listLabel": "목록 라벨: \"{label}\"",
+    "cueNotes": "큐 노트 — {item}",
+    "serviceDeletedShort": "예배 순서를 삭제했습니다",
+    "duplicated": "복제됨: \"{name}\"",
+    "serviceImportEmpty": "가져오기 실패: 파일에서 예배 항목을 찾을 수 없습니다",
+    "serviceImported": "\"{name}\" 가져옴 — 항목 {count}개{warnings}",
+    "warningsCount": "경고 {count}개",
+    "serviceImportWarnings": "경고와 함께 예배 순서를 가져왔습니다:",
+    "couldNotRead": "파일을 읽을 수 없습니다",
+    "importing": "가져오는 중… ({done}/{total})",
+    "importFailed": "가져오기 실패: {error}",
+    "kjvLoaded": "KJV 로드됨 — 성구 검색 준비 완료",
+    "noUsage": "아직 표시한 찬송가가 없습니다.",
+    "clearUsageConfirm": "이 기기의 사용 기록을 지울까요? 보고에 필요하면 먼저 내보내세요.",
+    "clear": "지우기",
+    "usageCleared": "사용 기록을 지웠습니다",
+    "creditsIntro": "불러온 번역본의 크레딧(교회 크레딧에 기재하세요):",
+    "open": "열기",
+    "copyLink": "링크 복사",
+    "linkCopied": "링크를 복사했습니다",
+    "copyManually": "위의 링크 텍스트를 선택해 복사하세요(Ctrl+C)",
+    "hotkeysSetupTitle": "전역 단축키를 설정하려면 클릭하세요(스타일 → OBS 연결)"
+  },
+  "bibleGet": {
+    "otherLanguages": "기타 언어",
+    "license": {
+      "pd": "공공 도메인",
+      "bibliatodo": "무료 라이선스(BibliaTodo v1.9) — 출처 표기 필요",
+      "ccbysa": "CC BY-SA 4.0 — Biblica 표기",
+      "varies": "번역본마다 다름 — 각각 확인하세요"
+    },
+    "steps": {
+      "save": "파일을 저장한 뒤 위의 성경 카드에 놓으세요.",
+      "zip": "JSON ZIP을 내려받아 위의 성경 카드에 놓으세요(압축 해제 불필요).",
+      "ntbt": "내려받은 ZIP을 위의 성경 카드에 놓으세요(압축 해제 불필요).",
+      "yoruba": "해당 페이지에서 USFM(.zip) 버전을 내려받아 위의 성경 카드에 놓으세요. HymnFlow가 변환해 줍니다.",
+      "ebible": "수백 개의 번역본. USFM(.zip) 버전을 내려받아 위의 성경 카드에 놓으세요."
+    }
+  },
+  "operator": {
+    "corruptKept": "저장된 {name} 데이터를 읽을 수 없습니다. 복구할 수 있도록 브라우저 저장소에 사본(hymnflow-corrupt-{name}-*)을 보관했습니다.",
+    "restore": "복원",
+    "noSnapshot": "해당 스냅샷은 더 이상 사용할 수 없습니다.",
+    "notBackup": "이 파일은 HymnFlow 백업이 아닙니다.",
+    "emptyBackup": "백업에 사용할 수 있는 찬송가가 없습니다.",
+    "undo": "되돌리기",
+    "undone": "복원됨",
+    "nothingToRestore": "복원할 항목이 없습니다",
+    "restored": "화면에 있던 내용을 복원했습니다",
+    "pressAgain": "마지막 절 — {item}(으)로 가려면 '다음'을 한 번 더 누르세요",
+    "blanked": "화면을 비웠습니다",
+    "cleared": "화면을 지웠습니다",
+    "hymnDeleted": "\"{title}\" 삭제됨",
+    "serviceDeleted": "예배 순서 \"{name}\" 삭제됨"
   }
 }

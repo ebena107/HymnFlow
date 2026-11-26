@@ -23,4 +23,5 @@ with open(output_file, "w", encoding="utf-8") as f:
     f.write(";\n")
 
 print(f"Successfully generated {output_file}")
-print("WARNING: Run this only after updating all .json files to match translations.js")
+print("Edit the per-language .json files, then run this script to regenerate translations.js.")
+print("tests/i18n.test.js fails if the .json files and translations.js disagree.")

@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "HymnFlow Dock",
-    "subtitle": "Atunṣe isalẹ-kẹta fun OBS HYMN",
+    "subtitle": "Atunṣe isalẹ-kẹta fun OBS HYMN by @gbcowode",
     "status": {
       "live": "LÓRÍ ATFẸFERẸ",
       "storage": "localStorage",
@@ -84,7 +84,8 @@
     "alerts": {
       "nameRequired": "Orúkọ ìsìn ṣe pàtàkì",
       "atLeastOneHymn": "Fi ó kéré tán orin kan kún ìsìn yìí",
-      "validationFailed": "Ìfihàn ìsìn kùnà:\n{errors}"
+      "validationFailed": "Ìfihàn ìsìn kùnà:\n{errors}",
+      "itemRequired": "Fi o kéré jù ohun kan kún ètò ìsìn"
     },
     "confirmations": {
       "delete": "Pa ìsìn yìí rẹ́?"
@@ -93,11 +94,73 @@
       "validationIssues": "Ìkìlọ̀: Ìsìn yìí ní àwọn ìṣòro ìfihàn",
       "loaded": "Ìsìn tí a gbé jáde: {name} (orin {count})",
       "deleted": "A ti pa ìsìn rẹ́",
-      "saved": "A ti fi ìsìn pa mọ́"
+      "saved": "A ti fi ìsìn pa mọ́",
+      "hymnNotFound": "A kò rí orin náà nínú ìkójọpọ̀",
+      "divider": "▸ {label}",
+      "hymnDeleted": "A ti pa orin ìyìn rẹ́ (a ṣe ìmúdójúìwọ̀n ètò ìsìn {count})"
     },
     "errors": {
       "saveFailed": "Àṣìṣe nígbà tí a ń fi ìsìn pa mọ́: {error}"
+    },
+    "addButtons": {
+      "announce": "+ Ìkéde",
+      "divider": "+ Ìpín",
+      "hymn": "+ Orin ìyìn",
+      "scripture": "+ Ìwé Mímọ́"
+    },
+    "banner": {
+      "nextItem": "Ohun tó kàn nínú ètò ìsìn",
+      "prevItem": "Ohun tó ṣáájú nínú ètò ìsìn"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "Fi ìkéde kún un",
+        "addDivider": "Fi ìpín kún un",
+        "addScripture": "Fi Ìwé Mímọ́ kún un",
+        "save": "Fi pamọ́"
+      },
+      "placeholders": {
+        "announceText": "Ọ̀rọ̀ ìkéde (fún àpẹẹrẹ, Ẹ wá bá wa ṣe ìdàpọ̀ lẹ́yìn ìsìn)",
+        "dividerLabel": "Àmì apá (fún àpẹẹrẹ, Ọrẹ, Ìwàásù, Àdúrà)",
+        "scriptureRef": "Àlàyé ẹsẹ (fún àpẹẹrẹ, Jòhánù 3:16)",
+        "scriptureText": "Ọ̀rọ̀ ẹsẹ (fún àpẹẹrẹ, Nítorí Ọlọ́run fẹ́ aráyé tó bẹ́ẹ̀…)"
+      },
+      "titles": {
+        "addAnnounce": "Fi ìkéde kún un",
+        "addDivider": "Fi ìpín kún un",
+        "addScripture": "Fi Ìwé Mímọ́ kún un",
+        "editAnnounce": "Ṣàtúnṣe ìkéde",
+        "editDivider": "Ṣàtúnṣe ìpín",
+        "editScripture": "Ṣàtúnṣe Ìwé Mímọ́"
+      }
     }
+  },
+  "textSlide": {
+    "title": "Ìfáwọlé Ọ̀rọ̀",
+    "hint": "ìwé mímọ́, ìkéde, ojú-ìwé òfo",
+    "sendButton": "Fi ránṣẹ sí Overlay",
+    "clearButton": "Mọ́ Ìfáwọlé",
+    "sent": "A ti fi ìfáwọlé ọ̀rọ̀ ránṣẹ",
+    "cleared": "A ti mọ́ ìfáwọlé ọ̀rọ̀"
+  },
+  "bible": {
+    "title": "Bibeli",
+    "label": "Bibeli",
+    "description": "Gbe faili JSON ti ìtúmọ̀ kankan wá láti ṣe imuṣiṣẹ wiwa ẹsẹ. Ìtúmọ̀ kọ̀ọ̀kan wà ní àárọ̀ — yí padà láàrin wọn nígbàkigbà.",
+    "importButton": "Gbe JSON Wọlé",
+    "loading": "Ń gbé Bibeli…",
+    "notLoaded": "A kò gbé wọlé"
+  },
+  "quickScripture": {
+    "title": "Ìwé Mímọ́ Yára",
+    "hint": "láàárọ̀ · ad-hoc",
+    "refPlaceholder": "Ìtọ́kasí (fún àpẹẹrẹ, Johanu 3:16)",
+    "textPlaceholder": "Ọ̀rọ̀ ẹsẹ — ìlà òfo ṣe ìyàtọ̀ àwọn ojú-ìwé",
+    "lookupButton": "🔍",
+    "displayButton": "Fihàn",
+    "clearButton": "Pa Rẹ",
+    "status": "Ìwé Mímọ́: {ref}",
+    "statusNoRef": "A ti fihàn Ìwé Mímọ́"
   },
   "navigation": {
     "verseInfo": "Ẹsẹ {current}/{total} · Ìlà {startLine}-{endLine} nínú {totalLines}",
@@ -117,7 +180,11 @@
       "nextLine": "Ferese ìlà tí ó kàn (Ọfà ìsàlẹ̀)",
       "jumpChorus": "Fi ègbè hàn bí ó bá wà",
       "emergencyClear": "Fi ìbòrí pa mọ́ lẹ́sẹ̀kẹsẹ̀ kúrò lórí afẹ́fẹ́"
-    }
+    },
+    "chorusNext": " · Ègbè tó kàn",
+    "lastChorus": " · Ègbè ìkẹyìn",
+    "lastVerse": " · Ẹsẹ ìkẹyìn",
+    "shrinksToFit": " · ⚠ ń dín kù láti wọ̀"
   },
   "display": {
     "title": "Àwọn Ìṣàkóso Ìfihàn",
@@ -125,7 +192,12 @@
     "liveIndicator": "LÓRÍ ATFẸFERẸ",
     "resetButton": "Tunṣe",
     "resetTooltip": "Tunṣe sí ẹsẹ àkọ́kọ́, ìlà àkọ́kọ́",
-    "linesPerDisplay": "Ìlà fún ìfihàn kọ̀ọ̀kan"
+    "linesPerDisplay": "Ìlà fún ìfihàn kọ̀ọ̀kan",
+    "blanked": "A ti sọ ojú-ìbòjú di òfo — Ìfihàn tàbí Ìwé Mímọ́ kíákíá yóò mú un padà",
+    "displayOffHint": "Ìfihàn wà ní PÍPA — yí ìyípadà Ìfihàn kí orin yìí lè hàn",
+    "hotkeysReconnecting": "Àwọn hotkey OBS ti já — ń tún sopọ̀…",
+    "noHymnSelected": "Kò sí ohun láti fihàn — yan orin ìyìn kan ná",
+    "offHint": "Ìfihàn wà ní PÍPA — yí ìyípadà Ìfihàn kí orin yìí lè hàn"
   },
   "preview": {
     "title": "Ìwòràn Orin"
@@ -168,13 +240,27 @@
     "addHymn": "Fi Orin Kún Un",
     "buttons": {
       "cancel": "Fagilé",
-      "save": "Fi Àtúnṣe Pa Mọ́"
+      "save": "Fi Àtúnṣe Pa Mọ́",
+      "addAnyway": "Fi kún un lọ́nàkọnà",
+      "delete": "Parẹ́",
+      "discard": "Ṣá tì",
+      "ok": "Ó dára"
+    },
+    "confirmations": {
+      "badReference": "\"{ref}\" kò jọ àlàyé ẹsẹ Bíbélì tó tọ́.\nṢé kí a fi kún un lọ́nàkọnà?",
+      "discard": "Ṣé kí a ṣá àwọn àyípadà tí a kò tíì fi pamọ́ tì?"
     }
   },
   "settings": {
     "title": "Àwọn Ètò",
     "language": "Èdè",
     "languageLabel": "Èdè Ìkọ́nilọ́wọ́"
+  },
+  "tabs": {
+    "library": "Ìkójọpọ̀",
+    "service": "Ìsìn",
+    "live": "Alãáyẹ",
+    "style": "Ìpele"
   },
   "setup": {
     "import": {
@@ -189,5 +275,159 @@
     "importFormats": {
       "csv": "Iru CSV"
     }
+  },
+  "ui": {
+    "blank_screen": "Ṣe ojú-ìbòjú di òfo",
+    "restore": "↩ Dá padà",
+    "shortcuts": "? Àwọn ọ̀nà àbùjá",
+    "tip_drop_any_downloaded_file_anywhere": "Ìmọ̀ràn: sọ fáìlì èyíkéyìí tí o gbà sílẹ̀ sí ibikíbi lórí dock — Bíbélì (.zip, .json, USFM), orin ìyìn, ètò ìsìn tàbí ẹ̀dà ìpamọ́. HymnFlow yóò mọ ohun tí ó jẹ́, yóò ṣí i, yóò sì yí i padà fún ọ.",
+    "get_another_translation": "Gba ìtumọ̀ mìíràn",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow kì í gba nǹkan kan sílẹ̀ fúnrarẹ̀. Yan èdè kan, ṣí ìjápọ̀ náà, fi fáìlì pamọ́, lẹ́yìn náà sọ ọ́ sórí káàdì Bíbélì lókè — kò sí ìdí láti ṣí tàbí yípadà. Ṣàyẹ̀wò ìwé-àṣẹ ìtumọ̀ kọ̀ọ̀kan.",
+    "language": "Èdè",
+    "import": "Gbé wọlé",
+    "cancel": "Fagilé",
+    "auto_display_planned_scripture": "Fi Ìwé Mímọ́ tí a ṣètò hàn fúnrarẹ̀",
+    "background_opacity": "Ìṣípayá ẹ̀yìn",
+    "scripture_display": "Ìfihàn Ìwé Mímọ́",
+    "scripture_font": "Ọ̀nà kíkọ Ìwé Mímọ́",
+    "classic_serif_default": "Serif àtijọ́ (àìyípadà)",
+    "same_as_lyrics": "Bí ọ̀rọ̀ orin",
+    "italic_text": "Ọ̀rọ̀ tí ó tẹ̀",
+    "show_reference": "Fi àlàyé ẹsẹ hàn",
+    "translation_badge": "Àmì ìtumọ̀",
+    "custom_size": "Ìwọ̀n àdáni",
+    "scripture_font_size": "Ìwọ̀n kíkọ Ìwé Mímọ́",
+    "obs_connection": "Ìsopọ̀ OBS",
+    "host": "Olùgbàlejò",
+    "port": "Ibudo",
+    "password": "Ọ̀rọ̀ ìgbaniwọlé",
+    "connect": "Sopọ̀",
+    "disconnect": "Ya kúrò",
+    "hotkeys_dock_focus": "Àwọn ọ̀nà àbùjá (nígbà tí dock bá wà lórí)",
+    "data_backup": "Dátà àti ẹ̀dà ìpamọ́",
+    "hymns_services_and_settings_are_stored": "A fi àwọn orin ìyìn, ètò ìsìn àti ètò sí ibi ìwádìí yìí. A máa ń ya àwòrán ìpamọ́ ní gbogbo ìgbà tí a bá ṣí dock, o sì lè dá ìparẹ́ orin tàbí ètò padà fún ìṣẹ́jú-àáyá díẹ̀.",
+    "export_backup": "Gbé ẹ̀dà ìpamọ́ jáde…",
+    "restore_from_file": "Dá padà láti inú fáìlì…",
+    "usage_report_each_hymn_put_on": "Ìròyìn lílò: orin ìyìn kọ̀ọ̀kan tí a fihàn lórí ojú-ìbòjú ni a ń kọ sílẹ̀ lórí ẹ̀rọ yìí (ọjọ́, àkọ́lé, nọ́mbà CCLI) kí o lè fi ròyìn sí CCLI. A kò fi nǹkan ránṣẹ́ sí ibikíbi.",
+    "export_usage_report_csv": "Gbé ìròyìn lílò jáde (CSV)…",
+    "clear_usage_log": "Pa àkọsílẹ̀ lílò rẹ́",
+    "automatic_snapshots": "Àwọn àwòrán ìpamọ́ àdáṣe",
+    "restore_selected_snapshot": "Dá àwòrán ìpamọ́ tí a yàn padà",
+    "bibles_are_stored_separately_and_are": "A ń pa àwọn Bíbélì mọ́ lọ́tọ̀ọ̀tọ̀, ẹ̀dà ìpamọ́ tàbí ìdápadà kò sì fọwọ́ kàn wọ́n. A kì í kọ àlàyé ìsopọ̀ OBS àti ọ̀rọ̀ ìgbaniwọlé sínú fáìlì ẹ̀dà ìpamọ́.",
+    "licensing_credits": "Ìwé-àṣẹ àti ìdúpẹ́",
+    "livestreaming": "Ìgbóhùnsáfẹ́fẹ́ láàyè:",
+    "showing_copyrighted_lyrics_on_a_livestream": "fífi ọ̀rọ̀ orin tí ó ní ẹ̀tọ́-àdáwòkọ hàn lórí ìgbóhùnsáfẹ́fẹ́ láàyè sábà máa ń béèrè ìwé-àṣẹ ìgbóhùnsáfẹ́fẹ́ yàtọ̀ sí ìwé-àṣẹ ẹ̀tọ́-àdáwòkọ ìjọ (fún àpẹẹrẹ CCLI tàbí OneLicense). Àwọn ohun tí a nílò yàtọ̀ láti orílẹ̀-èdè sí orílẹ̀-èdè àti pẹpẹ — bá olùpèsè ìwé-àṣẹ rẹ sọ̀rọ̀. Àwọn orin ìyìn tí ó jẹ́ ti gbogbo ènìyàn kò nílò rẹ̀. Kọ ẹ̀tọ́-àdáwòkọ àti nọ́mbà CCLI orin kọ̀ọ̀kan sínú fọ́ọ̀mù àtúnṣe rẹ̀.",
+    "bible_translations": "Àwọn ìtumọ̀ Bíbélì:",
+    "you_are_responsible_for_having_the": "ojúṣe rẹ ni láti ní ẹ̀tọ́ láti lo àwọn ìtumọ̀ tí o gbé wọlé. Àwọn ọ̀rọ̀ tí ó jẹ́ ti gbogbo ènìyàn tàbí tí a fún ní ìwé-àṣẹ ṣíṣí dára; àwọn yòókù nílò ìyọ̀nda láti ọ̀dọ̀ olùtẹ̀wé.",
+    "ask_for_a_second_press_before": "Béèrè ìtẹ̀ kejì kí a tó lọ sí ohun tó kàn nínú ètò ìsìn",
+    "copyright": "Ẹ̀tọ́-àdáwòkọ",
+    "ccli": "Nọ́mbà CCLI",
+    "name_optional": "Orúkọ (kò pọn dandan)",
+    "search_by_title_author_or_number": "Wá nípa àkọ́lé, òǹkọ̀wé tàbí nọ́mbà…",
+    "reference_or_label": "Àlàyé ẹsẹ tàbí àmì",
+    "enter_text": "Tẹ ọ̀rọ̀ sí i…",
+    "type_any_text_to_send_to": "Tẹ ọ̀rọ̀ èyíkéyìí láti fi ránṣẹ́ sí ojú-ìbòjú (Ìwé Mímọ́, ìkéde, ojú-ìbòjú òfo...)",
+    "leave_blank_if_none": "(fi sílẹ̀ bí kò bá sí)",
+    "e_g_public_domain_or_1990": "fún àpẹẹrẹ, Ti gbogbo ènìyàn, tàbí © 1990 Olùtẹ̀wé",
+    "take_the_screen_down_without_losing": "Mú ojú-ìbòjú kúrò láì sọ ibi tí o dé nù (B)",
+    "bring_back_what_was_on_screen": "Mú ohun tó wà lórí ojú-ìbòjú padà kí Òfo / Pa rẹ́ tó ṣẹlẹ̀ (Z)",
+    "keyboard_shortcuts": "Àwọn ọ̀nà àbùjá kọ́kọ́rọ́ (?)",
+    "previous_item_in_service": "Ohun tó ṣáájú nínú ètò ìsìn",
+    "next_item_in_service": "Ohun tó kàn nínú ètò ìsìn",
+    "import_a_service_schedule_from_a": "Gbé ètò ìsìn wọlé láti inú fáìlì ọ̀rọ̀",
+    "active_translation": "Ìtumọ̀ tí ń lò lọ́wọ́",
+    "look_up_verse": "Wá ẹsẹ",
+    "skip_the_confidence_preview_planned_scripture": "Yẹ àyẹ̀wò àkọ́kọ́ sílẹ̀: àwọn ẹsẹ tí a ṣètò yóò lọ tààrà sí ojú-ìbòjú nígbà tí a bá mú wọn ṣiṣẹ́",
+    "on_the_last_verse_the_first": "Ní ẹsẹ ìkẹyìn, ìtẹ̀ àkọ́kọ́ lórí Èyí tó kàn kàn ń múra sílẹ̀ ni; ìtẹ̀ kejì láàárín ìṣẹ́jú-àáyá díẹ̀ yóò lọ sí ohun tó kàn nínú ètò ìsìn",
+    "storage_type": "Irú ibi ìpamọ́",
+    "main_navigation": "Ìlọ-bọ̀ pàtàkì",
+    "keyboard_shortcuts_2": "Àwọn ọ̀nà àbùjá kọ́kọ́rọ́",
+    "filter_by_source": "Ṣẹ̀ka nípa orísun",
+    "hymns_library": "Ibi ìkówèé orin ìyìn",
+    "select_hymn_file_to_import": "Yan fáìlì orin ìyìn láti gbé wọlé",
+    "translation_name_optional_filled_in_automaticall": "Orúkọ ìtumọ̀ (kò pọn dandan, a máa fi sí i fúnrarẹ̀)",
+    "select_a_bible_file": "Yan fáìlì Bíbélì kan",
+    "select_service_schedule_text_file": "Yan fáìlì ọ̀rọ̀ ètò ìsìn",
+    "saved_services": "Àwọn ètò ìsìn tí a fi pamọ́",
+    "jump_to_verse": "Lọ sí ẹsẹ",
+    "scripture_reference": "Àlàyé ẹsẹ Ìwé Mímọ́",
+    "bible_translation": "Ìtumọ̀ Bíbélì",
+    "verse_text": "Ọ̀rọ̀ ẹsẹ",
+    "previous_page": "Ojú ìwé tó ṣáájú",
+    "next_page": "Ojú ìwé tó kàn",
+    "background_opacity_2": "Ìṣípayá ẹ̀yìn"
+  },
+  "drop": {
+    "overlay": "Sọ sílẹ̀ láti gbé wọlé",
+    "unsupported": "A kò lè gbé irú fáìlì yẹn wọlé. Lo fáìlì orin ìyìn (.txt, .csv, .json, .cho, .usr), fáìlì Bíbélì (.zip, .json, .usfm), ètò ìsìn (.txt) tàbí ẹ̀dà ìpamọ́ HymnFlow (.json)."
+  },
+  "msg": {
+    "noSnapshots": "Kò tíì sí àwòrán ìpamọ́",
+    "shortcutsNote": "Àwọn ọ̀nà àbùjá ń ṣiṣẹ́ nígbà tí dock bá wà lórí. Fún àwọn kọ́kọ́rọ́ tí ń ṣiṣẹ́ láti inú fèrèsé èyíkéyìí, so àwọn hotkey OBS ní Ìrísí → Ìsopọ̀ OBS.",
+    "hotkeysOn": "Àwọn hotkey gbogbogbò: wà lórí",
+    "hotkeysConnecting": "Àwọn hotkey gbogbogbò: ń sopọ̀…",
+    "hotkeysOff": "Àwọn hotkey gbogbogbò: wà ní pípa",
+    "hotkeysConnected": "A ti so àwọn hotkey OBS",
+    "storageFullHymns": "Ibi ìpamọ́ ti kún ({count} orin ìyìn). Gbé àwọn orin rẹ jáde, lẹ́yìn náà ṣí ibi ìpamọ́ kí o lè tẹ̀síwájú.",
+    "storageFull": "Ibi ìpamọ́ ti kún — gbé orin ìyìn jáde láti rí ààyè.",
+    "errorSavingHymns": "Àṣìṣe nígbà tí a ń fi orin ìyìn pamọ́: {error}",
+    "errorSavingSettings": "Àṣìṣe nígbà tí a ń fi ètò pamọ́: {error}",
+    "errorSavingServices": "Àṣìṣe nígbà tí a ń fi ètò ìsìn pamọ́: {error}",
+    "bibleNotLoaded": "Kò tíì gbé Bíbélì wọlé — gbé ìtumọ̀ kan wọlé ní táàbù Ibi ìkówèé",
+    "draftRestored": "A ti dá àkọsílẹ̀ ètò ìsìn tí a kò tíì fi pamọ́ padà",
+    "listLabel": "Àmì àtòkọ: \"{label}\"",
+    "cueNotes": "Àkọsílẹ̀ ìtọ́kasí — {item}",
+    "serviceDeletedShort": "A ti pa ètò ìsìn rẹ́",
+    "duplicated": "A ti ṣe ẹ̀dà: \"{name}\"",
+    "serviceImportEmpty": "Ìgbéwọlé kùnà: kò sí ohun ètò ìsìn nínú fáìlì náà",
+    "serviceImported": "A ti gbé \"{name}\" wọlé — ohun {count}{warnings}",
+    "warningsCount": "ìkìlọ̀ {count}",
+    "serviceImportWarnings": "A gbé ètò ìsìn wọlé pẹ̀lú ìkìlọ̀:",
+    "couldNotRead": "Kò lè ka fáìlì náà",
+    "importing": "Ń gbé wọlé… ({done}/{total})",
+    "importFailed": "Ìgbéwọlé kùnà: {error}",
+    "kjvLoaded": "KJV ti wọlé — ó ṣetán fún wíwá ẹsẹ",
+    "noUsage": "A kò tíì fi orin ìyìn kankan hàn.",
+    "clearUsageConfirm": "Ṣé kí a pa àkọsílẹ̀ lílò rẹ́ lórí ẹ̀rọ yìí? Gbé e jáde ná tí o bá nílò rẹ̀ fún ìròyìn.",
+    "clear": "Pa rẹ́",
+    "usageCleared": "A ti pa àkọsílẹ̀ lílò rẹ́",
+    "creditsIntro": "Ìdúpẹ́ fún àwọn ìtumọ̀ tí o ti gbé wọlé (kọ wọ́n sínú ìdúpẹ́ ìjọ rẹ):",
+    "open": "Ṣí",
+    "copyLink": "Ṣe ẹ̀dà ìjápọ̀",
+    "linkCopied": "A ti ṣe ẹ̀dà ìjápọ̀",
+    "copyManually": "Yan ọ̀rọ̀ ìjápọ̀ lókè kí o sì ṣe ẹ̀dà rẹ̀ (Ctrl+C)",
+    "hotkeysSetupTitle": "Tẹ láti ṣètò àwọn hotkey gbogbogbò (Ìrísí → Ìsopọ̀ OBS)"
+  },
+  "bibleGet": {
+    "otherLanguages": "Àwọn èdè mìíràn",
+    "license": {
+      "pd": "Ti gbogbo ènìyàn",
+      "bibliatodo": "Ìwé-àṣẹ ọ̀fẹ́ (BibliaTodo v1.9) — a nílò ìdúpẹ́",
+      "ccbysa": "CC BY-SA 4.0 — dúpẹ́ lọ́wọ́ Biblica",
+      "varies": "Ó yàtọ̀ — ṣàyẹ̀wò ìtumọ̀ kọ̀ọ̀kan"
+    },
+    "steps": {
+      "save": "Fi fáìlì pamọ́, lẹ́yìn náà sọ ọ́ sórí káàdì Bíbélì lókè.",
+      "zip": "Gba ZIP JSON sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè (kò sí ìdí láti ṣí i).",
+      "ntbt": "Sọ ZIP tí o gbà sílẹ̀ sórí káàdì Bíbélì lókè (kò sí ìdí láti ṣí i).",
+      "yoruba": "Lórí ojú ìwé náà, gba ẹ̀yà USFM (.zip) sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè — HymnFlow yóò yí i padà fún ọ.",
+      "ebible": "Ọgọ́rọ̀ọ̀rún ìtumọ̀. Gba ẹ̀yà USFM (.zip) sílẹ̀ kí o sì sọ ọ́ sórí káàdì Bíbélì lókè."
+    }
+  },
+  "operator": {
+    "corruptKept": "A kò lè ka dátà {name} tí a fi pamọ́. A fi ẹ̀dà kan sílẹ̀ sí ibi ìpamọ́ aṣàwákiri (hymnflow-corrupt-{name}-*) kí a lè gbà á padà.",
+    "restore": "Dá padà",
+    "noSnapshot": "Àwòrán ìpamọ́ yẹn kò sí mọ́.",
+    "notBackup": "Fáìlì yẹn kì í ṣe ẹ̀dà ìpamọ́ HymnFlow.",
+    "emptyBackup": "Kò sí orin ìyìn tí a lè lò nínú ẹ̀dà ìpamọ́ náà.",
+    "undo": "Dá padà",
+    "undone": "A ti dá padà",
+    "nothingToRestore": "Kò sí ohun láti dá padà",
+    "restored": "A ti dá ohun tó wà lórí ojú-ìbòjú padà",
+    "pressAgain": "Ẹsẹ ìkẹyìn — tẹ Èyí tó kàn lẹ́ẹ̀kan sí i fún {item}",
+    "blanked": "A ti sọ ojú-ìbòjú di òfo",
+    "cleared": "A ti pa ojú-ìbòjú rẹ́",
+    "hymnDeleted": "A ti pa \"{title}\" rẹ́",
+    "serviceDeleted": "A ti pa ètò ìsìn \"{name}\" rẹ́"
   }
 }

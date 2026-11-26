@@ -431,7 +431,7 @@
     });
     if (!sel.children.length) {
       const opt = document.createElement('option');
-      opt.textContent = 'No snapshots yet';
+      opt.textContent = t('msg.noSnapshots', 'No snapshots yet');
       sel.appendChild(opt);
     }
     if (btn) btn.disabled = !readSlot(sel.value);
@@ -682,7 +682,7 @@
     });
     const note = document.createElement('p');
     note.className = 'backup-note';
-    note.textContent = 'Shortcuts work while the dock has focus. For keys that work from any window, connect OBS hotkeys in Style → OBS Connection.';
+    note.textContent = t('msg.shortcutsNote', 'Shortcuts work while the dock has focus. For keys that work from any window, connect OBS hotkeys in Style → OBS Connection.');
     const close = document.createElement('button');
     close.className = 'btn btn-add';
     close.textContent = 'Close';
@@ -708,17 +708,21 @@
     close.focus();
   }
 
+  let lastHotkeyState = 'off';
+  window.addEventListener('languageChanged', () => setHotkeyChip(lastHotkeyState));
+
   function setHotkeyChip(state) {
+    lastHotkeyState = state;
     const chip = document.getElementById('hotkeyChip');
     if (!chip) return;
-    const label = state === 'connected' ? 'Global hotkeys: on'
-      : state === 'connecting' ? 'Global hotkeys: connecting…'
-      : 'Global hotkeys: off';
+    const label = state === 'connected' ? t('msg.hotkeysOn', 'Global hotkeys: on')
+      : state === 'connecting' ? t('msg.hotkeysConnecting', 'Global hotkeys: connecting…')
+      : t('msg.hotkeysOff', 'Global hotkeys: off');
     chip.textContent = '⌨ ' + label;
     chip.className = 'hotkey-chip' + (state === 'connected' ? ' on' : state === 'connecting' ? ' connecting' : '');
     chip.title = state === 'connected'
-      ? 'OBS hotkeys are connected'
-      : 'Click to set up global hotkeys (Style → OBS Connection)';
+      ? t('msg.hotkeysConnected', 'OBS hotkeys connected')
+      : t('msg.hotkeysSetupTitle', 'Click to set up global hotkeys (Style → OBS Connection)');
   }
 
   function loadHymns() {
@@ -801,9 +805,9 @@
     } catch (err) {
       console.error('[Hymns Save Error]', err);
       if (err.name === 'QuotaExceededError') {
-        statusEl.textContent = `Storage full (${hymns.length} hymns). Export your hymns then clear storage to continue.`;
+        statusEl.textContent = t('msg.storageFullHymns', 'Storage full ({count} hymns). Export your hymns then clear storage to continue.', { count: hymns.length });
       } else {
-        statusEl.textContent = 'Error saving hymns: ' + err.message;
+        statusEl.textContent = t('msg.errorSavingHymns', 'Error saving hymns: {error}', { error: err.message });
       }
     }
   }
@@ -839,9 +843,9 @@
       } catch (err) {
         console.error('[Settings Save Error]', err);
         if (err.name === 'QuotaExceededError') {
-          statusEl.textContent = 'Storage full — export hymns to free space.';
+          statusEl.textContent = t('msg.storageFull', 'Storage full — export hymns to free space.');
         } else {
-          statusEl.textContent = 'Error saving settings: ' + err.message;
+          statusEl.textContent = t('msg.errorSavingSettings', 'Error saving settings: {error}', { error: err.message });
         }
       }
     }, 300); // Debounce: wait 300ms after last change before saving
@@ -924,7 +928,7 @@
       if (msg.op === 2) {  // Identified — handshake complete
         obsWsSetStatus('connected');
         if (obsWsRetryCount > 0 || !obsWsWasConnected) {
-          statusEl.textContent = 'OBS hotkeys connected';
+          statusEl.textContent = t('msg.hotkeysConnected', 'OBS hotkeys connected');
         }
         obsWsRetryCount = 0;
         obsWsWasConnected = true;
@@ -1548,7 +1552,7 @@
     if (!ref) { refInput?.focus(); return false; }
 
     if (!window.HymnFlowBibleLookup?.isLoaded()) {
-      if (statusEl) statusEl.textContent = 'Bible not loaded — import a translation in the Library tab';
+      if (statusEl) statusEl.textContent = t('msg.bibleNotLoaded', 'Bible not loaded — import a translation in the Library tab');
       return false;
     }
 
@@ -1929,7 +1933,7 @@
       if (window.HymnFlowI18n) {
         statusEl.textContent = window.HymnFlowI18n.getTranslation('services.errors.saveFailed', { error: err.message });
       } else {
-        statusEl.textContent = 'Error saving services: ' + err.message;
+        statusEl.textContent = t('msg.errorSavingServices', 'Error saving services: {error}', { error: err.message });
       }
     }
   }
@@ -2028,7 +2032,7 @@
     document.getElementById('serviceName').value = draft.name || '';
     renderServiceItems();
     markServiceDirty();
-    statusEl.textContent = 'Restored unsaved service draft';
+    statusEl.textContent = t('msg.draftRestored', 'Restored unsaved service draft');
   }
 
   // Which "+ ..." button opened the item form, so focus can return to it.
@@ -2163,7 +2167,7 @@
     if (!hint) return;
     if (!text) { hint.hidden = true; return; }
     const label = text.length > 35 ? text.substring(0, 35) + '…' : text;
-    hint.textContent = `List label: "${label}"`;
+    hint.textContent = t('msg.listLabel', 'List label: "{label}"', { label });
     hint.hidden = false;
   }
 
@@ -2185,7 +2189,7 @@
     const t = (key, fb) => window.HymnFlowI18n ? window.HymnFlowI18n.getTranslation(key) : fb;
     if (type === 'hymn') {
       // Hymns are edited only for their cue notes — the hymn itself is fixed.
-      titleEl.textContent = `Cue Notes — ${existing ? itemDisplayLabel(existing) : ''}`;
+      titleEl.textContent = t('msg.cueNotes', 'Cue Notes — {item}', { item: existing ? itemDisplayLabel(existing) : '' });
       refRow.hidden = true;
       textRow.hidden = true;
       addBtn.textContent = t('services.itemForm.buttons.save', 'Save');
@@ -2401,7 +2405,7 @@
         if (window.HymnFlowI18n) {
           statusEl.textContent = window.HymnFlowI18n.getTranslation('services.status.deleted');
         } else {
-          statusEl.textContent = 'Service deleted';
+          statusEl.textContent = t('msg.serviceDeletedShort', 'Service deleted');
         }
         offerUndo(t('operator.serviceDeleted', 'Deleted service "{name}"', { name: serviceToDelete.name }), before);
       }
@@ -2417,7 +2421,7 @@
     services.push(copy);
     saveServices();
     renderServicesList();
-    statusEl.textContent = `Duplicated: "${copy.name}"`;
+    statusEl.textContent = t('msg.duplicated', 'Duplicated: "{name}"', { name: copy.name });
   }
 
   // ── Service schedule text export / import ─────────────────────────────────
@@ -2613,25 +2617,29 @@
   function handleServiceImport(e) {
     const file = e.target.files[0];
     e.target.value = '';
+    importServiceFile(file);
+  }
+
+  function importServiceFile(file) {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
       const fallback = file.name.replace(/\.txt$/i, '').replace(/^hymnflow-service-/i, '').replace(/[-_]+/g, ' ').trim() || 'Imported Service';
       const { name, items, warnings } = parseServiceText(ev.target.result, fallback);
       if (!items.length) {
-        statusEl.textContent = 'Import failed: no service items found in file';
+        statusEl.textContent = t('msg.serviceImportEmpty', 'Import failed: no service items found in file');
         return;
       }
       services.push({ id: generateUniqueServiceId(), name, items });
       saveServices();
       renderServicesList();
-      statusEl.textContent = `Imported "${name}" — ${items.length} item${items.length !== 1 ? 's' : ''}${warnings.length ? `, ${warnings.length} warning${warnings.length !== 1 ? 's' : ''}` : ''}`;
+      statusEl.textContent = t('msg.serviceImported', 'Imported "{name}" — {count} item(s){warnings}', { name, count: items.length, warnings: warnings.length ? ', ' + t('msg.warningsCount', '{count} warning(s)', { count: warnings.length }) : '' });
       if (warnings.length) {
         console.warn('[Service Import]', warnings);
-        notify('Service imported with warnings:\n\n' + warnings.join('\n'));
+        notify(t('msg.serviceImportWarnings', 'Service imported with warnings:') + '\n\n' + warnings.join('\n'));
       }
     };
-    reader.onerror = () => { statusEl.textContent = 'Could not read file'; };
+    reader.onerror = () => { statusEl.textContent = t('msg.couldNotRead', 'Could not read file'); };
     reader.readAsText(file);
   }
 
@@ -2972,18 +2980,7 @@
     document.getElementById('fileInput').onchange = handleImport;
     document.getElementById('btnExport').onclick = handleExport;
     document.getElementById('btnImportBible').onclick = () => document.getElementById('bibleFileInput').click();
-    const bibleSection = document.getElementById('bibleSection');
-    if (bibleSection) {
-      const hasFiles = (ev) => ev.dataTransfer && Array.from(ev.dataTransfer.types || []).includes('Files');
-      bibleSection.addEventListener('dragover', (ev) => { if (!hasFiles(ev)) return; ev.preventDefault(); bibleSection.classList.add('bible-drop-active'); });
-      bibleSection.addEventListener('dragleave', (ev) => { if (!bibleSection.contains(ev.relatedTarget)) bibleSection.classList.remove('bible-drop-active'); });
-      bibleSection.addEventListener('drop', (ev) => {
-        if (!hasFiles(ev)) return;
-        ev.preventDefault();
-        bibleSection.classList.remove('bible-drop-active');
-        importBibleFile(ev.dataTransfer.files[0]);
-      });
-    }
+    setupDropAnywhere();
     document.getElementById('bibleFileInput').onchange = handleBibleImport;
 
     // Modal controls
@@ -3252,6 +3249,11 @@
 
   async function handleImport(e) {
     const file = e.target.files[0];
+    e.target.value = '';
+    await importHymnFile(file);
+  }
+
+  async function importHymnFile(file) {
     if (!file) return;
     if (importInProgress) return;
     importInProgress = true;
@@ -3300,7 +3302,7 @@
           hymns = [...hymns, ...slice];
           offset += CHUNK;
           if (statusEl) {
-            statusEl.textContent = `Importing… (${Math.min(offset, valid.length)}/${valid.length})`;
+            statusEl.textContent = t('msg.importing', 'Importing… ({done}/{total})', { done: Math.min(offset, valid.length), total: valid.length });
           }
           if (offset < valid.length) {
             setTimeout(processChunk, 0);
@@ -3327,11 +3329,10 @@
       if (window.HymnFlowI18n) {
         statusEl.textContent = window.HymnFlowI18n.getTranslation('hymns.alerts.importFailed', { error: err.message });
       } else {
-        statusEl.textContent = 'Import failed: ' + err.message;
+        statusEl.textContent = t('msg.importFailed', 'Import failed: {error}', { error: err.message });
       }
       console.error('[Import Error]', err);
     } finally {
-      e.target.value = '';
       importInProgress = false;
       const btnImportEl = document.getElementById('btnImport');
       if (btnImportEl) btnImportEl.disabled = false;
@@ -3356,7 +3357,7 @@
           try { delete window.HymnFlowBible; } catch (e) { window.HymnFlowBible = undefined; }
           if (res && res.ok) {
             try { localStorage.setItem('hymnflow-bible-seeded', '1'); } catch (e) { /* ignore */ }
-            if (statusEl) statusEl.textContent = 'KJV loaded — ready for scripture lookup';
+            if (statusEl) statusEl.textContent = t('msg.kjvLoaded', 'KJV loaded — ready for scripture lookup');
           }
           resolve(!!(res && res.ok));
         });
@@ -3440,7 +3441,7 @@
 
   async function exportUsageReport() {
     const log = readUsage();
-    if (!log.length) { notify('No hymns have been displayed yet.', 'info'); return; }
+    if (!log.length) { notify(t('msg.noUsage', 'No hymns have been displayed yet.'), 'info'); return; }
     const head = ['Date (UTC)', 'Title', 'Author', 'Hymn #', 'Source', 'CCLI #', 'Copyright'];
     const rows = log.map(r => [r.t, r.title, r.author, r.number, r.source, r.ccli, r.copyright].map(csvCell).join(','));
     const csv = [head.map(csvCell).join(',')].concat(rows).join('\r\n');
@@ -3451,10 +3452,10 @@
 
   async function clearUsageLog() {
     if (!readUsage().length) return;
-    if (!(await askConfirm('Clear the usage log on this device? Export it first if you need it for reporting.', 'Clear'))) return;
+    if (!(await askConfirm(t('msg.clearUsageConfirm', 'Clear the usage log on this device? Export it first if you need it for reporting.'), t('msg.clear', 'Clear')))) return;
     try { localStorage.removeItem(USAGE_KEY); } catch (e) { /* ignore */ }
     lastUsage = { id: '', t: 0 };
-    statusEl.textContent = 'Usage log cleared';
+    statusEl.textContent = t('msg.usageCleared', 'Usage log cleared');
   }
 
   const TRANSLATION_CREDITS = [
@@ -3474,7 +3475,7 @@
     if (!lines.length) return;
     const h = document.createElement('p');
     h.className = 'backup-note';
-    h.textContent = 'Credits for the translations you have loaded (list these in your church credits):';
+    h.textContent = t('msg.creditsIntro', 'Credits for the translations you have loaded (list these in your church credits):');
     el.appendChild(h);
     lines.forEach(t => {
       const p = document.createElement('p');
@@ -3508,13 +3509,24 @@
       steps: 'Hundreds of translations. Download the USFM (.zip) version and drop it onto the Bible card above.' },
   ];
 
+  const BIBLE_GET_KEYS = [
+    { l: 'bibleGet.license.pd', s: 'bibleGet.steps.save' },
+    { l: 'bibleGet.license.bibliatodo', s: 'bibleGet.steps.zip' },
+    { l: 'bibleGet.license.bibliatodo', s: 'bibleGet.steps.ntbt' },
+    { l: 'bibleGet.license.bibliatodo', s: 'bibleGet.steps.zip' },
+    { l: 'bibleGet.license.ccbysa', s: 'bibleGet.steps.yoruba' },
+    { l: 'bibleGet.license.varies', s: 'bibleGet.steps.ebible' },
+  ];
+
+  window.addEventListener('languageChanged', () => { try { renderBibleGet(); renderCredits(); } catch (e) { /* not ready */ } });
+
   function renderBibleGet() {
     const sel = document.getElementById('bibleGetLang');
     const out = document.getElementById('bibleGetList');
     if (!sel || !out) return;
     const langs = Array.from(new Set(BIBLE_SOURCES.map(s => s.lang)));
     if (!sel.options.length) {
-      langs.forEach(l => { const o = document.createElement('option'); o.value = l; o.textContent = l; sel.appendChild(o); });
+      langs.forEach(l => { const o = document.createElement('option'); o.value = l; o.textContent = l === 'Other languages' ? t('bibleGet.otherLanguages', l) : l; sel.appendChild(o); });
       sel.addEventListener('change', renderBibleGet);
     }
     out.textContent = '';
@@ -3526,10 +3538,11 @@
       h.textContent = s.name;
       const lic = document.createElement('div');
       lic.className = 'bible-get-license';
-      lic.textContent = s.license;
+      const bk = BIBLE_GET_KEYS[BIBLE_SOURCES.indexOf(s)] || {};
+      lic.textContent = bk.l ? t(bk.l, s.license) : s.license;
       const st = document.createElement('div');
       st.className = 'bible-get-steps';
-      st.textContent = s.steps;
+      st.textContent = bk.s ? t(bk.s, s.steps) : s.steps;
       const url = document.createElement('div');
       url.className = 'bible-get-url';
       url.textContent = s.url;
@@ -3538,14 +3551,14 @@
       const open = document.createElement('a');
       open.href = s.url; open.target = '_blank'; open.rel = 'noopener noreferrer';
       open.className = 'btn btn-secondary';
-      open.textContent = 'Open';
+      open.textContent = t('msg.open', 'Open');
       const copy = document.createElement('button');
       copy.type = 'button';
       copy.className = 'btn btn-secondary';
-      copy.textContent = 'Copy link';
+      copy.textContent = t('msg.copyLink', 'Copy link');
       copy.addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText(s.url); statusEl.textContent = 'Link copied'; }
-        catch (e) { statusEl.textContent = 'Select the link text above and copy it (Ctrl+C)'; }
+        try { await navigator.clipboard.writeText(s.url); statusEl.textContent = t('msg.linkCopied', 'Link copied'); }
+        catch (e) { statusEl.textContent = t('msg.copyManually', 'Select the link text above and copy it (Ctrl+C)'); }
       });
       row.appendChild(open); row.appendChild(copy);
       [h, lic, st, url, row].forEach(n => card.appendChild(n));
@@ -3613,6 +3626,47 @@
 
   // Handles a Bible file from the file picker or a drag-and-drop. The importer
   // unzips/converts as needed and picks a name when the box is left blank.
+
+  // ── Drop anywhere: decide what a dropped file is and send it to the right importer ──
+  async function routeDroppedFile(file) {
+    const ext = (file.name.split('.').pop() || '').toLowerCase();
+    const head = ['txt', 'json', 'js', 'csv'].includes(ext) ? await file.slice(0, 65536).text() : '';
+    if (['zip', 'usfm', 'sfm', 'ptx'].includes(ext)) return importBibleFile(file);
+    if (ext === 'json' || ext === 'js') {
+      if (/"format"\s*:\s*"hymnflow-backup"/.test(head)) return restoreFromFile(file);
+      if (/"libros"\s*:|window\.HymnFlowBible\b|^\s*\{\s*"GEN"\s*:/.test(head)) return importBibleFile(file);
+      if (/^\s*\[\s*\{[\s\S]{0,400}"chapters"\s*:/.test(head) && !/"verses"\s*:/.test(head.slice(0, 2000))) return importBibleFile(file);
+      if (ext === 'js') return importBibleFile(file);
+      return importHymnFile(file);
+    }
+    if (ext === 'txt') {
+      if (/^\\id\s+[A-Z0-9]{3}/m.test(head)) return importBibleFile(file);
+      if (/^\s*Service\s*:/mi.test(head)) return importServiceFile(file);
+      return importHymnFile(file);
+    }
+    if (['csv', 'cho', 'chordpro', 'chopro', 'pro', 'crd', 'usr'].includes(ext)) return importHymnFile(file);
+    notify(t('drop.unsupported', "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json)."), 'error');
+  }
+
+  function setupDropAnywhere() {
+    const hasFiles = (ev) => ev.dataTransfer && Array.from(ev.dataTransfer.types || []).includes('Files');
+    const overlay = document.getElementById('dropOverlay');
+    let depth = 0;
+    const show = (on) => { if (overlay) overlay.classList.toggle('visible', on); };
+    window.addEventListener('dragenter', (ev) => { if (!hasFiles(ev)) return; depth++; show(true); });
+    window.addEventListener('dragover', (ev) => { if (!hasFiles(ev)) return; ev.preventDefault(); });
+    window.addEventListener('dragleave', (ev) => { if (!hasFiles(ev)) return; depth = Math.max(0, depth - 1); if (!depth) show(false); });
+    window.addEventListener('drop', async (ev) => {
+      if (!hasFiles(ev)) return;
+      ev.preventDefault();
+      depth = 0; show(false);
+      const files = Array.from(ev.dataTransfer.files).slice(0, 10);
+      for (const f of files) {
+        try { await routeDroppedFile(f); } catch (err) { notify(String(err && err.message || err), 'error'); }
+      }
+    });
+  }
+
   async function handleBibleImport(e) {
     const file = e.target.files[0];
     e.target.value = '';

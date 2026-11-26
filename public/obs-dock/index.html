@@ -20,14 +20,14 @@
         <div class="subtitle" data-i18n="app.subtitle">Lower-third controller for OBS HYMN by @gbcowode</div>
       </div>
       <div class="status-indicator">
-        <div class="status-badge" data-i18n="app.status.storage" aria-label="Storage type">localStorage</div>
+        <div class="status-badge" data-i18n="app.status.storage" aria-label="Storage type" data-i18n-aria="ui.storage_type">localStorage</div>
         <div role="status" aria-live="polite" aria-atomic="true" id="status" class="status-live"
           data-i18n="app.status.live">LIVE</div>
       </div>
     </header>
 
     <!-- Tab Navigation -->
-    <nav class="tab-bar" role="tablist" aria-label="Main navigation">
+    <nav class="tab-bar" role="tablist" aria-label="Main navigation" data-i18n-aria="ui.main_navigation">
       <button id="tab-btn-library" class="tab-btn active" data-tab="library" role="tab" aria-selected="true" aria-controls="tab-library" tabindex="0" data-i18n="tabs.library">Library</button>
       <button id="tab-btn-service" class="tab-btn" data-tab="service" role="tab" aria-selected="false" aria-controls="tab-service" tabindex="-1" data-i18n="tabs.service">Service</button>
       <button id="tab-btn-live" class="tab-btn" data-tab="live" role="tab" aria-selected="false" aria-controls="tab-live" tabindex="-1" data-i18n="tabs.live">Live</button>
@@ -37,16 +37,16 @@
     <!-- Blank + Emergency Clear: always accessible regardless of active tab -->
     <div class="emergency-bar">
       <button id="btnBlank" class="btn btn-secondary btn-blank"
-        title="Take the screen down without losing your place (B)">Blank Screen</button>
+        title="Take the screen down without losing your place (B)" data-i18n="ui.blank_screen" data-i18n-title="ui.take_the_screen_down_without_losing">Blank Screen</button>
       <button id="btnClear" class="btn btn-emergency" data-i18n="navigation.buttons.emergencyClear"
         data-i18n-aria="navigation.buttons.emergencyClear"
         data-i18n-title="navigation.tooltips.emergencyClear">&#9940; Emergency Clear</button>
       <button id="btnRestore" class="btn btn-secondary btn-restore" hidden
-        title="Bring back what was on screen before Blank / Clear (Z)">&#8617; Restore</button>
+        title="Bring back what was on screen before Blank / Clear (Z)" data-i18n="ui.restore" data-i18n-title="ui.bring_back_what_was_on_screen">&#8617; Restore</button>
     </div>
     <div class="hint-row">
       <button id="hotkeyChip" class="hotkey-chip" title="Click to set up global hotkeys (Style → OBS Connection)">&#9000; Global hotkeys: off</button>
-      <button id="btnShortcuts" class="hotkey-chip" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)">? Shortcuts</button>
+      <button id="btnShortcuts" class="hotkey-chip" aria-label="Keyboard shortcuts" title="Keyboard shortcuts (?)" data-i18n="ui.shortcuts" data-i18n-title="ui.keyboard_shortcuts" data-i18n-aria="ui.keyboard_shortcuts_2">? Shortcuts</button>
     </div>
 
     <!-- Active Service Banner (always visible when a service is loaded) -->
@@ -54,10 +54,10 @@
       <div class="service-banner-name" id="serviceBannerName"></div>
       <div class="service-banner-controls">
         <button id="btnPrevHymn" class="btn btn-secondary service-banner-btn"
-          aria-label="Previous item in service" data-i18n-aria="services.banner.prevItem" title="Previous item in service">⟵</button>
+          aria-label="Previous item in service" data-i18n-aria="services.banner.prevItem" title="Previous item in service" data-i18n-title="ui.previous_item_in_service">⟵</button>
         <span id="serviceBannerPos" class="service-banner-pos"></span>
         <button id="btnNextHymn" class="btn btn-secondary service-banner-btn"
-          aria-label="Next item in service" data-i18n-aria="services.banner.nextItem" title="Next item in service">⟶</button>
+          aria-label="Next item in service" data-i18n-aria="services.banner.nextItem" title="Next item in service" data-i18n-title="ui.next_item_in_service">⟶</button>
       </div>
       <div id="serviceBannerNext" class="service-banner-next" hidden></div>
     </div>
@@ -82,14 +82,14 @@
         <input id="search" type="text" class="search-input" data-i18n-placeholder="hymns.searchPlaceholder"
           placeholder="Search hymns" data-i18n-aria="hymns.searchLabel"
           aria-label="Search hymns by title, author, or number">
-        <div id="sourceFilters" class="source-filters" role="group" aria-label="Filter by source"></div>
-        <div id="hymnList" class="hymn-list" role="listbox" aria-label="Hymns library"></div>
+        <div id="sourceFilters" class="source-filters" role="group" aria-label="Filter by source" data-i18n-aria="ui.filter_by_source"></div>
+        <div id="hymnList" class="hymn-list" role="listbox" aria-label="Hymns library" data-i18n-aria="ui.hymns_library"></div>
         <div class="import-export-actions">
           <button id="btnImport" class="btn btn-secondary" data-i18n="hymns.buttons.import"
             data-i18n-aria="hymns.buttons.import" data-i18n-title="hymns.buttons.import">Import</button>
           <button id="btnExport" class="btn btn-secondary" data-i18n="hymns.buttons.export"
             data-i18n-aria="hymns.buttons.export" data-i18n-title="hymns.buttons.export">Export</button>
-          <input type="file" id="fileInput" accept=".txt,.json,.csv,.cho,.chordpro,.chopro,.pro,.crd,.usr" hidden aria-label="Select hymn file to import">
+          <input type="file" id="fileInput" accept=".txt,.json,.csv,.cho,.chordpro,.chopro,.pro,.crd,.usr" hidden aria-label="Select hymn file to import" data-i18n-aria="ui.select_hymn_file_to_import">
         </div>
 
       </section>
@@ -100,19 +100,19 @@
           <span id="bibleStatusBadge" class="bible-status-badge not-loaded" aria-live="polite" data-i18n="bible.notLoaded">Not loaded</span>
         </div>
         <p class="bible-description" data-i18n="bible.description">Import a Bible JSON file (any translation) to enable verse lookup. Each translation is stored separately — switch between them anytime.</p>
-        <p class="bible-drop-hint" id="bibleDropHint">Tip: drop a downloaded Bible file anywhere on this card &mdash; a .zip, .json or USFM file. HymnFlow unzips, converts and names it for you.</p>
+        <p class="bible-drop-hint" id="bibleDropHint" data-i18n="ui.tip_drop_any_downloaded_file_anywhere">Tip: drop any downloaded file anywhere on the dock &mdash; a Bible (.zip, .json, USFM), hymns, a service schedule or a backup. HymnFlow works out what it is, unzips and converts it for you.</p>
         <div class="bible-import-row">
-          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name (optional)" maxlength="20" aria-label="Translation name (optional, filled in automatically)">
+          <input id="bibleTranslationName" type="text" class="search-input" placeholder="Name (optional)" maxlength="20" aria-label="Translation name (optional, filled in automatically)" data-i18n-placeholder="ui.name_optional" data-i18n-aria="ui.translation_name_optional_filled_in_automaticall">
           <button id="btnImportBible" class="btn btn-secondary" data-i18n="bible.importButton">Import JSON</button>
-          <input type="file" id="bibleFileInput" accept=".json,.js,.zip,.usfm,.sfm" hidden aria-label="Select a Bible file">
+          <input type="file" id="bibleFileInput" accept=".json,.js,.zip,.usfm,.sfm" hidden aria-label="Select a Bible file" data-i18n-aria="ui.select_a_bible_file">
         </div>
         <div id="bibleTranslationList"></div>
         <details class="bible-get" id="bibleGet">
-          <summary>Get another translation</summary>
-          <p class="backup-note">HymnFlow never downloads anything itself. Pick a language, open the link, save the file, then drop it onto the Bible card above &mdash; no unzipping or converting needed. Check each translation&rsquo;s license.</p>
+          <summary data-i18n="ui.get_another_translation">Get another translation</summary>
+          <p class="backup-note" data-i18n="ui.hymnflow_never_downloads_anything_itself_pick">HymnFlow never downloads anything itself. Pick a language, open the link, save the file, then drop it onto the Bible card above &mdash; no unzipping or converting needed. Check each translation&rsquo;s license.</p>
           <label class="form-label">
-            <span>Language</span>
-            <select id="bibleGetLang" class="form-select" aria-label="Language"></select>
+            <span data-i18n="ui.language">Language</span>
+            <select id="bibleGetLang" class="form-select" aria-label="Language" data-i18n-aria="ui.language"></select>
           </label>
           <div id="bibleGetList"></div>
         </details>
@@ -128,11 +128,11 @@
           <h3 data-i18n="services.title">Services</h3>
           <div class="action-group">
             <button id="btnImportService" class="btn btn-secondary" style="margin: 0;"
-              title="Import a service schedule from a text file">Import</button>
+              title="Import a service schedule from a text file" data-i18n="ui.import" data-i18n-title="ui.import_a_service_schedule_from_a">Import</button>
             <button id="btnNewService" class="btn btn-add" style="margin: 0;" data-i18n="services.newButton"
               data-i18n-aria="services.newButton" data-i18n-title="services.newButton">+ New</button>
           </div>
-          <input type="file" id="serviceFileInput" accept=".txt" hidden aria-label="Select service schedule text file">
+          <input type="file" id="serviceFileInput" accept=".txt" hidden aria-label="Select service schedule text file" data-i18n-aria="ui.select_service_schedule_text_file">
         </div>
         <div id="serviceEditor" class="service-editor" style="display: none;">
           <input id="serviceName" type="text" class="search-input" data-i18n-placeholder="services.namePlaceholder"
@@ -142,19 +142,19 @@
           <!-- Inline hymn picker (shown when + Hymn is clicked) -->
           <div id="hymnPicker" class="item-inline-panel" hidden>
             <div class="item-form-title">Add Hymn</div>
-            <input id="hymnPickerSearch" type="text" class="search-input" placeholder="Search by title, author or number…" autocomplete="off">
+            <input id="hymnPickerSearch" type="text" class="search-input" placeholder="Search by title, author or number…" autocomplete="off" data-i18n-placeholder="ui.search_by_title_author_or_number">
             <div id="hymnPickerList" class="hymn-picker-list"></div>
-            <button id="btnHymnPickerCancel" class="btn btn-secondary" style="width: 100%;">Cancel</button>
+            <button id="btnHymnPickerCancel" class="btn btn-secondary" style="width: 100%;" data-i18n="ui.cancel">Cancel</button>
           </div>
 
           <!-- Inline scripture / announce / divider form -->
           <div id="itemForm" class="item-inline-panel" hidden>
             <div id="itemFormTitle" class="item-form-title">Add Item</div>
             <div id="itemFormRefRow">
-              <input id="itemFormRef" type="text" class="search-input" placeholder="Reference or label">
+              <input id="itemFormRef" type="text" class="search-input" placeholder="Reference or label" data-i18n-placeholder="ui.reference_or_label">
             </div>
             <div id="itemFormTextRow">
-              <textarea id="itemFormText" class="text-slide-textarea" rows="3" placeholder="Enter text…"></textarea>
+              <textarea id="itemFormText" class="text-slide-textarea" rows="3" placeholder="Enter text…" data-i18n-placeholder="ui.enter_text"></textarea>
               <div id="announceCharHint" class="announce-char-hint" hidden></div>
             </div>
             <div id="itemFormNotesRow">
@@ -162,7 +162,7 @@
             </div>
             <div style="display: flex; gap: 6px; margin-top: 6px;">
               <button id="btnItemFormAdd" class="btn btn-add" style="flex: 1;">Add</button>
-              <button id="btnItemFormCancel" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+              <button id="btnItemFormCancel" class="btn btn-secondary" style="flex: 1;" data-i18n="ui.cancel">Cancel</button>
             </div>
           </div>
 
@@ -177,7 +177,7 @@
             <button id="btnCancelService" class="btn btn-secondary" data-i18n="services.buttons.cancel">Cancel</button>
           </div>
         </div>
-        <div id="servicesList" class="services-list" role="list" aria-label="Saved services"></div>
+        <div id="servicesList" class="services-list" role="list" aria-label="Saved services" data-i18n-aria="ui.saved_services"></div>
       </section>
 
     </div>
@@ -192,7 +192,7 @@
           <div class="verse-info" id="hymnCopyright"></div>
         </div>
 
-        <div id="verseChips" class="verse-chips" role="group" aria-label="Jump to verse"></div>
+        <div id="verseChips" class="verse-chips" role="group" aria-label="Jump to verse" data-i18n-aria="ui.jump_to_verse"></div>
 
         <div class="navigation-controls">
           <button id="btnPrevVerse" class="btn btn-nav" data-i18n="navigation.buttons.prevVerse"
@@ -257,24 +257,24 @@
           <input id="qsRef" type="text" class="search-input"
             placeholder="Reference (e.g., John 3:16)"
             data-i18n-placeholder="quickScripture.refPlaceholder"
-            aria-label="Scripture reference">
-          <select id="qsTranslation" class="qs-translation-select" aria-label="Bible translation" title="Active translation"></select>
+            aria-label="Scripture reference" data-i18n-aria="ui.scripture_reference">
+          <select id="qsTranslation" class="qs-translation-select" aria-label="Bible translation" title="Active translation" data-i18n-title="ui.active_translation" data-i18n-aria="ui.bible_translation"></select>
           <button id="btnQsLookup" class="btn btn-secondary qs-lookup-btn"
-            aria-label="Look up verse" title="Look up verse">&#128269;</button>
+            aria-label="Look up verse" title="Look up verse" data-i18n-title="ui.look_up_verse" data-i18n-aria="ui.look_up_verse">&#128269;</button>
         </div>
         <textarea id="qsText" class="text-slide-textarea" rows="3"
           placeholder="Verse text — blank line separates pages"
           data-i18n-placeholder="quickScripture.textPlaceholder"
-          aria-label="Verse text"></textarea>
+          aria-label="Verse text" data-i18n-aria="ui.verse_text"></textarea>
         <div class="qs-controls">
-          <button id="btnQsPrev" class="btn btn-nav qs-page-btn" aria-label="Previous page" disabled>&#8592;</button>
+          <button id="btnQsPrev" class="btn btn-nav qs-page-btn" aria-label="Previous page" disabled data-i18n-aria="ui.previous_page">&#8592;</button>
           <span id="qsChunkInfo" class="qs-chunk-info" aria-live="polite">—</span>
-          <button id="btnQsNext" class="btn btn-nav qs-page-btn" aria-label="Next page" disabled>&#8594;</button>
+          <button id="btnQsNext" class="btn btn-nav qs-page-btn" aria-label="Next page" disabled data-i18n-aria="ui.next_page">&#8594;</button>
           <button id="btnQsDisplay" class="btn btn-add" data-i18n="quickScripture.displayButton">Display</button>
           <button id="btnQsClear" class="btn btn-secondary" data-i18n="quickScripture.clearButton">Clear</button>
         </div>
-        <label class="checkbox-label qs-auto" title="Skip the confidence preview: planned scripture items go straight to the overlay when activated">
-          <input type="checkbox" id="qsAutoDisplay"> <span>Auto-display planned scripture</span>
+        <label class="checkbox-label qs-auto" title="Skip the confidence preview: planned scripture items go straight to the overlay when activated" data-i18n-title="ui.skip_the_confidence_preview_planned_scripture">
+          <input type="checkbox" id="qsAutoDisplay"> <span data-i18n="ui.auto_display_planned_scripture">Auto-display planned scripture</span>
         </label>
       </section>
 
@@ -284,7 +284,7 @@
           <span class="text-slide-hint" data-i18n="textSlide.hint">scripture, announcement, blank</span>
         </summary>
         <textarea id="textSlideInput" class="text-slide-textarea" rows="3"
-          placeholder="Type any text to send to overlay&#10;(scripture, announcement, blank screen...)"></textarea>
+          placeholder="Type any text to send to overlay&#10;(scripture, announcement, blank screen...)" data-i18n-placeholder="ui.type_any_text_to_send_to"></textarea>
         <div class="text-slide-actions">
           <button id="btnSendTextSlide" class="btn btn-add" data-i18n="textSlide.sendButton">Send to Overlay</button>
           <button id="btnClearTextSlide" class="btn btn-secondary" data-i18n="textSlide.clearButton">Clear
@@ -378,9 +378,9 @@
           </label>
 
           <label class="form-label" id="bgOpacityRow">
-            <span>Background Opacity</span> <span id="bgOpacityValue">80%</span>
+            <span data-i18n="ui.background_opacity">Background Opacity</span> <span id="bgOpacityValue">80%</span>
             <input type="range" id="bgOpacity" min="0" max="100" value="80" class="form-slider"
-              aria-label="Background opacity">
+              aria-label="Background opacity" data-i18n-aria="ui.background_opacity_2">
           </label>
 
           <label class="form-label">
@@ -406,33 +406,33 @@
       <!-- Scripture Display (projection style for Bible verses) -->
       <details class="section collapsible-section" id="scriptureStylePanel">
         <summary>
-          <h3>Scripture Display</h3>
+          <h3 data-i18n="ui.scripture_display">Scripture Display</h3>
         </summary>
         <div class="styles-form">
           <label class="form-label">
-            <span>Scripture font</span>
+            <span data-i18n="ui.scripture_font">Scripture font</span>
             <select id="scriptureFontFamily" class="form-select">
-              <option value="serif">Classic Serif (default)</option>
+              <option value="serif" data-i18n="ui.classic_serif_default">Classic Serif (default)</option>
               <option value="'Georgia', serif">Georgia</option>
               <option value="'Times New Roman', serif">Times New Roman</option>
               <option value="Inter, sans-serif">Inter</option>
               <option value="'Segoe UI', sans-serif">Segoe UI</option>
               <option value="'Roboto', sans-serif">Roboto</option>
               <option value="'Montserrat', sans-serif">Montserrat</option>
-              <option value="lyrics">Same as lyrics</option>
+              <option value="lyrics" data-i18n="ui.same_as_lyrics">Same as lyrics</option>
             </select>
           </label>
 
           <div class="style-options">
-            <label class="checkbox-label"><input type="checkbox" id="scriptureItalic" checked> <span>Italic text</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="scriptureShowReference" checked> <span>Show reference</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="scriptureShowBadge" checked> <span>Translation badge</span></label>
-            <label class="checkbox-label"><input type="checkbox" id="scriptureCustomSize"> <span>Custom size</span></label>
-            <label class="checkbox-label" title="Skip the confidence preview: planned scripture items go straight to the overlay when activated"><input type="checkbox" id="scriptureAutoDisplay"> <span>Auto-display planned scripture</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="scriptureItalic" checked> <span data-i18n="ui.italic_text">Italic text</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="scriptureShowReference" checked> <span data-i18n="ui.show_reference">Show reference</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="scriptureShowBadge" checked> <span data-i18n="ui.translation_badge">Translation badge</span></label>
+            <label class="checkbox-label"><input type="checkbox" id="scriptureCustomSize"> <span data-i18n="ui.custom_size">Custom size</span></label>
+            <label class="checkbox-label" title="Skip the confidence preview: planned scripture items go straight to the overlay when activated" data-i18n-title="ui.skip_the_confidence_preview_planned_scripture"><input type="checkbox" id="scriptureAutoDisplay"> <span data-i18n="ui.auto_display_planned_scripture">Auto-display planned scripture</span></label>
           </div>
 
           <label class="form-label" id="scriptureSizeRow" style="display: none;">
-            <span>Scripture font size</span> <span id="scriptureFontSizeValue">44px</span>
+            <span data-i18n="ui.scripture_font_size">Scripture font size</span> <span id="scriptureFontSizeValue">44px</span>
             <input type="range" id="scriptureFontSize" min="24" max="96" value="44" class="form-slider">
           </label>
         </div>
@@ -441,28 +441,28 @@
       <!-- OBS Connection (obs-websocket + global hotkeys) -->
       <details class="section collapsible-section" id="obsConnPanel">
         <summary>
-          <h3>OBS Connection</h3>
+          <h3 data-i18n="ui.obs_connection">OBS Connection</h3>
           <span id="obsWsBadge" class="obs-ws-badge obs-ws-disconnected" title="Disconnected">●</span>
         </summary>
         <div class="styles-form">
           <label class="form-label">
-            <span>Host</span>
+            <span data-i18n="ui.host">Host</span>
             <input id="obsWsHost" type="text" class="form-input" value="127.0.0.1" placeholder="127.0.0.1">
           </label>
           <label class="form-label">
-            <span>Port</span>
+            <span data-i18n="ui.port">Port</span>
             <input id="obsWsPort" type="number" class="form-input" value="4455" min="1024" max="65535">
           </label>
           <label class="form-label">
-            <span>Password</span>
-            <input id="obsWsPassword" type="password" class="form-input" placeholder="(leave blank if none)">
+            <span data-i18n="ui.password">Password</span>
+            <input id="obsWsPassword" type="password" class="form-input" placeholder="(leave blank if none)" data-i18n-placeholder="ui.leave_blank_if_none">
           </label>
           <div style="display: flex; gap: 6px; margin-top: 6px;">
-            <button id="btnObsWsConnect"    class="btn btn-add"       style="flex: 1;">Connect</button>
-            <button id="btnObsWsDisconnect" class="btn btn-secondary" style="flex: 1;" disabled>Disconnect</button>
+            <button id="btnObsWsConnect"    class="btn btn-add"       style="flex: 1;" data-i18n="ui.connect">Connect</button>
+            <button id="btnObsWsDisconnect" class="btn btn-secondary" style="flex: 1;" disabled data-i18n="ui.disconnect">Disconnect</button>
           </div>
           <div class="obs-ws-hotkey-ref">
-            <strong>Hotkeys (dock focus)</strong><br>
+            <strong data-i18n="ui.hotkeys_dock_focus">Hotkeys (dock focus)</strong><br>
             <code>→</code> Next Verse &nbsp; <code>←</code> Prev Verse<br>
             <code>↓</code> Next Line &nbsp;&nbsp; <code>↑</code> Prev Line<br>
             <code>]</code> / <code>PgDn</code> Next Item &nbsp; <code>[</code> / <code>PgUp</code> Prev Item<br>
@@ -477,37 +477,37 @@
       <!-- Data & Backup -->
       <details class="section collapsible-section" id="backupPanel">
         <summary>
-          <h3>Data &amp; Backup</h3>
+          <h3 data-i18n="ui.data_backup">Data &amp; Backup</h3>
         </summary>
         <div class="styles-form">
-          <p class="backup-note">Hymns, services and settings are stored in this browser. A snapshot is taken automatically each time the dock opens, and deleted hymns or services can be undone for a few seconds.</p>
+          <p class="backup-note" data-i18n="ui.hymns_services_and_settings_are_stored">Hymns, services and settings are stored in this browser. A snapshot is taken automatically each time the dock opens, and deleted hymns or services can be undone for a few seconds.</p>
           <div style="display: flex; gap: 6px;">
-            <button id="btnBackupExport" class="btn btn-add" style="flex: 1;">Export backup…</button>
-            <button id="btnBackupImport" class="btn btn-secondary" style="flex: 1;">Restore from file…</button>
+            <button id="btnBackupExport" class="btn btn-add" style="flex: 1;" data-i18n="ui.export_backup">Export backup…</button>
+            <button id="btnBackupImport" class="btn btn-secondary" style="flex: 1;" data-i18n="ui.restore_from_file">Restore from file…</button>
           </div>
           <input type="file" id="backupFile" accept=".json,application/json" hidden>
-          <p class="backup-note">Usage report: each hymn put on screen is logged on this device (date, title, CCLI number) so you can report to CCLI. Nothing is sent anywhere.</p>
+          <p class="backup-note" data-i18n="ui.usage_report_each_hymn_put_on">Usage report: each hymn put on screen is logged on this device (date, title, CCLI number) so you can report to CCLI. Nothing is sent anywhere.</p>
           <div style="display: flex; gap: 6px;">
-            <button id="btnUsageExport" class="btn btn-secondary" style="flex: 1;">Export usage report (CSV)…</button>
-            <button id="btnUsageClear" class="btn btn-secondary" style="flex: 1;">Clear usage log</button>
+            <button id="btnUsageExport" class="btn btn-secondary" style="flex: 1;" data-i18n="ui.export_usage_report_csv">Export usage report (CSV)…</button>
+            <button id="btnUsageClear" class="btn btn-secondary" style="flex: 1;" data-i18n="ui.clear_usage_log">Clear usage log</button>
           </div>
           <label class="form-label">
-            <span>Automatic snapshots</span>
+            <span data-i18n="ui.automatic_snapshots">Automatic snapshots</span>
             <select id="backupSlot" class="form-select"></select>
           </label>
-          <button id="btnBackupRestoreAuto" class="btn btn-secondary" style="width: 100%;" disabled>Restore selected snapshot</button>
-          <p class="backup-note">Bibles are stored separately and are not touched by backup or restore. OBS connection details and password are never written to a backup file.</p>
+          <button id="btnBackupRestoreAuto" class="btn btn-secondary" style="width: 100%;" disabled data-i18n="ui.restore_selected_snapshot">Restore selected snapshot</button>
+          <p class="backup-note" data-i18n="ui.bibles_are_stored_separately_and_are">Bibles are stored separately and are not touched by backup or restore. OBS connection details and password are never written to a backup file.</p>
         </div>
       </details>
 
       <!-- Licensing & credits -->
       <details class="section collapsible-section" id="licensingPanel">
         <summary>
-          <h3>Licensing &amp; credits</h3>
+          <h3 data-i18n="ui.licensing_credits">Licensing &amp; credits</h3>
         </summary>
         <div class="styles-form">
-          <p class="backup-note"><strong>Livestreaming:</strong> showing copyrighted lyrics on a livestream usually needs a streaming license in addition to a standard church copyright license (for example CCLI or OneLicense). Requirements differ by country and platform &mdash; check with your licensing provider. Public-domain hymns need none. Record each hymn&rsquo;s copyright and CCLI number in its edit form.</p>
-          <p class="backup-note"><strong>Bible translations:</strong> you are responsible for having the right to use the translations you import. Public-domain and openly licensed texts are fine; others need permission from the publisher.</p>
+          <p class="backup-note"><strong data-i18n="ui.livestreaming">Livestreaming:</strong> <span data-i18n="ui.showing_copyrighted_lyrics_on_a_livestream">showing copyrighted lyrics on a livestream usually needs a streaming license in addition to a standard church copyright license (for example CCLI or OneLicense). Requirements differ by country and platform &mdash; check with your licensing provider. Public-domain hymns need none. Record each hymn&rsquo;s copyright and CCLI number in its edit form.</span></p>
+          <p class="backup-note"><strong data-i18n="ui.bible_translations">Bible translations:</strong> <span data-i18n="ui.you_are_responsible_for_having_the">you are responsible for having the right to use the translations you import. Public-domain and openly licensed texts are fine; others need permission from the publisher.</span></p>
           <div id="licensingCredits"></div>
         </div>
       </details>
@@ -515,8 +515,8 @@
       <section class="section">
         <h3 data-i18n="settings.title" style="margin-bottom: 12px;">Settings</h3>
         <div class="styles-form">
-          <label class="checkbox-label" title="On the last verse, the first Next only arms the advance; a second press within a few seconds moves to the next service item">
-            <input type="checkbox" id="confirmItemAdvance" checked> <span>Ask for a second press before moving to the next service item</span>
+          <label class="checkbox-label" title="On the last verse, the first Next only arms the advance; a second press within a few seconds moves to the next service item" data-i18n-title="ui.on_the_last_verse_the_first">
+            <input type="checkbox" id="confirmItemAdvance" checked> <span data-i18n="ui.ask_for_a_second_press_before">Ask for a second press before moving to the next service item</span>
           </label>
           <label class="form-label">
             <span data-i18n="settings.languageLabel">Interface Language</span>
@@ -587,12 +587,12 @@
         </label>
         <div class="modal-metadata-row">
           <label class="form-label">
-            <span>Copyright</span>
+            <span data-i18n="ui.copyright">Copyright</span>
             <input type="text" id="editCopyright" class="form-input" maxlength="200"
-              placeholder="e.g., Public domain, or &copy; 1990 Publisher">
+              placeholder="e.g., Public domain, or &copy; 1990 Publisher" data-i18n-placeholder="ui.e_g_public_domain_or_1990">
           </label>
           <label class="form-label">
-            <span>CCLI #</span>
+            <span data-i18n="ui.ccli">CCLI #</span>
             <input type="text" id="editCcli" class="form-input" inputmode="numeric" maxlength="10"
               placeholder="e.g., 22025">
           </label>
@@ -612,6 +612,7 @@
   <script src="../parsers/jsonParser.js?v=2.10.1"></script>
   <script src="../parsers/songParsers.js?v=2.10.1"></script>
   <script src="../parsers/bibleFormats.js?v=2.10.1"></script>
+  <div id="dropOverlay" class="drop-overlay" aria-hidden="true"><div class="drop-overlay-box" data-i18n="drop.overlay">Drop to import</div></div>
   <script src="obs-dock.js?v=2.10.1"></script>
 </body>
 

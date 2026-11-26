@@ -1,10 +1,10 @@
 {
   "app": {
     "title": "HymnFlow 控制台",
-    "subtitle": "OBS HYMN 的下三分之一控制器",
+    "subtitle": "OBS HYMN 的下三分之一控制器 by @gbcowode",
     "status": {
       "live": "直播中",
-      "storage": "本地存储",
+      "storage": "localStorage",
       "ready": "准备就绪 ({storage})",
       "hymnUpdated": "赞美诗已更新",
       "hymnAdded": "赞美诗已添加"
@@ -84,7 +84,8 @@
     "alerts": {
       "nameRequired": "安排名称为必填项",
       "atLeastOneHymn": "请至少向安排中添加一首赞美诗",
-      "validationFailed": "安排验证失败:\n{errors}"
+      "validationFailed": "安排验证失败:\n{errors}",
+      "itemRequired": "请至少向流程添加一个项目"
     },
     "confirmations": {
       "delete": "确实要删除此安排吗？"
@@ -93,11 +94,73 @@
       "validationIssues": "警告: 安排存在验证问题",
       "loaded": "已加载安排: {name} ({count} 首赞美诗)",
       "deleted": "安排已删除",
-      "saved": "安排已保存"
+      "saved": "安排已保存",
+      "hymnNotFound": "在库中找不到赞美诗",
+      "divider": "▸ {label}",
+      "hymnDeleted": "诗歌已删除（已更新 {count} 个流程）"
     },
     "errors": {
       "saveFailed": "保存安排时出错: {error}"
+    },
+    "addButtons": {
+      "announce": "+ 公告",
+      "divider": "+ 分隔",
+      "hymn": "+ 诗歌",
+      "scripture": "+ 经文"
+    },
+    "banner": {
+      "nextItem": "下一个流程项目",
+      "prevItem": "上一个流程项目"
+    },
+    "itemForm": {
+      "buttons": {
+        "addAnnounce": "添加公告",
+        "addDivider": "添加分隔",
+        "addScripture": "添加经文",
+        "save": "保存"
+      },
+      "placeholders": {
+        "announceText": "公告内容（例如：礼拜后欢迎参加团契）",
+        "dividerLabel": "环节标签（例如：奉献、讲道、祷告）",
+        "scriptureRef": "出处（例如：约翰福音 3:16）",
+        "scriptureText": "经节文字（例如：神爱世人……）"
+      },
+      "titles": {
+        "addAnnounce": "添加公告",
+        "addDivider": "添加分隔",
+        "addScripture": "添加经文",
+        "editAnnounce": "编辑公告",
+        "editDivider": "编辑分隔",
+        "editScripture": "编辑经文"
+      }
     }
+  },
+  "textSlide": {
+    "title": "文字幻灯片",
+    "hint": "经文、公告、空白屏幕",
+    "sendButton": "发送到叠加层",
+    "clearButton": "清除幻灯片",
+    "sent": "文字幻灯片已发送",
+    "cleared": "文字幻灯片已清除"
+  },
+  "bible": {
+    "title": "圣经",
+    "label": "圣经",
+    "description": "导入任意译本的JSON文件以启用经文查找功能。每个译本单独存储——随时切换。",
+    "importButton": "导入 JSON",
+    "loading": "正在加载圣经…",
+    "notLoaded": "未加载"
+  },
+  "quickScripture": {
+    "title": "快速经文",
+    "hint": "直播 · 即兴",
+    "refPlaceholder": "引用 (例如，约翰福音 3:16)",
+    "textPlaceholder": "经文文本 — 空行分隔页面",
+    "lookupButton": "🔍",
+    "displayButton": "显示",
+    "clearButton": "清除",
+    "status": "经文：{ref}",
+    "statusNoRef": "经文已显示"
   },
   "navigation": {
     "verseInfo": "第 {current}/{total} 节 · 第 {startLine}-{endLine} 行，共 {totalLines} 行",
@@ -116,7 +179,12 @@
       "nextLine": "下一行窗口 (下方向键)",
       "jumpChorus": "显示副歌 (如果可用)",
       "emergencyClear": "立即从直播中隐藏叠加层"
-    }
+    },
+    "chorusNext": " · 接下来是副歌",
+    "lastChorus": " · 最后一次副歌",
+    "lastVerse": " · 最后一节",
+    "shrinksToFit": " · ⚠ 缩小以适应",
+    "chorusInfo": "副歌 · 第 {startLine}-{endLine} 行，共 {totalLines} 行"
   },
   "display": {
     "title": "显示控制",
@@ -124,7 +192,12 @@
     "liveIndicator": "直播中",
     "resetButton": "重置",
     "resetTooltip": "重置为第一节、第一行",
-    "linesPerDisplay": "每屏行数"
+    "linesPerDisplay": "每屏行数",
+    "blanked": "已黑屏——点“显示”或“快速经文”可恢复",
+    "displayOffHint": "显示已关闭——打开“显示”开关即可显示这首诗歌",
+    "hotkeysReconnecting": "OBS 热键已断开——正在重新连接…",
+    "noHymnSelected": "没有可显示的内容——请先选择一首诗歌",
+    "offHint": "显示已关闭——打开“显示”开关即可显示这首诗歌"
   },
   "preview": {
     "title": "赞美诗预览"
@@ -167,13 +240,27 @@
     "addHymn": "添加赞美诗",
     "buttons": {
       "cancel": "取消",
-      "save": "保存更改"
+      "save": "保存更改",
+      "addAnyway": "仍然添加",
+      "delete": "删除",
+      "discard": "放弃",
+      "ok": "确定"
+    },
+    "confirmations": {
+      "badReference": "“{ref}”看起来不是有效的圣经出处。\n仍要添加吗？",
+      "discard": "放弃未保存的更改吗？"
     }
   },
   "settings": {
     "title": "设置",
     "language": "语言",
     "languageLabel": "界面语言"
+  },
+  "tabs": {
+    "library": "曲库",
+    "service": "安排",
+    "live": "直播",
+    "style": "样式"
   },
   "setup": {
     "import": {
@@ -188,5 +275,159 @@
     "importFormats": {
       "csv": "CSV 格式"
     }
+  },
+  "ui": {
+    "blank_screen": "黑屏",
+    "restore": "↩ 恢复",
+    "shortcuts": "? 快捷键",
+    "tip_drop_any_downloaded_file_anywhere": "提示：把下载的任何文件拖放到面板的任意位置——圣经（.zip、.json、USFM）、诗歌、聚会流程或备份。HymnFlow 会自动识别、解压并转换。",
+    "get_another_translation": "获取其他译本",
+    "hymnflow_never_downloads_anything_itself_pick": "HymnFlow 本身不会下载任何内容。选择语言，打开链接，保存文件，然后拖放到上方的圣经卡片上——无需解压或转换。请核对每个译本的授权。",
+    "language": "语言",
+    "import": "导入",
+    "cancel": "取消",
+    "auto_display_planned_scripture": "自动显示计划的经文",
+    "background_opacity": "背景不透明度",
+    "scripture_display": "经文显示",
+    "scripture_font": "经文字体",
+    "classic_serif_default": "经典衬线体（默认）",
+    "same_as_lyrics": "与歌词相同",
+    "italic_text": "斜体文字",
+    "show_reference": "显示出处",
+    "translation_badge": "译本标记",
+    "custom_size": "自定义大小",
+    "scripture_font_size": "经文字号",
+    "obs_connection": "OBS 连接",
+    "host": "主机",
+    "port": "端口",
+    "password": "密码",
+    "connect": "连接",
+    "disconnect": "断开",
+    "hotkeys_dock_focus": "快捷键（面板获得焦点时）",
+    "data_backup": "数据与备份",
+    "hymns_services_and_settings_are_stored": "诗歌、聚会流程和设置保存在此浏览器中。每次打开面板都会自动创建快照，删除诗歌或流程后几秒内可撤销。",
+    "export_backup": "导出备份…",
+    "restore_from_file": "从文件恢复…",
+    "usage_report_each_hymn_put_on": "使用报告：每首显示在屏幕上的诗歌都会记录在本设备上（日期、标题、CCLI 编号），方便你向 CCLI 申报。不会向任何地方发送数据。",
+    "export_usage_report_csv": "导出使用报告（CSV）…",
+    "clear_usage_log": "清除使用记录",
+    "automatic_snapshots": "自动快照",
+    "restore_selected_snapshot": "恢复所选快照",
+    "bibles_are_stored_separately_and_are": "圣经单独存储，不受备份或恢复影响。OBS 连接信息和密码绝不会写入备份文件。",
+    "licensing_credits": "授权与致谢",
+    "livestreaming": "直播：",
+    "showing_copyrighted_lyrics_on_a_livestream": "在直播中显示有版权的歌词，通常除了教会的版权许可外，还需要流媒体许可（例如 CCLI 或 OneLicense）。各国家和平台要求不同——请咨询您的授权提供方。公有领域的诗歌无需许可。请在每首诗歌的编辑表单中记录其版权和 CCLI 编号。",
+    "bible_translations": "圣经译本：",
+    "you_are_responsible_for_having_the": "您有责任确保有权使用所导入的译本。公有领域和开放授权的文本没有问题；其他文本需要出版方许可。",
+    "ask_for_a_second_press_before": "进入下一个流程项目前需再按一次",
+    "copyright": "版权",
+    "ccli": "CCLI 编号",
+    "name_optional": "名称（可选）",
+    "search_by_title_author_or_number": "按标题、作者或编号搜索…",
+    "reference_or_label": "出处或标签",
+    "enter_text": "输入文字…",
+    "type_any_text_to_send_to": "输入要发送到画面的任意文字（经文、公告、黑屏……）",
+    "leave_blank_if_none": "（没有则留空）",
+    "e_g_public_domain_or_1990": "例如：公有领域，或 © 1990 出版社",
+    "take_the_screen_down_without_losing": "撤下画面但保留当前位置（B）",
+    "bring_back_what_was_on_screen": "恢复黑屏/清除之前屏幕上的内容（Z）",
+    "keyboard_shortcuts": "键盘快捷键（?）",
+    "previous_item_in_service": "上一个流程项目",
+    "next_item_in_service": "下一个流程项目",
+    "import_a_service_schedule_from_a": "从文本文件导入聚会流程",
+    "active_translation": "当前译本",
+    "look_up_verse": "查找经节",
+    "skip_the_confidence_preview_planned_scripture": "跳过预览：计划的经文在激活时直接显示到画面上",
+    "on_the_last_verse_the_first": "在最后一节时，第一次点“下一个”仅作准备；几秒内再按一次才会进入下一个流程项目",
+    "storage_type": "存储类型",
+    "main_navigation": "主导航",
+    "keyboard_shortcuts_2": "键盘快捷键",
+    "filter_by_source": "按来源筛选",
+    "hymns_library": "诗歌库",
+    "select_hymn_file_to_import": "选择要导入的诗歌文件",
+    "translation_name_optional_filled_in_automaticall": "译本名称（可选，自动填写）",
+    "select_a_bible_file": "选择圣经文件",
+    "select_service_schedule_text_file": "选择聚会流程文本文件",
+    "saved_services": "已保存的流程",
+    "jump_to_verse": "跳到经节",
+    "scripture_reference": "经文出处",
+    "bible_translation": "圣经译本",
+    "verse_text": "经节文字",
+    "previous_page": "上一页",
+    "next_page": "下一页",
+    "background_opacity_2": "背景不透明度"
+  },
+  "drop": {
+    "overlay": "拖放以导入",
+    "unsupported": "无法导入这种文件。请使用诗歌文件（.txt、.csv、.json、.cho、.usr）、圣经文件（.zip、.json、.usfm）、聚会流程（.txt）或 HymnFlow 备份（.json）。"
+  },
+  "msg": {
+    "noSnapshots": "暂无快照",
+    "shortcutsNote": "面板获得焦点时快捷键才有效。若要在任何窗口都能使用，请在“样式 → OBS 连接”中连接 OBS 热键。",
+    "hotkeysOn": "全局热键：已开启",
+    "hotkeysConnecting": "全局热键：连接中…",
+    "hotkeysOff": "全局热键：已关闭",
+    "hotkeysConnected": "OBS 热键已连接",
+    "storageFullHymns": "存储已满（{count} 首诗歌）。请先导出诗歌，再清理存储后继续。",
+    "storageFull": "存储已满——请导出诗歌以释放空间。",
+    "errorSavingHymns": "保存诗歌出错：{error}",
+    "errorSavingSettings": "保存设置出错：{error}",
+    "errorSavingServices": "保存流程出错：{error}",
+    "bibleNotLoaded": "尚未载入圣经——请在“库”标签页导入译本",
+    "draftRestored": "已恢复未保存的流程草稿",
+    "listLabel": "列表标签：“{label}”",
+    "cueNotes": "提示备注 — {item}",
+    "serviceDeletedShort": "流程已删除",
+    "duplicated": "已复制：“{name}”",
+    "serviceImportEmpty": "导入失败：文件中没有流程项目",
+    "serviceImported": "已导入“{name}”——{count} 个项目{warnings}",
+    "warningsCount": "{count} 条警告",
+    "serviceImportWarnings": "流程已导入，但有警告：",
+    "couldNotRead": "无法读取文件",
+    "importing": "正在导入…（{done}/{total}）",
+    "importFailed": "导入失败：{error}",
+    "kjvLoaded": "KJV 已载入——可查找经文",
+    "noUsage": "尚未显示过任何诗歌。",
+    "clearUsageConfirm": "要清除此设备上的使用记录吗？如需用于申报，请先导出。",
+    "clear": "清除",
+    "usageCleared": "使用记录已清除",
+    "creditsIntro": "已载入译本的致谢信息（请列入教会的致谢名单）：",
+    "open": "打开",
+    "copyLink": "复制链接",
+    "linkCopied": "链接已复制",
+    "copyManually": "选中上方的链接文字并复制（Ctrl+C）",
+    "hotkeysSetupTitle": "点击设置全局热键（样式 → OBS 连接）"
+  },
+  "bibleGet": {
+    "otherLanguages": "其他语言",
+    "license": {
+      "pd": "公有领域",
+      "bibliatodo": "免费授权（BibliaTodo v1.9）——需署名",
+      "ccbysa": "CC BY-SA 4.0——需注明 Biblica",
+      "varies": "各不相同——请逐一查看"
+    },
+    "steps": {
+      "save": "保存文件，然后拖放到上方的圣经卡片上。",
+      "zip": "下载 JSON ZIP 并拖放到上方的圣经卡片上（无需解压）。",
+      "ntbt": "把下载的 ZIP 拖放到上方的圣经卡片上（无需解压）。",
+      "yoruba": "在该页面下载 USFM（.zip）版本，并拖放到上方的圣经卡片上——HymnFlow 会为你转换。",
+      "ebible": "数百种译本。下载 USFM（.zip）版本并拖放到上方的圣经卡片上。"
+    }
+  },
+  "operator": {
+    "corruptKept": "无法读取已保存的 {name} 数据。已在浏览器存储中保留了一份副本（hymnflow-corrupt-{name}-*），可用于恢复。",
+    "restore": "恢复",
+    "noSnapshot": "该快照已不可用。",
+    "notBackup": "该文件不是 HymnFlow 备份。",
+    "emptyBackup": "备份中没有可用的诗歌。",
+    "undo": "撤销",
+    "undone": "已恢复",
+    "nothingToRestore": "没有可恢复的内容",
+    "restored": "已恢复屏幕上之前的内容",
+    "pressAgain": "最后一节——再按一次“下一个”进入 {item}",
+    "blanked": "已黑屏",
+    "cleared": "已清屏",
+    "hymnDeleted": "已删除“{title}”",
+    "serviceDeleted": "已删除流程“{name}”"
   }
 }
