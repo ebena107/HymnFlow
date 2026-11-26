@@ -1,4 +1,6 @@
-## [Unreleased]
+## [2.11.0] - 2026-11-26
+
+### Drop anything, in your language
 
 ### Security
 - GitHub Actions are pinned to full commit SHAs and a test enforces it; `SECURITY.md` documents the new import paths (drop anywhere, zip reader limits, USFM, usage restore).
