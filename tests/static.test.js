@@ -38,3 +38,13 @@ for (const f of ['obs-dock/index.html', 'obs-overlay/index.html']) {
   assert.ok(!/<script>[\s\S]*?<\/script>/i.test(html), `inline <script> in ${f}`);
 }
 console.log('static checks passed');
+
+// 4. Third-party GitHub Actions are pinned to full commit SHAs (supply-chain safety)
+const wfDir = path.join(__dirname, '..', '.github', 'workflows');
+for (const f of fs.readdirSync(wfDir).filter(n => n.endsWith('.yml'))) {
+  const y = fs.readFileSync(path.join(wfDir, f), 'utf8');
+  for (const m of y.matchAll(/uses:\s*([^\s#]+)/g)) {
+    assert.match(m[1], /@[0-9a-f]{40}$/, `${f}: action "${m[1]}" is not pinned to a commit SHA`);
+  }
+}
+console.log('workflow pinning checked');

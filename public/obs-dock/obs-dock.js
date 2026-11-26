@@ -497,6 +497,8 @@
       services,
       settings: prefs
     };
+    const usage = readUsage();
+    if (usage.length) data.usage = usage; // CCLI usage history travels with the backup
     const stamp = new Date().toISOString().slice(0, 10);
     const result = await saveTextFile(`hymnflow-backup-${stamp}.json`, JSON.stringify(data, null, 2), 'application/json', '.json');
     notify(exportStatusMessage(result), result.cancelled ? 'warn' : 'info');
@@ -520,6 +522,8 @@
       localStorage.setItem(storageKeys.hymns, JSON.stringify(checked.valid));
       localStorage.setItem(storageKeys.services, JSON.stringify(svc));
       localStorage.setItem(storageKeys.prefs, mergedPrefsRaw(obj.settings));
+      // Older backups have no usage history: leave the existing log alone in that case.
+      if (Array.isArray(obj.usage)) localStorage.setItem(USAGE_KEY, JSON.stringify(sanitizeUsage(obj.usage)));
     }, hasSafety);
   }
 
@@ -2981,6 +2985,7 @@
     document.getElementById('btnExport').onclick = handleExport;
     document.getElementById('btnImportBible').onclick = () => document.getElementById('bibleFileInput').click();
     setupDropAnywhere();
+    showAppVersion();
     document.getElementById('bibleFileInput').onchange = handleBibleImport;
 
     // Modal controls
@@ -3411,6 +3416,18 @@
     } catch (e) { return []; }
   }
 
+  // Keeps only well-formed usage rows (plain strings, bounded length) from a backup file.
+  function sanitizeUsage(list) {
+    const s = (v, n) => String(v == null ? '' : v).slice(0, n);
+    return list
+      .filter(r => r && typeof r === 'object' && typeof r.title === 'string' && r.title)
+      .slice(-USAGE_CAP)
+      .map(r => ({
+        t: s(r.t, 40), title: s(r.title, 300), author: s(r.author, 300), number: s(r.number, 20),
+        source: s(r.source, 100), ccli: s(r.ccli, 10).replace(/[^0-9]/g, ''), copyright: s(r.copyright, 300),
+      }));
+  }
+
   // One entry per hymn per showing: skipped if the same hymn was logged in the
   // last 30 minutes, so paging through verses doesn't create many rows.
   function logHymnUsage(hymn) {
@@ -3646,6 +3663,21 @@
     }
     if (['csv', 'cho', 'chordpro', 'chopro', 'pro', 'crd', 'usr'].includes(ext)) return importHymnFile(file);
     notify(t('drop.unsupported', "That kind of file can't be imported. Use a hymn file (.txt, .csv, .json, .cho, .usr), a Bible file (.zip, .json, .usfm), a service schedule (.txt) or a HymnFlow backup (.json)."), 'error');
+  }
+
+  // The release script stamps ?v=X.Y.Z on this script's URL, so the running version is
+  // always known without a separate constant to keep in sync.
+  function showAppVersion() {
+    const el = document.getElementById('aboutLine');
+    if (!el) return;
+    let v = '';
+    try {
+      const s = document.querySelector('script[src*="obs-dock.js"]');
+      v = s ? (new URL(s.src, location.href).searchParams.get('v') || '') : '';
+    } catch (e) { /* ignore */ }
+    el.textContent = 'HymnFlow' + (v ? ' v' + v : '') + ' · GPL-2.0 · github.com/ebena107/HymnFlow';
+    const title = document.querySelector('.header .title');
+    if (title && v) title.title = 'v' + v;
   }
 
   function setupDropAnywhere() {

@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
 
@@ -64,7 +64,7 @@ jobs:
           zip -r hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip hymnflow-${{ steps.tag_name.outputs.VERSION }}
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v1
         with:
           files: hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip
           body_path: .github/release-template.md
@@ -74,7 +74,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload release artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: hymnflow-plugin
           path: hymnflow-v${{ steps.tag_name.outputs.VERSION }}-plugin.zip

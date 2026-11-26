@@ -1,6 +1,6 @@
 # 🎵 HymnFlow — OBS Studio Hymn & Scripture Display Plugin
 
-**v2.7.0** · [Changelog](doc/CHANGELOG.md) · [Setup Guide](doc/SETUP.md) · [Full Docs](doc/OBS_DOCK_README.md) · [Releases](https://github.com/ebena107/HymnFlow/releases)
+**Latest: [see Releases](https://github.com/ebena107/HymnFlow/releases/latest)** · [Changelog](doc/CHANGELOG.md) · [Setup Guide](doc/SETUP.md) · [Full Docs](doc/OBS_DOCK_README.md) · [Releases](https://github.com/ebena107/HymnFlow/releases)
 
 HymnFlow is a browser-based OBS Studio plugin for displaying hymns and scripture during worship services. It runs entirely in the browser — no server, no Node.js, no installation. A custom dock controls the presentation; a browser source overlays text on your stream.
 
@@ -8,15 +8,17 @@ HymnFlow is a browser-based OBS Studio plugin for displaying hymns and scripture
 
 - 🗂️ **Tabbed Dock** — Library, Service, Live, and Style tabs keep controls organized
 - 📅 **Full Service Planning** — Build and save service orders with Hymns, Scripture, Announcements, and Dividers; drag-and-drop reorder, duplicate services, notes/cues per item
-- 📖 **Multi-Translation Bible Lookup** — Plug-and-play: KJV auto-loads on first run; import any public-domain Bible; Quick Scripture panel for live verse lookup (flexible references: `John 3:16`, `Rom 8:28-30`, `Rom 8 28 30`, `Juan 3:16`); persistent via IndexedDB
+- 📖 **Multi-Translation Bible Lookup** — Plug-and-play: KJV auto-loads on first run; drop in any Bible you have the right to use; Quick Scripture panel for live verse lookup (flexible references: `John 3:16`, `Rom 8:28-30`, `Rom 8 28 30`, `Juan 3:16`); persistent via IndexedDB
 - 📜 **Scripture Display Styling** — Dedicated serif look for scripture with reference header + translation badge, all customizable: font, italics, header/badge visibility, independent size
 - ⌨️ **Keyboard Navigation** — Arrow keys for verse/line navigation; `[` / `]` for service items; configurable global hotkeys via OBS (11 actions incl. Blank, Clear, Chorus, Restore)
 - 🎛️ **Global OBS Hotkeys** — Control HymnFlow from any OBS window via obs-websocket + included Python script; hotkeys registered natively in OBS Settings → Hotkeys
 - 🎨 **Customizable Styling** — Fonts, colors, text effects, backgrounds, animations, position
-- 📥 **Import / Export** — Support for .txt, .csv, and .json hymn files; built-in Bible text converter script
+- 📥 **Drop anywhere** — Drop a hymn file, service schedule, Bible (.zip, .json or USFM text) or backup anywhere on the dock; HymnFlow works out what it is, unzips and converts it, and names it for you. Hymn formats: .txt, .csv, .json, plain lyrics (SongSelect/Hymnary), ChordPro and CCLI .usr
+- ©️ **Copyright & CCLI** — Copyright and CCLI number per hymn, a usage log of what went on screen, and a one-click CSV usage report for CCLI reporting; a Licensing & credits panel with the livestream-licensing note and translation credits
+- 🧭 **Get another translation** — A guide in Library → Bible lists recommended sources by language with their license and plain steps
 - 🔄 **Auto-Advance** — Last verse auto-advances to next service item; line navigation wraps between verses
 - 💾 **Persistent Storage** — Hymns in localStorage; Bible translations in IndexedDB (no size limit)
-- 🌍 **9 UI Languages** — EN, ES, FR, PT, SW, TL, YO, ZH, KO
+- 🌍 **9 UI Languages** — EN, ES, FR, PT, SW, TL, YO, ZH, KO. Every label, tooltip and message is translated, and the dock starts in your browser's language ([how to help translate](doc/TRANSLATING.md))
 
 ## 🚀 Quick Start
 

@@ -43,6 +43,7 @@ before public disclosure.
 | Hymns, services, settings | `localStorage` | Plain JSON, not encrypted |
 | Bible translations | IndexedDB | Imported by the user |
 | OBS WebSocket password (optional) | `localStorage` (settings) | **Plain text**; excluded from exported backups |
+| Usage log (hymn, date, CCLI number) | `localStorage` | Stays on the device; included in backups you export; capped at 5,000 rows |
 | Automatic snapshots | `localStorage` | Taken when the dock opens |
 
 Anyone with access to the OBS user profile on the machine can read this data.
@@ -57,8 +58,18 @@ are **data from outside the app** — only import files you trust.
 - Backups and stored data have their hymn and service ids sanitized on load.
 - Parsers accept `.txt`, `.csv`, `.json`, ChordPro and `.usr`; they never
   evaluate content as code.
+- **Drop anywhere** inspects the first 64 KB of a file to decide what it is, then
+  hands it to the matching importer; unknown types are refused. At most 10 files
+  are handled per drop.
+- **Zip files** are read by a small built-in reader. It refuses password-protected
+  and zip64 archives, caps any single file inside at 60 MB and an archive at 3,000
+  entries, and never writes anything to disk — contents are only parsed as text.
+- USFM (Bible text) is parsed as plain text; markup is stripped, never executed.
 - Bible JSON is checked for structure (66 books) but not for correctness of the
-  text.
+  text. Partial Bibles (for example New Testament only) are accepted from USFM.
+- Usage rows restored from a backup are re-validated (plain strings, bounded
+  length, CCLI numbers reduced to digits). CSV exports prefix cells that start with
+  `=`, `+`, `-` or `@` so spreadsheets do not treat them as formulas.
 
 ## Known limitations
 
@@ -71,8 +82,9 @@ are **data from outside the app** — only import files you trust.
 
 - [x] Strict `script-src` CSP, no inline event handlers
 - [x] Automated tests and CI on every push (`npm test`, `.github/workflows/test.yml`)
-- [ ] Pin GitHub Actions to commit SHAs
+- [x] Pin GitHub Actions to commit SHAs (enforced by `tests/static.test.js`)
 - [ ] Optional encryption of exported backups
+- [ ] Automated browser tests of the dock itself
 
 ## Supported versions
 

@@ -1,6 +1,12 @@
 ## [Unreleased]
 
+### Security
+- GitHub Actions are pinned to full commit SHAs and a test enforces it; `SECURITY.md` documents the new import paths (drop anywhere, zip reader limits, USFM, usage restore).
+
 ### Added
+- 🗣️ **Starts in your language** — on first launch the dock follows the browser's language when it is one of the 9 supported (an explicit choice in Style → Settings always wins and is the only thing saved).
+- 💾 **Usage history in backups** — the CCLI usage log is exported with a backup and restored (validated) from one; older backups leave your existing log untouched.
+- 🏷️ **Version shown in the dock** — Style → Licensing & credits shows the running version, and hovering the title does too.
 - 🌐 **Full translation coverage** — about 180 previously hardcoded English labels, placeholders, tooltips, accessibility labels and messages (backup, licensing, usage report, Bible guide, import/drop messages, service form, dialog buttons, display hints) now come from the translation files in all 9 languages. Every language has the same 329 keys; `tests/i18n.test.js` keeps it that way. New `doc/TRANSLATING.md`. Swahili, Tagalog and Yoruba benefit from native review.
 - 📥 **Drop anywhere** — drop a hymn file, service schedule, Bible (.zip/.json/USFM) or backup anywhere on the dock; HymnFlow works out what it is and imports it (several files at once are fine).
 - 📥 **Drop-in Bible files** — drop a downloaded Bible onto the Bible card in Library: `.zip` (unzipped for you), `.json` (BibliaTodo or HymnFlow format) or USFM text (footnotes and markup removed) is converted and named automatically. No scripts, unzipping or typing a name needed.

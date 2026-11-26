@@ -126,7 +126,22 @@
   // ========================================
   // Change language
   // ========================================
-  function changeLanguage(lang) {
+  // Picks the first browser-preferred language HymnFlow supports (English if none).
+  // Used on first launch so a Spanish-speaking church sees Spanish without any setup.
+  function detectLanguage(preferred) {
+    const list = preferred || (typeof navigator !== 'undefined' ? (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language]) : []);
+    const alias = { fil: 'tl' };
+    for (const raw of list || []) {
+      const base = String(raw || '').toLowerCase().split(/[-_]/)[0];
+      const code = alias[base] || base;
+      if (AVAILABLE_LANGUAGES[code]) return code;
+    }
+    return DEFAULT_LANGUAGE;
+  }
+
+  // persist=false keeps an automatically detected language from being saved as a choice,
+  // so it keeps following the browser until the user picks one themselves.
+  function changeLanguage(lang, persist = true) {
     let resolvedLang = lang;
     if (!AVAILABLE_LANGUAGES[resolvedLang]) {
       console.warn(`Language ${lang} is not supported. Falling back to ${DEFAULT_LANGUAGE}.`);
@@ -136,7 +151,7 @@
     try {
       translations = loadTranslations(resolvedLang);
       currentLanguage = resolvedLang;
-      localStorage.setItem(STORAGE_KEY, resolvedLang);
+      if (persist) localStorage.setItem(STORAGE_KEY, resolvedLang);
       applyTranslations();
       return true;
     } catch (error) {
@@ -149,9 +164,10 @@
   // Initialize i18n
   // ========================================
   function init() {
-    // Load saved language preference or use default
-    const savedLang = localStorage.getItem(STORAGE_KEY) || DEFAULT_LANGUAGE;
-    changeLanguage(savedLang);
+    // Use the saved choice; on first launch follow the browser's language.
+    const savedLang = localStorage.getItem(STORAGE_KEY);
+    if (savedLang) changeLanguage(savedLang);
+    else changeLanguage(detectLanguage(), false);
   }
 
   // ========================================
@@ -160,6 +176,7 @@
   window.HymnFlowI18n = {
     init,
     changeLanguage,
+    detectLanguage,
     getTranslation,
     getCurrentLanguage: () => currentLanguage,
     getAvailableLanguages: () => AVAILABLE_LANGUAGES,
