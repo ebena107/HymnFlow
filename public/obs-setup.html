@@ -225,15 +225,15 @@
     </div>
 
     <!-- ===== WHAT'S NEW ===== -->
-    <h2>🆕 What's New in v2.5.0</h2>
+    <h2>🆕 What's New</h2>
     <div class="new-feature">
-      <strong>Service Planning Overhaul</strong> — Build full service orders with hymns, scripture, announcements, and dividers. Drag-and-drop reorder, duplicate services, notes/cues per item, live coming-next preview in the service banner, past-item checkmarks, and auto-advance between items.
+      <strong>Drop anything onto the dock</strong> &mdash; hymn files, Bibles (<code>.zip</code>, <code>.json</code>, USFM), service schedules and backups. HymnFlow works out what each file is, unzips and converts it, and names it for you. No scripts needed.
     </div>
     <div class="new-feature">
-      <strong>Global OBS Hotkeys</strong> — Control HymnFlow from any OBS window. Load <code>scripts/hymnflow-obs-hotkeys.py</code> in OBS → Tools → Scripts; hotkeys appear in OBS Settings → Hotkeys. Works via obs-websocket (OBS 28+, built-in). New keys: Next/Previous Service Item (<code>]</code>/<code>[</code>), Next/Previous Line.
+      <strong>Starts in your language</strong> &mdash; the dock follows your browser's language (English, Spanish, French, Portuguese, Swahili, Tagalog, Yoruba, Chinese, Korean). Every label and message is translated.
     </div>
     <div class="new-feature">
-      <strong>Persistent Bible Storage</strong> — Bible translations now stored in IndexedDB (no 5 MB limit). Survives OBS restarts reliably. Auto-migrates from any prior localStorage format.
+      <strong>Copyright &amp; CCLI</strong> &mdash; record copyright and CCLI numbers per hymn, keep a usage log, and export a CCLI-style CSV report. A Licensing &amp; credits panel covers livestream licensing and translation credits.
     </div>
 
     <!-- ===== QUICK SETUP ===== -->
@@ -247,7 +247,7 @@
             <li>Open OBS Studio</li>
             <li>Go to <code>View → Docks → Custom Browser Docks</code></li>
             <li>Dock Name: <code>HymnFlow Control</code></li>
-            <li>URL: <code id="dockUrl">file:///C:/HymnFlow/public/obs-dock/index.html</code></li>
+            <li>URL: <code id="dockUrl">file:///C:/HymnFlow/obs-dock/index.html</code></li>
             <li>Click <strong>Apply</strong></li>
           </ul>
         </li>
@@ -288,7 +288,7 @@
           <ul>
             <li>In OBS, add a new <strong>Browser Source</strong></li>
             <li>Name: <code>Hymn Lower-Third</code></li>
-            <li>URL: <code id="overlayUrl">file:///C:/HymnFlow/public/obs-overlay/index.html</code></li>
+            <li>URL: <code id="overlayUrl">file:///C:/HymnFlow/obs-overlay/index.html</code></li>
             <li>Width: <code>1920</code> · Height: <code>1080</code></li>
             <li>✅ <strong>Shutdown source when not visible</strong></li>
             <li>Click <strong>OK</strong></li>
@@ -313,7 +313,7 @@
         </table>
       </div>
       <div class="card">
-        <h3>Service Navigation <span class="tag tag-new">New in 2.5</span> <span class="tag tag-opt">dock focus</span></h3>
+        <h3>Service Navigation <span class="tag tag-opt">dock focus</span></h3>
         <table>
           <tr><th>Key</th><th>Action</th></tr>
           <tr><td><code>]</code> or <code>PgDn</code></td><td>Next service item</td></tr>
@@ -326,7 +326,7 @@
     </div>
 
     <!-- ===== GLOBAL OBS HOTKEYS ===== -->
-    <h2>🎛️ Global OBS Hotkeys <span class="tag tag-new">New in 2.5</span></h2>
+    <h2>🎛️ Global OBS Hotkeys</h2>
 
     <p>Global hotkeys work from <strong>any window in OBS</strong> — you don't need to click the dock first. They use OBS's built-in hotkey system and communicate via obs-websocket (included in OBS 28+).</p>
 
@@ -402,7 +402,7 @@
         </ul>
       </div>
       <div class="card">
-        <h3>📅 Service Planning <span class="tag tag-new">v2.5</span></h3>
+        <h3>📅 Service Planning</h3>
         <ul>
           <li>Build service orders: hymns, scripture, announcements, dividers</li>
           <li>Drag-and-drop reorder; duplicate services as templates</li>
@@ -416,7 +416,7 @@
           <li>Import any Bible translation (KJV, NIV, ESV, Yoruba…)</li>
           <li>Look up any verse or chapter live</li>
           <li>Step through verses with ← → navigation</li>
-          <li>Persistent storage via IndexedDB (no size limit) <span class="tag tag-new">v2.5</span></li>
+          <li>Persistent storage via IndexedDB (no size limit)</li>
         </ul>
       </div>
       <div class="card">
@@ -495,17 +495,16 @@
         </div>
         <div class="card">
           <h4>Yoruba Bible</h4>
-          <p style="font-size:0.85em; opacity:0.8;">Convert Yoruba Bible text using the included Python script</p>
-          <code style="font-size:0.8em; display:block; margin-top:8px;">python scripts/convert_yoruba_bible.py "input.txt"</code>
+          <p style="font-size:0.85em; opacity:0.8;">Download the USFM .zip from eBible.org and drop it onto the dock</p>
+          <a href="https://ebible.org/find/" target="_blank" rel="noopener" style="color: var(--accent-primary);">eBible.org</a>
         </div>
       </div>
 
       <h3>Step 2: Import into HymnFlow</h3>
       <ol>
-        <li>Open HymnFlow Dock → <strong>Library</strong> tab → <strong>Bible</strong> section</li>
-        <li>Type a short translation name (e.g., <code>KJV</code>, <code>RVR</code>, <code>AA</code>) in the name field</li>
-        <li>Click <strong>Import JSON</strong> and select the downloaded file</li>
-        <li>Status badge shows <code>KJV ✓</code> — Bible is ready</li>
+        <li>Download the file (a <code>.zip</code>, <code>.json</code> or USFM file &mdash; no need to unzip it)</li>
+        <li><strong>Drop it anywhere on the HymnFlow dock</strong> (or Library tab &rarr; Bible &rarr; <strong>Import JSON</strong>)</li>
+        <li>HymnFlow converts it and names it automatically; the status badge shows e.g. <code>NTBT &#10003;</code></li>
       </ol>
       <p>You can load <strong>multiple translations</strong> — each stored separately. Switch between them with the inline selector in the Live tab.</p>
 
@@ -605,7 +604,7 @@ python scripts/convert_yoruba_bible.py "path/to/yoruba.txt"    # Yoruba-specific
     </div>
 
     <!-- ===== SERVICE PLANNING WORKFLOW ===== -->
-    <h2>📅 Service Planning Workflow <span class="tag tag-new">New in 2.5</span></h2>
+    <h2>📅 Service Planning Workflow</h2>
     <div class="steps">
       <ol>
         <li><strong>Create a service:</strong> Service tab → <code>+ New Service</code> → give it a name (e.g., "Sunday Morning 22 Jun")</li>
@@ -719,7 +718,7 @@ And grace my fears relieved;</pre>
       <div class="card">
         <h3>Bible lost after OBS restart</h3>
         <ul>
-          <li>v2.5 stores Bibles in IndexedDB — should persist reliably</li>
+          <li>Bibles are stored in IndexedDB — should persist reliably</li>
           <li>If upgrading from v2.4.x, re-import your Bible once — it will migrate automatically</li>
         </ul>
       </div>

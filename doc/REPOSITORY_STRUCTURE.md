@@ -1,207 +1,56 @@
-# HymnFlow - Repository Structure
+# HymnFlow — Repository Structure
 
-## 📁 Directory Organization
+## Directory layout
 
-```
+```text
 HymnFlow/
-├── .github/
-│   ├── workflows/
-│   │   └── release.yml          ← GitHub Actions for automated releases
-│   ├── ISSUE_TEMPLATE/
-│   │   ├── bug-report.md        ← Bug report template
-│   │   ├── feature-request.md   ← Feature request template
-│   │   └── question.md          ← Question template
-│   ├── CONTRIBUTING.md          ← Contribution guidelines
-│   ├── CODE_OF_CONDUCT.md       ← Community standards
-│   ├── copilot-instructions.md  ← AI agent instructions
-│   ├── release-checklist.md     ← Release process guide
-│   └── release-template.md      ← Release notes template
+├── public/                     App source. In a release zip these folders sit at the top level
+│   ├── obs-dock/               OBS custom dock (control panel): index.html, obs-dock.css, obs-dock.js
+│   ├── obs-overlay/            OBS browser source (on-screen display): index.html, overlay.css, overlay.js
+│   ├── data/                   bible-lookup.js, hymns-data.js (+ generated Bible bundles, git-ignored)
+│   ├── parsers/                txtParser, csvParser, jsonParser (hymn files),
+│   │                           songParsers (plain lyrics, ChordPro, CCLI .usr),
+│   │                           bibleFormats (.zip reader, USFM)
+│   ├── i18n/                   translations.js (what the app loads) + one <lang>.json per language
+│   ├── validation.js           hymn / service data validation
+│   └── obs-setup.html          interactive setup page
 │
-├── public/                       ← User-facing files (plugin package)
-│   ├── obs-dock/                ← OBS control panel
-│   │   ├── index.html
-│   │   ├── obs-dock.css
-│   │   └── obs-dock.js
-│   ├── obs-overlay/             ← OBS display overlay
-│   │   ├── index.html
-│   │   ├── overlay.css
-│   │   └── overlay.js
-│   ├── data/
-│   │   ├── hymns-data.js        ← Default hymn library
-│   │   ├── hymns.json
-│   │   └── yoruba-hymns-sample.js
-│   ├── parsers/                 ← File format parsers
-│   │   ├── txtParser.js
-│   │   ├── csvParser.js
-│   │   └── jsonParser.js
-│   └── obs-setup.html           ← Setup wizard
-│
-├── scripts/                      ← Utility scripts
-│   ├── release.sh              ← Release script (Unix/Mac)
-│   └── release.bat             ← Release script (Windows)
-│
-├── doc/
-│   └── archive/IMPLEMENTATION.md        ← Technical documentation
-│
-├── README.md                    ← Main user documentation
-├── archive/README-GITHUB.md             ← GitHub README (badges, GH-specific)
-├── SETUP.md                     ← Quick setup guide (2-5 min)
-├── RELEASE.md                   ← Release information & migration
-├── SECURITY.md                  ← Security policy
-├── TROUBLESHOOTING.md           ← Common issues & solutions
-├── CHANGELOG.md                 ← Version history
-├── OBS_DOCK_README.md           ← Detailed dock documentation
-├── archive/OBS_IMPLEMENTATION.md        ← Implementation details
-├── archive/STREAMLINE_SUMMARY.md        ← Architecture summary
-│
-├── .github/
-│   ├── .markdownlint.json      ← Markdown linting rules
-│   └── copilot-instructions.md ← For AI agents (in .github/)
-│
-├── .gitignore                   ← Git ignore patterns
-├── package.json                 ← Project metadata
-├── LICENSE                      ← MIT License
-└── .git/                        ← Git repository
+├── scripts/                    release.py (+ release.sh / release.bat), hymnflow-obs-hotkeys.py,
+│                               Bible converters and scrapers, translation combiner
+├── tests/                      Node tests, run with `npm test`
+├── doc/                        documentation (see below); doc/archive holds historical notes
+├── .github/                    workflows (tests, release), issue templates, contributing guide
+├── hymn-bundle/                local-only hymn collections (git-ignored, never distributed)
+├── LICENSE                     GPL-2.0
+├── package.json                project metadata and `npm test`
+└── README.md
 ```
 
-## 📋 Key Files Description
+## Documentation
 
-### User Documentation
+| File | Purpose |
+|---|---|
+| `README.md` | Overview, quick start, features |
+| `doc/SETUP.md` | Step-by-step setup guide |
+| `doc/OBS_DOCK_README.md` | Detailed user guide |
+| `doc/TROUBLESHOOTING.md` | Common problems and fixes |
+| `doc/CONTENT_LICENSING.md` | Copyright of hymns and Bible translations, livestream licensing |
+| `doc/SECURITY.md` | Security policy and how the app handles files and data |
+| `doc/TRANSLATING.md` | How to add or improve a language |
+| `doc/CHANGELOG.md`, `doc/RELEASE_NOTES_v*.md` | Version history |
+| `doc/RELEASING.md` | How to cut a release (maintainers) |
+| `doc/TESTING_GUIDE.md`, `doc/DATA_MODELS.md` | Testing notes and data formats (developers) |
+| `doc/archive/` | Historical planning and announcement documents |
+| `.github/CONTRIBUTING.md`, `.github/CODE_OF_CONDUCT.md` | Community guides |
 
-| File | Purpose | Audience |
-|------|---------|----------|
-| `README.md` | Overview, features, quick links | End users, developers |
-| `SETUP.md` | 5-minute setup guide | New users |
-| `OBS_DOCK_README.md` | Detailed features & usage | Active users |
-| `TROUBLESHOOTING.md` | Common issues & solutions | Users with problems |
-| `RELEASE.md` | Version info, upgrades | Users on older versions |
+## What gets released
 
-### Developer Documentation
+Each release publishes three zips built by `scripts/release.py` — `lite` (app + KJV), `full` (app + curated Bibles) and `data` (Bibles only) — plus a bare `plugin` zip built by CI. They contain the contents of `public/` at the top level, the key docs, and the `scripts/` needed for hotkeys. Hymn collections are not included.
 
-| File | Purpose | Audience |
-|------|---------|----------|
-| `doc/IMPLEMENTATION.md` | Technical deep-dive | Developers, contributors |
-| `.github/copilot-instructions.md` | AI agent guidance | GitHub Copilot, Claude |
-| `archive/OBS_IMPLEMENTATION.md` | Feature implementation | Feature developers |
-| `archive/STREAMLINE_SUMMARY.md` | Architecture summary | New developers |
+## Versioning
 
-### Community & Repository
+Semantic versioning, `MAJOR.MINOR.PATCH` (for example `v2.11.0`). `scripts/release.py` stamps the version into the app, builds the zips and tags the release; see [RELEASING.md](RELEASING.md).
 
-| File | Purpose | Audience |
-|------|---------|----------|
-| `.github/CONTRIBUTING.md` | How to contribute | Potential contributors |
-| `.github/CODE_OF_CONDUCT.md` | Community standards | All participants |
-| `SECURITY.md` | Security policy | Security researchers |
-| `.github/ISSUE_TEMPLATE/` | Issue templates | Bug reporters, feature requesters |
-| `.github/release-checklist.md` | Release process | Maintainers |
+## License
 
-## 🎯 File Grouping by Purpose
-
-### Plugin Package (What Gets Released)
-
-```
-Everything in public/ + these docs:
-- README.md (overview)
-- SETUP.md (setup instructions)
-- TROUBLESHOOTING.md (help)
-- SECURITY.md (security info)
-```
-
-→ Packaged as: `hymnflow-v{version}-plugin.zip`
-
-### Development Files (Source Code)
-
-```
-Everything (full repository):
-- public/ (plugin source)
-- scripts/ (build/release utilities)
-- .github/ (CI/CD & community)
-- doc/ (technical docs)
-- All documentation files
-```
-
-→ Distributed as: GitHub repository
-
-### Distribution Artifacts
-
-```
-Created during release:
-- hymnflow-v{version}-plugin.zip (plugin package)
-- hymnflow-v{version}-source.zip (source code, auto-generated)
-```
-
-## 🔄 Workflow: From Development to Release
-
-1. **Development** → Edit files in `public/` or `doc/`
-2. **Documentation** → Update `.md` files and `.github/` docs
-3. **Version** → Update version in `package.json` and `CHANGELOG.md`
-4. **Test** → Run through release checklist in `.github/release-checklist.md`
-5. **Package** → Run `scripts/release.sh` (or `.bat` on Windows)
-6. **Commit** → `git add . && git commit`
-7. **Tag** → `git tag v{version}`
-8. **Release** → Push tag, GitHub Actions creates release with ZIP
-9. **Announce** → Share release notes
-
-## 📦 What's in Each Release
-
-### Plugin Package (`hymnflow-v{version}-plugin.zip`)
-
-```
-HymnFlow/
-├── obs-dock/        ← Control panel (ready to use)
-├── obs-overlay/     ← Display overlay (ready to use)
-├── data/            ← Hymn library
-├── parsers/         ← Import parsers
-├── README.md        ← Overview
-├── SETUP.md         ← Setup instructions
-├── TROUBLESHOOTING.md ← Help
-└── SECURITY.md      ← Security info
-```
-
-**Size:** ~150-200KB (depends on hymn data)  
-**Format:** ZIP file  
-**Installation:** Extract and point OBS to the paths
-
-### Source Code (Auto-generated by GitHub)
-
-Includes entire repository:
-- All source files
-- Full documentation
-- Git history
-- Development configuration
-
-## 🏷️ Version Numbering
-
-Format: `MAJOR.MINOR.PATCH` (e.g., `v2.0.0`)
-
-- **MAJOR** - Breaking changes (localStorage key changes, API restructure)
-- **MINOR** - New features (styling options, new parsers, new shortcuts)
-- **PATCH** - Bug fixes and improvements
-
-Examples:
-- `v2.0.0` - Major release with new architecture
-- `v2.1.0` - New feature release
-- `v2.1.3` - Bug fix release
-
-## 🔗 Important Links
-
-- **GitHub:** https://github.com/yourusername/HymnFlow
-- **Releases:** https://github.com/yourusername/HymnFlow/releases
-- **Issues:** https://github.com/yourusername/HymnFlow/issues
-- **Contributing:** .github/CONTRIBUTING.md
-- **License:** LICENSE (MIT)
-
-## 📊 Repository Statistics
-
-- **Language:** JavaScript (vanilla, no frameworks)
-- **Dependencies:** 0 (no npm packages)
-- **Lines of Code:** ~2000 (core plugin)
-- **File Size:** ~150KB (plugin package)
-- **License:** MIT (free & open source)
-
-## 🚀 Getting Started
-
-1. **For Users:** Read [SETUP.md](SETUP.md)
-2. **For Developers:** See [doc/archive/IMPLEMENTATION.md](archive/IMPLEMENTATION.md)
-3. **For Contributors:** See [.github/CONTRIBUTING.md](../.github/CONTRIBUTING.md)
-4. **For Security:** See [SECURITY.md](SECURITY.md)
+GPL-2.0 (see `LICENSE`). Hymn lyrics and Bible text have their own copyright — see [CONTENT_LICENSING.md](CONTENT_LICENSING.md).

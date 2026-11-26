@@ -325,7 +325,7 @@ And grace my fears relieved;
 ## 📚 Documentation Files
 
 1. **[OBS_DOCK_README.md](../OBS_DOCK_README.md)** - Complete user guide
-2. **[public/obs-setup.html](public/obs-setup.html)** - Interactive setup wizard
+2. **[public/obs-setup.html](../../public/obs-setup.html)** - Interactive setup wizard
 3. **This file** - Implementation summary
 
 ## 🔗 Quick Access

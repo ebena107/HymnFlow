@@ -179,7 +179,7 @@ Releases are managed by maintainers. When your PR is merged:
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree that your contributions will be licensed under the GPL-2.0 license, the same as the project (see `LICENSE`).
 
 ---
 

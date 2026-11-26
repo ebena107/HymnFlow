@@ -438,11 +438,11 @@ git push origin --tags
 
 ## Quick Links
 
-- [Quick Setup (5 min)](SETUP.md)
+- [Quick Setup (5 min)](../SETUP.md)
 - [Quick Release Guide](QUICKSTART_RELEASE.md)
 - [Full Release Details](RELEASE_SETUP_SUMMARY.md)
-- [Repository Guide](REPOSITORY_STRUCTURE.md)
-- [How to Contribute](.github/CONTRIBUTING.md)
-- [Security Policy](SECURITY.md)
+- [Repository Guide](../REPOSITORY_STRUCTURE.md)
+- [How to Contribute](../../.github/CONTRIBUTING.md)
+- [Security Policy](../SECURITY.md)
 
 **Made with ❤️ for worship communities everywhere.**

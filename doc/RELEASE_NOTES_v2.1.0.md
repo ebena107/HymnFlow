@@ -276,14 +276,14 @@ Pre-organize hymns for services, programs, and events. Perfect for:
 
 - **Setup Guide:** [SETUP.md](SETUP.md)
 - **Troubleshooting:** [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-- **Full Documentation:** [docs/](doc/)
+- **Full Documentation:** docs/
 - **Repository:** [github.com/ebena107/HymnFlow](https://github.com/ebena107/HymnFlow)
 
 ---
 
 ## 📄 License
 
-HymnFlow v2.1.0 is released under the [GPL-2.0 License](LICENSE) - Same as OBS Studio.  
+HymnFlow v2.1.0 is released under the [GPL-2.0 License](../LICENSE) - Same as OBS Studio.  
 Free to use in churches, ministries, and commercial settings.
 
 ---

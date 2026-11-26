@@ -30,6 +30,7 @@ Getting content into HymnFlow no longer needs scripts or file juggling, and the 
 - Strict Content Security Policy; hymn and service ids are sanitized on load.
 - GitHub Actions are pinned to exact commits, and releases run the tests before packaging.
 - The service "More" menu is no longer clipped in a narrow dock.
+- Documentation refreshed: a practical troubleshooting guide, an accurate repository map, current "What's New" on the setup page, consistent GPL-2.0 licence statements, and every doc link repaired (and now tested).
 - Install steps in the README and setup guide now match the folders inside the release zip (`obs-dock/…`, not `public/obs-dock/…`).
 - Buttons and badges meet the accessibility contrast minimum, and the header message bar is neutral instead of permanently red and pulsing.
 - Dropping several per-book USFM files together now makes one Bible instead of one per file.

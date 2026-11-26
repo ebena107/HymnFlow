@@ -4,6 +4,10 @@
 
 ### Fixed
 - **Install instructions matched the wrong folder layout.** The README, `SETUP.md` and `OBS_DOCK_README.md` told people to use `…/HymnFlow/public/obs-dock/index.html`, but release zips keep `obs-dock/` and `obs-overlay/` at the top level. They now show the right paths and point to `obs-setup.html`, which fills in the exact URLs.
+- **Documentation overhaul.** `TROUBLESHOOTING.md` was a developer's debugging diary from an old bug; it is now a practical guide (dock won't load, nothing on stream, hotkeys, import errors, language, where your data lives, updating). `REPOSITORY_STRUCTURE.md` described a file layout that no longer exists and called the project MIT; both rewritten. The setup page's "What's New in v2.5.0" and "New in 2.5" badges replaced with current highlights, and its import steps now say "drop the file". `SETUP.md` no longer recommends copyrighted Spanish/Portuguese Bibles as direct downloads and leads with drop-in import.
+- **Licence statements** in the user guide and contributing guide said MIT; they now match `LICENSE` (GPL-2.0).
+- ~100 broken links in the docs repaired (96 re-pointed, 6 turned into plain text); a new test (`tests/docs.test.js`) fails if any relative link breaks, an install URL mentions `public/`, or a doc claims another licence.
+- Added `.gitattributes` so line endings are consistent on Windows, macOS and Linux (the repository already stored LF).
 - **Contrast.** Green, blue and red buttons, the active tab and the Live badge now use darker fills so their white text meets the 4.5:1 accessibility minimum (it was 2.5–3.8).
 - **The header message bar** was permanently red and pulsing, so harmless messages ("Ready", "Link copied") looked like errors. It is now neutral, with a one-time highlight when a new message appears.
 - **Search highlighting** could split an HTML entity (searching "amp" in a title containing "&"). It now highlights the raw text.

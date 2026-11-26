@@ -210,7 +210,7 @@ hymnflow-v2.0.0/
 
 ## 🤝 Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+We welcome contributions! See [CONTRIBUTING.md](../.github/CONTRIBUTING.md) for guidelines.
 
 **Ways to Contribute:**
 - 🐛 Report bugs via [GitHub Issues](https://github.com/ebena107/HymnFlow/issues)
@@ -224,7 +224,7 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## 📜 License
 
-HymnFlow is released under the [MIT License](LICENSE).
+HymnFlow is released under the [license](../LICENSE).
 
 **Commercial Use Allowed** - Free to use in churches, ministries, and commercial settings.
 

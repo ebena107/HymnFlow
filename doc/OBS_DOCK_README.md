@@ -37,9 +37,12 @@
 1. **Locate the Files**
 
    ```
-   public/obs-dock/       ← Control dock
-   public/obs-overlay/    ← Lower-third overlay
+   obs-dock/              ← Control dock
+   obs-overlay/           ← Lower-third overlay
+   obs-setup.html         ← shows the exact URLs for your computer
    ```
+
+   (In a source checkout these folders are inside `public/`.)
 
 2. **Add Custom Dock to OBS**
    - Open OBS Studio
@@ -349,7 +352,7 @@ This OBS dock plugin **shares the same localStorage** as the main HymnFlow contr
 
 ## 📄 License
 
-MIT License - Free to use and modify
+GPL-2.0 — free to use and modify (see `LICENSE`). Hymn lyrics and Bible text have their own copyright: see [CONTENT_LICENSING.md](CONTENT_LICENSING.md).
 
 ## 🤝 Support
 

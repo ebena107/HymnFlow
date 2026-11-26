@@ -63,7 +63,7 @@ HymnFlow ships with a few public-domain sample hymns and **no hymn collections**
 3. OBS → **Settings → Hotkeys** → search "HymnFlow" → bind your keys
 4. HymnFlow dock → **Style** tab → **OBS Connection** → Connect
 
-See [obs-setup.html](public/obs-setup.html) for the full interactive guide.
+Open `obs-setup.html` from your extracted folder (`public/obs-setup.html` in a source checkout) for the full interactive guide.
 
 ## ⌨️ Keyboard Shortcuts
 
@@ -91,7 +91,7 @@ On the last verse, the first `→` only arms the advance; a second press moves t
 
 **Works out of the box** — on first launch the dock auto-loads the bundled KJV, so scripture lookup needs no setup.
 
-**Curated translations (included in the `-full` and `-data` release bundles):** six translations that passed a systematic accuracy audit — five public domain (**KJV 1769**, **Revised Version 1885**, **Geneva Bible 1599**, **Douay-Rheims**¹, **JPS 1917 Tanakh** (OT only)) and the **Literal Standard Version**, which is copyrighted by Covenant Press and released under an open license (keep its attribution; see [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md)). Import via Library → Bible → **Import JSON**.
+**Curated translations (included in the `-full` and `-data` release bundles):** six translations that passed a systematic accuracy audit — five public domain (**KJV 1769**, **Revised Version 1885**, **Geneva Bible 1599**, **Douay-Rheims**¹, **JPS 1917 Tanakh** (OT only)) and the **Literal Standard Version**, which is copyrighted by Covenant Press and released under an open license (keep its attribution; see [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md)). Drop them onto the Bible card (Library tab), or use **Import JSON**.
 
 ¹ *Douay-Rheims uses Vulgate Psalm numbering (Psalm N ≈ Hebrew Psalm N+1).*
 
@@ -106,11 +106,9 @@ On the last verse, the first `→` only arms the advance; a second press moves t
 | [seven1m/open-bibles](https://github.com/seven1m/open-bibles) | WEB, YLT, Darby, and others | EN |
 | [eBible.org](https://ebible.org/find/) | 500+ translations | Yoruba, Swahili, Hausa, Korean, and many more |
 
-**Converting plain-text Bibles:**
-```bash
-python scripts/convert_bible_txt.py "path/to/bible.txt" --name KJV
-python scripts/convert_yoruba_bible.py "path/to/yoruba.txt"  # Yoruba-specific
-```
+**Easiest way in:** download the file and drop it onto the dock. `.zip` files are unzipped, JSON and USFM text are converted, and the translation is named for you. Library → Bible → *Get another translation* lists sources by language with their licenses.
+
+*Advanced:* plain-text Bibles that are not USFM can still be converted with `python scripts/convert_bible_txt.py "path/to/bible.txt" --name KJV`.
 
 ## 📅 Service Planning
 
@@ -140,26 +138,30 @@ The **OBS Connection** and **Scripture Display** sections are collapsible panels
 
 9 UI languages: English · Spanish · French · Portuguese · Swahili · Tagalog · Yoruba · Mandarin · Korean
 
-Change in: Style tab → Settings → Interface Language dropdown.
+The dock starts in your browser's language when it is supported. Change it any time in Style tab → Settings → Interface Language. Native-speaker corrections are welcome — see [doc/TRANSLATING.md](doc/TRANSLATING.md).
 
 ## 📁 Project Structure
 
 ```text
-public/
+public/                 # in a release zip these folders are at the top level
 ├── obs-dock/           # Control panel (OBS custom dock)
 ├── obs-overlay/        # Lower-third overlay (OBS browser source)
-├── data/               # Bible bundles (generated)
+├── data/               # Bible lookup + bundled/generated Bibles
 ├── i18n/               # 9-language UI translations
-├── parsers/            # File parsers (txt, csv, json)
+├── parsers/            # Hymn file parsers + Bible .zip/USFM readers
+├── validation.js
 └── obs-setup.html      # Interactive setup wizard
 
 scripts/
 ├── hymnflow-obs-hotkeys.py   # OBS Script — global hotkey bridge
-├── convert_bible_txt.py      # Generic Bible text → HymnFlow JSON converter
+├── release.py                # Release automation (bump, build, tag, publish)
+├── convert_bible_txt.py      # Plain-text Bible converter (advanced)
 ├── convert_yoruba_bible.py   # Yoruba Bible converter
 ├── bundle_bible_kjv.py       # KJV downloader / converter
 └── scrape_bible_api.py       # Multi-translation scraper (audited, curated output)
 
+tests/                  # Node tests (`npm test`)
+doc/                    # Documentation (doc/archive = historical)
 hymn-bundle/            # local-only hymn collections (git-ignored; not distributed)
 ```
 
@@ -179,12 +181,15 @@ Hymn and service data → `localStorage`. Bible translations → `IndexedDB`. Re
 | [public/obs-setup.html](public/obs-setup.html) | Interactive setup wizard with download links |
 | [doc/SETUP.md](doc/SETUP.md) | 5-minute quick-start guide |
 | [doc/OBS_DOCK_README.md](doc/OBS_DOCK_README.md) | Complete user guide |
-| [doc/CHANGELOG.md](doc/CHANGELOG.md) | Full version history |
 | [doc/TROUBLESHOOTING.md](doc/TROUBLESHOOTING.md) | Common issues & solutions |
+| [doc/CONTENT_LICENSING.md](doc/CONTENT_LICENSING.md) | Copyright of hymns and Bibles, livestream licensing |
+| [doc/SECURITY.md](doc/SECURITY.md) | Security policy |
+| [doc/TRANSLATING.md](doc/TRANSLATING.md) | Add or improve a language |
+| [doc/CHANGELOG.md](doc/CHANGELOG.md) | Full version history |
 
 ## 🤝 Contributing
 
-Vanilla JavaScript project, no build step required.
+Vanilla JavaScript project, no build step required. Run the tests with `npm test` (Node 18+); they cover the parsers, imports, translations and security checks.
 
 1. **Report bugs**: [Open an issue](https://github.com/ebena107/HymnFlow/issues)
 2. **Suggest features**: [Discussions](https://github.com/ebena107/HymnFlow/discussions)

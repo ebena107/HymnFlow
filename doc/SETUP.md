@@ -1,4 +1,4 @@
-# HymnFlow Quick Setup Guide — v2.5.0
+# HymnFlow Quick Setup Guide
 
 ## ⚡ 5-Minute Setup
 
@@ -126,40 +126,24 @@ Global hotkeys work even when the dock doesn't have focus — essential when you
 
 ## 📖 Bible Lookup Setup
 
-The Quick Scripture panel lets you look up and display any verse live during a service. Bible data is **not bundled** in the plugin — import a free public-domain JSON file.
+The Quick Scripture panel looks up and shows any verse live during a service. The KJV loads automatically the first time you open the dock. To add other translations, **download the file and drop it onto the Bible card** (Library tab): HymnFlow unzips it, converts it and names it for you. No scripts, unzipping or typing a name needed.
 
-### Option A: Direct Download (No Python)
+**Where to get translations:** open **Library → Bible → Get another translation**, pick a language, and it lists recommended sources with their licenses and exact steps. Some direct downloads:
 
-Download a pre-formatted Bible JSON from one of these repositories:
-
-**English:**
-- **KJV** — [thiagobodruk/bible → en_kjv.json](https://github.com/thiagobodruk/bible/blob/master/json/en_kjv.json) → click **Raw**, Save As `kjv.json`
-- **ASV** — [thiagobodruk/bible → en_asv.json](https://github.com/thiagobodruk/bible/blob/master/json/en_asv.json) → click **Raw**, Save As `asv.json`
-- **KJV (alternate)** — [aruljohn/Bible-kjv → kjv.json](https://github.com/aruljohn/Bible-kjv/blob/master/kjv.json)
-
-**Spanish (Reina Valera):**
-- [thiagobodruk/bible → es_rvr.json](https://github.com/thiagobodruk/bible/blob/master/json/es_rvr.json) → Save As `rvr.json`
-
-**Spanish (NTBT — Nueva Traducción BibliaTodo, modern translation from the original languages):**
+- **ASV (English, public domain)** — [en_asv.json](https://raw.githubusercontent.com/thiagobodruk/bible/master/json/en_asv.json): save the file, then drop it.
+**Spanish and English (NTBT / BTNT — BibliaTodo, modern translations from the original languages):**
 - Download [NTBT-json.zip](https://downloads.bibliatodo.org/texto/NTBT-json.zip) and drop it onto the Bible card in the dock (Library tab) — no unzipping, converting or naming needed.
-- English BTNT and Portuguese NTB-BR are available from the same publisher: [BTNT materials](https://www.bibliatodo.org/en/btnt/materials), [NTB-BR materials](https://www.bibliatodo.org/pt/ntb-br/materials).
+- English BTNT and Portuguese NTB-BR come from the same publisher: [BTNT-json.zip](https://downloads.bibliatodo.org/en/texto/BTNT-json.zip), [NTB-BR-json.zip](https://downloads.bibliatodo.org/pt/texto/NTB-BR-json.zip) (drop them the same way).
 - Free to use and distribute under the [BibliaTodo license](https://www.bibliatodo.org/en/license); keep the Scripture wording unchanged and credit it once where your church lists credits (no need beside every verse on the overlay), e.g. *Santa Biblia, Nueva Traducción BibliaTodo (NTBT). Publicada por BibliaTodo Bible Society. Uso, reproducción y distribución autorizados gratuitamente conforme a la Licencia NTBT.* Link “BibliaTodo Bible Society” to <https://www.bibliatodo.org/es/ntbt/> (English BTNT: <https://www.bibliatodo.org/en/btnt/>) and keep a link to the license (version 1.9). Not bundled with HymnFlow.
 
-**Portuguese (Almeida):**
-- [thiagobodruk/bible → pt_aa.json](https://github.com/thiagobodruk/bible/blob/master/json/pt_aa.json) → Save As `pt_aa.json`
 
-**French (Segond):**
-- [thiagobodruk/bible → fr_apee.json](https://github.com/thiagobodruk/bible/blob/master/json/fr_apee.json) → Save As `fr.json`
+**Yoruba, Swahili, Korean and hundreds more:** download the USFM `.zip` from [eBible.org](https://ebible.org/find/) and drop it onto the Bible card. A zip with one file per book is fine, and so are loose USFM files — drop all the books **together** and they become one Bible.
 
-In the dock, **Library → Bible → Get another translation** lists recommended sources by language with their licenses and steps. Whatever you download — a `.zip`, a `.json` or USFM text — **drop it onto the Bible card**: HymnFlow unzips it, converts it and names it automatically (type a name first if you want a different one).
+**Copyright:** Reina-Valera 1960, Almeida Atualizada and many modern translations are copyrighted. Get the publisher's permission before using them in a service or livestream. See [CONTENT_LICENSING.md](CONTENT_LICENSING.md).
 
-Then import it:
-1. Open HymnFlow Dock → **Library** tab → **Bible** section
-2. Type a name (e.g., `KJV`) in the name field
-3. Click **Import JSON** → select the downloaded file
-4. Status badge shows `KJV ✓` — Bible is ready
+**What you can drop:** a `.zip` (JSON or USFM inside), a `.json` Bible (HymnFlow, BibliaTodo or array-of-books format), or USFM files (`.usfm` / `.sfm`). Type a name in the name box first if you want a specific one; otherwise it is chosen for you.
 
-### Option B: Convert a Text Bible (Python)
+### Advanced: convert a plain-text Bible (Python)
 
 If you have a Bible in plain-text format (downloaded from eBible.org, Crosswire, etc.):
 
@@ -173,7 +157,7 @@ python scripts/convert_yoruba_bible.py "path/to/yoruba.txt"
 
 Output: a `.js` file or JSON file ready to import via the Library tab.
 
-### Option C: KJV Auto-Download (Python)
+### Advanced: KJV auto-download (Python)
 
 ```bash
 python scripts/bundle_bible_kjv.py

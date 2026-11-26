@@ -47,7 +47,7 @@ Width: 1920 | Height: 1080
 
 **Step 4:** Click a hymn and press → to test
 
-👉 [Detailed Setup Guide](SETUP.md)
+👉 [Detailed Setup Guide](../SETUP.md)
 
 ## ⌨️ Keyboard Shortcuts
 
@@ -104,11 +104,11 @@ Changes apply **instantly** to the overlay.
 
 ## 📚 Documentation
 
-- [**SETUP.md**](SETUP.md) - Complete setup guide
-- [**OBS_DOCK_README.md**](OBS_DOCK_README.md) - Detailed feature documentation
-- [**TROUBLESHOOTING.md**](TROUBLESHOOTING.md) - Common issues & solutions
-- [**RELEASE.md**](RELEASE.md) - Version info & migration guide
-- [Contributing](../.github/CONTRIBUTING.md) - How to contribute
+- [**SETUP.md**](../SETUP.md) - Complete setup guide
+- [**OBS_DOCK_README.md**](../OBS_DOCK_README.md) - Detailed feature documentation
+- [**TROUBLESHOOTING.md**](../TROUBLESHOOTING.md) - Common issues & solutions
+- [**RELEASE.md**](../RELEASE.md) - Version info & migration guide
+- [Contributing](../../.github/CONTRIBUTING.md) - How to contribute
 
 ## 🛠️ Development
 
@@ -138,7 +138,7 @@ No dependencies, no build process.
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
+We welcome contributions! Please see [CONTRIBUTING.md](../../.github/CONTRIBUTING.md).
 
 **Quick help:**
 - 🐛 Found a bug? [Report it](https://github.com/yourusername/HymnFlow/issues/new?template=bug-report.md)
@@ -147,11 +147,11 @@ We welcome contributions! Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## 📄 License
 
-MIT License - Free to use and modify. See [LICENSE](LICENSE) file.
+MIT License - Free to use and modify. See [LICENSE](../../LICENSE) file.
 
 ## 🔒 Security
 
-For security issues, please see [SECURITY.md](SECURITY.md).
+For security issues, please see [SECURITY.md](../SECURITY.md).
 
 HymnFlow runs entirely in your browser with **zero external dependencies**:
 - No server to hack
@@ -171,7 +171,7 @@ Special thanks to:
 
 ## 📞 Support
 
-- **Documentation**: See [SETUP.md](SETUP.md) and [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+- **Documentation**: See [SETUP.md](../SETUP.md) and [TROUBLESHOOTING.md](../TROUBLESHOOTING.md)
 - **Issues**: [GitHub Issues](https://github.com/yourusername/HymnFlow/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/yourusername/HymnFlow/discussions)
 - **Email**: contact@yourdomain.com

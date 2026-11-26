@@ -262,19 +262,19 @@ git push origin --tags
 ## 📚 Quick Reference
 
 ### For Users
-1. **New user?** → Read [SETUP.md](SETUP.md)
-2. **Having issues?** → Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
-3. **Want more details?** → See [OBS_DOCK_README.md](OBS_DOCK_README.md)
+1. **New user?** → Read [SETUP.md](../SETUP.md)
+2. **Having issues?** → Check [TROUBLESHOOTING.md](../TROUBLESHOOTING.md)
+3. **Want more details?** → See [OBS_DOCK_README.md](../OBS_DOCK_README.md)
 
 ### For Developers
-1. **Want to contribute?** → Read [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
-2. **Need technical details?** → See [doc/IMPLEMENTATION.md](doc/IMPLEMENTATION.md)
-3. **Curious about release process?** → Check [.github/release-checklist.md](.github/release-checklist.md)
+1. **Want to contribute?** → Read [.github/CONTRIBUTING.md](../../.github/CONTRIBUTING.md)
+2. **Need technical details?** → See [doc/IMPLEMENTATION.md](IMPLEMENTATION.md)
+3. **Curious about release process?** → Check [.github/release-checklist.md](../../.github/release-checklist.md)
 
 ### For Maintainers
-1. **Making a release?** → Follow [.github/release-checklist.md](.github/release-checklist.md)
+1. **Making a release?** → Follow [.github/release-checklist.md](../../.github/release-checklist.md)
 2. **Creating release package?** → Run `scripts/release.bat` (Windows) or `scripts/release.sh` (Unix)
-3. **Setting up GitHub Actions?** → See [.github/workflows/release.yml](.github/workflows/release.yml)
+3. **Setting up GitHub Actions?** → See [.github/workflows/release.yml](../../.github/workflows/release.yml)
 
 ---
 
@@ -305,9 +305,9 @@ git push origin --tags
 
 Refer to these files:
 
-- **How do I make a release?** → [.github/release-checklist.md](.github/release-checklist.md)
-- **What's in the repository?** → [REPOSITORY_STRUCTURE.md](REPOSITORY_STRUCTURE.md)
-- **How do I contribute?** → [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+- **How do I make a release?** → [.github/release-checklist.md](../../.github/release-checklist.md)
+- **What's in the repository?** → [REPOSITORY_STRUCTURE.md](../REPOSITORY_STRUCTURE.md)
+- **How do I contribute?** → [.github/CONTRIBUTING.md](../../.github/CONTRIBUTING.md)
 - **Release workflow details?** → [RELEASE_SETUP_SUMMARY.md](RELEASE_SETUP_SUMMARY.md)
 
 ---

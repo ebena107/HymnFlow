@@ -116,21 +116,21 @@ Three parsers in `public/parsers/`: `txtParser.js`, `csvParser.js`, `jsonParser.
 - `Author:` is optional
 - Empty lines separate verses
 - `Chorus:` marks optional chorus text
-- Example: See [public/parsers/txtParser.js](public/parsers/txtParser.js) for full implementation
+- Example: See [public/parsers/txtParser.js](../public/parsers/txtParser.js) for full implementation
 
 **CSV format**:
 - Expected columns: `Title`, `Author`, `Verse Number`, `Verse Text`, `Chorus`
 - Multiple rows with same title/author are combined into one hymn with multiple verses
 - Quote fields containing commas: `"Title","Author",1,"Verse\nwith\nlines",""`
-- See [public/parsers/csvParser.js](public/parsers/csvParser.js) for implementation
+- See [public/parsers/csvParser.js](../public/parsers/csvParser.js) for implementation
 
-**JSON format**: Array of hymn objects matching the hymn schema (see [public/data/hymns-data.js](public/data/hymns-data.js) and [public/data/hymns.json](public/data/hymns.json) for examples)
+**JSON format**: Array of hymn objects matching the hymn schema (see [public/data/hymns-data.js](../public/data/hymns-data.js) and public/data/hymns.json for examples)
 
 **Adding a new parser**: 
 1. Create file in `public/parsers/` (e.g., `xmlParser.js`)
 2. Export async `parseXml(file)` function that returns array of hymn objects
-3. Add handler to `handleImport()` switch statement in [public/obs-dock/obs-dock.js](public/obs-dock/obs-dock.js#L703-L715)
-4. Update file input accept attribute in [public/obs-dock/index.html](public/obs-dock/index.html#L40) if needed
+3. Add handler to `handleImport()` switch statement in [public/obs-dock/obs-dock.js](../public/obs-dock/obs-dock.js#L703-L715)
+4. Update file input accept attribute in public/obs-dock/index.html if needed
 
 ### Client-Side Data Operations
 All data operations use localStorage - no backend server needed:
@@ -332,9 +332,9 @@ moveServiceHymn(idx, dir) // Reorder hymns within service (up/down)
 
 | File | Purpose | Key Functions |
 |------|---------|---------------|
-| [public/obs-dock/obs-dock.js](public/obs-dock/obs-dock.js) | Control panel logic | `sendCommand()`, `selectHymn()`, `nextVerse()`, `nextLineWindow()`, `loadServices()` |
-| [public/obs-overlay/overlay.js](public/obs-overlay/overlay.js) | Display overlay logic | `show()`, `hide()`, `applyStyles()`, storage event listener |
-| [public/parsers/*.js](public/parsers/) | File format parsers | `parseTxt()`, `parseCsv()`, `parseJson()` - all async, accept File object |
-| [public/data/hymns-data.js](public/data/hymns-data.js) | Default hymn library | `DEFAULT_HYMNS` array (embedded in HTML via script tag) |
-| [scripts/release.bat](scripts/release.bat) | Windows release script | Packages plugin for distribution |
-| [scripts/release.sh](scripts/release.sh) | Unix/Mac release script | Packages plugin for distribution |
+| [public/obs-dock/obs-dock.js](../public/obs-dock/obs-dock.js) | Control panel logic | `sendCommand()`, `selectHymn()`, `nextVerse()`, `nextLineWindow()`, `loadServices()` |
+| [public/obs-overlay/overlay.js](../public/obs-overlay/overlay.js) | Display overlay logic | `show()`, `hide()`, `applyStyles()`, storage event listener |
+| public/parsers/*.js | File format parsers | `parseTxt()`, `parseCsv()`, `parseJson()` - all async, accept File object |
+| [public/data/hymns-data.js](../public/data/hymns-data.js) | Default hymn library | `DEFAULT_HYMNS` array (embedded in HTML via script tag) |
+| [scripts/release.bat](../scripts/release.bat) | Windows release script | Packages plugin for distribution |
+| [scripts/release.sh](../scripts/release.sh) | Unix/Mac release script | Packages plugin for distribution |
